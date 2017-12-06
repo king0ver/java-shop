@@ -1,0 +1,238 @@
+<#include '/admin/header.html' >
+<style>
+ td .layui-btn{
+  background:#1E9FFF;
+  }
+  #start_time_one{
+  height:25px;
+  }
+  #end_time_one{
+  height:25px;
+  }
+  ._inline{
+  margin-right:16px!important;
+  margin-top:5px;
+  height:25px;
+  }
+  .search_conditions{
+   display:block
+}
+.form-horizontal .form-group{
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.layui-form-select dl dd.layui-this{
+	background-color:#428bca;
+}
+</style>
+<div  class="admin-main">
+   <div style="margin-top: 25px">
+        <!--提示区域  -->
+        <div class="page_explain">
+            <ul>
+                <ul>
+                <li><span>·</span>买家购买商品生成的所有订单，都会出现在该商品列表中，其中状态有订单状态、付款状态、发货状态。</li>
+                <li><span>·</span>订单状态分为:新订单,待确认、 已确认、  已取消、  已完成、 交易完成申请售后。</li>
+                <li><span>·</span>付款状态分为:已付款、部分付款、 未付款。</li>
+                <li><span>·</span>发货状态分为:未发货、 已发货、 已收货。</li>
+                <li><span>·</span>删除订单操作，只能删除作废订单，并且删除成功后，会放到回收站，您可以对其进行彻底清除或者还原其订单。</li>
+            </ul>
+            </ul>
+        </div>
+        <!--按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" class="layui-btn layui-btn-primary " title="提示" id="explain"><i class="icon iconfont icon-tishi1"></i></button>
+            </div>
+            <!--搜索区域  -->
+            <div class="table_search">
+                <input type="text" name="keyword" placeholder="请输入订单编号" id="searchbtn" >
+            	<div id="templist" style="display: none">
+			            <form class="layui-form">
+			                <div class="form-group" style="float: left;width: 50%;">
+								    <label for="contain">订单号：</label>
+								    <input class="form-control" type="text" id="order_sn" maxlength="20" style="width: 80%;" />
+							  </div> 
+							  <div class="form-group" style="float: left;width: 50%;">
+								    <label for="contain">收货人：</label>
+								    <input class="form-control" type="text"  id="ship_name"  maxlength="20" style="width: 80%;"/>
+							  </div> 
+							    <div style="clear: both;"></div>
+							  <div class="form-group" style="float: left;width: 50%;">
+								    <label for="contain">商品名称：</label>
+								    <input  class="form-control" type="text" id="goods_name" maxlength="20" style="width: 80%;"/>
+							  </div> 
+							   <div class="form-group" style="float: left;width: 46%;">
+								    <label for="filter">买家名字：</label>
+								       <input  class="form-control" type="text" id="buyer_name" maxlength="20" style="width: 80%;"/>
+							  </div>
+							  <div style="clear: both;"></div>
+							  <div class="form-group" style="float: left;width: 50%;" >
+								    <label for="contain">下单时间：</label>
+								   	<input class="form-control" placeholder="开始日" id="start_time" style="width: 80%;">
+							  </div> 
+							   <div class="form-group" style="float: left;width: 50%;">
+								  <input class="form-control" placeholder="截止日" id="end_time"  style="width: 80%;margin-top: 23px;">
+							  </div> 
+							  <div style="clear: both;"></div>
+							    <div class="form-group" style="float: left;width: 50%;" >
+								    <label for="contain">订单状态：</label>
+								     <select id="order_status">
+										<option value=''>--订单状态--</option>
+										<option value="NEW">新订单</option>
+										<option value="CONFIRM">已确认</option>
+										<option value="PAID_OFF">已付款</option>
+										<option value="SHIPPED">已发货</option>
+										<option value="ROG">已收货</option>
+										<option value="COMPLETE">已完成</option>
+										<option value="CANCELLED">已取消</option>
+										<option value="AFTE_SERVICE">售后中</option>
+									</select>
+							  </div>
+						    <div style="clear: both;"></div>
+			            </form>
+			        </div>
+            </div>
+        </div>
+    </div>
+   
+    <!--表格区域  --> 
+   <table id="orderdata" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+      <thead>
+        <tr>
+          <th>订单号</th>
+          <th>下单日期</th>
+<!--           <th>发货日期</th> -->
+          <th>订单总额</th>
+<!--           <th>消费积分</th> -->
+          <th>收货人</th>
+          <th>订单状态</th>
+          <th>付款状态</th>
+          <th>发货状态</th>
+<!--           <th>配送方式</th> -->
+          <th>支付方式</th>
+          <th>订单来源</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+   </table>
+   <!--传值等操作(暂定)  -->
+  <div id="addBrand" ></div>
+</div>
+
+<!--js区域  -->
+<script>
+/* 监听开始搜索按钮 */
+var table;
+$(function(){
+
+
+ //搜索栏
+    var cent = $("#templist").html();
+    $("#searchbtn").searchBox({
+    	  content: cent,
+          keywordSearch: function () {
+           var keyword = $("input[name=keyword]").val();
+			table.ajax.url("${ctx}/order-query/admin/order.do?&keyword="+keyword).load();
+        },
+        formSearch: function () {
+			var order_sn = $("#order_sn").val();
+			var start_time = $("#start_time").val();
+			var end_time = $('#end_time').val();
+			var ship_name = $("#ship_name").val();
+			var goods_name = $("#goods_name").val();
+			var buyer_name = $("#buyer_name").val();
+			var order_status = $("#order_status").val();
+			var param = "order_sn="+order_sn+"&start_time="+start_time+"&end_time="+end_time+"&ship_name="+ship_name+"&goods_name="+goods_name+"&buyer_name="+buyer_name+"&order_status="+order_status;
+			table.ajax.url("${ctx}/order-query/admin/order.do?"+param).load();
+        }
+    });
+    
+    
+	table = $('#orderdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"get",
+	        url: '${ctx}/order-query/admin/order.do',
+	    },
+	    //getFormatDateByLong
+	    columns: [ //定义列
+	            {data: "sn"},
+	   	        {data: "create_time"},
+// 	   	        {data: function(sale_time) {
+// 	   	        	return  "发货日期";
+// 	   	       	}},
+	   	        {data: "order_amount"},
+// 	   	        {data: null,"render":function(data, type, row) {
+// 	   	        	return "消费积分";		//获取值:data["brand_id"]
+// 	   	       	}},
+	   	        {data: "ship_name"},
+	   	        {data: "order_status_text"},
+	   	        {data: "pay_status_text"},
+	   	        {data: "ship_status_text"},
+// 	   	    	{data: null,"render": function(data,type,row){
+// 	   	    		return "配送方式";
+// 	   	        }},
+	   	        {data: null,"render":function(data, type, row) {
+	   	        	var paymentType = data["payment_type"];
+	   	        	if(paymentType == "online"){
+	   	        		return "线上支付";
+	   	        	}else if(paymentType == "offline"){
+	   	        		return "线下支付";
+	   	        	}else if(paymentType == "cod"){
+	   	        		return "货到付款";
+	   	        	}
+	   	        	return "线上支付";		//获取值:data["brand_id"]
+	   	       	}},
+	   	     	{data: null,"render":function(data, type, row) {
+	   	        	return data["client_type"];		//获取值:data["brand_id"]
+	   	       	}},
+	   	        {data: null,"render": function(data, type, row) {
+	   	        	return "<a class='layui-btn layui-btn-small _aa' name='change_btn' onclick=\"newTab('查看订单详细"+(data["sn"])+"','${ctx}/shop/admin/order-detail.do?sn="+data["sn"]+"&logi_no="+data["logi_no"]+"&uname="+data["uname"]+"&ship="+data["ship_name"]+"&status="+data["status"]+"')\" ) >操作</a>";		//获取值:data["brand_id"]
+	   	       	}}
+	     ]
+	});
+	//layui日期控件配置
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  
+		  var start = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      end.min = datas; //开始日选好后，重置结束日的最小日期
+		      end.start = datas //将结束日的初始值设定为开始日
+		    }
+		  };
+		  
+		  var end = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      start.max = datas; //结束日选好后，重置开始日的最大日期
+		    }
+		  };
+		  
+		  document.getElementById('start_time').onclick = function(){
+		    start.elem = this;
+		    laydate(start);
+		  }
+		  document.getElementById('end_time').onclick = function(){
+		    end.elem = this
+		    laydate(end);
+		  }
+		});
+});
+
+</script>
+<#include '/admin/footer.html' >

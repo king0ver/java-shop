@@ -1,0 +1,24 @@
+<#-- 积分兑换提示登录弹框 -->
+<div id="login_tip" style="display:none">
+    <div class="">
+        您当前是游客身份，游客身份不能购买积分商品！<br><br>
+    </div>
+    <div class="button-wrapper">
+        <div class="btn">
+            <input type="button" class="small-green to-login-btn go-next-button" value="马上登录">
+        </div>
+
+        <div class="btn">
+            <input type="button" class="small-yellow to-checkout-btn go-next-button" value="立即注册">
+        </div>
+    </div>
+</div>
+
+<#-- 积分不足弹框 -->
+<div id="point_tip" style="display:none">
+    <div class="">
+        抱歉,您的积分不足以兑换此商品！<br><br>
+        <#if member??>可用积分:${member.mp}</#if>
+        <br><br>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<#assign title="积分商城" />
+<#include '/common/header.html'/>
+<link rel="stylesheet" href="${ctx}${themes_path}/css/exchange.css">
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/iscroll/iscroll-lite.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/exchange.js"></script>
+<link rel="stylesheet" href="${ctx}/statics/e_tools/mobile/library/swiper/swiper-3.4.2.min.css">
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/swiper/swiper-3.4.2.min.js"></script>
+
+<div id="exchange" class="exchange">
+    <div id="exchange-container" class="exchange-container">
+        <div class="swiper-wrapper">
+            <#assign advListTag = newTag("focusPictureTag") />
+            <#assign advList = advListTag("'client_type':'mobile'")!'' />
+            <#list advList as adv>
+                <a href="${adv.operation_url}" class="swiper-slide">
+                    <img src="<@imgurl pic='${adv.pic_url!adv.pic_url}' />" alt="${adv.aname!''}">
+                </a>
+            </#list>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="exchange-category">
+        <div id="category-wrapper" class="category-wrapper">
+            <#assign exchangeCategoryTag = newTag( "exchangeCategoryTag") />
+            <#assign exchangeCategory = exchangeCategoryTag() />
+            <ul>
+                <li class="item-category active"><span>全部</span></li>
+                <#list exchangeCategory as category>
+                    <#if category_index lt 3>
+                        <li class="item-category" data-cat_id="${category.category_id!''}">
+                            <span><@substring title="${category.text}" length=4 dot="" /></span>
+                        </li>
+                    </#if>
+                </#list>
+                <li id="open-slider"><span></span></li>
+            </ul>
+        </div>
+        <ul id="goods-wrapper" class="goods-wrapper"></ul>
+        <div id="slider-wrapper" class="slider-wrapper">
+            <div class="slider-navigator">
+                <i class="close-slider"></i>
+                <span>筛选</span>
+            </div>
+            <div id="slider-content" class="slider-content">
+                <ul>
+                    <#list exchangeCategory as category>
+                        <li class="item-category" data-cat_id="${category.category_id!''}"><span>${category.text}</span></li>
+                    </#list>
+                </ul>
+            </div>
+        </div>
+        <div id="slider-mask" class="slider-mask"></div>
+    </div>
+</div>
+
+</body>
+</html>

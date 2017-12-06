@@ -1,0 +1,166 @@
+<#-- 创建商品基本信息标签 -->
+<#assign goodsBaseDataTag = newTag("goodsBaseDataTag") />
+<#assign goods = goodsBaseDataTag("{'goodsid':${goodsid!0}}") />
+<#-- 获取商品状态【不存在-1、下架1、草稿2】-->
+<#assign goods_off = goods.goods_off!''/>
+<#if goods_off != -1>
+    <#-- 商品id、店铺id -->
+    <#assign goods_id = goods.goods_id!0 />
+    <#assign store_id = goods.seller_id!0 />
+    <#-- 获取商品店铺信息 -->
+    <#assign myShopDetailTag = newTag("myShopDetailTag") />
+    <#assign shop = myShopDetailTag("{'store_id':'${goods.seller_id}','type':1}" ) />
+</#if>
+
+    <form id="goodsForm" style="float: left; width: 410px">
+        <input type="hidden" name="goodsid" value="${goods_id}" />
+        <input type="hidden" name="store_id" value="${store_id}" />
+        <input type="hidden" name="showCartData" value="0" />
+        <input type="hidden" name="exchange" id="exchange">
+         <input type="hidden" name="activity_id" id="activity_id">
+		<input type="hidden" id="sku_id" name="skuid" value="${goods_id}">
+        <div class="pro-name">
+            <h2 style="cursor:default">${goods.goods_name!''}</h2>
+        </div>
+        <div class="pro-details">
+            <div class="pro-list clearfix">
+                <div class="pro-title" style="line-height: 42px; *line-height: 48px; height:33px;cursor:default">价格</div>
+                <div class="pro-content" style="min-height: 32px;*height:auto">
+                    <!-- <strong class="Dprice" id="secooPriceJs">${goods.price?string("0.00")}</strong> -->
+                    <span style="color:#e93a38;font-size:30px;font-family: Tahoma;cursor:default"><span class='price-by-group'></span><strong class="Dprice" id="price"> </strong></span>
+                </div>
+            </div>
+            
+            <#-- 检测商品参与的活动 -->
+			<#assign promotionListByGoodsIdTag = newTag("promotionListByGoodsIdTag") />
+			<#assign promotionList = promotionListByGoodsIdTag("{'goods_id':${goods.goods_id}}") />
+			<#assign promotionshow = true>
+			<#if promotionList?size gt 0>
+				<#list promotionList as promotionVo>
+					<#-- 积分活动 -->
+                    <#if promotionVo.promotion_type=='exchange'>
+                        <div class="pro-list clearfix exchange detail_exchange">
+                        </div>
+                        <script>
+                             $.ajax({
+                                url: '${ctx}/detail/detail_exchange.html',
+                                methods: 'GET',
+                                async: false,
+                                success: function (result) {
+                                    $('body .exchange.detail_exchange').html(result)
+                                }
+                            })
+                        </script>
+					<#elseif promotionVo.promotion_type=='groupbuy'>
+						<#-- 团购活动 -->
+						<#include '/detail/detail_groupbuy.html' />
+					<#else>		
+						<#-- 促销活动 -->
+						<#include '/detail/detail_activity.html' />
+						<#assign promotionshow = false>
+					</#if>
+				</#list>
+			</#if>
+                        
+            <style>
+                .hover-section-two,.hover-section-one {
+                    display: none;
+                }
+            
+                .hover-section-two.show,.hover-section-one.show {
+                    display: block;
+                    margin-top: 2px;
+                }
+            
+                .pro-content .show>div {
+                    margin-bottom: 2px;
+                }
+            </style>
+
+            <script>
+                (function(){
+                    // 动态操作商品促销区块，实现hover切换促销区块的效果
+                    // 用JS改造下促销信息的结构，以适应需求。
+                    // 主要构造出了两个div
+                    
+                    var promotionContainer = $('#goodsForm > div.pro-details .pro-activity');
+                    var sectionTwo = $('<div class="hover-section-two"></div>');
+                    var sectionOne = $('<div class="hover-section-one show"></div>');
+                    promotionContainer.each(function(index){
+                        // 跳过第一个
+                        if(index === 0){
+                            return;
+                        }
+                        var $this = $(this);
+
+                        // 添加进 新生成的div中
+                        sectionOne.append($this.find('em.hl_red_bg').clone(true));
+                        sectionTwo.append($this);
+                    });
+                    $($('#goodsForm > div.pro-details > div.pro-list.clearfix.pro-activity')[0]).find('.parent_tips_prom').append(sectionOne);
+                    sectionTwo.insertAfter(sectionOne);
+                })()
+            </script>
+
+            <#-- 优惠券 -->
+            <#include '/detail/detail_bonus.html' />
+
+			<div class="pro-list clearfix" style="cursor:default">
+			    <div class="pro-title">温馨提示</div>
+			    <div class="pro-content">
+			        <span>本商品无质量问题不支持退换货</span>
+			        <br>
+			        <!--<span>本商品为特例品,不支持使用优惠券</span><br>-->
+			    </div>
+			</div>
+        </div>
+        <div class="pro-list_box clearfix">
+            <div class='sku-render-container'> </div>
+            <div class="pro-list clearfix pNum" style="cursor:default">
+                <div class="pro-title">购买数量</div>
+                <div class="pro-content">
+                    <div class="count-num">
+                        <a href="javascript:;" class="oper-num down fl not-oper"></a>
+                        <span class="num fl">
+                            <input type="text" name="num" id="buyNumVal" value="1">
+                        </span>
+                        <a href="javascript:;" class="oper-num up fl<#if goods.quantity lt 2> not-oper</#if>"></a>
+                        <input type="hidden" id="stock" value="${goods.quantity}">
+                    </div>
+                    <span class="delivery last-pro-duct-num">仅剩 <span class="enable_quantity"></span>件，抓紧时间购买哦！</span>
+                </div>
+            </div>
+            <div class="prompt clearfix" style="cursor:default">
+                <#if goods.goods_off==2>
+                    <button type="button" class="cant-buy good-preview" title="">预览商品</button>
+                    <#else/>
+                    <button type="button" class="topanic fl<#if goods.quantity lt 1> not-oper</#if>" id="buyNow"></button>
+                    <button type="button" class="tocart fl addToCart" id="addCart"></button>
+                </#if>
+            </div>
+        </div>
+    </form>
+    <div class="goods-store">
+        <div class="store-title"><a href="javascript:;">${shop.shop_name!''}</a></div>
+        <div class="store-logo">
+            <img src="${shop.shop_logo!''}" />
+        </div>
+        <div class="store-outdside">
+            <div class="store_rate">
+                <input type="hidden" id="store_id" value="16">
+                <ul>
+                    <li style="cursor:default"><h2>描述</h2><span id="desc">${shop.shop_desccredit!'5'}分</span></li>
+                    <li style="cursor:default"><h2>服务</h2><span id="server">${shop.shop_servicecredit!'5'}分</span></li>
+                    <li style="cursor:default"><h2>发货</h2><span id="send">${shop.shop_deliverycredit!'5'}分</span></li>
+                </ul>
+            </div>
+            <div class="go_store">
+                <a href="${ctx}/store_themes/${shop.shop_id}/index.html?menu=store" target="_blank" class="goto_store">进入商家店铺</a>
+                <a href="javascript:void(0);" onclick="collect_store(${shop.shop_id!0},this,'store_collect');" class="store_favoritebtn">收藏店铺(<i id="store_collect">${shop.shop_collect!0}</i>)</a>
+            </div>
+            <div class="store_contact">
+                <h3 style="cursor:default"><i>公司名称：</i>${shop.company_name}</h3>
+                <h3 style="cursor:default"><i>所&nbsp;&nbsp;在&nbsp;&nbsp;地：</i>${shop.compant_address!''}</h3>
+            </div>
+        </div>
+    </div>

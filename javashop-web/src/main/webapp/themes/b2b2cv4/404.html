@@ -1,0 +1,80 @@
+<#include 'common/header.html' />
+<style>
+    div,
+    span,
+    p,
+    h1,
+    img {
+        margin: 0;
+        padding: 0;
+    }
+
+    .notfound {
+        width: 100%;
+        padding: 0 10%;
+        height: 500px;
+        margin: 0 auto;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .main {
+        width: 50%;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .main h1 {
+        margin-bottom: 3rem;
+    }
+
+    .main .reason {
+        margin-bottom: 0.5rem;
+    }
+
+    .main p {
+        font-size: 14px;
+        margin-bottom: 0.3rem;
+    }
+
+    .main span {
+        color: #ccc;
+    }
+
+    .main a {
+        color: #aaa;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    body>div.v_header>nav>div>div>div.category_div {
+        display: none;
+    }
+
+    .footer {
+        margin: 0;
+        padding: 0;
+    }
+
+    .index_nav {
+        display: none;
+    }
+</style>
+
+<body>
+    <div class='notfound'>
+        <img src='${file_path}/images/4041.png' alt='404 Not Found'>
+        <div class='main'>
+            <h1 style="font-size: 25px;cursor:default">糟糕! 您访问的页面不见啦...</h1>
+            <span class='reason' style="cursor:default">可能是因为: </span>
+            <p style="cursor:default">网站有错误:<span>>请检查地址是否完整或存在多余字符</span></p>
+            <p style="cursor:default">网址已失效:<span>>可能页面已删除，活动已下线等</span></p>
+            <h5 style="cursor:default">您可以逛逛: <a href='/'>网站首页</a></h5>
+        </div>
+    </div>
+</body>
+<#include 'common/footer.html'/>

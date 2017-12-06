@@ -1,0 +1,54 @@
+<#assign goodsParamEidtorTag=newTag("goodsParamEidtorTag") >
+<#assign goodsParamList = goodsParamEidtorTag("{'goods_id':${goods_id},'catid':'${catid}','model':'${model}'}")>
+
+	<#if goodsParamList?exists && goodsParamList?size!=0 >
+	<#list goodsParamList as group>
+		<div class="goods-info-group">
+			<div class="goods-info-group-inner">
+				<div class="info-group-title vbox">
+					<div class="group-inner">${group.group_name!''}
+					<input type="hidden" name="groupnames" value="${group.group_name!''}" />
+					</div>
+				</div>
+				<div class="info-group-cont vbox">
+					<div class="group-inner">
+						<#if group.params?exists && group.params?size!=0 >
+						<#list group.params as param>
+						<div class="control-group params" style="margin-top: 20px; " param_id="${param.param_id!''}" param_name="${param.param_name!''}">
+								<label class="control-label" style="width: 120px; text-align: right; ">${param.param_name!''}：</label>
+								<div class="controls">
+								<#if param.param_type==1>
+									<input type="text" class="form-control paramvalues" name="paramvalues" maxlength="50" value="${param.param_value!''}" 
+									<#if param.required==1>isrequired="true"</#if> />
+									<#else>
+									<select class="form-control paramvalues" name="paramvalues" <#if param.required==1>isrequired="true"</#if> > 
+									<option value="">请选择</option>
+									<#list param.optionAr as option >
+										<option value="${option!''}" <#if (param.param_value!"") == option>selected</#if> >${option}</option> 
+									</#list>
+									</select>
+									</#if>
+								</div>
+							</div>
+						</#list>
+						</#if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</#list>
+<#else> 
+	该类型未定义参数 
+</#if>
+<script type="text/javascript">
+	$(function(){
+		/* IE下input框样式兼容
+		 ============================================================================ */
+		(function(){
+			if(Sys.ie > 7){
+				$("input[type='text']").css({height: 25});
+			};
+		})();
+	});
+</script>
+

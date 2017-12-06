@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '出售中' />
+    <#include '/new_store/common/header.html' />
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/goods/selling.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/goods/selling.css">
+</head>
+<body>
+<#assign mainPageName = 'main_goods' />
+<#assign lowerPageName = 'lower_goods_warehouse' />
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav">
+        <li><a href="./warehouse.html?goods_type=normal">仓库中的商品</a></li>
+        <li class="active"><a href="./selling.html?market_enable=1">出售中的商品</a></li>
+    </ul>
+</div>
+<!--主页面区↓-->
+<div class="app-wappler">
+<div class="inner-app-wappler">
+<#assign myGoodsListTag=newTag("myGoodsListTag")>
+<#assign storeGoods=myGoodsListTag()>
+<#-- 创建店铺商品分类标签 -->
+<#assign storeGoodsCatListTag= newTag("storeGoodsCatListTag") >
+<#-- 查询店铺商品分类列表 0表示查子分类 -->
+<#assign storeGoodsCatList= storeGoodsCatListTag("'type':0")!''>
+<div class="goods_warehouse">
+    <div class="top-tools">
+        <div class="left-top-tools">
+            <a href="javascript: void(0);" class="btn btn-warning down-all-goods">批量下架</a>
+            <a href="./goods_publish.html" class="btn btn-success">发布商品</a>
+            <a href="./trash.html?disable=1" class="btn btn-info">回收站</a>
+        </div>
+        <div class="right-top-tools">
+            <div class="inner-tools">
+                <div class="cat" style="margin-right: 120px;">
+                    <select name="store_cat" class="store_cat">
+                        <option value="0">全部分类</option>
+                        <#list storeGoodsCatList as cat>
+                            <#if cat.store_cat_pid==0>
+                                <option value="${cat.store_cat_id}"
+                                <#if storeGoods.store_cat??>
+                                    <#if storeGoods.store_cat+""==cat.store_cat_id+"">
+                                        selected="selected"
+                                    </#if>
+                                </#if>
+                                >${cat.store_cat_name!''}</option>
+                            </#if>
+                            <#list storeGoodsCatList as childCat>
+                                <#if childCat.store_cat_pid==cat.store_cat_id>
+                                    <option value="${childCat.store_cat_id}"
+                                    <#if storeGoods.store_cat??>
+                                        <#if storeGoods.store_cat+""==childCat.store_cat_id+"">
+                                            selected="selected"
+                                        </#if>
+                                    </#if>
+                                    >&nbsp;&nbsp;&nbsp;&nbsp;${childCat.store_cat_name!''}</option>
+                                </#if>
+                            </#list>
+                        </#list>
+                    </select>
+                </div>
+                <div class="seach">
+                    <span class="icomoon"></span>
+                    <input type="text" class="seach-keyword" placeholder="搜索">
+                    <a href="javascript: void(0);" class="btn btn-success seach-btn" id="key_seach_btn">搜索</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <#if storeGoods.storegoods.result??>
+        <form id="selling_form">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="select">
+                        <input type="checkbox" class="check-all check-width">
+                    </th>
+                    <th class="img">图片</th>
+                    <th class="name">名称</th>
+                    <th class="price">价格</th>
+                    <th class="warehouse">库存</th>
+                    <th class="can-warehouse">可用库存</th>
+                    <th class="create-time">创建时间</th>
+                    <th class="status">状态</th>
+                    <th class="operate">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list storeGoods.storegoods.result as storeGoods>
+                    <tr>
+                        <th class="th-bind">
+                            <#if type??>
+                                <input class="checkbox check-width" type="checkbox" name="reg_id" value="${storeGoods.goods_id}">
+                                <#else>
+                                    <input class="checkbox check-width" type="checkbox" name="goods_ids" value="${storeGoods.goods_id}">
+                            </#if>
+                        </th>
+                        <th class="th-img th-bind">
+                            <#if storeGoods.thumbnail?exists && storeGoods.thumbnail != ''>
+                                <@image src="${storeGoods.thumbnail!''}" alt="${storeGoods.goods_name!''}" height="50"/>
+                                <#else>
+                                    暂无图片
+                            </#if>
+                        </th>
+                        <th class="th-name th-bind">
+                            <a target="_blank" href="${ctx}/goods-${storeGoods.goods_id}.html"><@substring title="${storeGoods.goods_name}" length=34 dot="" /></a>
+                        </th>
+                        <th class="th-bind">${storeGoods.price?string.currency}</th>
+                        <th class="th-bind">${storeGoods.quantity!''}件</th>
+                        <th class="th-bind">${storeGoods.enable_quantity!''}件</th>
+                        <th class="th-bind"><@dateformat time="${storeGoods.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></th>
+                        <th class="status-th th-bind">
+                            <#-- 判断是否开启商品审核 -->
+                                <#if storeGoods.is_auth??>
+                                    <#-- 判断是否审核通过 -->
+                                        <#if storeGoods.is_auth==1||storeGoods.is_auth==0>
+                                            <#if storeGoods.market_enable==1>
+                                                上架
+                                                <#else>
+                                                    下架
+                                            </#if>
+                                            <#elseif storeGoods.is_auth==2>
+                                                审核未通过
+                                                <#elseif storeGoods.is_auth==3>
+                                                    待审核
+                                        </#if>
+                                        <#else>
+                                            <#if storeGoods.market_enable==1>
+                                                上架
+                                                <#else>
+                                                    下架
+                                            </#if>
+                                </#if>
+                        </th>
+                        <th class="goods-operate">
+                            <a class="btn btn-success edit-goods" goods_id="${storeGoods.goods_id}">编辑</a>
+                            <a type='button' class="edit-quantity-button btn btn-info warehouse-goods" data-toggle="modal" data-target="#edit-quantity-modal" data-which="${storeGoods.goods_id!'0'}">库存</a>
+                            <a class="btn btn-warning down-goods" goods_id="${storeGoods.goods_id}" name="goodsUnder">下架</a>
+                        </th>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </form>
+        <div class="app-paging-tools">
+            <div class="demo"></div>
+            <div class="paging">
+                <@pager pageno="${storeGoods.page!'1'}" pagesize="${storeGoods.storegoods.pageSize}" totalcount="${storeGoods.totalCount}" />
+            </div>
+        </div>
+    <#else>
+        <div class="app-no-data">
+            <span class="a-no-data">暂无相关数据</span>
+        </div>
+    </#if>
+</div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="edit-quantity-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">库存编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div class='container table-responsive'>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary save-qiantity-button">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--主页面区↑-->
+
+<script>
+     /* 
+     * 编辑库存
+     * 监听按钮,动态展示库存数信息.
+     */
+     $('#edit-quantity-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('which');
+        $.get('${ctx}/shop/goods/' + id + '/skus.do', function (response) {
+            // 没有商品规格信息
+            // 如果返回无数据,或者空数组,或者数据里不存在specList数据
+            if (!response || response.length === 0 || !response[0].specList) {
+                var emptyForm = '<form data-goods-id='+ response.goods_id + ' data-sku-id='+ response.sku_id +'>\
+                        <div class="form-group quantity">\
+                            <label >库存</label>\
+                            <input type="number" class="form-control">\
+                        </div>\
+                        <div class="form-group enable_quantity">\
+                            <label >可用库存</label>\
+                            <input type="number" class="form-control">\
+                        </div>\
+                    </form>';
+                
+                var formDOM = $(emptyForm).data('response',response);
+                $('body .modal-body .container').html(formDOM);
+                // 初始化库存数据
+                if(response[0] && (response[0].quantity === 0 || response[0].quantity)){
+                    formDOM.find('.quantity input').val(response[0].quantity);
+                }
+                if(response[0] && (response[0].enable_quantity === 0 || response[0].enable_quantity)){
+                    formDOM.find('.enable_quantity input').val(response[0].enable_quantity);
+                }
+                return;
+            }
+            // 有规格信息
+            var dataTransformed = transformDefaultData(response);
+            var headArray = dataTransformed.map(function(item){
+                return item.spec_name;
+            });
+            var bodyArray = dataTransformed.map(function(item){
+                return item.item_list;
+            });
+            var table = '<table class="table">' + generateThead(headArray) + generateTbody(bodyArray) + '</table>';
+            var tableDOM = $(table).data('response',response);
+            
+            $('body .modal-body .container').html(dealRowSpan(bodyArray,tableDOM));
+
+            // 遍历, 初始化库存,可用库存
+            if (response && response.length > 0) {
+                response.forEach(function (oneSku, index) {
+                    // 特定行/tr
+                    var tr = $('body .modal-body table tbody tr')[index];
+                    // key: price,weight,sn之类的
+                    for (var key in oneSku) {
+                        if (!key || key === 'sku') {
+                            continue;
+                        };
+                        $(tr).find('td.' + key + ' input').val(oneSku[key]);
+                    }
+                });
+            };
+        })
+    });
+
+    // 保存库存按钮
+    $('#edit-quantity-modal .save-qiantity-button').click(function () {
+        var skuList = [];
+        var formDOM = $('#edit-quantity-modal form');
+        if (formDOM.length === 1) {
+            var response = formDOM.data('response')[0];
+            skuList.push({
+                goods_id: response.goods_id,
+                sku_id:  response.sku_id,
+                quantity: Number(formDOM.find('.quantity input').val()),
+                enable_quantity: Number(formDOM.find('.enable_quantity input').val())
+            });
+        } else {
+            var tableDOM = $('#edit-quantity-modal table');
+            var response = tableDOM.data('response');
+
+            tableDOM.find('tbody tr').each(function (index) {
+                skuList.push({
+                    goods_id: response[index].goods_id,
+                    sku_id: response[index].sku_id,
+                    quantity: Number($(tableDOM.find('.quantity input')[index]).val()),
+                    enable_quantity: Number($(tableDOM.find('.enable_quantity input')[index]).val())
+                });
+            });
+        }
+
+        // 可用库存 > 库存 的数组
+        var checked = skuList.filter(function (item) {
+            return item.enable_quantity > item.quantity
+        });
+
+        if (checked.length > 0) {
+            $.message.error('可用库存量不能大于库存量,请修改!');
+            return;
+        }
+
+        $.ajax({
+            url: ctx + '/goods/seller/goods/quantity.do',
+            type: 'POST',
+            data: JSON.stringify({skuList: skuList}),
+            contentType: 'application/json',
+            success: function () {
+                $('#edit-quantity-modal').modal('hide');
+                location.reload();
+            },
+            error: function (e) {
+            	$.message.error(e.responseJSON.error_message);
+            }
+        })
+        
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<#assign  title="我的评论" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member??>
+    <#assign memberCommentListTag = newTag("memberCommentListTag") />
+    <#assign commentsList = memberCommentListTag() />
+    <#assign goodsBaseDataTag = newTag("goodsBaseDataTag") />
+    <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/member-items.css"/>
+    <div class="my-comment">
+    <#if commentsList.totalCount gt 0>
+        <div class="my-comment-items">
+            <#list commentsList.commentsList as comment>
+                <div class="item">
+                    <div class="goods-info">
+                        <a href="${ctx}/goods-${comment.goods_id!''}.html" style="color: #1E9FFF">${comment.goods_name!''}</a>
+                    </div>
+                    <div class="comment-conten">
+                        ${comment.content!''}
+                    </div>
+                    <#assign commentGalleryListTag = newTag("commentGalleryListTag") />
+                    <#assign galleryList = commentGalleryListTag("{'comment_id':${comment.comment_id}}") />
+                    <#if galleryList??>
+                        <div class="comment-images">
+                            <#list galleryList as gallery>
+                                <@image src="${gallery.original!''}" class="img-comment-images" />
+                            </#list>
+                        </div>
+                    </#if>
+                    <div class="comment-time">
+                        <span><@dateformat time="${comment.dateline?c}" pattern="yyyy-MM-dd HH:mm"/></span>
+                    </div>
+
+                    <#if comment.replystatus == 1>
+                        <div class="comment-reply">
+                            <i class="iocn-content-reply"></i>
+                            <div class="content-comment-reply">
+                                客服回复：${comment.reply!''}
+                            </div>
+                        </div>
+                    </#if>
+                </div>
+            </#list>
+        </div>
+    <#else/>
+        <div class="eui-nodata">
+            <img src="${ctx}/statics/e_tools/images/beifang/beifang-no_comment.png">
+        </div>
+    </#if>
+
+    </div>
+    <script type="text/javascript">
+        new Module().navigator.init('我的评论');
+    </script>
+</#if>
+
+<style>
+    .my-comment-items .goods-info a{
+        display: block;
+        line-height: 1.6;
+    }
+</style>
+
+</body>
+</html>

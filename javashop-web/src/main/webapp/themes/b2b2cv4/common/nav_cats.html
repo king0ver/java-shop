@@ -1,0 +1,112 @@
+<#assign goodsCategoryTag= newTag("goodsCategoryTag") />
+<#assign goodsCat = goodsCategoryTag() />
+<#assign menuTag= newTag("menuTag") />
+<#assign isindex = isIndex!'false' />
+<div class="menu<#if isindex == 'true'> is-index</#if>">
+    <div class="menu-type">
+        <a href="javascript:void(0) " target="_blank">全部商品分类</a>
+    </div>
+    <div class="menu-tab-content">
+        <div class="menu-items" id="cata-nav">
+            <#list goodsCat.cat_tree as cat>
+                <#if cat_index lt 7 >
+                    <div class="menu-item">
+                        <div class="item item-content">
+                            <i style='background:url("${cat.image!''}") no-repeat center'></i>
+                            <div class="menu-title">
+                                <strong>
+                                    <a href="${cat.url}" target="_blank">${cat.name}</a>
+                                </strong>
+                                <#if cat.hasChildren>
+                                    <span>
+                                        <#assign children2 = cat.children />
+                                        <#list children2 as cat2>
+                                            <#if cat2_index lt 2 >
+                                                <a href="${cat2.url}" target="_blank">${cat2.name} </a>
+                                            </#if>
+                                        </#list>
+                                    </span>
+                                </#if>
+                            </div>
+                        </div>
+                        <div class="menu-items-layer" ectype="cateLayer" style="display: none;">
+                            <div class="cate-layer-con clearfix">
+                                <div class="cate-layer-left">
+                                    <!--<div class="cate_channel">
+                                        <a href="#" target="_blank">品牌日</a>
+                                        <a href="#" target="_blank">家电城</a>
+                                        <a href="#" target="_blank">智能生活馆</a>
+                                    </div>-->
+                                    <div class="cate_detail">
+                                        <#if cat.hasChildren>
+                                            <span>
+                                                <#assign children2 = cat.children />
+                                                <#list children2 as cat2>
+                                                    <dl>
+                                                        <dt><a href="${cat2.url}" target="_blank">${cat2.name}</a></dt>
+                                                        <#if cat2.hasChildren >
+                                                            <dd>
+                                                                <#assign children3 = cat2.children />
+                                                                <#list children3 as cat3>
+                                                                    <a href="${cat3.url}" target="_blank">${cat3.name}</a>
+                                                                </#list>
+                                                            </dd>
+                                                        </#if>
+                                                    </dl>
+                                                </#list>
+                                            </span>
+                                        </#if>
+                                        <div class="item-brands">
+                                            <ul>
+                                            </ul>
+                                        </div>
+                                        <div class="item-promotions">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cate-layer-rihgt">
+                                    <div class="cate-brand">
+                                        <#if cat?exists && cat?size gt 0>
+                                            <#list cat.brands as brand>
+                                                    <div class="img">
+                                                        <a href="${brand.url}" target="_blank" title="${brand.name}">
+                                                            <@image src="${brand.logo!''}" />
+                                                        </a>
+                                                    </div>
+                                            </#list>
+                                        </#if>
+                                    </div>
+                                    <div class="cate-promotion">
+                                        <!--<a href="${ctx}" target="_blank">
+                                            <img src="" style="width: 199px; height: 97px">
+                                        </a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </#if>
+            </#list>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var menu = $('.menu');
+        menu.each(function () {
+            var _this = $(this), isIndex = _this.is('.is-index');
+            !isIndex && _this.hover(function (event) {
+                var mouseenter = event.type === 'mouseenter';
+                _this.css('overflow', mouseenter ? 'inherit' : 'hidden');
+            });
+        });
+
+        //  一级导航切换
+        menu.on('mouseenter mouseleave', '.menu-item', function (event) {
+            var $this = $(this), mouseenter = event.type === 'mouseenter';
+            mouseenter ? $this.addClass('selected') : $this.removeClass('selected');
+            $this.find('.menu-items-layer').css('display',mouseenter ? 'block' : 'none');
+        });
+    });
+</script>

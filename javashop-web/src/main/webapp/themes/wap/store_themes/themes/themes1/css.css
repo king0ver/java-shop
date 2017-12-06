@@ -1,0 +1,173 @@
+body{background:#ebebeb;}
+.themes-box{width:100%;overflow:hidden;}
+.banner{width:100%;text-align:center;}
+.banner img{width:100%;}
+.store-detail{width:100%;overflow:hidden;text-align:center;    margin: -0.1rem 0 0 0;}
+.store-detail ul{width:100%;height:100%;overflow:hidden;text-align:center; background:#fff;}
+.store-detail ul li{
+	list-style: none outside none;
+    text-align: center;
+    width: 32%;
+    display:inline-block;
+    height: 100%;
+    padding:0.5rem 0;
+    position:relative;
+    font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+}
+.store-detail ul li span{font-size:0.8rem;}
+.store-detail ul li p{font-size:0.8rem;}
+.store-detail ul li i{width:1px;height:2rem;display:block;border-right:1px solid #dedede;position:absolute;top:0.9rem;right:0px;}
+
+
+
+
+.go-top{
+	position: fixed;
+    bottom: 4rem;
+    right: 1rem;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABuElEQVRoQ+2XzU3DQBBGP1cAdJASoAJCBVACdLAn+4hztE/TASUAFZASKAE6gAqMRtpFUeT9845lWxrfktjxe/PNrscVNn5UG+eHCiydoCaw2gS6rmurqnpeGpDvPwzDoWmadozF20J93w9rgHcMdV2PsnoFNp/AmqofYtFdaOmkZkvAGHMN4BXAJYAnInqbQ3YWAQv/YeEd9w0RfUpLiAt44Jn7B8CdtISoQADeFV5cQkwgAX4WCRGBEfhfAEcA95b6HcAewIX9LJZEsYAHnmEfALhZ6gCAdyGWEpUoEvDB80I1xvDw9S9ARK09X1RiskAInttkTMB+z88HMYlJAjH4kIC0RLZACnxMQFIiSyAVPkVASiJZIAc+VUBCIkeAF96t3cd5n9+HxgLfIh6bhUp2pxyBRwAvAL55j4/NNDkCviSI6Co2/CUL2JvsiOgr9qc5LXT6X2dJcMp8P35qe48sgRRwd05uAifX7QBw2kci4rYNHqsTiAGf/64CvopNbSFNILcCmkBhxXQRawtpCxVWQFuosIC6C2kLrbiFeK538zy/fia9COX6zLYGckGmnq8CUysndd0fGQwzQNc+1UAAAAAASUVORK5CYII=') no-repeat center;
+    border-radius: 50%;
+    background-size: 65% 65%;
+    display: block;
+    width: 37px;
+    height: 37px;
+    box-shadow: rgb(226, 226, 226) 0px 2px 3px 0px;
+}
+
+.nav-box{width:60%;position:absolute;top:0px;right:-70%;background:#fff;box-shadow: -2px 1px 16px #dedede;display:none;}
+.nav-box .nav-listbox{width:100%;margin:1rem 0;}
+.nav-box .nav-listbox .nav-list{width:85%;margin:0 0 0 5%;padding:0.1rem 0 0.1rem 5%;line-height:1.7rem; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size:0.9rem;font-weigth:200;color:#000;}
+.nav-box .nav-listbox .nav-list a{display:block;width:95%;border-bottom:1px dashed #dedede;padding:0 0 0 5%;background:url(images/golist.png) no-repeat 95% center ;background-size:1rem}
+.nav-box .nav-listbox .nav-list ul{width:100%;}
+.nav-box .nav-listbox .nav-list ul li{width:90%;padding:0.1rem 0 0.1rem 5%;line-height:1.7rem; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size:0.8rem;font-weigth:200;color:#aaa;}
+.nav-box .nav-listbox .nav-list ul li a{width:100%;}
+.nav-box-position{position:relative;width:100%;height:100%;}
+.nav-close{width:2rem;height:2rem;position:absolute;top:-1rem;left:-2rem;background:url(images/close.png) no-repeat center center #fff;background-size:1.5rem;    box-shadow: -2px 1px 6px #dedede;}
+
+#nav-right{background:url(images/daohang5.png) no-repeat 70% center ;background-size:1.5rem}
+
+
+
+/********新品上市*********/
+.new-goods{padding:0.5rem;width:100%;overflow:hidden;background:#fff;}
+.new-goods h1{height:6rem;margin:1rem 0;width:100%;text-align:center;line-height:6rem;background:url(images/rm.jpg) no-repeat center center;background-size:50%;font-size:1.1rem;font-weight:300;}
+
+.new-goods ul{width:100%;overflow:hidden;}
+.new-goods ul li{
+	float: left;
+    width: 46%;
+    margin: 0px 2% 0.5rem 0px;
+    position: relative;
+    padding: 0.6rem 0px;
+    positio:relative;
+    text-align:center;
+}
+
+.new-goods ul li .new-list-img img{
+	width: 90%;
+    margin: 0px auto;
+    max-width: 200px;
+}
+
+.new-goods ul li .new-list-intro h2 a{
+	font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+	font-size:0.9rem;
+	font-weight:200;
+	line-height:1.2rem;
+	height:2.5rem;
+	    display: block;
+	    text-align:center;
+	    width:90%;
+	    padding:0 5%;
+}
+.new-goods ul li .new-list-intro p{
+	font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+	font-size:0.9rem;
+	font-weight:200;
+	line-height:1.2rem;
+	width:100;
+	text-align:center;
+}
+.new-goods ul li h3{width:100%;height:2rem;line-height:1.5rem;text-align:center;}
+.new-goods ul .new-list-top .new-list-intro{margin:0.5rem 0 0 0;}
+.new-goods ul li label{    
+	width: 1rem;
+    height: 17rem;
+    background-size: 100%;
+    position: absolute;
+    top: 1rem;
+    right: -1.5rem;
+    border-left: 1px solid #dedede;}
+
+.bordedr2{ border-bottom: 1px solid #dedede;}
+.bordedr3{ border-bottom: 1px solid #dedede;}
+.bordedr6{ border-bottom: 1px solid #dedede;}
+.bordedr7{ border-bottom: 1px solid #dedede;}
+
+.store-bonus-box{width:100%;overflow:hidden;margin:0.5rem 0; background:#fff;padding:0.5rem;box-shadow:1px 1px 10px #ccc;}
+.store-bonus-box ul{width:110%;overflow:hidden;}
+.store-bonus-box ul li{float: left;
+    background: #fff;
+    width: 42%;
+    margin: 0px 2% 0.5rem 0px;
+    overflow: hidden;
+    position: relative;
+    padding: 0.6rem 0px;
+    border:1px solid #dedede;
+    height:4.5rem;
+    text-align:center;
+}
+.store-bonus-box ul li p{font-size:1.2rem;width:100%;text-align:center;font-weight:400;}
+.store-bonus-box ul li p span{font-size:0.8rem;color:#ccc;font-weight:200;height:1.5rem;line-height:1.5rem;}
+.store-bonus-box ul li b{width:100%;height:1rem;line-height:1rem;text-align:center;font-size:0.8rem;color:#ccc;font-weight:200;display:block;margin:0.3rem 0; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+.store-bonus-box ul li label{padding:0 0.3rem;border:1px solid #dedede;font-size:0.8rem;color:#ccc;font-weight:200; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+
+.recommend-goods{width:100%;background:#fff;margin:0.5rem 0;padding:0.5rem 0;}
+.recommend-goods h1{width:100%;height:3rem;margin:1rem 0;background:url(images/tj.png) no-repeat center center #fff;background-size:80%;}
+.recommend-goods ul{width:100%;overflow:hidden;}
+.recommend-goods ul li{width:80%;margin:0 0 0.5rem 0;padding:1rem 10% 0.5rem;border-bottom:1px dashed #dedede;text-align:center;}
+.recommend-goods ul li img{width:80%;border-radius:30rem;box-shadow: -2px 1px 16px #dedede;margin:0 0 0.5rem 0;}
+.recommend-goods ul li h3 a{width:100%;height:2.5rem;line-height:1.2rem;text-align:center;font-size:1rem;font-weight:300;display:block;font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+.recommend-goods ul li p span{color:#bbb;font-size:0.8rem;font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+
+.hot-goods{width:90%;padding:1rem 5%;background:#fff;box-shadow:1px 1px 10px #ccc;}
+.hot-goods h1{width:100%;height:3rem;background:url(images/rm.png) no-repeat center center;background-size:80%;}
+.hot-goods ul{width:100%;}
+.hot-goods ul li{width:100%;position:relative;margin: 1rem 0 9rem 0;}
+.hot-goods ul li .hot-detail{width:12rem;padding:1rem;border:1px dashed #ddd;height:12rem;}
+.hot-goods ul li .hot-detail p a{width:12rem;text-align:left;margin:2rem 0 0 0;display:block;
+	font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+	font-size:1rem;
+	font-weight:300;
+	line-height:1.5rem;
+}
+.hot-goods ul li .hot-detail span{
+	font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+	font-size:0.8rem;
+	font-weight:300;
+	line-height:1.5rem;
+	margin:0.5rem 0;
+	display:block;
+}
+.hot-goods ul li .hot-detail span b{font-size:1rem;}
+.hot-goods ul li .hot-detail i{display:block;height:1.2rem;
+font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+	font-size:0.8rem;
+	font-weight:300;
+}
+.hot-goods ul li .hot-img{background:#fff;width:15rem;height:15rem;position:absolute;top:5rem;right:0rem;text-align:center;border:1px solid #ddd;}
+.hot-goods ul li .hot-img img{width:95%;}
+
+
+.store-detail-word{text-align:center;font-weight:200;width:90%;overflow:hidden;margin:0.5rem 0 3rem 0;background:#fff;padding:0.5rem 5%;font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+.store-detail-word h3{
+	 font-size:1.1rem;line-height:2rem;font-weight:200;color:#000;
+}
+.store-detail-word h6{font-size:0.7rem;line-height:2rem;font-weight:200;color:#ccc;}
+.store-detail-word p{font-size:0.9rem;line-height:1.5rem;text-align: justify;color:#000;}
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+<div class="slide-container" id="slide">
+    <div class="adv-box-shadow"></div>
+    <div class="hd">
+        <ul></ul>
+    </div>
+    <div class="bd">
+        <ul>
+            <#assign advListTag= newTag("focusPictureTag") />
+            <#assign advList = advListTag("'client_type':'mobile'")!'' />
+            <#if !advList?exists || advList?size==0>
+                没有上传广告
+            <#else/>
+                <#list advList as adv>
+                    <li class="tap" data-href="${adv.pic_url!''}">
+                        <a href="${adv.operation_url}"><img class="swiper-slide" _src="<@imgurl pic='${adv.pic_url!adv.pic_url}' />" alt="${adv.aname!''}"></a>
+                    </li>
+                </#list>
+            </#if>
+        </ul>
+    </div>
+</div>

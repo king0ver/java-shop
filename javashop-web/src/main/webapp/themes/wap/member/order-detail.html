@@ -1,0 +1,154 @@
+<#assign title="订单详情" />
+<#include '/common/header.html' />
+<#include '/common/object-to-json.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member??>
+    <#assign buyerOrderDetailTag = newTag("buyerOrderDetailTag") />
+    <#assign buyerOrderDetail = buyerOrderDetailTag()!'' />
+    <#assign orderDetail = buyerOrderDetail.orderDetail />
+    <#assign orderItemList = orderDetail.orderSkuList />
+    <#assign operateAllowable = orderDetail.operateAllowable />
+
+    <input type="hidden" id="order-sn" value="${ordersn}"/>
+    <script>console.log(${otj(orderDetail)})</script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/Order.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/page/order-detail.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/css/order-detail.css">
+
+    <div class="order-detail">
+        <!-- 下单时间 -->
+        <div class="detail-list">
+            <div class="order-time">
+                <p>
+                    <span>下单时间：</span>
+                    <span><@dateformat time='${orderDetail.create_time}' pattern='yyyy-MM-dd hh:mm:ss'/></span>
+                </p>
+                <p>
+                    <span>订单编号：</span>
+                    <span>${orderDetail.sn}</span>
+                </p>
+                <#if orderDetail.remark??>
+                    <p>
+                        <span>订单备注：</span>
+                        <span>${orderDetail.remark}</span>
+                    </p>
+                </#if>
+            </div>
+
+            <div class="payment">
+                <div class="handle">
+                    <#if orderDetail.pay_status == 'PAY_YES'>
+                        <span>已付:</span>
+                        <span class="pay-price">${orderDetail.paymoney?string.currency}</span>
+                    <#else/>
+                        <span>应付:</span>
+                        <span class="pay-price">${orderDetail.need_pay_money?string.currency}</span>
+                    </#if>
+
+                </div>
+                <div class="pament-btn">
+                    <#if operateAllowable.allowCancel>
+                        <a class="cancel-order">取消订单</a>
+                    </#if>
+
+                    <#if operateAllowable.allowPay>
+                        <button type="button" class="order-btn _pay" onclick="location.href = '${ctx}/member/pay_desk_ordersn.html?ordersn=${ordersn}'">付款<i>${orderDetail.need_pay_money?string.currency}</i></button>
+                    </#if>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品信息 -->
+        <div class="good-info">
+            <#assign countNum = 0/>
+            <#list orderItemList as orderItem>
+                <#assign countNum = countNum + orderItem.num/>
+            </#list>
+            <div class="shop-info">
+                <div class="shop-name" onclick="location.href = '${ctx}/store_themes/${orderDetail.seller_id}/index.html?menu=store&store_id=${orderDetail.seller_id}'">
+                    <span></span>
+                    <a>${orderDetail.seller_name}<i></i> </a>
+                </div>
+                <span>共计<a>${countNum}</a>件商品</span>
+            </div>
+
+            <div class="goods-list">
+                <ul>
+                    <#list orderItemList as orderItem>
+                        <script>console.log(${otj(orderItem)})</script>
+                        <li>
+                            <div class="goods-img">
+                                <a href="${ctx}/goods-${orderItem.goods_id}.html">
+                                    <@image src="${orderItem.goods_image!''}" alt="${orderItem.name}" />
+                                </a>
+                            </div>
+                            <div class="goods-name">
+                                <a href="${ctx}/goods-${orderItem.goods_id}.html" class="name">${orderItem.name}</a>
+                                <p class="good-type">
+                                    <span>白色</span>
+                                </p>
+                                <#if orderItem.allowApplyService>
+                                    <button type="button" onclick="">申请售后</button>
+                                </#if>
+                            </div>
+                            <div class="goods-info">
+                                <span class="goods-pri">${orderItem.purchase_price?string.currency}</span>
+                                <span class="goods-num">x${orderItem.num}</span>
+                            </div>
+                        </li>
+                    </#list>
+                </ul>
+            </div>
+            <div class="track-comment">
+                <div class="track-btn">
+                    <#if orderDetail.ship_status == 'SHIP_YES'>
+                        <a href="./logistics-query.html?ship_no=${orderDetail.ship_no}&logi_id=${orderDetail.logi_id}">追踪物流</a>
+                    </#if>
+                    <#if operateAllowable.allowComment>
+                        <a href="./order-comment.html?ordersn=${orderDetail.sn}">评价</a>
+                    </#if>
+                    <#if operateAllowable.allowRog>
+                        <a class="rog-order">确认收货</a>
+                    </#if>
+                    <script type="text/javascript">
+                        $(function () {
+                        	var trackComment = $('.track-comment');
+							trackComment.find('a').length === 0 && trackComment.remove();
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <#if orderDetail.need_receipt == 'yes'>
+            <!-- 电子发票 -->
+            <div class="invoice" onclick="location.href = './invoice-info.html?ordersn=${ordersn}'">
+                <span>普通发票 - <#if orderDetail.receipt_type == 'COMPANY'>单位<#else/>个人</#if></span>
+                <a></a>
+            </div>
+        </#if>
+
+        <!--信息  -->
+        <div class="information">
+            <div class="address">
+                <span class="name">${orderDetail.ship_name}</span>
+                <span>${orderDetail.ship_mobile}</span>
+                <p>${orderDetail.shipping_area!} ${orderDetail.ship_addr}</p>
+            </div>
+            <div class="total">
+                <p><a>商品合计：</a><span>${orderDetail.order_price?string.currency}</span></p>
+                <#if orderDetail.discount_price gt 0>
+                    <p><a>优惠金额：</a><span>-${orderDetail.discount_price?string.currency}</span></p
+                ></#if>
+                <p><a>运费：</a><span>${orderDetail.shipping_price?string.currency}</span></p>
+            </div>
+            <div class="pay">
+                <p> <a>应付：</a><span>${orderDetail.need_pay_money?string.currency}</span></p>
+            </div>
+        </div>
+    </div>
+</#if>
+</body>
+
+</html>

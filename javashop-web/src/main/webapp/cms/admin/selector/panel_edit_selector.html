@@ -1,0 +1,68 @@
+<#include '/admin/header.html'>
+    <style>
+        .modify-title {
+            display: flex;
+            width: 70%;
+            align-items: center;
+            margin: 2rem auto;
+        }
+
+        .modify-title span {
+            font-size: 17px;
+        }
+
+        .modify-title input {
+            margin-left: 1rem;
+            width: 70%;
+        }
+    </style>
+    <div class='floor-design-modify-title'>
+        <div class='modify-title'>
+            <span>模块名称</span>
+            <input type="text" name="title" required lay-verify="required" placeholder="请输入名称..." autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-layer-btn" style="padding:20px 12px;z-index:1000;top: 83%; position: fixed;left: 1px;width: 98%;height: 40px; background:rgba(230,230,230,0.8)">
+            <a class="layui-layer-btn0" lay-submit="" lay-filter="save-stock">保存</a>
+            <a class="layui-layer-btn1">取消</a>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var index = parent.layer.getFrameIndex(window.name);
+
+            // 根据URI, 获取到传来的面板id和 面板名称
+            var arguments = decodeURI(document.location.search.replace('?', ''));
+            var arguObj = {};
+            arguments.split('&').forEach(function (ele) {
+                var arr = ele.split('=');
+                arguObj[arr[0]] = arr[1];
+            });
+            var $input = $('.floor-design-modify-title input');
+
+            if (arguObj.name) {
+                $input.val(arguObj.name)
+            }
+
+            $(".layui-layer-btn1").click(function () {
+                parent.layer.close(index);
+            });
+            $('.floor-design-modify-title .layui-layer-btn0').click(function () {
+                $.ajax({
+                    url: ctx + "/cms/admin/floor/panel/" + arguObj.id + ".do",
+                    method: "POST",
+                    data: {
+                        panel_name: $input.val(),
+                    },
+                    success: function (json) {
+                        // 更改页面名称
+                        $(window.parent.document).find('body .panel[data-id="' + arguObj.id + '"]').children('.panelhandle').text($input.val());
+                        parent.layer.close(index);
+                        $.success("楼层信息保存成功!");
+                    },
+                    error: function (e) {
+                        $.error(e.responseJSON.error_message);
+                    }
+                });
+            })
+        })()
+    </script>

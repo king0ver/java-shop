@@ -1,0 +1,109 @@
+<#include '/admin/header.html'>
+	<link rel="stylesheet" href="${ctx}/cms/admin/css/vendor/swiper/swiper-3.4.2.min.css" />
+	<link rel="stylesheet" href="${ctx}/cms/admin/css/floor-design.css?v=1.7" />
+	<script src="${ctx}/cms/admin/js/jquery.javashop.js"></script>
+	<script src="${ctx}/cms/admin/js/swiper/swiper-3.4.2.min.js"></script>
+	<script type="text/javascript" src="${ctx}/cms/admin/js/floor-design.js?v=4.8"></script>
+
+	<!-- <div class="tool-bar" style="width:100%">
+		<button class="btn-normal" id="saveBtn" data-floor-id="${id}" type="button" >保存</button>
+	</div> -->
+
+
+	<div class="floor-design">
+		<div class="header">
+			<h2 class="btn-normal saveBtn" data-floor-id="${id}">
+				<span>保存</span>
+			</h2>
+			<div class="pc-floor-module-container">
+				<h5>新增</h5>
+				<ul>
+
+				</ul>
+			</div>
+		</div>
+		<div class="floor">
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		(function () {
+			var id = $(".btn-normal").attr("data-floor-id")
+
+			$(function () {
+				$.ajax({
+					url: ctx + "/cms/admin/panel-tpl/pc/normal.do",
+					dataType: "json",
+					async: false,
+					success: function (result) {
+						var _form = "";
+						for (var i in result) {
+							var item = result[i];
+							_form = createItem(item)
+							$(_form).appendTo($(".pc-floor-module-container ul"));
+						}
+						JavashopProxy.form();
+					}
+				})
+
+				var design = new FloorDesign($(".floor"), {
+					floorid: id
+				});
+				$(".saveBtn").click(function () {
+					design.save();
+				});
+
+				$(".pc-floor-module-container .addPanel").click(function () {
+					var tpl_id = $(this).attr("tpl_id");
+					design.addPanel(tpl_id);
+				});
+
+				$('.pc-floor-module-container').mouseover(function () {
+					$(this).find('ul').show();
+				}).mouseout(function () {
+					$(this).find('ul').hide();
+				});
+
+				$('.pc-floor-module-container h5').mouseover(function () {
+					$(this).next().show();
+				}).mouseout(function () {
+					$(this).next().hide();
+				});
+			});
+
+			// 循环添加其他 普通面板
+			function createItem(item) {
+				var li = '<li><span tpl_id="' + item.tpl_id + '" class="addPanel">' + item.tpl_name + '</span></li>'
+				return li;
+			}
+
+			// $('.pc-floor-module-container li a.saveBtn').mouseover(function () {
+			// 	$(this).children('span').css('border-color', '#323741 transparent transparent');
+			// }).mouseout(function () {
+			// 	$(this).children('span').css('border-color', 'transparent transparent #323741');
+			// });
+
+
+			/**
+			 * 页面-首页楼层管理-设计里: 轮播图
+			 * @author: 陈小博
+			 * @date: 2017-8-4
+			 */
+
+			// 用定时器检测轮播图的所需HTMl元素是否被渲染到页面中,然后才绑定轮播图JS.
+			var timeMachine = setInterval(function () {
+				if (document.getElementsByClassName('test-swiper-pagination').length != 0) {
+					clearInterval(timeMachine);
+					var swiperInFloor = new Swiper('.floor-swiper-container', {
+						pagination: '.test-swiper-pagination',
+						// paginationType: 'custom',
+						paginationClickable: true,
+						spaceBetween: 30,
+						autoplay: 2500000,
+					});
+				}
+			}, 1000);
+		})()
+	</script>
+
+	<#include '/admin/footer.html'>

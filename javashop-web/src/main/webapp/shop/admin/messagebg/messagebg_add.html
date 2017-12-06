@@ -1,0 +1,317 @@
+<#include '/admin/header.html' >
+<#assign regionSelectDirective="com.enation.app.base.tag.regions.RegionSelectDirective"?new()>
+<style>
+.site-table tbody tr td .layui-btn + .layui-btn{
+width:80px
+}
+
+table.dataTable tbody th, table.dataTable tbody td{
+padding:8px 38px;
+}
+.layui-form-item{
+	margin-left:10px;
+}
+.layui-table td, .layui-table th{
+padding:8px 42px;
+}
+
+</style>
+<div class="admin-main">
+    <!--表单区域  -->
+	<form id="messageform" class="layui-form layui-form-pane" action="" style="padding-top: 10px;padding-bottom:30px;">
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">标题：</label>
+    		<div class="layui-input-block">
+      			<input type="text"  name="msg_title" maxlength="30" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  		
+  		<div class="layui-form-item ">
+   			<label class="layui-form-label">消息内容：</label>
+    		<div class="layui-input-block">
+      			<textarea name="msg_content" placeholder="限20000字" maxlength="2000" lay-verify="required" class="layui-textarea"></textarea>
+      			<span class="un">还可以输入<font id="font_size">20000</font>个字</span>
+    		</div>
+  		</div>
+  		
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">范围：</label>
+    		<div class="layui-input-block">
+      			<input type="radio" name="send_type" value="0" lay-filter="sendAll"  id="sendAll" checked="checked" title="发送全站">
+      			<input type="radio" name="send_type" value="1" lay-filter="sendPart" id="sendPart" title="发送指定会员"  >
+      			<input type="hidden" name="member_ids" id="content">
+    		</div>
+  		</div>
+  		
+  		<div class="layui-form-item">
+    		<div class="layui-input-block">
+      			<button type="button"  class="layui-btn" id="saveBtn" lay-submit="" lay-filter="saveBtn">确认发送</button>
+    		</div>
+  		</div>
+  	</form>
+  	<div id="show_members" style="display:none;">
+  	<div class="layui-tab">
+     <ul class="layui-tab-title">
+	    <li class="layui-this">选择会员</li>
+	    <li>已选会员</li>
+ 	</ul> 
+ <!--  //点击发送指定会员出现的内容 -->
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show" style="height:100%">
+    	<div class="choice" style="height:40px;">
+	    		 <a class="layui-btn  layui-btn-normal layui-btn-small" onclick="batchchoice()">批量选择</a>
+	    	<span style="float:right;">
+	        <span>关键字:</span>
+		        <input type="text" id="_search" placeholder="请输入用户名/姓名/手机号" class="choice-inp" style="height:28px;margin-top:2px;">
+		        <button type="button" class="layui-btn  layui-btn-normal  layui-btn-small" onclick="searchOrder()">搜索</button>
+	        </span>
+        </div>
+        <div class="chioce-list xuanze">
+       		<form id="memberform">
+				<table id="memberdata" class="layui-table site-table table-hover selected"
+						width="100%" lay-skin="line">
+				<thead>
+				<tr>
+					<th><input type='checkbox' class='btn-checkall fly-checkbox'
+						id='selected-all'></th>
+						<th>用户名</th>
+						<th>姓名</th>
+						<th>邮箱</th>
+						<th>手机</th> 
+						<th>操作</th>
+				</tr>
+				</thead>
+				</table>
+				<div id="addBrand"></div>
+			</form>
+        </div>
+    </div>
+    <div class="layui-tab-item">
+         <div class="cancel">
+          	 <a class="layui-btn  layui-btn-normal layui-btn-small" onclick="batch()">批量取消</a>
+         </div>
+    	<div class="cansel-list  yixuan">
+   			<form id="memberformone">
+				<table id="memberdatatwo" class="layui-table site-table table-hover selected" width="100%" lay-skin="line">
+					<thead>
+						<tr>
+							<th><input type='checkbox' class='btn-checkall fly-checkbox'
+								id='selected-alltwo'></th>
+								<th>用户名</th>
+								<th>姓名</th>
+								<th>邮箱</th>
+								<th>手机</th> 
+								<th>操作</th>
+						</tr>
+					</thead>
+				</table>
+			</form>
+    	</div>
+    	
+    </div>
+    
+  </div>
+</div>
+  	
+  	
+  	</div>
+</div>
+<script type="text/javascript" src="${ctx}/shop/admin/js/jquery.membersSelector.js"></script>
+<script>
+var table;
+var check_ids = [];
+$(function() {
+	layui.use(['form','element'], function(){
+	    var form = layui.form();
+	    var element = layui.element();
+	    form.on('radio(sendPart)', function(data){
+	    	//创建会员选择器
+	    	$("#show_members").css("display","block");
+			var container = $("#show_members");
+				var options = {
+					membersid_name : 'members_ids',
+				};
+			}); 
+	    form.on('radio(sendAll)',function(data){
+	    	$("#show_members").css("display","none");
+	    });
+	    
+	    form.on('submit(saveBtn)', function(data) {
+	    	var formflag = $("#messageform");
+			if (formflag) {
+				var sendType = $("input[name='send_type']:checked").val();
+				if(sendType == 1){
+					if(check_ids.length <= 0){
+						alert("请选择要通知的会员......");
+						return;
+					}
+					$("#content").val(check_ids.join(","));
+				}
+				var options = {
+					url : "${ctx}/shop/admin/message/save-message.do",
+					type : "POST",
+					dataType : 'json',
+					success : function(result) {
+						if (result.result == 1) {
+							$.Loading.success(result.message);
+							newTab("历史消息","${ctx}/shop/admin/message/list.do");
+						}
+						if (result.result == 0) {
+							$.Loading.error(result.message);
+						}
+					},
+					error : function(result) {
+						$.error(result.error_messgae);
+					}
+				};
+				$("#messageform").ajaxSubmit(options);
+				return false;
+			}
+	    });
+	});
+
+	//
+	$("#sendAll").click(function(){
+		var container = $("#show_members");
+		container.empty();
+	});
+	
+	table = $('#memberdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/shop/admin/member/member-list-json.do',
+	    },
+	    columns: [ //定义列
+	         {data: function (obj) {
+	        	 		var checked = check_ids.indexOf(obj["member_id"])>-1?"checked = true ":" ";
+	                   	return '<input type="checkbox" memberid="'+obj.member_id+'"  name = "member_id" class="fly-checkbox" '+checked+'  value=' + obj.member_id + '>';
+	               		}},
+	        {data: "uname"},
+	        {data: "name"},
+	        {data: "email"},
+	        {data: "mobile"},	        
+	        {data: function(data){
+	        	var select_this_show = check_ids.indexOf(data["member_id"])>-1?"style='display:none'":"style='display:block'";
+	        	var have_select_show = check_ids.indexOf(data["member_id"])>-1?"style='display:block'":"style='display:none'";
+	        	return "<a class='layui-btn  layui-btn-normal layui-btn-small anniu' name='select_this' onclick = 'select(this,"+data["member_id"]+")' "+select_this_show+" >选择此会员</a>"
+	        	    + "<a class='layui-btn  layui-btn-normal layui-btn-small anniuone' name='have_select' onclick = 'unselect(this,"+data["member_id"]+")' "+have_select_show+">已选择</a>"
+	        	     + "<a class='layui-btn  layui-btn-normal layui-btn-small anniutwo' name='cancel_select' onclick = 'upselect(this,"+data["member_id"]+") ' style='display:none' >删除</a>";
+	        }}                                                                                                                                                                                                   
+	     ]
+	});
+	
+	$('#msg_content').on('keyup',function(){
+		var maxlenth = $('#msg_content').attr("maxlenth");
+	    var txtval = $('#msg_content').val().length;
+	    var str = parseInt(maxlenth - txtval);
+	    if(str > 0 ){
+	       $('#font_size').html(str);
+	    }else{
+           $('#font_size').html(str);
+           $('#msg_content').val($('#msg_content').val().substring(0,maxlenth)); //这里意思是当里面的文字小于等于0的时候，那么字数不能再增加，只能是600个字
+        }
+	});	
+	
+})
+
+/* 点击批量选择按钮 */
+function batchchoice(){
+	var checks = $('#memberdata input[name=member_id]:checked');
+	for(var i = 0;i < checks.length; i++){
+		check_ids.push(Number($(checks[i]).attr("memberid")));
+		var tr = $(checks[i]).closest('tr');
+		if(tr.find(".anniu").css("display")=='block'){
+    		tr.find(".layui-btn").css({'display':'none'});
+    		var clone_tr = tr.clone();
+    		tr.find(".anniuone").css({'display':'block'});
+    		clone_tr.find(".anniutwo").css({'display':'block'});
+    		$("#memberdatatwo").append(clone_tr);
+		}
+	}
+	
+	  	/* 一开始批量选择框中的复选框就不选中状态 */
+    $('#memberdatatwo input[name=member_id]').each(function () {
+        $(this).attr('checked',false);
+	});	
+}
+
+/* 点击批量取消按钮 */
+function batch(){
+	var allrows = $("#memberdatatwo [name=member_id]:checked");//已选中取消的
+	var table = $("#memberdata");//已选中的
+	for(var i = 0;i < allrows.length;i++){
+		var row = $(allrows[i]);
+		var member_id = row.val();
+		var box = table.find(".fly-checkbox[value="+member_id+"]");
+		box.attr('checked',false);
+		box.closest('tr').find('td:last').find('.anniuone').css({'display':'none'}).siblings('.anniu').css({'display':'block'});
+		row.closest('tr').remove();
+		
+		checkidsRemove(member_id);
+	}
+	// 取消已选会员的全选按钮已选择状态
+	$("#selected-alltwo").prop('checked',false);
+	
+}
+
+	/*点击选择此会员按钮 */
+function select(obj,member_id){
+   $(obj).css( "display" , "none"); 
+   var clone_tr = $(obj).closest('tr').clone();
+   clone_tr.find('[name = "cancel_select"]').css("display","block");
+   
+   $(obj).parent().find('[name = "have_select"]').css("display","block"); 
+   
+   $("#memberdatatwo").append(clone_tr);
+   
+   check_ids.push(member_id);
+ }; 
+ 
+	 /*点击已选择按钮 */
+ function  unselect(obj,member_id){
+  	$(obj).css( "display" , "none" );
+   	$(obj).parent().find('[name = "select_this"]').css("display","block");
+   	//获取已选中的
+   	var all_have_select = $('#memberdata [name=member_id]:checked');
+   	for(var i = 0 ; i < all_have_select.length;i++){
+   		if(all_have_select[i].value == member_id){
+   			$("#memberdatatwo tr").eq(i+1).remove();
+   			break;
+   		}
+   	}
+   	checkidsRemove(member_id);
+ }
+	 
+	/* 点击删除按钮 */
+function upselect(obj,member_id){
+	 var check = $('#memberdata [name=member_id][memberid='+member_id+']');
+	 check.attr({'checked':false});
+	 check.closest('tr').find('td:last').find('.anniuone').css({'display':'none'}).siblings('.anniu').css({'display':'block'});
+	 $(obj).closest('tr').remove();
+	 
+	 checkidsRemove(member_id);
+	}
+	
+//搜索功能
+function searchOrder(){
+	var keyword = $("#_search").val();
+	table.ajax.url("${ctx}/shop/admin/member/member-list-json.do?keyword="+keyword+"&stype="+0).load();
+}	
+
+//移除选中数组中的某一值
+function checkidsRemove(value){
+	var index = check_ids.indexOf(value);
+	check_ids.splice(index,1);
+}
+	
+</script>
+<#include '/admin/footer.html' >

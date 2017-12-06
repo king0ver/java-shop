@@ -1,0 +1,74 @@
+<#assign title="售后申请列表" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member?? >
+    <#assign refundDetailTag = newTag("refundDetailTag") />
+    <#assign refundListTag = newTag("refundListTag") />
+    <#assign result = refundListTag() />
+
+    <#if result.resultList?size gt 0 >
+        <div class="oreer_list">
+            <ul>
+                <#list result.resultList as _refund>
+                    <li class="orderslist" >
+                        <div class="list_outside">
+                            <#assign refund = refundDetailTag("'sn':'${_refund.sn!''}'}") />
+                            <#assign refundDetail = refund.refund />
+                            <#assign goodsList= refund.goodsList />
+                            <div class="order_sketch" style="border-bottom: none">
+                                <p style="width:100%">订单编号：${_refund.order_sn!'' }<strong class="orderlist_open"></strong></p>
+                            </div>
+                            <div class="order_detail" style="display:none;">
+                                <div class="order_goodslist" style="background-color: #fff; padding: 10px">
+                                    <p class="sketch_same">下单日期：<@dateformat time="${ _refund.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></p>
+                                    <p style="width:100%">订单状态：${refundDetail.refund_status_text!''}</p>
+                                    <p style="width:100%">申请售后原因：${refundDetail.refund_reason!''}</p>
+                                    <p style="width:100%">申请售后详细描述：${refundDetail.customer_remark!''}</p>
+                                    <#if refundDetail.seller_remark??>
+                                        <p style="width:100%">客服回复：${refundDetail.seller_remark!''}</p>
+                                    </#if>
+                                    <p style="width:100%">申请售后金额：${refundDetail.refund_price!''}</p>
+                                    <p style="width:100%">退款方式：
+                                        <#if refundDetail.refund_way=='original'>
+                                            原路退回
+                                            <#elseif refundDetail.refund_way=='online'/>
+                                            在线支付
+                                            <#elseif refundDetail.refund_way=='offline'/>
+                                            线下支付
+                                        </#if>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </#list>
+            </ul>
+        </div>
+    <#else/>
+        <p style="width: 100%; text-align: center; margin-top: 20px;">暂无订单...</p>
+    </#if>
+
+    <script>
+        $(function () {
+            var module = new Module();
+            module.navigator.init('售后申请列表');
+            $(".orderlist_open").click(function () {
+                if ($(this).attr("class") === "orderlist_open") {
+                    $(".orderslist .order_detail").hide();
+                    $(".order_sketch strong").removeClass("orderlist_close");
+                    $(".order_sketch strong").addClass("orderlist_open");
+                    $(this).removeClass("orderlist_open");
+                    $(this).addClass("orderlist_close");
+                    $(this).parents(".list_outside").find(".order_detail").show();
+                } else {
+                    $(this).removeClass("orderlist_close");
+                    $(this).addClass("orderlist_open");
+                    $(this).parents(".list_outside").find(".order_detail").hide();
+                }
+            });
+        })
+    </script>
+</#if>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<#assign storeOrderSelectPriceTag = newTag("storeOrderSelectPriceTag") />
+<#assign orderPrice = storeOrderSelectPriceTag() />
+{
+    "goodsPrice": ${orderPrice.goodsPrice},
+    "needPayMoney": ${orderPrice.needPayMoney},
+    "orderPrice": ${orderPrice.orderPrice},
+    "shippingPrice": ${orderPrice.shippingPrice},
+    "discountPrice": ${orderPrice.discountPrice},
+    "actDiscount": ${orderPrice.actDiscount},
+    "act_free_ship": ${orderPrice.act_free_ship},
+    "bonus_id": ${orderPrice.bonus_id},
+    "gift_id": ${orderPrice.gift_id},
+    "point": ${orderPrice.point},
+    "weight": ${orderPrice.weight},
+    "is_free_ship": ${orderPrice.is_free_ship}
+}

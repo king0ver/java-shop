@@ -1,0 +1,60 @@
+<#assign cartSelectGoodsListTag = newTag("cartSelectGoodsListTag") />
+<#assign itemStoreList = cartSelectGoodsListTag() />
+
+<#assign countNum = 0 />
+<#assign itemNum = 0 />
+<#list itemStoreList as store>
+    <#list store.productList as item>
+        <#assign countNum = countNum + item.num/>
+        <#assign itemNum = itemNum + 1 />
+    </#list>
+</#list>
+
+<#if itemNum == 1>
+    <#list itemStoreList as store >
+        <#list store.productList as item>
+            <div class="sigle-item">
+                <div class="img-sigle-item">
+                    <div class="inner-img-sigle-item">
+                        <img src="${item.goods_image!''}">
+                    </div>
+                </div>
+                <div class="content-sigle-item">
+                    <div class="name-sigle-item">${item.name}</div>
+                    <div class="price-sigle-item">
+                        <div class="sitem-sam-l cf">
+                    <span class="price-box">
+                        <#assign _price  = item.purchase_price?string("0.00") />
+                        <#assign _length = _price?length />
+                        <em>￥</em><span class="price">${_price?substring(0, _length-3)}</span><em>${_price?substring(_length-3, _length)}</em>
+                    </span>
+                        </div>
+                        <span class="sam-num">×${item.num!'1'}</span>
+                    </div>
+                </div>
+            </div>
+        </#list>
+    </#list>
+<#else/>
+    <a href="./checkout-cart-list.html" class="eui-block">
+        <div class="more-item">
+            <div class="more-item-list">
+                <#assign _itemCount = 0 />
+                <#list itemStoreList as store >
+                    <#list store.productList as item>
+                        <#assign _itemCount = _itemCount + 1/>
+                        <#if _itemCount lt 5>
+                            <div class="img-more-item-list">
+                                <img src="${item.goods_image!''}">
+                                <p>×${item.num!'1'}</p>
+                            </div>
+                        </#if>
+                    </#list>
+                </#list>
+            </div>
+            <div class="more-item-count">共${countNum}件</div>
+            <div style="clear: both;"></div>
+        </div>
+        <i class="eui-item-point"></i>
+    </a>
+</#if>

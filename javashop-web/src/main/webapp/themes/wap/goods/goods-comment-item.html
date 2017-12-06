@@ -1,0 +1,39 @@
+<#assign commentGalleryListTag = newTag("commentGalleryListTag") />
+<#assign commentListTag = newTag("commentListTag") />
+<#assign commentList = commentListTag("{'goods_id':${goods_id},'page':${page!'1'},'grade':${grade!0},'type':1}") />
+<#list commentList.result as comment>
+    <li class="item-comment">
+        <div class="header-comment">
+            <span class="user-face">
+                <@image src="${comment.face!''}" />
+            </span>
+            <span class="user-name">${comment.uname!''}</span>
+            <span class="comment-star"><span class="real-star width-${comment.grade!3}"></span></span>
+        </div>
+        <div class="time-spec-comment">
+            <span class="time-comment"><@dateformat pattern="yyyy-MM-dd HH:mm:ss" time="${comment.dateline?c}" /></span>
+            <span class="spec-comment">
+                <#if comment.specList??>
+                    <#list comment.specList as spec>
+                        ${spec.spec_value!''}<#if spec_has_next>;</#if>
+                    </#list>
+                </#if>
+            </span>
+        </div>
+        <div class="content-comment">${comment.content!''}</div>
+        <#assign galleryList = commentGalleryListTag("{'comment_id':${comment.comment_id}}") />
+        <#if galleryList?? && galleryList?size gt 0>
+            <ul class="gallery-comment">
+                <#list galleryList as gallery>
+                    <li><@image src="${gallery.original!''}" /></li>
+                </#list>
+            </ul>
+        </#if>
+        <#if comment.reply??>
+            <div class="reply-comment-box">
+                <em class="icon-reply-comment"></em>
+                <div class="reply-comment">掌柜回复：${comment.reply!''}</div>
+            </div>
+        </#if>
+    </li>
+</#list>

@@ -1,0 +1,273 @@
+<#include '/admin/header.html'>
+	<style>
+		#progress-wrap {
+			padding: 20px
+		}
+		.layui-form-label{
+			width:190px;
+		}
+		#createform{
+			padding:21px;
+		}
+		.layui-form-item.w500{
+			display: flex;
+			align-items: center;
+			width: 860px;
+		}
+		
+		.layui-form-item.w500 > div{
+			margin-left: 0;
+			width: 335px;
+		}
+
+		.layui-form-item.w500 > span{
+			margin-left: 16px;
+			margin-right: 16px;
+			font-size: 16px;
+		}
+
+		.layui-form-item.w500 > button{
+			margin-left: 36px;
+			line-height: 30px;
+			height: 30px;
+    		width: 64px;
+    		text-align: center;
+		}
+	</style>
+
+	<script ype="text/javascript" src="${ctx}/adminthemes/new/js/jquery.timers-1.2.js"></script>
+
+	<div class="admin-main">
+		<form id="createform" class="layui-form">
+			<div class="layui-form-item" style="width:520px;float:left;height:38px">
+				<label class="layui-form-label" style="font-size:16px;">请选择要生成的页面：</label>
+				<div class="layui-input-block">
+					<input type="checkbox" name="choose_pages" title="首页" value="index" >
+					<input type="checkbox" name="choose_pages" title="商品页" value="goods" >
+					<input type="checkbox" name="choose_pages" title="帮助中心" value="help" >
+				</div>
+			</div>
+			
+				<div class="buttonArea" style="display-inline">
+				<a class="layui-btn" href="javascript:void(0)" id="createBtn" style="margin-top:4px;height:30px;line-height:30px">生成</a>
+			</div>
+			<div class="layui-form-item w500">
+				<span>静态页生成地址:</span>
+				<div class="layui-input-block">
+					<input type="text" onclick="edit()" id="address" value="${address!''}" autocomplete="off" class="layui-input" />
+				</div>
+				<button 	class="layui-btn layui-btn-small" href="javascript:void(0)" id="saveBtn" type="button">确定</button>
+			</div>
+			<div class=" " id="progress-wrap">
+				正在检测是否有任务进行中...
+
+			</div>
+			<div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true" style="width:595px">
+				<div class="layui-progress-bar" lay-percent="0%"></div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function () {
+			
+			// 判断, 如果进度条为100%或0%,生成按钮可以点击,否则不可点击.
+			var precent = $("#createform > div.layui-progress.layui-progress-big > div").attr("lay-percent");
+			if (precent == '0%' || percent == '100%') {
+				$("#createBtn").removeClass("disabled");
+			} else {
+				$("#createBtn").addClass("disabled");
+			}
+
+			layui.use(['form', 'element'], function () {
+				var form = layui.form();
+				var element = layui.element();
+				function create() {
+					$("#createform > div.layui-form-item > div .layui-unselect")
+					$("#createform").ajaxSubmit({
+						url: '${ctx}/shop/admin/page-create/create.do',
+						dataType: "json",
+						success: function (json) {
+							if (json.result == 1) {
+								loadTask();
+							} else {
+								alert(json.message)
+							}
+						},
+						error: function () {
+							alert("error");
+						}
+					});
+				}
+				
+				
+				function taskFinished(status) {
+					if (status == 'error') {
+						alert("生成出错");
+					}
+					if (status == 'success') {
+						alert("生成成功");
+
+					}
+					$("#createBtn").removeClass("layui-btn-disabled");    //使按钮可用
+				}
+
+				function loadTask() {
+					var self = this;
+					var config = { url: "${ctx}/core/admin/progress/view-progress.do?progressid=page_create", onFinished: taskFinished }
+					var progress = new Progress(config);
+					progress.show();
+
+				}
+				function checkStatus() {
+
+					$.ajax({
+						url: '${ctx}/core/admin/progress/has-task.do?progressid=page_create',
+						dataType: "json",
+						success: function (json) {
+
+							if (json.result == 1) {
+								if (json.data.hastask == 1) {
+									$("#createBtn").addClass("layui-btn-disabled");  //使按钮禁用
+									loadTask();
+								} else {
+									$("#progress-wrap").text("暂无页面生成任务，请点击生成按钮生成所有静态页。");
+								}
+								bindCreateEvent();
+
+							} else {
+								alert("json message error")
+							}
+						},
+						error: function () {
+							alert("error");
+						}
+					});
+				}
+
+				function bindCreateEvent() {
+					$("#createBtn").click(function () {
+						//判断linkbutton是否已禁用，如果禁用则跳过
+						var disabled = $(this).hasClass("layui-btn-disabled");
+						if (!disabled) {
+							/* if (comfirm("确认重新生成所有静态页面吗？")) {
+								create();
+							} */
+							var status = 0
+							$("#createform > div.layui-form-item > div .layui-unselect").each(
+									function(){
+										if($(this).hasClass('layui-form-checked')){
+											status++;
+										}
+									}
+							)
+							if(status == 0){
+								alert("请确认已经选中所需要生成的页面!");
+								return;
+							}
+							layer.confirm('确认重新生成所有静态页面？', {
+								  btn: ['确认','关闭'] //按钮
+								}, function(){
+									create();
+								  layer.msg('正在生成请稍等！', {icon: 1});
+								}, function(){
+								
+								});
+						}
+					});
+					
+					$("#saveBtn").click(function () {
+						$.ajax({  
+						    type: "POST",  
+						    url: '${ctx}/shop/admin/page-create/save.do?address='+$('#address').val(),
+						    async: false,  
+						    error: function(request) {  
+						        alert("Connection error");  
+						    },  
+						    success: function(data) {  
+						        if(data.result == 1){
+						        		alert("修改成功")
+						        }
+						    }  
+						})
+					});
+
+				}
+
+				$(function () {
+					checkStatus();
+				});
+
+				/***
+				 * 进度条
+				 *  
+				 */
+				var setTime
+
+				var Progress = function (config) {
+					this.config = config || {};
+					this.url = config.url;
+
+					this.onFinished = config.onFinished;
+
+				};
+
+				Progress.fn = Progress.prototype = {
+					constructor: Progress,
+					show: function () {
+						var self = this;
+						$("#progress-wrap").html('<div class="pro" style="width:500px"></div><div class="taskmsg"/>');
+
+						/* $("#progress-wrap").everyTime(1000, 'progress',timeFunc); */
+						setTime = setInterval(function () {
+							self.refresh();
+						}, 1000)
+
+					},
+					refresh: function () {
+						var statusurl = this.url;
+						var onFinished = this.onFinished;
+						$.ajax({
+							url: statusurl,
+							dataType: "json",
+							success: function (data) {
+								if (data.data.sum_per == 100) {
+									clearInterval(setTime);
+								}
+								if (data.result == 1) {
+									var sum_per = data.data.sum_per;
+									$('#progress-wrap>div.taskmsg').text(data.data.text + "(" + sum_per + "%)");
+									element.progress('demo', sum_per + "%");
+									if (data.data.task_status == 1) {
+										$('#progress-wrap>div.taskmsg').text("任务已完成");
+										$("#progress-wrap").stopTime('progress');
+										if (typeof onFinished == 'function') {
+											onFinished('success');
+										}
+									}
+									if (data.data.task_status == 2) {
+										$('#progress-wrap>div.taskmsg').text("任务出错：" + data.data.text);
+										$("#progress-wrap").stopTime('progress');
+										if (typeof onFinished == 'function') {
+											onFinished('error');
+										}
+									}
+								} else {
+									$("#progress-wrap").stopTime('progress');
+									alert(data.message);
+								}
+							}, error: function () {
+								$("#progress-wrap").stopTime('progress');
+								if (typeof onFinished == 'function') {
+									onFinished('error');
+								}
+							}
+						});
+					}
+				};
+			});
+		});
+	</script>
+	<#include '/admin/footer.html'>

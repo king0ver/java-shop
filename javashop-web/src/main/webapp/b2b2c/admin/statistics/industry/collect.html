@@ -1,0 +1,126 @@
+<#include '/admin/header.html' >
+<style>
+	table{
+		line-height:47px;
+	}
+	td input{
+		height: 25px;
+	}
+	tr td{
+		padding-left:155px;
+		white-space:nowrap;
+	}
+	td select{
+	height:30px;
+	}
+</style>
+
+<div class="admin-main">
+<div class="table_control">
+ <div style="margin-top: 25px">
+	<!-- 查询条件 -->
+	<div class="page_explain">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+        </div>
+	<div style="display: block;" class="searchAdvanced">
+		<table width="98%" border="0" cellspacing="0" cellpadding="8">
+			<tr>
+				<td>选择分类：
+				<select id="type" onchange="searchCat()"> 
+				<#if cats??> 
+						<#list cats as cat>
+							<option value="${cat.category_id}"<#if category_id==cat.category_id> selected="selected"</#if>>${cat.name}</option>
+						</#list>
+				</#if>
+				</select>
+				</td>
+				<td>
+						选择店铺:
+					<select id="store" onchange="searchCat()">
+						<!-- <option value="0">--请选择--</option> -->
+						<option value='0'  <#if store_id==0> selected="selected"</#if>>--全平台--</option>
+						<#list storeList as shop>
+							<option value="${shop.shop_id}"   <#if store_id==shop.shop_id> selected="selected"</#if>>${shop.shop_name}</option> 
+						</#list>
+					</select>
+				</td>
+				
+			</tr>
+		</table>
+	</div>
+	</div>
+	</div>
+	<!--表格区域  -->
+   <form id="brandform">
+	<div class="shadowBoxWhite tableDiv">
+		<table id="orderdata" class="layui-table site-table table-hover">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>平均价格</th>
+            <th>有销量商品数</th>
+            <th>销量</th>
+            <th>销售额</th>
+            <th>商品总数</th>
+            <th>无销量商品数</th>
+          </tr>
+        </thead>
+    </table>
+      <!--传值等操作(暂定)  -->
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<!-- 显示结果集 --> 
+
+	
+
+
+<script type="text/javascript">
+$(function(){
+	var table = $('#orderdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/b2b2c/admin/industryStatistics/collect-data.do?category_id=${category_id}&store_id=${store_id}',
+	    },
+	    columns: [ //定义列
+	        {data: "name"},
+	        {data: "avgPrice"},
+	        {data: "salesGoodsNum"},
+	        {data: "sales"},
+	        {data: "saleroom"},
+	        {data: "countGoods"},
+	        {data: "residue"}
+	     ]
+	});
+});
+
+function searchCat(){ 
+	var store_id=$('#store option:selected') .val();//选中的值
+	var category_id = $("#type option:selected").val();
+	var param = "category_id="+category_id+"&store_id="+store_id;
+	window.location.href="${ctx}/b2b2c/admin/industryStatistics/show-collect.do?"+param; 
+} 
+function itemFormatter(value, rec) {
+    var f = parseFloat(value);
+    if (isNaN(f)) {
+        return;
+    }
+    return Math.round(f * 100) / 100;
+}
+</script>
+
+<#include '/admin/footer.html' >

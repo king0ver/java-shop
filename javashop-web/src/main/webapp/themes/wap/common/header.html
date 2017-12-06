@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<#assign headerTag = newTag("headerTag") />
+<#assign header = headerTag() />
+<#if title??>
+<title>${title}-${header.title}</title>
+<#else/>
+<title>${header.title}</title>
+</#if>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<#assign openIdGetTag = newTag("openIdGetTag") />
+<#assign unionId = openIdGetTag () />
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/common.css?v=2.0" />
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/b2b2cwap.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/showLoading.css" />
+
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/jquery/jquery.mobile.touch.min.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/layer/layer.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/js/module.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.form-3.51.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/show.js"></script>
+<script>
+	var ctx="${ctx}";
+</script>
+</head>
+<body id="top">
+<script>
+$(function(){
+	$.ajax({
+		url : "${ctx}/api/shop/sms/sms-safe.do",
+		success : function(){}
+	});
+});
+
+var _map_ = {
+    //支付宝方式退款
+    'alipayDirectPlugin' : 1,
+    'alipayWapPlugin'    : 1,
+    'alipayMobilePlugin' : 1,
+    //微信方式退款
+    'weixinPayPlugin'    : 1,
+    'wechatMobilePlugin' : 1,
+    //中国银联退款
+    'unPay'              : 1,
+    /**中国农业银行网上支付*/
+    "abcpayPlugin"       : 0,
+    /**快钱人民币支付*/
+    "billPlugin"         : 0,
+    /**银联在线支付*/
+    "chinaPay"           : 0,
+    /**货到付款*/
+    "cod"                : 0,
+    /**线下支付*/
+    "offline"            : 0,
+    /**paypal支付插件*/
+    "paypalPaymentPlugin": 0,
+    /**财付通即时到账接口*/
+    "tenpayDirectPlugin" : 0
+};
+
+function getRefund(key) {
+    return _map_[key];
+}
+</script>

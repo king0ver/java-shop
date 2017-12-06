@@ -1,0 +1,33 @@
+<#assign title="优惠券" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/checkout.css"/>
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/checkout-bonus.js"></script>
+<#if member??>
+    <div class="bonus-wapper">
+        <div class="nav-checkout-bonus">
+            <div class="item available selected">
+            	<#assign myStoreBonusByWapAccountTag = newTag("myStoreBonusByWapAccountTag") />
+                <#assign canUseStoreList = myStoreBonusByWapAccountTag("{'is_usable':1}") />
+                <a href="javascript:;">可用优惠券 (${canUseStoreList.totalNum!'0'})</a>
+            </div>
+            <div class="item unavailable">
+            	<#assign myStoreBonusByWapAccountTag = newTag("myStoreBonusByWapAccountTag") />
+                <#assign nocanUseStoreList = myStoreBonusByWapAccountTag("{'is_usable':0}") />
+                <a href="javascript:;">不可用优惠券 (${nocanUseStoreList.totalNum!'0'})</a>
+            </div>
+        </div>
+        <div class="content-bonus">
+            <div class="items available show">
+                <#include './checkout-bonus-can-use.html' />
+            </div>
+
+            <div class="items unavailable">
+                <#include './checkout-bonus-cant-use.html' />
+            </div>
+        </div>
+    </div>
+</#if>
+</body>
+</html>

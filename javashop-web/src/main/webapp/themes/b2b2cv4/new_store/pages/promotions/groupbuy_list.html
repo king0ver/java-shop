@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<#assign title = '团购商品管理' />
+	<#include '/new_store/common/header.html' />
+	<link rel="stylesheet" href="${ctx}/themes/b2b2cv4/new_store/css/pages/promotions/groupbuy.css">
+	<script type="text/javascript" src="${ctx}/themes/b2b2cv4/new_store/js/pages/promotions/groupbuy_list.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_promotions' />
+<#assign lowerPageName = 'lower_promotions_groupbuy' />
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+	<ul class="list-nav">
+		<li class="active"><a href="javascript: void(0);" onclick="location.reload();">团购商品列表</a></li>
+		<li><a href="./groupbuy_add.html">新增团购商品</a></li>
+	</ul>
+</div>
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+	<div class="inner-app-wappler">
+		<#assign groupBuyListTag=newTag("myGroupBuyListTag")>
+		<#assign gbPage=groupBuyListTag()>
+		<div class="group-buy">
+			<div class="filter-tools">
+				<div class="filter-box filter-name">
+					<span>团购名称：</span>
+					<input type="text" class="form-control" id="filter_name" value="${gb_name!''}">
+				</div>
+				<div class="filter-box filter-customer">
+					<span>活动状态：</span>
+					<#if !gb_status?? >  <#assign gb_status='-1'  />  </#if>
+					<select id="groupbuy-state" class="groupbuy-state form-control">
+						<option value="" >全部团购</option>
+						<option value="0" <#if gb_status=='0'>selected="selected"</#if> >未审核</option>
+						<option value="1" <#if gb_status=='1'>selected="selected"</#if>>已通过</option>
+						<option value="2" <#if gb_status=='2'>selected="selected"</#if>>审核失败</option>
+						<option value="3" <#if gb_status=='3'>selected="selected"</#if>>已结束</option>
+					</select>
+				</div>
+				<div class="filter-box filter-seach">
+					<a href="javascript: void(0);" class="btn btn-info" id="filter_seach">搜索</a>
+				</div>
+			</div>
+
+			<table class="table-groupbuy table table-bordered table-hover">
+				<thead>
+				<tr>
+					<th>商品图片</th>
+					<th style="width: 30%;">团购名称</th>
+					<th>活动信息</th>
+					<th>已团购</th>
+					<th>活动状态</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<#assign  gbList = gbPage.result />
+				<#if gbList?size != 0>
+				<tbody>
+					<#list gbList as gb >
+						<tr>
+							<td>
+								<a target="_blank" href="${ctx}/goods-${gb.goods_id}.html">
+									<@image border="0" src="${gb.img_url!''}"  alt="${gb.gb_name!''}"  class="table-groupbuy-img"/>
+								</a>
+							</td>
+							<td>
+								<a target="_blank" href="${ctx}/goods-${gb.goods_id}.html" title="${gb.gb_name!''}">
+									<@substring title="${gb.gb_name!''}" length=50 dot="..." />
+								</a>
+								<p>${gb.gb_title!''}</p>
+							</td>
+							<td>
+								<strong>${gb.act_name}</strong>
+								<p class="goods-time">
+									<@dateformat time="${gb.start_time}" pattern="yyyy-MM-dd"/>
+									&nbsp;-&nbsp;
+									<@dateformat time="${gb.end_time}" pattern="yyyy-MM-dd"/>
+								</p>
+							</td>
+							<td>
+								${gb.buy_num!0}
+							</td>
+							<td>
+								<#if gb.gb_status==0 >待审核</#if>
+								<#if gb.gb_status==1 >已审核</#if>
+								<#if gb.gb_status==2 >已拒绝</#if>
+								<#if gb.gb_status==3 >已结束</#if>
+							</td>
+							<td>
+								<#if gb.gb_status==0||gb.gb_status==2>
+									<a href="./groupbuy_edit.html?goodsid=${gb.goods_id}&gb_id=${gb.gb_id}" class="btn btn-info groupbuy-edit">编辑</a>
+									<a href="javascript: void(0);" class="btn btn-danger groupbuy-delete" gb_id="${gb.gb_id}">删除</a>
+								</#if>
+							</td>
+						</tr>
+					</#list>
+				</tbody>
+			</table>
+				<div class="app-paging-tools">
+					<div class="demo"></div>
+					<div class="paging">
+						<@pager pageno="${gbPage.page!'1'}" pagesize="${gbPage.pageSize}" totalcount="${gbPage.totalCount}" />
+					</div>
+				</div>
+				<#else>
+					</table>
+					<div style="height: 10px; background-color: #FFFFFF; "></div>
+					<div class="app-no-data">
+						<span class="a-no-data">暂无相关数据</span>
+					</div>
+				</#if>
+		</div>
+	</div>
+</div>
+<!--主页面区↑-->
+
+<!--<div class="app-help">
+    <div class="head-help">
+        <span class="icomoon question-ico"></span>
+        <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+        <span class="icomoon close-ico" title="关闭">x</span>
+    </div>
+    <div class="body-help">
+        <p>帮</p>
+        <p>助</p>
+        <p>与</p>
+        <p>客</p>
+        <p>服</p>
+    </div>
+</div>
+<div class="open-help">
+    <span class="icomoon question-ico"></span>
+    <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+</div>-->
+</body>
+</html>

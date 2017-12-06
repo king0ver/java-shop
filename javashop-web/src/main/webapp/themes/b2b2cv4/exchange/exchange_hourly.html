@@ -1,0 +1,140 @@
+<!--整点兑换开始  -->
+<div id="hourExchangeMark" class="wrap mod_point_exchange clearfix">
+	<div class="point_exchange_list">
+		<div class="point_tit clearfix">
+			<h3>${efl.name}</h3>
+			<em></em> 
+			<i></i>
+		</div>
+		<#assign exchangeFloorTag=newTag("exchangeFloorTag")>
+		<#assign exchangeGoodsMap=exchangeFloorTag("{'type':${efl.type!0}}")>
+		<#if exchangeGoodsMap?exists>
+                <#list exchangeGoodsMap?keys as key> 
+                	<#assign exchangeGoodsList=exchangeGoodsMap[key]>
+                	<div class="begin_soon_wrap 
+                	<#if key_index==0&&key_has_next >
+                		begining
+                	</#if>
+                	">
+						<div class="soon_begining">
+							<p class="active_state">
+								<em><i>${key?substring(10,16)}</i>
+								<#if key?substring(10,16)?time("HH:mm") < .now?time?string("HH:mm")?time("HH:mm")>
+									进行中
+								</#if>
+								</em>
+							</p>
+							<#list exchangeGoodsList as exchangeGoods>
+							<div class="pro_list clearfix">
+									<a data-tpa="JIFEN_PC_INDEX_EXCHANGE_PROD_IMG" class="pro_img"
+										title="${exchangeGoods.name}"
+										href="${ctx}/exchange-${exchangeGoods.goods_id}.html" target="_blank"> <img
+										width="160px" height="160px"
+										src="${exchangeGoods.thumbnail!''}">
+										<em>${exchangeGoods.name}</em> <span>剩余${exchangeGoods.enable_exchange}份</span>
+									</a>
+								<#if exchangeGoodsList?size==1>
+								<div class="pro_detail">
+									<a data-tpa="JIFEN_PC_INDEX_EXCHANGE_PROD_NAME" class="pro_name"
+										title="${exchangeGoods.name}"
+										href="${ctx}/exchange-${exchangeGoods.goods_id}.html" target="_blank">${exchangeGoods.name}</a>
+									<p class="pro_point">
+										<b>${exchangeGoods.exchange_point}</b>积分
+										<del>¥${exchangeGoods.exchange_money}</del>
+									</p>
+									<p class="pro_btn">
+										<a onclick="addToCartForPoint(1061945,1201040,2);"
+										data-tpa="JIFEN_PC_INDEX_PUNCTUALITY" class="exchange_btn"
+										href="javascript:void(0);">立即兑换</a>
+									</p>
+								</div>
+								</#if>
+							</div>
+							</#list>
+							<#if exchangeGoodsList?size==1>
+							<div align="center" class="pro_list clearfix">
+								<img width="330px" height="165px"
+									src="${ctx}/themes/kaben/exchange/exchange_hourly.png">
+							</div>
+							</#if>
+						</div>
+					</div>
+                </#list>
+        </#if>
+		<div class="tomorrow_list_wrap">
+			<p class="active_state">
+				<em>明日精彩抢先看</em>
+			</p>
+			<ul class="clearfix">
+				<li><a title="Globemilk荷高 巧克力味牛奶（调制乳）200ml*3/组 荷兰进口"
+					class="pro_img" href="http://item.yhd.com/item/54818185"
+					target="_blank"> <img width="100px" height="100px"
+						src="http://d6.yihaodianimg.com/N08/M0A/E6/8E/ChEi1FYgiV-APEGAAAWvhcmiigQ94601_100x100.jpg">
+				</a></li>
+				<li class="begin_time">
+					<p>10:00</p>
+				</li>
+				<li><a title="Dove 多芬 柔肤乳霜香块 100g*3" class="pro_img"
+					href="http://item.yhd.com/item/908578" target="_blank"> <img
+						width="100px" height="100px"
+						src="http://d7.yihaodianimg.com/V00/M00/E5/DC/CgQDslT_6eaAfGC3AAUzaZnlYNI25501_100x100.jpg">
+				</a></li>
+				<li><a
+					title="黛惠家 柔美天使之泪奥地利水晶项链女毛衣链短款锁骨链韩版时尚百搭饰品情人节礼物蓝色奥地利水晶大小规格请看商品详情"
+					class="pro_img" href="http://item.yhd.com/item/31773880"
+					target="_blank"> <img width="100px" height="100px"
+						src="http://d9.yihaodianimg.com/N03/M01/6C/29/CgQCtFOnko6ADKgWAAEkW7xUKeY84900_100x100.jpg">
+				</a></li>
+				<li><a title="Tempo/得宝 迷你纸手帕*12包 苹果木味" class="pro_img"
+					href="http://item.yhd.com/item/1062082" target="_blank"> <img
+						width="100px" height="100px"
+						src="http://d9.yihaodianimg.com/N02/M08/B2/88/CgQCsVIlWX6ACo7sAAhUEY1l9yo58501_100x100.jpg">
+				</a></li>
+				<li><a title="雅席敬品 冻顶乌龙茶  浓香茶叶 台湾高山乌龙  冻顶乌龙茶50g/盒初品装  乌龙茶叶"
+					class="pro_img" href="http://item.yhd.com/item/52392473"
+					target="_blank"> <img width="100px" height="100px"
+						src="http://d9.yihaodianimg.com/N07/M0B/D6/ED/ChEbvFXUIOWAQr5SAAN3znI9AgA41300_100x100.jpg">
+				</a></li>
+			</ul>
+			<div class="tomorrow_list_mask"></div>
+		</div>
+	</div>
+	
+	
+	
+	<div class="right_banner">
+		<a data-tpa="JIFEN_PC_INDEX_ADV2"
+			href="http://jifen.yhd.com/pointshop/pointProduct.do?ref=ad.16026_31144480_1"><img
+			src="http://d7.yihaodianimg.com/N06/M03/5A/98/ChEbu1bTpCyAB8PnAADvL6M3sUw79500.jpg"></a>
+		<a data-tpa="JIFEN_PC_INDEX_ADV2"
+			href="http://cms.yhd.com/sale/XFaGKUjvEJ?ref=ad.16026_36683437_2"><img
+			src="http://d6.yihaodianimg.com/N05/M05/00/84/ChEbulcjJHeAeaW2AACAvwhJz3c00500.jpg"></a>
+	</div>
+</div>
+<!-- 整点兑换结束 -->
+<script>
+$(function(){
+	var time=new Date();
+	var month=time.getMonth()+1;
+	var start=time.getFullYear()+'-'+month+'-'+time.getDate();
+	var end=time.getFullYear()+'-'+month+'-'+(time.getDate()+1);
+	$(".point_tit").find("em").html(start);
+	$(".point_tit").find("i").html(end);
+	
+	$(".pro_img ").mouseover(function(){
+		$(this).addClass("cur");
+	});
+	$(".pro_img ").mouseout(function(){
+		$(this).removeClass("cur");
+	});
+	
+	$(".tomorrow_list_wrap").mouseover(function(){
+		$(".tomorrow_list_mask").css('display','none');
+	});
+	$(".tomorrow_list_wrap").mouseleave(function(){
+		$(".tomorrow_list_mask").css('display','block');
+	}); 
+});
+
+
+</script>

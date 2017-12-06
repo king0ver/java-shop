@@ -1,0 +1,594 @@
+<#include '/admin/header.html'>
+	<#assign regionSelectDirective="com.enation.app.base.tag.regions.RegionSelectDirective"?new()>
+	<#assign dateformat="com.enation.framework.directive.DateformateDirective"?new()>
+	<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.addressSelect-1.0.js"></script>
+	<script type="text/javascript" src="${ctx}/shop/admin/js/MemberDetail.js"></script>
+	<style>
+		input {
+			height: 25px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			padding-left: 5px;
+		}
+
+		.app-address {
+			z-index: 1;
+		}
+		td input{
+			  height:25px;
+			  border:1px solid #ccc;
+			  border-radius: 3px;
+			  padding-left:2px;
+		  }
+		 .layui-table tbody tr th{
+			   background:#F7F7F7;
+			   color:#777;
+			   width:135px;
+			   font-size:12px!important;
+			   text-align:right;
+		  }
+		  .layui-table thead tr th{
+			  	background:#CCCCCC;
+			  	color:#fff;
+		  }
+		  .layui-table{
+		        box-shadow: 2px 2px 2px rgba(204,204,204,0.25);
+		        margin-top:20px;
+		  }
+	</style>
+
+	<div class="admin-main">
+		<div style="display: block;" class="store_detail">
+			<form id="editForm" method="post" class="layui-form layui-form-pane">
+				<div class="main">
+					<input class="layui-input" name="shop_id" type="hidden"  value="${shop.shop_id}" >
+					<input class="layui-input" name="shop_disable" type="hidden"  value="${shop.shop_disable}" >
+					<input class="layui-input" name="member_id" type="hidden"  value="${shop.member_id}" >
+					<input class="layui-input" name="shop_level" type="hidden"  value="${shop.shop_level}" >
+					<input class="layui-input" name="id" type="hidden"  value="${shop.id}" >
+				  <p style="font-size:20px;">店铺详细信息</p>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="6">基本信息</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							   <th>公司名称：</th>
+							   <td colspan="5">
+							   		<input class="layui-input" name="company_name" type="text"  value="${shop.company_name}" lay-verify='required'  maxlength="50">
+							   </td>
+							</tr>
+							<tr>
+								<th>公司地址：</th>
+								<td colspan="5">
+									<input class="layui-input" name="compant_address" type="text"  value="${shop.compant_address}" lay-verify='required'  maxlength="50">
+								</td>
+							</tr>
+							<tr>
+								<th>公司电话：</th>
+								<td>
+									<input class="layui-input" name="compant_phone" type="text"  value="${shop.compant_phone}" lay-verify='required'  maxlength="15">
+								</td>
+								<th>员工总数：</th>
+								<td>
+									<input class="layui-input" name="employee_num" type="text"  value="${shop.employee_num}"   maxlength="10">
+								</td>
+								<th>注册资金：</th>
+								<td>
+									<input class="layui-input" name="reg_monety" type="text"  value="${shop.reg_monety}" lay-verify='required'  maxlength="10">
+								</td>
+								
+							</tr>
+							<tr>
+								<th>联系人姓名：</th>
+								<td>
+									<input class="layui-input" name="link_name" type="text"  value="${shop.link_name}" lay-verify='required'  maxlength="10">
+								</td>
+								<th>联系人电话：</th>
+								<td>
+									<input class="layui-input" name="link_phone" type="text"  value="${shop.link_phone}"   maxlength="11">
+								</td>
+								<th>电子邮箱：</th>
+								<td>
+									<input class="layui-input" name="compant_email" type="text"  value="${shop.compant_email}" lay-verify='required|email'  maxlength="30" >
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="6">营业执照信息</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							   <th>法定代表人姓名：</th>
+							   <td colspan="">
+							   		<input class="layui-input" name="legal_name" type="text"  value="${shop.legal_name}" lay-verify='required'  maxlength="10">
+							   </td>
+							    <th>身份证号：</th>
+							   <td colspan="">
+							   		<input class="layui-input" name="legal_id" type="text"  value="${shop.legal_id}" lay-verify='required|identity'  maxlength="18" >
+							   </td>
+							</tr>
+							<tr>
+								<th>营业执照号：</th>
+								<td>
+									<input class="layui-input" name="license_num" type="text"  value="${shop.license_num}" lay-verify='required'  maxlength="20" >
+								</td>
+								<th>法定经营范围：</th>
+								<td>
+									<input class="layui-input" name="scope" type="text"  value="${shop.scope}" lay-verify='required'  maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>营业执照所在地：</th>
+								<td>
+									 <dl >
+										 <dd id="selectAddress">
+							         	     <script type="text/javascript">
+											$(function() {
+												$('#selectAddress').addressSelect({
+													'names':{
+														province:'license_province',
+														province_id:'license_province_id',
+														city:'license_city',
+														city_id:'license_city_id',
+														region:'license_region',
+														region_id:'license_region_id',
+														town:'license_town',
+														town_id:'license_town_id'
+													},
+													deData:[   
+													           ${shop.license_province_id!''},
+								                               ${shop.license_city_id!''},
+								                               ${shop.license_region_id!''},
+								                               ${shop.license_town_id!''}
+												     ]
+												});
+											})
+										
+								             </script>
+						                 </dd> 
+						              </dl>
+								</td>
+								<th>营业执照详细地址：</th>
+								<td>
+									<input class="layui-input" name="license_add" type="text"  value="${shop.license_add}" lay-verify='required'  maxlength="50" >
+								</td>
+							</tr>
+							<tr>
+								<th>成立日期：</th>
+								<td>
+									<input name="establishdate"  lay-verify="required|date"
+										value="<@dateformat time='${(shop.establish_date)!0}' pattern='yyyy-MM-dd'/>"
+										placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input"
+										onclick="layui.laydate({elem: this})" type="text">
+								</td>
+								<th>营业执照有效期：</th>
+								<td>
+									<input name="licencestart"  lay-verify="required|date"
+										value="<@dateformat time='${(shop.licence_start)!0}' pattern='yyyy-MM-dd'/>"
+										placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input"
+										onclick="layui.laydate({elem: this})" type="text">
+									<input name="licenceend"  lay-verify="required|date"
+										value="<@dateformat time='${(shop.licence_end)!0}' pattern='yyyy-MM-dd'/>"
+										placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input"
+										onclick="layui.laydate({elem: this})" type="text">	
+								</td>
+							</tr>
+							<tr>
+								<th style="height:40px;">法人身份证电子版：</th>
+								<td  colspan="4" style="height:40px;">
+									<span class="upload-btn legal_img_btn">上传</span>
+									<#if (shop.legal_img?? && shop.legal_img!="")>
+									     <img class="temp-preview-image" src="${shop.legal_img}" height="200" width="200">
+									</#if>
+									<input class="layui-input" name="legal_img" type="hidden"  value="${shop.legal_img}" >
+								</td>
+							</tr>
+							<tr >
+								<th rowspan="2" style="height:40px;">营业执照电子版：</th>
+								<td colspan="4" style="height:40px;">
+									<span class="upload-btn  licence_img_btn">上传</span>
+									<#if (shop.licence_img?? && shop.licence_img!="")>
+									      <img class="temp-preview-image" src="${shop.licence_img}" height="200" width="200">
+									</#if>
+									<input class="layui-input" name="licence_img" type="hidden"  value="${shop.licence_img}" >
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+					
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="2">组织机构代码证：</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>组织机构代码：</th>
+								<td>
+									<input class="layui-input" name="organization_code" type="text"  value="${shop.organization_code}"   maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>组织机构代码证电子版：</th>
+								<td>
+									<span class="upload-btn  code_img_btn">上传</span>
+									<#if (shop.code_img?? && shop.code_img !="")>
+										  <img class="temp-preview-image" src="${shop.code_img}" height="200" width="200">
+									</#if>
+									<input class="layui-input" name="code_img" type="hidden"  value="${shop.code_img}" >
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+						<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="2">一般纳税人证明：</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>一般纳税人证明：</th>
+								<td>
+									<span class="upload-btn taxes_img_btn">上传</span>
+									<#if (shop.taxes_img?? && shop.taxes_img!="")>
+										 <img class="temp-preview-image" src="${shop.taxes_img}" height="200" width="200">
+									</#if>
+									<input class="layui-input" name="taxes_img" type="hidden"  value="${shop.taxes_img}" >
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="2">开户行银行许可证：</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>银行开户名：</th>
+								<td>
+									<input class="layui-input" name="bank_account_name" type="text"  value="${shop.bank_account_name}"   maxlength="20"  >
+								</td>
+							</tr>
+							<tr>
+								<th>公司银行账号：</th>
+								<td>
+									<input class="layui-input" name="bank_number" type="text"  value="${shop.bank_number}"   maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>开户银行支行名称：</th>
+								<td>
+									<input class="layui-input" name="bank_name" type="text"  value="${shop.bank_name}"   maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>开户银行所在地：</th>
+								<td>
+									<dl >
+										 <dd id="selectAddress_on">
+							         	     <script type="text/javascript">
+												$(function() {
+													$('#selectAddress_on').addressSelect({
+														'names':{
+															province:'bank_province',
+															province_id:'bank_province_id',
+															city:'bank_city',
+															city_id:'bank_city_id',
+															region:'bank_region',
+															region_id:'bank_region_id',
+															town:'bank_town',
+															town_id:'bank_town_id'
+														},
+														deData:[   
+															${shop.bank_province_id!''},
+															${shop.bank_city_id!''},
+															${shop.bank_region_id!''},
+															${shop.bank_town_id!''}
+													     ]
+													});
+												})
+								             </script>
+						                 </dd> 
+						              </dl>
+								</td>
+							</tr>
+							<tr>
+								<th>开户银行许可证电子版：</th>
+								<td>
+									<span class="upload-btn bank_img_btn">上传</span>
+									<#if (shop.bank_img?? && shop.bank_img!="")>
+									     <img class="temp-preview-image" src="${shop.bank_img}" height="200" width="200">
+									</#if>
+									<input class="layui-input" name="bank_img" type="hidden"  value="${shop.bank_img}" >
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="2">税务登记证：</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>税务登记证号：</th>
+								<td>
+									<input class="layui-input" name="taxes_certificate_num" type="text"  value="${shop.taxes_certificate_num}"   maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>纳税人识别号：</th>
+								<td>
+									<input class="layui-input" name="taxes_distinguish_num" type="text"  value="${shop.taxes_distinguish_num}"   maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>税务登记证电子版：</th>
+								<td>
+									<span class="upload-btn taxes_certificate_img_btn">上传</span>
+									<#if (shop.taxes_certificate_img?? && shop.taxes_certificate_img!="")>
+									     <img class="temp-preview-image" src="${shop.taxes_certificate_img}" height="200" width="200">
+									</#if>
+									<input class="layui-input" name="taxes_certificate_img" type="hidden"  value="${shop.taxes_certificate_img}" >
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="2">店铺信息：</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>店铺名称：</th>
+								<td>
+									<input class="layui-input" name="shop_name" type="text"  value="${shop.shop_name}" lay-verify='required'  maxlength="20" >
+								</td>
+							</tr>
+							<tr>
+								<th>店铺地址：</th>
+								<td>
+									<dl >
+										 <dd id="selectAddress_ad">
+							         	     <script type="text/javascript">
+												$(function() {
+													<#if shop.shop_province_id??>
+														$('#selectAddress_ad').addressSelect({
+															'names':{
+																province:'shop_province',
+																province_id:'shop_province_id',
+																city:'shop_city',
+																city_id:'shop_city_id',
+																region:'shop_region',
+																region_id:'shop_region_id',
+																town:'shop_town',
+																town_id:'shop_town_id'
+															},
+															deData:[   
+																${shop.shop_province_id!''},
+																${shop.shop_city_id!''},
+																${shop.shop_region_id!''},
+																${shop.shop_town_id!''}
+														     ]
+														});
+													<#else>
+														$('#selectAddress_ad').addressSelect({
+															 names : {
+										                            province: 'shop_province',
+										                            city    : 'shop_city',
+										                            region  : 'shop_region',
+										                            town    : 'shop_town'
+										                        }
+														});
+													</#if>
+													
+												})
+								             </script>
+						                 </dd> 
+						              </dl>
+								</td>
+							</tr>
+							<tr>
+								<th>佣金比例：</th>
+								<td>
+									<input class="layui-input" name="shop_commission" type="text"  value="${shop.shop_commission}" lay-verify='num|required'  maxlength="20" >
+									如果输入10.平台佣金为订单价格的百分之10
+								</td>
+							</tr>
+							<div class='operate-item'>
+								<span>经营类目：</span>
+							       	<#list goodsType as type>
+							            <input type="checkbox"  value="${type.category_id}" name="goods_management_category" lay-filter="check">${type.name}
+							        </#list>
+							         <input type="hidden"  value="${shop.goods_management_category}" name="goodsmanagementcategory">
+							</div>
+						</tbody>
+					</table>
+					<#if shop.shop_disable=='apply'>
+							<div class='layui-form-item'>是否通过店铺审核
+								<input style="height: 12px;" type="radio" value="1" checked="checked" name="pass" title="是"/>
+								<input style="height: 12px;" type="radio" value="0" name="pass"/ title="否">
+							</div>
+					</#if>
+					<button class="layui-btn layui-btn-normal" type="submit" lay-submit="" lay-filter="site_menu" id="sub">确定</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(function () {
+			$(".store_detail .contentTab1>ul>li").click(function () {
+				var tabid = $(this).attr("tabid");
+				$(".store_detail .contentTab1>ul>li").removeClass("contentTabS");
+				$(this).addClass("contentTabS");
+				$(".tab-page .tab-panel").hide();
+				$(".tab-panel[tabid=" + tabid + "]").show();
+			});
+
+			layui.use(['form', 'layedit', 'laydate'], function () {
+				var form = layui.form(),
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+				// 发现有时复选框没有被layui化,所以,添加render语句.
+				form.render();
+
+				// form.on('checkbox(check-filter)', function (data) {
+				// 	console.log('chjeck-->', data.elem.checked);
+				// 	// if (data.elem.checked) {
+				// 	// 	$("input[name='goods_management_category'][value=" + data.value + "]").prop("checked", true);
+				// 	// } else {
+				// 	// 	$("input[name='goods_management_category'][value=" + data.value + "]").prop("checked", false);
+				// 	// }
+				// 	console.log(data.value, $("input[name='goods_management_category'][value=" + data.value + "]").prop("checked"))
+				// });
+
+
+
+				//监听提交
+				form.on('submit(site_menu)', function (data) {
+					var shopProvince = $("input[name='shop_province']").val();
+					var ch_cat_id = $("input[name='goods_management_category']").is(':checked');
+					var disabled = $("#shop_disable").val();
+					if (shopProvince == "" || shopProvince == null) {
+						$.Loading.error("所在地地址选择不能为空！！")
+						return false;
+					}
+					if (ch_cat_id === false) {
+						$.Loading.message("请选择经营类目");
+						return false;
+					}
+					var options = {
+						url: "${ctx}/b2b2c/admin/shop/save-edit.do",
+						type: "POST",
+						dataType: 'json',
+						success: function (data) {
+							if (data.result == 1) {
+								$.Loading.success(data.message);
+								closeCurrent();
+								newTab('查看店铺详细', '${ctx}/b2b2c/admin/shop/shop-list.do')
+							}
+							if (data.result == 0) {
+								$.Loading.error(data.message);
+							}
+						},
+						error: function (e) {
+							parent.$.Loading.error("出现错误 ，请重试");
+						}
+					};
+					$("#editForm").ajaxSubmit(options);
+
+					return false;
+				});
+
+			});
+
+			// 法人身份证电子版 
+			var options = {
+				//文件上传成功后回调
+				success: function (data) {
+					$(".temp-legal-img").remove();
+					$("[name='legal_img']").val(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			}
+			$('.legal_img_btn').FilesUpload(options);
+
+			//组织机构代码证电子版
+			var options = {
+				//文件上传成功后回调
+				success: function (data) {
+					$(".temp-code-img").remove();
+					$("[name='code_img']").val(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			}
+			$('.code_img_btn').FilesUpload(options);
+
+			//营业执照电子版
+			options = {
+				//文件上传成功后回调
+				success: function (data) {
+					$(".temp-licence-img").remove();
+					$("[name='licence_img']").val(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			}
+			$('.licence_img_btn').FilesUpload(options);
+
+			//一般纳税人证明
+			options = {
+				//文件上传成功后回调
+				success: function (data) {
+					$(".temp-taxes-img").remove();
+					$("[name='taxes_img']").val(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			}
+			$('.taxes_img_btn').FilesUpload(options);
+
+			//开户银行许可证电子版
+			options = {
+				//文件上传成功后回调
+				success: function (data) {
+					$(".temp-bank-img").remove();
+					$("[name='bank_img']").val(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			}
+			$('.bank_img_btn').FilesUpload(options);
+
+			//税务登记证电子版
+			options = {
+				//文件上传成功后回调
+				success: function (data) {
+					$(".temp-taxes-certificate-img").remove();
+					$("[name='taxes_certificate_img']").val(data);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			}
+			$('.taxes_certificate_img_btn').FilesUpload(options);
+			var arr =  $("input[name='goodsmanagementcategory']").val().split(',');
+			$.each(arr,function(index,obj){
+				$("[name='goods_management_category'][value="+obj+"]").attr("checked","checked");
+		 	});
+			// 把经营类目移到最下方
+			$('#editForm .operate-item').insertAfter($('#editForm .operate-item').next());
+
+		});
+	</script>
+
+
+	<#include '/admin/footer.html'>

@@ -1,0 +1,68 @@
+<table id="address" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+        <thead>
+          <tr>
+          		<th>收货人</th>
+				<th>所在地区</th>
+				<th>街道地址</th>
+				<th>电话</th>
+				<th>手机</th>
+				<th>默认</th>
+          </tr>
+        </thead>
+</table>
+
+<script>
+var table;
+$(function(){
+	
+	table = $('#address').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/shop/admin/address/get-member-address.do?member_id=${member_id}',
+	    },
+	    columns: [
+	   	 	{data: "name"},
+			{data:null,"render":function(data,type,row){
+				var str= data.province+"-"+data.city+"-"+data.region;
+				if(data.town != ""){
+					str+= "-"+data.town
+				}
+				return str;
+			}},
+			{data: "addr"},
+			{data: "tel"},
+			{data: "mobile"},
+			{data:null,"render":function(data,type,row){
+				if(data.def_addr == 0){
+					return "否";
+				}else{
+					return "是";
+				}
+			}}
+	     ]
+	});
+	// // 监听窗口滚动,重新设置表格宽度
+	setTimeout(function () {
+		$('#cbg thead tr th:first-child').css('width', '70%');
+	}, 400)
+
+	$(window).resize(function () {
+		var setTime = setTimeout(function () {
+			// 不存在%号
+			clearTimeout(setTime)
+			$('#cbg thead tr th:first-child').css('width', '70%');
+		}, 400)
+	})
+
+});
+
+</script>

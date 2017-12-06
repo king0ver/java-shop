@@ -1,0 +1,58 @@
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member?? >
+    <#assign buyerOrderListTag = newTag("buyerOrderListTag") />
+    <#assign memberOrderList = buyerOrderListTag("{'page':'${page!'1'}','keyword':'${keyword!''}','status':'${status!''}'}") />
+    <#assign orderList = memberOrderList.orderList />
+    <#if orderList.totalCount gt 0>
+        <#list orderList.result as item>
+            <li class="item-order" data-order_sn="${item.sn}">
+                <div class="sn-item-order">
+                    <span>订单号：</span>
+                    ${item.sn!''}
+                </div>
+                <div class="info-item-order">
+                    <p>
+                        <span>状<i></i>态：</span>
+                        <em style="color: #3985ff;">${item.order_status_text!''}</em>
+                    </p>
+                    <p>
+                        <span>总<i></i>价：</span>
+                        <em style="color: #f15353;">${item.order_amount?string.currency}</em>
+                    </p>
+                    <#assign operateAllowable = item.operateAllowable />
+                    <#if operateAllowable.allowCancel>
+                        <button type="button" class="order-btn _cancel">取消订单</button>
+                    </#if>
+                    <#if operateAllowable.allowPay>
+                        <button type="button" class="order-btn _pay">去支付</button>
+                    </#if>
+                    <#if operateAllowable.allowRog>
+                        <button type="button" class="order-btn _rog">确认收货</button>
+                    </#if>
+                    <#if operateAllowable.allowComment>
+                        <button type="button" class="order-btn _comment">去评论</button>
+                    </#if>
+                </div>
+                <a href="${ctx}/store_themes/${item.seller_id}/index.html?menu=store&store_id=${item.seller_id}" class="seller-item-order">
+                    <em>${item.seller_name!''}</em>
+                </a>
+                <#list item.orderSkuList as product>
+                    <div class="product-item-order">
+                        <div class="product-content">
+                            <a href="./order-detail.html?ordersn=${item.sn!''}">
+                                <img src="${product.goods_image!''}" alt="${product.name}">
+                            </a>
+                            <a href="./order-detail.html?ordersn=${item.sn!''}">
+                                <div style="margin-top: 3px">
+                                    <span class="name-product">${product.name}</span>
+                                </div>
+                                <p><span>${product.num}件</span></p>
+                            </a>
+                        </div>
+                    </div>
+                </#list>
+            </li>
+        </#list>
+    </#if>
+</#if>

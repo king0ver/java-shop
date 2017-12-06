@@ -1,0 +1,40 @@
+<table id="memberdata" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+        <thead>
+          <tr>
+            <th>订单号</th>
+            <th>订单状态</th>
+            <th>支付状态</th>
+            <th>下单日期</th>
+          </tr>
+        </thead>
+</table>
+
+
+<script>
+var table;
+$(function(){
+	
+	table = $('#memberdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        url: '${ctx}/order-query/admin/order.do?member_id=${memberid}',
+	    },
+	    columns: [
+			{data: "sn"},      
+			{data: "order_status_text"},
+            {data: "pay_status_text"},
+			{data: "create_time"},
+	     ]
+	});
+});
+
+</script>
+

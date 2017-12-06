@@ -1,0 +1,122 @@
+<#include '/admin/header.html' > 
+<div class="admin-main">
+ 	<div>
+        <!--按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" id="add_menu_button" class="layui-btn layui-btn-primary " title="添加" onclick="add()"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+            </div>
+        </div>
+    </div>
+	<div class="shadowBoxWhite tableDiv">
+	<!--表格区域  -->
+	   	<form id="storeThemesForm">
+	    <table id="storethemesdata" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+	        <thead>
+	          <tr>
+	            <th>店铺模版名</th>
+	            <th>店铺模版路径</th>
+	            <th>是否为默认模板</th>
+	            <th>操作</th>
+	          </tr>
+	        </thead>
+	    </table>
+	    <!--传值等操作(暂定)  -->
+	    <div id="addBrand" ></div>
+	   </form>
+	</div>
+</div>
+
+<script type="text/javascript">
+var table;
+$(function(){
+	
+	table = $('#storethemesdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/b2b2c/admin/store-themes/list-json.do',
+	    },
+	    columns: [ //定义列
+	        {data: "name"},
+	        {data: "path"},
+	        {data: null,"render":function(data,type,row){
+	   	    	if(data.is_default == 1){
+	   	    		return "是";
+	   	    	}else if(data.is_default == 0){
+	   	    			return "否";
+	   	        }else{
+	   	        	return "";
+	   	        }
+	   	    }},
+	   	 {data: null,"render":function(data,type,row){
+	   		return "<a class='layui-btn layui-btn-small _aa' name='id' onclick='edit("+data["id"]+")' >操作</a>"+"&nbsp"+
+        	"<a class='layui-btn layui-btn-small layui-btn-danger ' name='id' onclick='del("+data["id"]+")')' >删除</a>";	
+	   	    }},
+	       
+
+	     ]
+	});
+	
+	
+	
+});
+function edit(id){
+	  layer.open({
+         title:"修改店铺模板",//标题
+         maxmin :true,//右上角可否放大缩小
+         type:2,//弹框的类型
+         shade: [0.3, '#000'],//黑色背景
+         shadeClose:false,//黑色背景是否可以点击关闭
+         content:ctx+"/b2b2c/admin/store-themes/edit.do?id="+id,//内容的URL
+         area:['500px','400px'],//弹框大小
+         scrollbar: false,//是否允许浏览器出现滚动条
+     });
+}
+
+function add(){
+	  layer.open({
+       title:"添加店铺模板",//标题
+       maxmin :true,//右上角可否放大缩小
+       type:2,//弹框的类型
+       shade: [0.3, '#000'],//黑色背景
+       shadeClose:false,//黑色背景是否可以点击关闭
+       content:ctx+"/b2b2c/admin/store-themes/add.do",//内容的URL
+       area:['500px','400px'],//弹框大小
+       scrollbar: false,//是否允许浏览器出现滚动条
+   });
+}
+	function del(id){ 
+		if(!confirm("此操作会将用到此模版的商家恢复默认模版？")){	
+			return ;
+		}
+		 var options = {
+			url : "${ctx}/b2b2c/admin/store-themes/delete.do?id="+id,
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				if(result.result==1){
+					$.Loading.success(result.message);
+					location.reload();
+				}
+				if(result.result==0){ 
+					$.Loading.error(result.message);
+				}
+			},
+			error : function(e) {
+				$.Loading.error("出现错误 ，请重试");
+			}
+		};
+		$('#storeThemesForm').ajaxSubmit(options);	
+	}
+	
+</script>
+<#include '/admin/footer.html' >

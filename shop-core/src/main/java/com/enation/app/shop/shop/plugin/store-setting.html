@@ -1,0 +1,33 @@
+<div class="layui-form-item w900">
+	<label class="layui-form-label" style="width:200px;">商家商品是否审核</label>
+	<div class="layui-input-block">
+		<input type="radio" name="store.auth"   value="1" title="是"  <#if store.auth=="1">checked="checked"</#if> />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="store.auth"   value="0"  title="否" <#if store.auth=="0">checked="checked"</#if>  />
+	</div>
+</div>
+<div class="layui-form-item w900">
+	<label class="layui-form-label" style="width:200px;">修改商品是否审核</label>
+	<div class="layui-input-block">
+		<input type="radio" name="store.edit_auth"   value="1"  title="是"<#if store.edit_auth=="1">checked="checked"</#if> />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="store.edit_auth"   value="0" title="否" <#if store.edit_auth=="0">checked="checked"</#if>  />
+	</div>
+</div>
+<div class="layui-form-item w900">
+	<label class="layui-form-label"style="width:200px;">自营商品是否审核</label>
+	<div class="layui-input-block">
+		<input type="radio" name="store.self_auth"   value="1"  title="是"<#if store.self_auth=="1">checked="checked"</#if> />&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="store.self_auth"   value="0" title="否" <#if store.self_auth=="0">checked="checked"</#if>  />
+	</div>
+</div>
+<div class="layui-form-item w900">
+	<label class="layui-form-label" >PC模板路径</label>
+	<div class="layui-input-block">
+		<input type="text" name="store.store_themes" value="${store.store_themes}" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+<div class="layui-form-item w900">
+	<label class="layui-form-label">wap模板路径</label>
+	<div class="layui-input-block">
+		<input type="text" name="store.shop_wap_themes" value="${store.shop_wap_themes}" autocomplete="off" class="layui-input" />
+	</div>
+</div>

@@ -1,0 +1,158 @@
+<!-- 统计图div -->
+<div id="region_num_statistics"  style="display: inline-block; width: 47%; height: 550px; margin: 0px 0px 50px 0px; top: 30px;"></div>
+<div id="region_num_charts" style="display: inline-block; width: 47%; height: 550px; margin: 0px 0px 50px 0px; top: 30px;"></div>
+<script type="text/javascript">
+	$(function() {
+		getRegionNum();
+		var type = $("#cycle_type").val();
+		// 如果统计类型 是按年统计
+		if (type == "2") {
+			$("#month").hide();
+		} else {
+			$("#month").show();
+		}
+
+		// 统计类型变更事件
+		$("#cycle_type").change(function() {
+
+			var type = $(this).val();
+
+			// 如果统计类型 是按年统计
+			if (type == "2") {
+				$("#month").hide();
+			} else {
+				$("#month").show();
+			}
+			//设置全部tab需要刷新
+		});
+	});
+
+	function getRegionNum() {
+		var cycle_type = $("#cycle_type :selected").val();
+		var year = $("#year :selected").val();
+		var month = $("#month :selected").val();
+		//区域分析
+		$.ajax({
+			url : "${ctx}/api/operator-statistics/region-num-list-json.do",
+			data:{'cycle_type':cycle_type,'year':year,'month':month,'storeid':store_id},
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				regionStatistics(result.message,"下单会员数");
+				var conf=regionchart(result.chartmessage,"下单会员数");
+				//初始化柱状图
+				initHistogram_nun(conf)
+			},
+			error : function(e) {
+				$.Loading.error("出现错误 ，请重试");
+			}
+		});
+	}
+	/**
+	 * 初始化区域分析图
+	 * @param id	html 初始化div的id
+	 * @param conf	相关配置
+	 */
+	 
+function regionStatistics(data,name){
+	var myChart = echarts.init(document.getElementById('region_num_statistics'));
+	var options =  {
+		
+	    title : {						//标题
+	        text : '区域分析统计',
+	        left : 'center'
+	    },
+	    tooltip : {
+	        trigger : 'item'   //鼠标放置图形   触发类型
+	    },
+	    legend : {
+	        orient : 'vertical',  //图列列表布局朝向
+	        left : 'left',
+	        calculable : true
+	    },
+	    visualMap : {
+	        min : 0,
+	        top : 'bottom',
+	        text : ['高','低'],           // 文本，默认为数值文本
+	        calculable : true
+	    },
+	    series : [
+	    	{
+				name :　name,
+	    		type : 'map',    //图表显示类型
+	    		mapType : 'china',
+	    		roam : false,
+	    		label : {
+	                normal : {      //是否在普通状态下显示标签
+	                    show: true
+	                },
+	                emphasis : {    //是否显示高亮
+	                    show : true
+	                }
+	            },
+	            data :　data
+	    	}          
+	    ]
+	};
+	myChart.setOption(options);
+};
+	
+	function regionchart(json,ytitle){
+		var categories = []; //X轴 时间
+		var data = [];	// Y轴 增加数量
+		//alert(JSON.stringify(json));
+		// 遍历生成 data,categories
+		for(var i in json) {
+			var member = json[i];
+			//添加到数组
+			categories.push(member.local_name + "");
+			data.push(member.num);
+		}
+		var conf = {
+				title : "地区排行",		//统计图标题
+												//X 轴数据 [数组]
+				categories : categories,				
+		            							//Y轴数据 [数组]
+			    name: '会员下单数',
+			    data: data
+			};
+		return conf;
+	}
+
+	
+	
+	function initHistogram_nun(conf){
+		var myChart = echarts.init(document.getElementById('region_num_charts'));
+		var options = {
+			color : ['#3398DB'],	
+			title : {				//图形上方显示标题
+		        x : 'center',
+				text : conf.title,                    
+		    }, 
+		    legend : {
+	        	bottom : '10',
+	        	data : ['会员下单数']
+	        },
+		    xAxis : {			//x坐标
+	        	type : 'value'                                           
+	        },  
+	        yAxis : {                              //y坐标                             
+	        	type :　'category',		//坐标轴类型
+	            data : conf.categories,
+	            min : 0
+	        },
+	        tooltip : {                                                         
+	        	trigger : 'item'		//触发类型
+	        },    
+	        series : [
+	        	{
+	        		name : '会员下单数',
+	        		type : 'bar',
+	        		data : conf.data
+	        	}          
+	        ]
+		};
+		
+		myChart.setOption(options);
+	}
+</script>

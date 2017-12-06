@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<#assign title = '发布商品' /> 
+<#include '/new_store/common/header.html' />
+<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/goods/publish.css">
+<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/goods/goods_edit.css">
+<#-- 加载百度富文本ueditor -->
+<script type="text/javascript" charset="utf-8" src="${ctx}/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${ctx}/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.autoFloat.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.ui.js"></script>
+<script type="text/javascript" src="${ctx}/adminthemes/new/js/easy-ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${ctx}/adminthemes/new/js/easy-ui/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/new/js/easy-ui/themes/gray/easyui.css"/>    
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/new/js/easy-ui/themes/icon.css"/> 
+<#-- 商品规格插件 -->
+<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/selectize.default.css">
+<script type="text/javascript" src="${ctx}${themes_path}/new_store/js/selectize.min.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/new_store/js/skueditor.js"></script>  
+</head>
+<body>
+	<#-- 是否为自营标签 --> 
+	<#assign selfTag=newTag("selfTag") >
+	<#assign selfid = selfTag()>
+	<#-- 获得会员信息 -->
+	<#assign checkB2b2cMemberTag = newTag("checkB2b2cMemberTag")>
+	<#assign storeMember = checkB2b2cMemberTag()>
+	
+	<#assign mainPageName = 'main_goods' /> 
+	<#assign lowerPageName = 'lower_goods_publish' /> 
+	<#include '/new_store/common/sidebar.html' />
+
+	<div class="app-nav">
+		<ul class="list-nav">
+			 <li><a href="javascript: void(0);" onclick="location.reload();">商品发布</a></li>
+		</ul>
+	</div>
+
+	<#-- 全局变量商品id -->
+	<#assign goods_id = goods_id!'0' />
+		<#-- 类型 这里要获取两次商品信息，暂时待优化 -->
+	<#assign type = 1>
+	<#-- 判断是否需要获取商品信息 -->
+	<#if (goods_id != '0')>
+		<#assign type = 2>
+		<#-- 店铺商品 -->
+		<#assign storeGoodsInfoTag=newTag("storeGoodsInfoTag")/>
+		<#assign storeGoodsInfo=storeGoodsInfoTag("{'goods_id':'${goods_id}','store_id':'${storeMember.store_id}'}")/>
+		<#assign storeGoods=storeGoodsInfo.goods>
+	</#if>
+	<!--主页面区↓-->
+	<div class="app-wappler">
+		<div class="inner-app-wappler">
+			<div class="goods-edit-area">
+				<ul class="ui-nav-tab">
+					<li data-next-step="1" class="js-switch-step js-step-1 active">
+						<a href="javascript:;">1.选择商品品类</a>
+					</li>
+					<li data-next-step="2" class="js-switch-step js-step-2">
+						<a href="javascript:;">2.编辑基本信息</a>
+					</li>
+					<li data-next-step="3" class="js-switch-step js-step-3">
+						<a href="javascript:;">3.编辑商品详情</a>
+					</li>
+				</ul>
+				<div class="ui-nav-tab-content js-content-1 active" data-content-step="1" >
+					
+					<div class="select_cat_tools">
+						<div class="select_cat_list">
+							<div style="position: relative;" class="wp_sort">
+								<div class="wp_sort_block" id="class_div">
+									
+								</div>
+							</div>
+						</div>
+						<!-- 商品分类提示 -->
+						<div class="tips_choice">
+							<dl class="hover_tips_cont">
+								<dt class="current_sort" style="" id="commoditydt">您当前选择的商品类别是：</dt>
+								<dd id="commoditydd"></dd>
+							</dl>
+						</div>
+						<!-- 确定商品分类 -->
+						<!-- <div class="select_catok">
+							<input type="button" class="submit go_save_selectcat" value="下一步" id="nextBtn" disabled="disabled">
+						</div> -->
+					</div>
+				</div>
+				
+				<div class="ui-nav-tab-content js-content-2" data-content-step="2" style="display: none;" >
+					<!-- 动态加载 -->
+				</div>
+				
+				<div class="ui-nav-tab-content js-content-3" data-content-step="3" style="display: none;">
+					<div novalidate="true" class="form-horizontal fm-goods-info">
+						<div class="goods-info-group">
+							<div class="goods-info-group-inner">
+								<!-- <div class="info-group-title vbox">
+									<div class="group-inner">描述信息</div>
+								</div> -->
+								<div class="info-group-cont vbox">
+									<div class="group-inner">
+										<div class="control-group">
+											<label class="control-label">商品描述：</label>
+											<div class="controls">
+												<script id="editor" type="text/plain" style="height:300px;width: 99%;"><#if storeGoods??>${storeGoods.intro!''}</#if></script>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="buttons-float-div" class="app-actions" style="width: 100%;">
+				    <div class="form-actions text-center">
+				    	<input id="lastBtn" data-next-step="0" class="btn btn-primary js-switch-step lastBtn" style="display: none; width: 150px;" value="上一步" type="button"/>
+				   		<input id="nextBtn" data-next-step="0" class="btn btn-primary js-switch-step nextBtn" style="width: 150px; ;" value="下一步"  type="button" />
+				        <input id="goodsOnBtn" class="btn btn-primary js-switch-step goodsOnBtn saveBtn" style="display: none; width: 150px;" value="上架"  type="button"/>
+				        <input id="goodsOffBtn" class="btn btn-primary js-switch-step goodsOffBtn" style="display: none; width: 150px;" value="下架"  type="button"/>
+				       	<#if (goods_id == '0')>
+				       	<input id="draft" class="btn btn-primary js-switch-step draft" style="display: none; width: 150px;" value="保存草稿"  type="button"/>
+				   	 	</#if>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	
+		var ue = UE.getEditor('editor');
+		UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+		UE.Editor.prototype.getActionUrl = function(action) {
+			if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+				return ctx+"/api/base/upload-image/upload-img.do";
+			} else {
+				return this._bkGetActionUrl.call(this, action);
+			};
+		};
+		
+		
+	
+		var nowPageIndex = 1;	// 当前页面下标  1 2 3
+		var submitUe;			// 提交用的富文本
+		var goodsId = ${goods_id};
+		var view    = ${view!'0'};
+
+		$(function() {
+			
+			//id不等于0就是有效,编辑商品
+			if(goodsId != 0) {
+				showTab2(undefined);
+				
+				if((view && view == goodsId)){
+					showTab3();
+				};
+				// 可能不用再编辑商品详细，所以直接显示上架下架
+				$(".app-actions .goodsOnBtn").show();
+				$(".app-actions .goodsOffBtn").show();
+			}
+			
+			// 初始化分类
+			CatLoader.init();
+			
+			$("#lastBtn").click(function(){
+				// 第二页返回第一页
+				if (nowPageIndex == 2) {
+					
+					$.confirm("返回上一步会清除未保存的数据，确认返回吗？",function(){
+						$(".ui-nav-tab .active").removeClass("active");
+						$(".ui-nav-tab .js-step-1").addClass("active");
+						$(".ui-nav-tab-content").hide();
+						$(".js-content-1").addClass("active");
+						$(".js-content-1").show();
+						$(".app-actions .lastBtn").hide();
+						nowPageIndex--;
+						$(".app-actions .goodsOnBtn").hide();
+						$(".app-actions .goodsOffBtn").hide();
+						$(".app-actions .draft").hide();
+						$("#buttons-float-div").checkFloat();
+						// 隐藏掉保存草稿按钮
+						$('.draft').hide();
+					});
+					
+				// 第三页返回第二页
+				} else if(nowPageIndex == 3) {
+					$(".ui-nav-tab .active").removeClass("active");
+					$(".ui-nav-tab .js-step-2").addClass("active");
+					$(".ui-nav-tab-content").hide();
+					$(".js-content-2").addClass("active");
+					$(".js-content-2").show();
+
+					// 下一步显示 隐藏下架上架
+					$(".app-actions .nextBtn").show();
+					$(".app-actions .goodsOnBtn").hide();
+					$(".app-actions .goodsOffBtn").hide();
+					nowPageIndex--;
+					//$("#buttons-float-div").checkFloat();
+				}
+			});
+
+			// 保存并上架
+			$("#goodsOnBtn").click(function(){
+				// 检测，选择积分换购时，积分项需要大于零
+				if($('#enable_exchange').prop('checked') && $('#storeGoodsForm > div > div > div.store_add_goods.hide0 > div > div.goods-info-group.exchange_setting > div > div.info-group-cont.vbox > div:nth-child(1) > div > div > input:nth-child(2)').val()<1){
+					$.message.error('请输入大于零的积分值! ');
+					return false;
+				}
+
+				if($(".ui-nav-tab .js-step-2").hasClass("active")){
+					if($("input[name='sn']").val() == ""){
+						$.message.error("必须填写商品编号");
+						return false;
+					}
+				}
+				if($("input[name='picnames']").val() == undefined){
+					$.message.error("至少上传一张图片");
+					return false;
+				}
+				//弹出 '是否自动生成货号' 的弹框
+				var jump=skuEditor.generateSN(($("input[name='sn']").val()));
+				//用户点是返回true 点否返回false,用户全部填写正确返回all 用户货号都填了或者自动生成一次，走函数
+				if(jump==="done"){
+					if(!CatLoader.checkFrom()){
+						// 在参数Tab存在检测到输入无效的input
+						var errorSpanOfTabOne = $('#storeGoodsForm > div > div > div.store_add_goods.hide0 > div').find('span.tip').not('span.ok');
+						var errorSpanOfTabTwo = $('#storeGoodsForm > div > div > div.hide2.store_add_goods > div > div > div.info-group-cont.vbox > div').find('span.tip').not('span.ok');
+						if(errorSpanOfTabOne.length === 0 && errorSpanOfTabTwo.length!==0){
+							$('#storeGoodsForm > div > ul > li.a_goods2.active > a').click();
+						}
+					    return false;
+	                 }
+					// 判定设置库存是否大于实际库存
+					if((parseInt($(".stock").val()) > parseInt($(".stock").attr("rel")))&& $(".info-group-cont vbox .control-group checkbox #enable_exchange:checked") ){
+						$.message.error("可兑换库存不能大于当前商品库存");
+						 return false;
+					}
+					var html = ue.getContent();
+					$("#script-intro").val(html);
+					$("#market_enable").val("1");
+					submitGoodsFrom();
+				}else if(jump === 'have'){
+					$.message.error('存在未输入的规格值!');
+					return;
+				}else{
+					return;
+				}
+			});
+			
+			// 保存并下架
+			$("#goodsOffBtn").click(function(){
+				var html = ue.getContent();
+				$("#script-intro").val(html);
+				$("#market_enable").val("0");
+				if($(".ui-nav-tab .js-step-2").hasClass("active")){
+					if($("input[name='sn']").val() == ""){
+						$.message.error("必须填写商品编号");
+						return false;
+					}
+				}
+				//弹出 '是否自动生成货号' 的弹框
+				var jump=skuEditor.generateSN(($("input[name='sn']").val()));
+				//用户点是返回true 点否返回false  用户货号都填了或者自动生成一次，走函数
+				if(jump==="done"){
+					submitGoodsFrom(0);
+				}else if(!jump){
+					return;
+				}else if(jump === 'have'){
+					$.message.error('存在未输入的规格值!');
+					return;
+				}else{
+					return;
+				}
+			});
+			
+			// 预览商品
+			$("#preview").click(function(){
+				 window.open("${ctx}/api/b2b2c/store-goods/preview.do?goodsId="+$("#storeGoodsId").val())
+			});
+			
+			// 保存草稿
+			$("#draft").click(function(){
+				// 不需要任何形式的表单验证
+				var html = ue.getContent();
+				$("#script-intro").val(html);
+				$("#market_enable").val("1");
+				saveGoodsFormIntoDraft();
+			})
+			
+			// 最后再浮动
+			$("#buttons-float-div").autoFloat();
+
+			/* IE下input框样式兼容
+			 ============================================================================ */
+			(function(){
+				if(Sys.ie > 7){
+					$("input[type='text']").css({height: 25});
+				};
+			})();
+		});	
+		function showTab2(catId){
+			$("#buttons-float-div").hide();
+			$(".ui-nav-tab .active").removeClass("active");
+			$(".ui-nav-tab .js-step-2").addClass("active");
+			$(".ui-nav-tab-content").hide();
+			$(".js-content-2").addClass("active");
+			$(".js-content-2").show();
+			// 第二步时显示草稿箱按钮
+			$('.draft').css('display','inline-block');
+
+			var url = "";
+			
+			if (catId && catId != 0) {
+				url = "goods_publish_info.html?store_id=${storeMember.store_id!'0'}&catid=" + catId + "&goods_id=" + goodsId;
+			} else {
+				url = "goods_publish_info.html?store_id=${member.store_id!0}&goods_id=" + goodsId;
+			}
+			
+			$(".js-content-2").load(url, function(){
+				$("#buttons-float-div").show();
+				$("#buttons-float-div").checkFloat();
+				
+				// 初始化隐藏富文本
+				submitUe = UE.getEditor('script-intro');
+			});
+			//location.href = "add_goods.html?store_id=${member.store_id!0}&catid=" + catid+"&menu=store_goods";
+			nowPageIndex ++; // 当前页面下标+1
+			$(".app-actions .lastBtn").show();
+		}
+
+		function showTab3(){
+			$(".ui-nav-tab .active").removeClass("active");
+			$(".ui-nav-tab .js-step-3").addClass("active");
+			$(".ui-nav-tab-content").hide();
+			$(".js-content-3").addClass("active");
+			$(".js-content-3").show();
+			nowPageIndex = 3;
+
+			// 下一步隐藏  上架下架按钮显示
+			$(".app-actions .nextBtn").hide();
+			$(".app-actions .goodsOnBtn").show();
+			$(".app-actions .goodsOffBtn").show();
+			$(".app-actions .draft").show();
+			$("#buttons-float-div").checkFloat();
+		}
+	
+		
+		//添加和修改商品
+		function submitGoodsFrom(market_enable){
+			$(window).off('beforeunload');
+			<#if (goods_id != '0')>
+			var url = "${ctx}/goods/seller/goods/edit.do";
+			<#else>
+			var url = "${ctx}/goods/seller/goods.do";
+			</#if>
+		
+			var active  = $("form").serializeJson();
+			var goodsParamsList  =[];
+			$(".goods-info-group .params").each(function () {
+					var goodsParams = {};
+					goodsParams.param_name = $(this).attr("param_name");
+					goodsParams.param_id = $(this).attr("param_id");
+					goodsParams.param_value = $(this).find(".paramvalues").val();
+					goodsParamsList.push(goodsParams);
+				})
+				active["goodsParamsList"] = goodsParamsList;
+				var goodsGalleryList = $(".img_box img");
+				var goodsGalleryLists = [];
+				var count = 1;
+				for (var i = 0; i < goodsGalleryList.length; i++) {
+					var goodsGallery = {};
+					goodsGallery.original = goodsGalleryList[i].src;
+					goodsGallery.img_id = $(goodsGalleryList[i]).attr('data-id') != 'undefined' ? $(goodsGalleryList[i]).attr('data-id') : -1;
+					goodsGallery.sort = count;
+					count++;
+					goodsGalleryLists.push(goodsGallery);
+				}
+				active["goodsGalleryList"] = goodsGalleryLists;
+
+				//如果market_enable传过来是0说明点击了下架
+				if (market_enable == 0) {
+					active["market_enable"] = market_enable;
+				} else {
+					active["market_enable"] = 1;
+				}
+				//总库存
+				active["quantity"] = skuEditor.getStorages();
+				//sku
+				active["skuList"] = skuEditor.getSkuList();
+				if (active["skuList"] == 1) {
+					$.message.error("规格图片有未添加项，请添加！");
+					return false;
+				}
+				if (active["skuList"] == undefined) {
+					$.message.error("商品规格有漏填，请重新填写！");
+					return false;
+				}
+			//规格组合发生变化判断，编辑时用
+			if($("input[name='goods_id']").val()!=0){
+				active["has_changed"] = skuEditor.skuHasChanged();
+			}
+			//当前操作是修改并且是选中兑换商品才可以取积分换购当参数
+				var exchange = {};
+				exchange.setting_id = active["setting_id"];
+				if(active["enable_exchange"]==undefined){
+					exchange.enable_exchange = 0;
+				}else{
+					exchange.enable_exchange = 1;
+				}
+				exchange.category_id = active["exchange_cat_id"];
+				exchange.exchange_money = active["exchange_money"];
+				exchange.exchange_point = active["exchange_point"];
+				active["exchange"] = exchange;
+				$.ajax({
+						url: url,
+						type: "POST",
+						contentType: "application/json",
+						data: JSON.stringify(active),
+						success: function (result) {
+							$.message.success("操作成功", function () {
+								var goods_type;
+								$('#enable_exchange').prop('checked') ? goods_type = 'point' : goods_type = 'normal';
+								if(goods_type=='point'){
+									window.location.href = ctx + "/new_store/pages/goods/point.html?goods_type=" + goods_type;
+								}else{
+									window.location.href = ctx + "/new_store/pages/goods/warehouse.html?goods_type=" + goods_type;
+								}
+								
+							});
+						},
+						error: function (e) {
+							$.message.error(e.responseJSON.error_message);
+							$(".saveBtn").removeAttr("disabled");
+						}
+					});
+		}
+
+		//添加和修改商品
+		function saveGoodsFormIntoDraft(market_enable) {
+			$(window).off('beforeunload');
+			var url = ctx + '/shop/seller/draft_goods/add.do';
+
+			var active = $("form").serializeJson();
+			var goodsParamsList = [];
+			$(".goods-info-group .params").each(function () {
+				var goodsParams = {};
+				goodsParams.param_name = $(this).attr("param_name");
+				goodsParams.param_id = $(this).attr("param_id");
+				goodsParams.param_value = $(this).find(".paramvalues").val();
+				goodsParamsList.push(goodsParams);
+			})
+			active["goodsParamsList"] = goodsParamsList;
+			var goodsGalleryList = $(".img_box img");
+			var goodsGalleryLists = [];
+			var count = 1;
+			for (var i = 0; i < goodsGalleryList.length; i++) {
+				var goodsGallery = {};
+				goodsGallery.original = goodsGalleryList[i].src;
+				goodsGallery.img_id = $(goodsGalleryList[i]).attr('data-id') != 'undefined' ? $(goodsGalleryList[i]).attr('data-id') : -1 ;
+				goodsGallery.sort = count;
+				count++;
+				goodsGalleryLists.push(goodsGallery);
+			}
+			active["goodsGalleryList"] = goodsGalleryLists;
+
+			//如果market_enable传过来是0说明点击了下架
+			if (market_enable == 0) {
+				active["market_enable"] = market_enable;
+			} else {
+				active["market_enable"] = 1;
+			}
+			
+			skuEditor.generateSN($("input[name='sn']").val(),'draft');
+			//总库存
+			active["quantity"] = skuEditor.getStorages();
+			//sku
+			active["skuList"] = skuEditor.getSkuList();
+			if (active["skuList"] == 1) {
+					$.message.error("规格图片有未添加项，请添加！");
+					return false;
+				}
+			if (active["skuList"] == undefined) {
+				$.message.error("商品规格有漏填，请重新填写！");
+				return false;
+			}
+			//规格组合发生变化判断，编辑时用
+			if ($("input[name='goods_id']").val() != 0) {
+				active["has_changed"] = skuEditor.skuHasChanged();
+			}
+			//当前操作是修改并且是选中兑换商品才可以取积分换购当参数
+			var exchange = {};
+			exchange.setting_id = active["setting_id"];
+			if (active["enable_exchange"] == undefined) {
+				exchange.enable_exchange = 0;
+			} else {
+				exchange.enable_exchange = 1;
+			}
+			exchange.category_id = active["exchange_cat_id"];
+			exchange.exchange_money = active["exchange_money"];
+			exchange.exchange_point = active["exchange_point"];
+			active["exchange"] = exchange;
+			$.ajax({
+				url: url,
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(active),
+				success: function (result) {
+					$.message.success("操作成功", function () {
+						var goods_type;
+						$('#enable_exchange').prop('checked') ? goods_type = 'point' : goods_type = 'normal';
+						window.location.href = ctx + "/new_store/pages/goods/draft.html?goods_type=" + goods_type;
+					});
+				},
+				error: function (e) {
+					$.message.error(e.responseJSON.error_message);
+					$(".saveBtn").removeAttr("disabled");
+				}
+			});
+		}
+		
+		var CatLoader = {
+				init: function () {
+					var self = this;
+					this.loadChildren(0);
+
+					// 初始化完分类之后 才绑定事件
+					//下一步
+					$("#nextBtn").click(function () {
+						if (nowPageIndex == 1) {
+							var catid = self.getSelectedCatId();
+							if (!catid) {
+								$.message.error("请选择商品的分类");
+								return;
+							} else {
+								showTab2(catid);
+							}
+						} else if (nowPageIndex == 2) {
+							// 检测，选择积分换购时，积分项需要大于零
+							if($('#enable_exchange').prop('checked') && $('#storeGoodsForm > div > div > div.store_add_goods.hide0 > div > div.goods-info-group.exchange_setting > div > div.info-group-cont.vbox > div:nth-child(1) > div > div > input:nth-child(2)').val()<1){
+								$.message.error('请输入大于零的积分值! ');
+								return false;
+							}
+						
+							// 判定设置库存是否大于实际库存
+							if (parseInt($(".stock").val()) > parseInt($(".stock").attr("rel"))) {
+								alert("对不起，库存不足！");
+								return false;
+							}
+							if (!self.checkFrom()) {
+								var paramsContainer = $('.tab_box >.hide2.store_add_goods .goods-info-group');
+								// 参数状态, true表示input/select全部有值
+								var status = true;
+								// 检查input
+								paramsContainer.find('input').serializeArray().forEach(function (param) {
+									if (param.value === '') {
+										status = false;
+									}
+								});
+								// 检查select
+								paramsContainer.find('select').serializeArray().forEach(function (param) {
+									if (param.value === '') {
+										status = false;
+									}
+								});
+							
+								var errorSpanOfTabOne = $('#storeGoodsForm > div > div > div.store_add_goods.hide0 > div').find('span.tip').not('span.ok');
+								var errorSpanOfTabTwo = $('#storeGoodsForm > div > div > div.hide2.store_add_goods > div > div > div.info-group-cont.vbox > div').find('span.tip').not('span.ok');
+								// 如果Tab1不存在无效输入,而Tab2存在,切换过去
+								if (errorSpanOfTabOne.length === 0 && errorSpanOfTabTwo.length !== 0) {
+									$('#storeGoodsForm > div > ul > li.a_goods2.active > a').click();
+								}
+
+								return false;
+							}
+						}
+
+						if ($(".ui-nav-tab .js-step-2").hasClass("active")) {
+							if ($("input[name='sn']").val() == "") {
+								$.message.error("必须填写商品编号");
+								return false;
+							}
+							//弹出 '是否自动生成货号' 的弹框
+							var jump = skuEditor.generateSN(($("input[name='sn']").val()));
+							//用户点是返回true 点否返回false  用户货号都填了或者自动生成一次，走函数
+							if(jump === 'have'){
+								$.message.error('存在未输入的规格值!');
+								return;
+							}else if(jump !=='done'){
+								return;
+							}
+						}
+
+						// 隐藏当前的显示第三个
+						$(".ui-nav-tab .active").removeClass("active");
+						$(".ui-nav-tab .js-step-3").addClass("active");
+						$(".ui-nav-tab-content").hide();
+						$(".js-content-3").addClass("active");
+						$(".js-content-3").show();
+						nowPageIndex++;
+
+						// 下一步隐藏  上架下架按钮显示
+						$(".app-actions .nextBtn").hide();
+						$(".app-actions .goodsOnBtn").show();
+						$(".app-actions .goodsOffBtn").show();
+						$(".app-actions .draft").show();
+						$("#buttons-float-div").checkFloat();
+					});
+
+				},
+
+				checkFrom: function () {
+					// 验证商品名称
+					var str = "[@/'\"#$%&^*]+";
+					var goodsname = $(".store_goodsname").val()
+					var reg = new RegExp(str);
+					var flag = true;
+
+					// 旧版校验
+					if (!$("#storeGoodsForm").checkall()) {
+						// 商品属性参数等tab页面
+
+						$(".tab_menu li").addClass("normal");
+						$('.a_goods0').removeClass("normal");
+						$('.a_goods0').addClass("active");
+						$(".tab_box .store_add_goods").hide();
+						$(".tab_box .hide0").show();
+
+						$("#buttons-float-div").checkFloat();
+
+						$('.tip.error').css({ top: 34 })
+						flag = false;
+					}
+
+					if ($("input[name='picnames']").val() == undefined) {
+						$.message.error("至少上传一张图片");
+						flag = false;
+					}
+
+					if ($(".image-update-box").length > 0) {
+						var inputs = $('.image-update-box').find("input[name='spec_image']"), inputsLen = inputs.length;
+						for (var i = 0; i < inputsLen; i++) {
+							if (!inputs.eq(i).val()) {
+								$.message.error('您还有颜色图片没有上传！');
+								flag = false;
+								break;
+							}
+						}
+					}
+
+					return flag
+				},
+				loadChildren: function (catid) {
+					var self = this;
+					$.ajax({
+						type: 'GET',
+						url: '${ctx}/goods-info/seller/category-child.do?cat_id=' + catid,
+						success: function (result) {
+							self.appendCatList(result, catid);
+							self.refreshPath();
+							//  IE下样式问题修复
+							(function () {
+								if (Sys.ie > 7) {
+									$('.category_list ul li a').css({ height: 30 });
+								};
+
+								if (Sys.ie == 7) {
+									$('.cat_box').css({ float: 'left' });
+								}
+							})();
+						},
+						error: function () {
+							$.message.error("加载分类出错");
+						}
+
+					});
+				},
+				appendCatList: function (catJson, catid) {
+
+					if (catJson.length == 0)
+						return;
+					var self = this;
+					var selHtml = '<div class="sort_list cat_box" id="box_' + catid + '" >';
+					selHtml += '<div class="wp_category_list">'
+					selHtml += '<div class="category_list" id="class_div_1">'
+					selHtml += '<ul>'
+					$.each(catJson, function (i, cat) {
+						selHtml += '<li catid="' + cat.category_id + '" class="" id="box_' + catid + '" >'
+						selHtml += '<a href="javascript:void(0)" catid="' + cat.category_id + '" class=""><span class="has_leaf">' + cat.name + '</span></a>'
+						selHtml += "</li>";
+					});
+					selHtml += '</ul></div></div></div>'
+
+					$(selHtml).appendTo($("#class_div")).find("a").click(function () {
+						var $this = $(this);
+						self.removeChildBox($this.parent().attr("id"));
+						self.loadChildren($this.attr("catid"));
+
+						$this.parent().parent().find('a').removeClass("classDivClick");
+						$this.addClass("classDivClick");
+
+						$("#nextBtn").attr("disabled", false);
+					});
+
+				},
+				removeChildBox: function (boxid) {
+					var flag = false;
+					$("#class_div .cat_box").each(function () {
+						var $this = $(this);
+						if (flag) {
+							$this.remove();
+						}
+						if ($this.attr("id") == boxid) {
+							flag = true;
+						}
+					});
+				},
+				refreshPath: function () {
+					var pathbox = $("#commoditydd").empty();
+					var html = "";
+					$("#class_div a.classDivClick").each(function (i, v) {
+						if (i != 0) {
+							html += "&nbsp;&gt;&nbsp;";
+						}
+						var name = $(this).text();
+						html += name;
+					});
+					pathbox.append(html);
+				},
+				getSelectedCatId: function () {
+					var catEl = $("#class_div a.classDivClick:last");
+					if (catEl.length == 0) {
+						return false;
+					} else {
+						return catEl.attr("catid");
+					}
+				}
+			}
+	</script>
+	<!--主页面区↑-->
+</body>
+</html>

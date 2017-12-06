@@ -1,0 +1,71 @@
+<#assign title="店铺优惠券 - 购物车" />
+<#include '/common/header.html' />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/cart.css">
+<div class="cart-bonus" style="padding: 10px;">
+    <#assign storeBonusListTag = newTag("storeBonusListTag") />
+    <#assign storeBonusList = storeBonusListTag("{'store_id':${store_id}}")!'' />
+    <#assign totalCount = storeBonusList.totalCount />
+    <#if totalCount gt 0>
+        <#assign storeBonusResult = storeBonusList.bonusList.result />
+        <#list storeBonusResult as bonus>
+            <div class="eui-bonus eui-bonus01<#if bonus.limit_num == bonus.received_num> unavailable</#if>" data-type_id="${bonus.type_id}">
+                <div class="par">
+                    <p>${bonus.type_name!''}</p>
+                    <sub class="sign">￥</sub><span>${bonus.type_money?string("0.00")}</span>
+                    <p>订单满${bonus.min_goods_amount?string("0.00")}元</p>
+                </div>
+                <div class="copy">
+                    <span>副券</span>
+                    <p><@dateformat time="${bonus.use_start_date?c}" pattern="yyyy-MM-dd"/></p>
+                    <p>~</p>
+                    <p><@dateformat time="${bonus.use_end_date?c}" pattern="yyyy-MM-dd"/></p>
+                </div>
+                <i></i>
+            </div>
+        </#list>
+    <#else/>
+        <div class="eui-nodata">
+            <img src="${ctx}/statics/e_tools/images/beifang/beifang-no_data.png">
+        </div>
+    </#if>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var module = new Module();
+        var store_id = module.getQueryString('store_id');
+        var $this;
+        module.navigator.init('店铺优惠券');
+        $('body').css({backgroundColor: '#fff'});
+
+        $('.cart-bonus').on('tap', '.eui-bonus', function () {
+            $this = $(this);
+            if($this.is('.unavailable')){
+                module.message.error('您已经领过了哦~');
+            }else {
+                $.ajax({
+                    url : ctx + '/api/b2b2c/bonus/receive-bonus.do',
+                    data: {
+                        store_id: store_id,
+                        type_id : $this.data('type_id')
+                    },
+                    type: 'POST',
+                    success: function (res) {
+                        if(res.result === 1){
+                            module.message.success(res.message, function () {
+                                location.reload()
+                            });
+                        }else {
+                            module.message.error(res.message);
+                        }
+                    },
+                    error: function () {
+                        module.message.error('出现错误，请重试！');
+                    }
+                });
+            }
+            return false
+        })
+    })
+</script>
+</body>
+</html>

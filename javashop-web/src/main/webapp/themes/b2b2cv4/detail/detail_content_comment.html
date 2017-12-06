@@ -1,0 +1,166 @@
+<#assign commentListTag = newTag("commentListTag") />
+<#assign commentPage = commentListTag("{'goods_id':${goods_id},'type':1}") />
+<style>
+    .detail-comment-list dl dd .detail-comment-detail{
+        border: 1px solid transparent;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail > .d_cont,
+    .detail-comment-list dl dd .detail-comment-detail >div:last-child{
+        background: #fff;
+        padding: 10px;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail > .d_cont >p:first-child{
+        width: fit-content;
+        text-align: left;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail > .detail-comment-photos,
+    .detail-comment-list dl dd .detail-comment-detail > .clearfix{
+        margin: 10px;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail > .clearfix{
+        margin-top: 20px;
+        color: #da4f49;
+        font-size: 16px;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail > .clearfix b{
+        color: black;
+        font-size: 14px;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail >div:last-child{
+        margin-top: 10px;
+        color: #aaa;
+        height: 17px;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail >div:last-child .comment-time{
+        float: right;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail > .detail-comment-photos >ul{
+        height: 50px;
+    }
+
+    .detail-comment-list dl dd .detail-comment-detail .detail-comment-photos_x a img{
+        max-width: 50px;
+        height: 39px;
+    }
+</style>
+<div class="detail-comment">
+    <div class="detail-comment-cont">
+        <div class="detail-comment-score clearfix" style="display: block;">
+            <#assign storeGoodsCommentInfoTag = newTag("storeGoodsCommentInfoTag") />
+            <#assign grade = storeGoodsCommentInfoTag("{'goods_id':${goods_id}}") />
+            <div class="fl complex" style="cursor:pointer">综合评分</div>
+            <i class="fl">|</i>
+            <div class="fl star_d">
+                <span class="star${grade}">
+                    <em style="width:${grade*20}%;"></em>
+                </span>
+                <i style="cursor:pointer"><b>${grade?string("0.0")}</b> / 5.0</i>
+            </div>
+        </div>
+        <div class="detail-comment-box">
+            <!--<ul class="detail-comment-tab clearfix">
+                <li class="on"><a href="javascript:void(0);">全部（20）</a></li>
+                <li><a href="javascript:void(0);">有图评价（2）</a></li>
+            </ul>-->
+            <div class="detail-comment-list">
+                <#list commentPage.result as comment>
+                    <dl>
+                        <dt>
+                        <p>
+                            <#if comment.member_id != 0 && comment.face != "">
+                                <@image src="${comment.face}" class="comment-img"/>
+                                <#else/>
+                                <img src="${ctx}${themes_path}/images/icon-no-face.jpg" class="comment-img">
+                            </#if>
+                        </p>
+                        <p class="name">
+                            <#if comment.member_id != 0>
+                                <#assign _name = comment.uname />
+                                <#assign _length = _name?length />
+                                <#assign uname = _name?substring(0, 1) + "***" + _name?substring(_length-1, _length) />
+                                ${uname}
+                            <#else/>
+                                匿名
+                            </#if>
+                        </p>
+                        </dt>
+                        <dd>
+                            <div class="detail-comment-detail">
+                                <div class="clearfix">
+										<b>评分：</b>
+										<#if comment.grade==1>
+										差评
+										<#elseif comment.grade==2>
+										中评
+										<#else>
+										好评
+										</#if>
+                                </div>
+                                <div class="d_cont">${comment.content!''}</div>
+                                <div class="detail-comment-photos">
+                                    <#assign commentGalleryListTag = newTag("commentGalleryListTag") />
+                                    <#assign galleryList = commentGalleryListTag("{'comment_id':${comment.comment_id}}") />
+                                    <#if galleryList?? && galleryList?size gt 0>
+                                        <ul class="detail-comment-photos_x">
+                                            <#list galleryList as gallery>
+                                                <a href="<@imgurl pic='${gallery.original}'/>" data-lightbox="roadtrip">
+                                                    <@image src="${gallery.original}"/>
+                                                </a>
+                                            </#list>
+                                        </ul>
+                                    </#if>
+                                    <p class="detail-comment-goodsxx"></p>
+                                </div>
+                             
+                                <#if comment.replystatus == 1 && comment.reply != "">
+                                    <div class="d_cont" style="padding: 10px; background-color: #ffffff">
+                                        <p style="color: #da4f49">掌柜回复：</p>
+                                        <p>${comment.reply}</p>
+                                    </div>
+                                </#if>
+                                <div>
+                                    <span class='comment-specs'>
+                                        <#if comment.specs??>
+                                            ${comment.specs}
+                                        </#if>
+                                    </span>
+                                    <span class='comment-time'><@dateformat time="${comment.dateline?c}" pattern="yyyy-MM-dd HH:mm"/></span>
+                                </div>
+                            </div>
+                        </dd>
+                    </dl>
+                </#list>
+                <div class="comment-page" style="cursor:default">
+                    <@ajaxpager pageno="${page!'1'}" pagesize="${commentPage.pageSize}" totalcount="${commentPage.totalCount}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    
+(function() {
+    // 动态优化评论中商品规格文本
+    $('div.detail-comment .detail-comment-box div.detail-comment-detail .comment-specs').each(function () {
+        // 提取规格数据.
+        var specArray = JSON.parse($(this).text());
+        // 规程规格字符串(空格分割)
+        var specText = specArray
+            .map(function (tempObj) {
+                return tempObj.spec_value;
+            })
+            .join(' ');
+        // 塞进p元素中
+        $(this).text(specText);
+    });
+})();
+
+</script>

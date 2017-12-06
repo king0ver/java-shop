@@ -1,0 +1,98 @@
+<#-- 创建商品基本信息标签 -->
+<#assign goodsBaseDataTag = newTag("goodsBaseDataTag") />
+<#assign goods = goodsBaseDataTag("{'goodsid':${goodsid!0}}") />
+<#-- 获取商品状态【不存在-1、下架1、草稿2】-->
+<#assign goods_off = goods.goods_off!''/>
+<#if goods_off != -1>
+    <#-- 商品id、店铺id -->
+    <#assign goods_id = goods.goods_id!0 />
+    <#assign store_id = goods.seller_id!0 />
+    <#-- 获取商品店铺信息 -->
+    <#assign myShopDetailTag = newTag("myShopDetailTag") />
+    <#assign shop = myShopDetailTag("{'store_id':'${goods.seller_id}','type':1}" ) />
+</#if>
+<#-- 判断商品有没有下架 -->
+    <#if goods_off == 1 || goods_off == -1 || shop.shop_disable != 'open'>
+        <#include '/common/header.html' />
+        <#include '/common/reception_header.html'/>
+        <#if goods_off == -1>
+            <#include '/404.html'/>
+        <#else/>
+            <#include '/detail/detail_off.html'/>
+        </#if>
+        <#include '/common/footer.html'/>
+        <#stop/>
+    </#if>
+<#-- 页面标题 -->
+<#if goods.page_title?? && goods.page_title != "">
+    <#assign title = "${goods.page_title}" />
+<#else/>
+    <#assign title = "${goods.goods_name}" />
+</#if>
+<#if goods.meta_keywords?? && goods.meta_keywords != "">
+    <#assign keywords="${goods.meta_keywords}" />
+</#if>
+<#if goods.meta_description?? && goods.meta_description != "">
+    <#assign description="${goods.meta_description}" />
+</#if>
+
+<#include 'common/header.html' />
+<#include 'common/reception_header.html'/>
+<#-- 店铺分类 -->
+<#assign goodsCatPathTag = newTag("goodsCatPathTag") />
+<#assign goodsCat = goodsCatPathTag("{'catid':${goods.category_id}}") />
+<link rel="stylesheet" href="${file_path}/css/goods.css">
+<link rel="stylesheet" href="${file_path}/js/lightbox/css/lightbox.css">
+<link rel="stylesheet" href="${file_path}/css/swiper-3.4.2.min.css">
+<div class="goods">
+    <div class="controllerg-goods">
+        <input type="hidden" id="goodsId" value="${goods_id}">
+        <div class="bread-nav">
+            <p>
+                <a href="${ctx}" target="_blank">首页</a>&gt;
+                <a href="${ctx}/goods_list.html?cat=${goods.category_id}" title="" target="_blank">${goodsCat.cat.name}</a>&gt;
+                <a href="${ctx}/goods-${goods.goods_id!'0'}.html" title="${goods.goods_name!''}">${goods.goods_name!''}</a>
+            </p>
+            <span id="goodsSnJs" style="cursor:default">商品编码：${goods.sn!''}</span>
+        </div>
+        <div class="contents clearfix">
+            <#include '/detail/detail_zoom.html' />
+            <!----- sku插件页面------>
+            <div class='info_right'>
+            </div>
+        </div>
+        <div class="details clearfix">
+        <!----- 左下角热销商品竖条页页面------>
+            <#include '/detail/detail_reco.html' />
+            <#include '/detail/detail_content.html' />
+        </div>
+    </div>
+    <#include '/detail/detail_dialogs.html' />
+</div>
+<script>
+    var goodsID = 0;
+    if(location.href.match(/goods-(.*).html/)){
+        goodsID = location.href.match(/goods-(.*).html/)[1]
+    }else if(location.href.match(/goodsid=(.*)/)){
+        // 如果匹配不到，则是goods.html?goodsid=xxx模式的页面
+        goodsID = location.href.match(/goodsid=(.*)/)[1]
+    }
+ 
+    var url = '${ctx}/detail/detail_oper.html?goodsid=' + goodsID
+    $.ajax({
+        url: url,
+        methods: 'GET',
+        async: false,
+        success: function (result) {
+            $('body > div.goods > div.controllerg-goods > div.contents.clearfix .info_right').html(result)
+        }
+    })
+</script>
+<script src="${ctx}/goods/seller/goods/visit/${goods_id}.do"></script>
+<script type="text/javascript" src="${file_path}/js/lightbox/js/lightbox.js"></script>
+<script type="text/javascript" src="${file_path}/js/spec.js"></script>
+<script type="text/javascript" src="${file_path}/js/skurender.js"></script>
+<script type="text/javascript" src="${file_path}/js/goods.js"></script>
+<script type="text/javascript" src="${file_path}/js/swiper-3.4.2.min.js"></script>
+<!-----footer------>
+<#include '/common/footer.html'/>

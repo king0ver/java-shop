@@ -1,0 +1,262 @@
+<#include 'common/header.html' />
+<#include 'common/reception_header.html'/>
+<#-- 创建商品基本信息标签 -->
+<#assign snapshotTag = newTag("snapshotTag") >
+<#-- 调用标签获取商品基本信息 -->
+<#assign snapshot= snapshotTag("{'snapshot_id':${snapshot_id!0}}") >
+<#assign goods = snapshot.snapshot />
+<link rel="stylesheet" href="${file_path}/css/goods.css">
+<link rel="stylesheet" href="${file_path}/js/lightbox/css/lightbox.css">
+<link rel="stylesheet" href="${file_path}/css/swiper-3.4.2.min.css">
+
+<script type="text/javascript" src="${file_path}/js/lightbox/js/lightbox.js"></script>
+<script type="text/javascript" src="${file_path}/js/spec.js"></script>
+<script type="text/javascript" src="${file_path}/js/skurender.js"></script>
+<script type="text/javascript" src="${file_path}/js/swiper-3.4.2.min.js"></script>
+<script type="text/javascript" src="${file_path}/js/goods.js"></script>
+<style>
+	.spec-left{
+		display: inline-block;
+		width: 70px;
+	}
+	.spec-container{
+		border: 1px dashed #ddd;
+		border-left: 0;
+		border-right: 0;
+		padding: 8px 0;
+		padding-right: 150px;
+		margin: 10px 0;
+	}
+	
+	.pro-details{
+	    padding-left: 0;
+	}
+
+	.info_right{
+		width: 50%;
+		width: calc(100% - 490px);
+		left: 1rem;
+	}
+
+	#goodsForm {
+		width: 100%;
+	}
+
+	#goodsForm .pro-name{
+		background: #fdf0e4;
+		padding: 10px;
+		padding-left: 30px;
+	}
+
+	#goodsForm .pro-name h2{
+		width: 100%;
+	}
+</style>
+	
+<div class="goods">
+    <div class="controllerg-goods">
+        <div class="bread-nav">
+        	当前页面内容为订单快照，包含订单创建时的商品描述和下单信息，买卖双方和平台在发生交易争议时，该页面作为判定依据。<a href="${ctx}/goods-${goods.goods_id!'0'}.html">点此查看最新商品详情</a>
+            
+        </div>
+        <div class="contents clearfix">
+            <#-- 商品相册 -->
+			
+			<#assign galleryList = snapshot.gallery_list />
+			
+			<link type="text/css" rel="stylesheet" href="${file_path}/js/magiczoom/magiczoom.css"/>
+			<script type="text/javascript" src="${file_path}/js/magiczoom/magiczoom.min.js"></script>
+			<div class="info_left">
+			    <dl class="clearfix">
+			        <dd class="swiper-container-zoom">
+			            <div class="move_box swiper-wrapper">
+			                <#list galleryList as gallery>
+			                    <a data-zoom-id="motorbike" href="<@imgurl pic="${gallery.big!''}"/>" class="swiper-slide<#if gallery_index==0> on</#if>">
+			                        <img src="<@imgurl pic="${gallery.big!''}"/>" style="width: 80px; height: 80px;">
+			                        <i></i>
+			                    </a>
+			                </#list>
+			            </div>
+			            <#if galleryList?size gt 5 >
+			                <div class="swiper-btn swiper-btn-prev"><i class="material-icons">&#xE316;</i></div>
+			                <div class="swiper-btn swiper-btn-next"><i class="material-icons">&#xE313;</i></div>
+			            </#if>
+			        </dd>
+			        <dt>
+			            <#list galleryList as gallery>
+			                <#if gallery_index == 0>
+			                    <a href="<@imgurl pic="${gallery.big!''}"/>" class="MagicZoom" id="motorbike" data-options="zoomWidth:400px; zoomHeight:400px; selectorTrigger: hover; transitionEffect: false">
+			                        <img src="<@imgurl pic="${gallery.big!''}"/>">
+			                    </a>
+			                </#if>
+			            </#list>
+			        </dt>
+			    </dl>
+			</div>
+			
+			
+			
+			 <div class="info_right">
+			    <form id="goodsForm" style="float: left;">
+			        <div class="pro-name">
+			            <h2>${goods.name!''}</h2>
+			        </div>
+			        <div class="pro-details">
+			            <div class="pro-list clearfix">
+			                <div class="pro-title" style="line-height: 42px; *line-height: 48px; height:33px;">价格</div>
+			                <div class="pro-content" style="min-height: 32px;*height:auto">
+			                    <span style="color:#e93a38;font-size:30px;font-family: Tahoma;"><span class='price-by-group'></span><strong class="Dprice" id="price"> ￥${goods.price}</strong></span>
+			                </div>
+			            </div>
+			        </div>
+			         <div>
+				        <span class='spec-left'>商品编号:</span><span class='spec-right'>${goods.sn!''}</span>
+					</div>
+					<#if snapshot.spec_list??>
+				        <div class='spec-container'>
+				        	<#list snapshot.spec_list as spec>
+					        	<div>
+					                <span class='spec-left'>${spec.spec_name}:</span>	<span class='spec-right'>${spec.spec_value}</span>
+				                </div>
+			           		 </#list>
+						</div>
+					</#if>
+					
+			        <div>
+						<span class='spec-left'>品牌:</span> 	<span class='spec-right'>${goods.brand_name!''}</span>
+			        </div >
+			        <div>
+						<span class='spec-left'>分类:</span> 	<span class='spec-right'>${goods.category_name!''}</span>
+			        </div>
+			    </form>
+			</div>
+        </div>
+        <#assign storeTagsGoodsTag = newTag("storeTagsGoodsTag") />
+		<div class="details-left fl">
+		    <h3 class="marTop_15" style="cursor:pointer">热销商品</h3>
+		    <#assign storeTagsGoods = storeTagsGoodsTag("{'mark':'hot','storeid':${goods.shop_id},'num':5}") />
+		    <div class="details-left-con details-left-con02">
+		        <ul>
+		            <#if storeTagsGoods?size gt 0>
+		                <#list storeTagsGoods.list as st>
+		                    <li class="clearfix">
+		                        <div class="sPic fl">
+		                            <@image src="${st.thumbnail!''}" style="display: inline; width: 50px; height: 50px" />
+		                        </div>
+		                        <div class="sbox fr">
+		                            <div class="sName">${st.goods_name}</div>
+		                            <div class="sPri"><strong><span class="rmb">¥</span>${st.price?string("0.00")}</strong></div>
+		                        </div>
+		                        <a href="${ctx}/goods-${st.goods_id}.html"
+		                           title="${st.goods_name}" target="_blank"></a>
+		                    </li>
+		                </#list>
+		            </#if>
+		        </ul>
+		    </div>
+		
+		    <h3 class="marTop_15" style="cursor:pointer">新品推荐</h3>
+		    <#assign storeTagsGoods = storeTagsGoodsTag("{'mark':'new','storeid':${goods.shop_id},'num':5}") />
+		    <div class="details-left-con details-left-con02">
+		        <ul>
+		            <#if storeTagsGoods?size gt 0>
+		                <#list storeTagsGoods.list as st>
+		                    <li class="clearfix">
+		                        <div class="sPic fl">
+		                            <@image src="${st.thumbnail!''}" style="display: inline; width: 50px; height: 50px" />
+		                        </div>
+		                        <div class="sbox fr">
+		                            <div class="sName">${st.goods_name}</div>
+		                            <div class="sPri"><strong><span class="rmb">¥</span>${st.price?string("0.00")}</strong></div>
+		                        </div>
+		                        <a href="${ctx}/goods-${st.goods_id}.html"
+		                           title="${st.goods_name}" target="_blank"></a>
+		                    </li>
+		                </#list>
+		            </#if>
+		        </ul>
+		    </div>
+		</div>
+        <div class="details clearfix">
+	            <div class="details-right fr">
+				    <div class="s-left-banner" style="display: none;"></div>
+				    <div class="s-left-list details-nav" id="details-nav">
+				        <ul>
+				            <li class="link-suit selected"><a href="javascript:;">商品详情</a></li>
+				        </ul>
+				    </div>
+				    <div id="pl-details-nav" style="height: 36px; display: none"></div>
+				    <div class="s-left-box">
+				        <div class="s-content details-param" style="display: block">
+				            		<#-- 商品参数 -->
+							<#assign goodsParamList = snapshot.params_list />
+							<style>
+							.product-detail-div .t-info{
+								overflow: visible;
+							}
+							
+								
+							.group-inner .control-group{
+							    height: 30px;
+							    line-height: 30px;
+							    padding: 0px 10px;
+							    background: #f6f6f6;
+							    width: 190px;
+							    margin-bottom:20px;
+								margin-right:4px;
+							}
+							
+							.group-inner .control-group p{
+								width: 100%;
+								font-family: monospace;
+							    font-weight: 100;
+								color:#333;
+								text-align: left;
+								position: relative;
+							}
+							
+							.product-detail-div .group-inner{
+								display: flex;
+								flex-wrap: wrap;
+							}
+							</style>
+							<div class="product-detail-div clearfix">
+							    <div class="t-info"></div>
+							        <#if goodsParamList?exists && goodsParamList?size!=0>
+							    		<#list goodsParamList as group>
+							        <div class="t-info">
+											<div class="moudle_details">
+							            		<div class="moudle_top">
+							               			 <span class="sp_cs" style="cursor:pointer">${group.group_name!''}</span>
+							            		</div>
+							        		</div>
+							       			<div class="info-group-cont vbox">
+												<div class="group-inner">
+													<#if group.params?exists && group.params?size!=0 >
+													<#list group.params as param>
+													<div class="control-group params" >
+															<p class="control-label" style="cursor:pointer">${param.param_name!''}：
+																<span class='value'></span><#if param.param_type==1>
+																	${param.param_value!''}
+																	<#else>
+																	<#list param.optionAr as option >
+																	<#if (param.param_value!"") == option>${option}</#if>
+																	</#list>
+																	</#if></span>
+															</p>
+													</div>
+													</#list>
+													</#if>
+												</div>
+											</div>
+									 	</div>
+							       	 </#list>
+							   	 </#if>
+							    <div class="info_intro">${goods.intro!''}</div>
+							</div>
+				        </div>
+				    </div>
+				</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+<#assign title="商品收藏" /> 
+<#include 'member_header.html' />
+
+<!-- 获取会员收藏列表标签 -->
+<#assign collectTag = newTag("collectTag")>
+<!-- 调用会员收藏列表标签 -->
+<#assign collect = collectTag()!''>
+<!-- 将调用的结果赋值给变量 -->
+<#assign collectList = collect.result>
+
+<style>
+.favorite_intro dl{
+    height: 76px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 220px;
+    z-index: 2;
+    display: block;
+    background: #fff;
+}
+.favorite_intro p{
+position:absolute;
+bottom:0px;
+width:50px;
+border:1px solid #ccc;
+    background: rgba(204, 204, 204, 0.13);
+    text-align: center;
+}
+</style>
+
+<div class="member_center">
+	<div class="favorite_title">
+		<ul>
+			<li class="selected"><a href="favorite.html"><span>收藏的商品</span></a></li>
+			<li class=""><a href="collect_store.html"><span>收藏的店铺</span></a></li>
+		</ul>
+	</div>
+	<!-- 商品收藏列表 -->
+	<div class="favorite_list"> 
+		<ul class="f_list">
+			<#list collectList as favorite>
+				<li>
+					<div class="favorite_img">
+						<a href="../goods-${favorite.goods_id}.html" title="${favorite.goods_name}" class="img"> 
+							<@image src="${favorite.thumbnail!''}"  height="55" width="55" />
+						</a>
+					</div>
+					<div class="favorite_intro">
+						<dl>
+							<dt>
+								<a href="../goods-${favorite.goods_id}.html">${favorite.goods_name}</a>
+							</dt>
+							<dd>
+								<span>商品编号：${favorite.sn}</span>
+							</dd>
+							<dd>
+								销售价：<strong>￥${favorite.price?string("0.##")}</strong>
+							</dd>
+							<!-- <dd>
+								<p rel="${favorite.favorite_id}" style="cursor: pointer" class="del_favorite">删除</p>
+							</dd> -->
+						</dl>
+						<p rel="${favorite.favorite_id}" style="cursor: pointer" class="del_favorite">删除</p>
+					</div>
+				</li>
+			</#list>
+		</ul>
+		<@pager pageno="${page!'1'}" pagesize="${collect.pageSize}" totalcount="${collect.totalCount}" />
+	</div>
+</div>
+<script>
+	$(function() {
+			$(".favorite_img").hover(
+		        function() {
+		            $(this).animate({"top": "-20px"}, 400, "swing");
+		        },function() {
+		            $(this).stop(true,false).animate({"top": "12px"}, 400, "swing");
+		        }
+		    );
+		
+			$(".favorite_intro dl").hover(
+			        function() {
+			            $(this).animate({"top": "-40px"}, 400, "swing");
+			        },function() {
+			            $(this).stop(true,false).animate({"top": "0px"}, 400, "swing");
+			        }
+			    );
+		
+		
+
+		$(".del_favorite").click(function() {
+			if(confirm("确定要删除此商品收藏吗？")){
+				var favoriteid = $(this).attr("rel");
+				$.post("${ctx}" + "/api/shop/favorite/delete.do", {
+					"favorite_id" : favoriteid
+				}, function(result) {
+					if (result.result == 1) {
+						alert("删除收藏成功");
+						location.href = "favorite.html";
+					} else {
+						alert(result.message);
+					}
+				}, "json");
+			}
+		})
+	})
+</script>
+</div>
+<#include '../common/footer.html'/>

@@ -1,0 +1,160 @@
+	
+	<#assign checkB2b2cMemberTag = newTag("checkB2b2cMemberTag")>
+	<#assign storeMember = checkB2b2cMemberTag()>
+	<#if storeMember.store_id?? >
+	<#else>	
+		<#stop>
+	</#if>
+	<#-- 获取商品店铺信息 -->
+	<#assign myShopDetailTag=newTag("myShopDetailTag")>
+	<#assign shopInfo=myShopDetailTag("{'store_id':${storeMember.store_id},'type':1 }")>
+	<#if shopInfo.shop_disable = 'open'>
+		<#if storeMember.store_id??&&storeMember.store_id!=0>
+		    <!-- 获取店铺信息  -->
+		    <#assign myShopDetailTag = newTag("myShopDetailTag")/>
+		    <#assign shop = myShopDetailTag()>
+		   	<#assign headerTag = newTag("headerTag") /> 
+			<#assign header =headerTag() /> 
+			<#if title??>
+				<title>${title}-${shop.shop_name}</title> 
+			<#else>
+				<title>${shop.shop_name}</title> 
+			</#if> 
+		<#-- 声明店铺id全局变量 -->
+		<#assign store_id = storeMember.store_id!'0'>
+		<#else />
+			<#assign headerTag = newTag("headerTag") /> 
+			<#assign header =headerTag() /> 
+			<#if title??>
+				<title>${title}-商家中心</title> 
+			<#else />
+				<title>商家中心</title> 
+			</#if> 
+			<script>
+				alert("抱歉，您还没有店铺，为您跳转到申请页面。");
+				location.href = '${ctx}/new_store/create_store.html';
+			</script>
+		<!-- 此处要跳转到店铺申请页面 -->
+		</#if>
+	<#else />
+		<#assign headerTag = newTag("headerTag") /> 
+		<#assign header =headerTag() /> 
+		<#if title??>
+			<title>${title}-商家中心</title> 
+		<#else>
+			<title>商家中心</title> 
+		</#if> 
+		<script>
+			alert("抱歉，您还没有店铺，为您跳转到申请页面。");
+			location.href = '${ctx}/new_store/create_store.html';
+		</script>
+	</#if>
+	
+	<meta charset="UTF-8">
+	<#if keywords??>
+		<meta name="keywords" content="${keywords!''}"/>
+	<#else>
+		<meta name="keywords" content="${header.keywords!''}"/>
+	</#if> 
+	<#if description??>
+		<meta name="description" content="${description!''}"/>
+	<#else>
+		<meta name="description" content="${header.description!''}"/>
+	</#if>
+    <script>var ctxPath = '${ctx}${themes_path}/';</script>
+    <script>var ctx = '${ctx}';</script>
+    <script type="text/javascript" src="${ctx}/statics/e_tools/js/e_broswer.js"></script>
+    <!-- 判断IE，并使IE9以下支持html5标签 -->
+    <!–[if lt IE 9]> <script  src="${ctx}${themes_path}/js/html5.js"></script> <![endif]–>
+	<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.blockUI.min.js"></script>
+	<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.form-3.51.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/app.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/app.css">
+    
+    <link rel="stylesheet"  href="${ctx}/selector/css/jquery.filesUpload.css" />
+		<style type="text/css">
+			@font-face {
+				font-family: 'icomoon';
+				src: url('${ctx}/statics/e_tools/fonts/icomoon.eot?b1br7i');
+				src: url('${ctx}/statics/e_tools/fonts/icomoon.eot?#iefixb1br7i')
+				format('embedded-opentype'), url('${ctx}/statics/e_tools/fonts/icomoon.woff?b1br7i')
+				format('woff'), url('${ctx}/statics/e_tools/fonts/icomoon.ttf?b1br7i')
+				format('truetype'), url('${ctx}/statics/e_tools/fonts/icomoon.svg?b1br7i#icomoon')
+				format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+			.icomoon {
+				font-family: icomoon
+			}
+		</style>
+    <!-- echarts头文件引入 -->
+	<script src="${ctx}/adminthemes/new/js/echarts/echarts.js"></script>
+	<#-- 商品选择器JS -->
+	<script src="${ctx}/selector/js/jquery.goodsSelector.js"></script>
+	<#-- sku选择器 -->
+	<script src="${ctx}/selector/js/jquery.skuSelector.js"></script>
+	<#-- 文件上传控件的js -->
+    <script type="text/javascript"  src="${ctx}/selector/js/jquery.filesUpload.js"></script>
+    <script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url : "${ctx}/api/shop/sms/sms-safe.do",
+			global: false,
+			success : function(){
+				
+			}
+		});
+	});
+	//时间公共getFormatDateByLong(value, "yyyy-MM-dd")
+	Date.prototype.format = function (format) {  
+	    var o = {  
+	        "M+": this.getMonth() + 1,  
+	        "d+": this.getDate(),  
+	        "h+": this.getHours(),  
+	        "m+": this.getMinutes(),  
+	        "s+": this.getSeconds(),  
+	        "q+": Math.floor((this.getMonth() + 3) / 3),  
+	        "S": this.getMilliseconds()  
+	    };  
+	    if (/(y+)/.test(format)) {  
+	        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));  
+	    }  
+	    for (var k in o) {  
+	        if (new RegExp("(" + k + ")").test(format)) {  
+	            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));  
+	        }  
+	    }  
+	    return format;  
+	};  
+	function getFormatDateByLong(l, pattern) {  
+	    return getFormatDate(new Date(l*1000), pattern);  
+	}     
+
+	function getFormatDate(date, pattern) {  
+	    if (date == undefined) {  
+	        date = new Date();  
+	    }  
+	    if (pattern == undefined) {  
+	        pattern = "yyyy-MM-dd";  
+	    }  
+	    return date.format(pattern);  
+	}
+	
+	  //form表单序列化为json
+	(function($){ 
+	    $.fn.serializeJson=function(){ 
+	      var serializeObj={}; 
+	      $(this.serializeArray()).each(function(){ 
+	        serializeObj[this.name]=this.value; 
+	      }); 
+	      return serializeObj; 
+	    }; 
+	})(jQuery);   
+//	layui.use(['form', 'layedit', 'laydate'], function(){
+//	    var form = layui.form()
+//	        ,layer = layui.layer
+//	        ,layedit = layui.layedit
+//	        ,laydate = layui.laydate;
+//	});
+	</script>

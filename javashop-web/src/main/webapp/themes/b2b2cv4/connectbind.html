@@ -1,0 +1,274 @@
+﻿<#assign  title="用户绑定" />
+<#assign  index_type=2 />
+<#include 'common/header.html' />
+<#assign connectUserTag = newTag("connectUserTag") >
+<#assign connectUser= connectUserTag()>
+
+<link rel="stylesheet" type="text/css" href="${file_path}/css/reg.css" />
+<link rel="stylesheet" type="text/css" href="${file_path}/css/connectlogin.css">
+<style>
+	.right_area ul li .reg_box input{width:255px;}
+</style>
+<div class="register-box">
+
+	<div class="login_main" style="height: 520px;">
+		<h1>${connectUser.nickName},只差一步即可完成登录设置<a href="${ctx}/index.html">回到首页</a></h1>
+		<div class="left-area" style="float: right">
+			<form action="register.html" method="post" id="login_form">
+			<div class="login_window">
+				<h2 style="font-size: 16px;font-weight: normal;height: 34px;padding-left: 10px;">已有账号?直接绑定</h2>
+				<div class="m_account" style="width: 250px;">
+					<label>用户名：</label>
+					<input style="width: 150px;" type="text" tabindex="1"  name="username"  class="definition_small login_username" id="login_username" placeholder="请输入会员名称"/>
+				</div>
+				<div class="m_account" style="width: 250px;">
+					<label>密码：</label>
+					<input style="width: 150px;" type="password" vtype="password" tabindex="2"  name="password" id="login_password"  class="definition_small login_password" placeholder="请输入密码"/>
+				</div>
+				<div class="m_account login_account" style="width: 250px;">
+					<div class="m_input">
+						<label>验证码：</label>
+						<input type="text" tabindex="3" name="validcode"  size="8"  class="m_small" id="validcode" placeholder="请输入验证码" style="width:150px;"/>
+					</div>
+					<img src="${ctx}/validcode.do?vtype=memberlogin" alt="会员登录验证码" id="LoginimgVerifyCode" >
+				</div>
+				<div class="m_submit" style="width: 200px;">
+					<input type="button" tabindex="4" value="立即绑定" class="registration" id="loginBtn">
+				</div>
+			</div>
+			</form>
+		</div>
+		<div class="right_area">
+			<h2 style="font-size: 16px;font-weight: normal;height: 34px;padding-left: 50px; padding-top: 20px;">完成账号创建后即可直接登录商城</h2>
+			<form action="register.html" method="post" id="register_form" class="validate">
+				<ul style="margin-top: 0px;">
+					<li>
+						<div class="reg_box">
+							<span class="item">用户名：</span>
+							<input type="text" class="user_name" id="username" name="username"  fun="checkUserName" maxlength="20" placeholder="4-20个中英文数字组成，注册后不可修改"/>
+						</div>
+					</li>
+					<li>
+						<div class="reg_box reg-mobile">
+							<span class="item">手机号：</span>
+							<input type="text" class="user_name_mobile" id="usermobile" name="mobile" fun="memberMobile" maxlength="11" placeholder="可以用来找回用户名及商城联系到您" style="width:227px"/>
+							<span class="tip ok"></span>
+						</div>
+					</li>
+					<li>
+						<div class="reg_box">
+							<span class="item">注册邮箱：</span>
+							<input type="text" class="email" maxlength="30" id="reg_email" name="email"  fun="checkEmail" i placeholder="邮箱用于登录和取回密码"/>
+						</div>
+					</li>
+					<li>
+						<div class="reg_box">
+							<span class="item">密 码：</span>
+							<input type="password" class="password" name="password" id="password"   fun="isPasswd"   maxlength="16" placeholder="6--16英文字母或数字组成"/>
+						</div>
+					</li>
+					<li>
+					<div class="reg_box">
+						<span class="item">确认密码：</span>
+						<input type="password" class="password" name="reg_password"  id="reg_passwd_r" name="passwd_re"   fun="checkpwd" class="definition_small" maxlength="16" placeholder="确认登录密码"/>
+					</div>
+					</li>
+					<li>
+						<div class="regis_read">
+							<input type="checkbox" checked="checked" value="agree" fun="checkLicense" name="license" id="license" class="satisfied" />
+							<span>我已阅读并同意《<a href="/help.html?articleid=10&catid=17" target="_blank">服务协议</a>》</span>
+						</div>
+					</li>
+					<li style="text-align:center">
+						<input type="button" class="registration" value="注册并绑定" id="registerBtn"></input>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#LoginimgVerifyCode").click(function(){
+		$("#LoginimgVerifyCode").attr("src","${ctx}/validcode.do?vtype=memberlogin&r="+new Date().getTime());
+	});
+
+	//点击注册 	
+	$("#registerBtn").click(function(){
+		var options = {
+			url : "${ctx}/connect/register.do" ,
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				alert('恭喜您，注册并绑定账号成功！');
+				if(result.result == 1){
+					location.href = "register_success.html?mailurl="+result.mailurl+"&forward=${forward!''}";
+				}else{
+					$.alert(result.message);
+					$.Loading.hide();
+				}
+			},
+			error : function(e) {
+				$.alert("出现错误 ，请重试");
+				$.Loading.hide();
+			}
+		};
+
+		if("false"!=$(this).attr("validate")){
+			var errorNum = $(".error").length; //错误个数
+			//判断段是否有错误，如果错误个数大于0，则不能进行注册
+			if(errorNum > "0"){
+				alert("请按照提示输入");
+				return false;
+			}
+			$.Loading.show("正在提交您的信息，请稍候...");
+			$('#register_form').ajaxSubmit(options);	
+		}
+	});
+
+	//点击登录
+	$("#loginBtn").click(function(){
+
+		if($(".login_username").val()==""){
+			alert("请输入账号！");
+			return false;
+		}
+		if($(".login_password").val()==""){
+			alert("请输入密码！");
+			return false;
+		}
+		if($("#validcode").val()==""){
+			alert("请输入验证码！");
+			return false;
+		}
+
+		var options = {
+			url : "${ctx}/connect/login.do" ,
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				if(result.result==1){
+					alert('恭喜您，登录并绑定账号成功！');
+					var forward='${ctx}/member/member.html'; //默认是会员中心
+					<#if forward?? >
+					forward='${forward}';
+					</#if>
+					location.href =forward;
+				}else{
+					$.alert(result.message);
+					$("#LoginimgVerifyCode").attr("src","${ctx}/validcode.do?vtype=memberlogin&r="+new Date().getTime());
+					$.Loading.hide();
+				}
+			},
+			error : function(e) {
+				$.alert("出现错误 ，请重试");
+				$("#LoginimgVerifyCode").attr("src","${ctx}/validcode.do?vtype=memberlogin&r="+new Date().getTime());
+				$.Loading.hide();
+			}
+		};
+
+		$.Loading.show("正在提交您的信息，请稍候...");
+		$('#login_form').ajaxSubmit(options);
+	});
+
+});
+
+//检测手机号码格式
+function memberMobile(value, callback){
+	var tel = $(".user_name_mobile").val();
+	 var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+	 if(reg.test(tel)==false){
+		 callback(false,"手机号码格式错误");
+	 }
+	
+}
+ 
+//手机号码字段失去焦点校验手机号码是否正确
+$(".user_name_mobile").blur(function(){
+	var tel = $(".user_name_mobile").val();
+	 var reg = /^0?1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+	 if(reg.test(tel)==false){
+		$(this).next("span").removeClass("ok");
+		$(this).next("span").addClass("error");
+		$(this).next("span").text("手机号码错误");
+	 }else{
+		$(this).next("span").removeClass("error");
+		$(this).next("span").addClass("ok");
+		$(this).next("span").text("");
+	 }
+	});
+
+//检测用户名
+function checkUserName(value,callback){
+	var input = $("#username");
+	var username  = input.val();
+	var patrn=/^([0-9A-Za-z一-龥]|-|_){4,20}$/;
+	if (!patrn.exec(username)) return "格式不正确！"  
+	$.ajax({
+		url:"api/shop/member/checkname.do",
+		type:"POST",
+		data:"username=" + username,
+		dataType:"json",
+		success:function(json){
+			if(json.result==0){
+				callback(false,"重复的用户名！");
+			}else{
+				callback(true,"");
+			}
+		}		
+	});	
+	return true;
+}
+//检测手机号码
+function isPasswd(s){  
+	var patrn=/^(\w){6,16}$/;  
+	if (!patrn.exec(s)) return "密码格式不正确！"  
+	return true  
+}
+
+//检测邮箱
+function checkEmail(value,callback){
+	var input = $("#reg_email");
+	var email  = input.val();
+	if($.trim(email)==''){
+		return "邮箱不能为空！";
+	}
+	var reg = /^([a-z0-9+_]|\-|\.|\-)+@([\w|\-]+\.)+[a-z]{2,4}$/i; 
+	if(!reg.test(email)){
+		return "邮箱格式不正确！";
+	}
+	$.ajax({
+		url:"api/shop/member/checkemail.do",
+		type:"POST",
+		data:"email="+email,
+		dataType:"json",
+		success:function(json){
+			if(json.result==0){
+				callback(false,"邮箱重复！");
+			}else{
+				callback(true,"");
+			}
+		}		
+	});	
+	return true;
+}
+
+
+function checkpwd(){
+	if( $("#reg_passwd_r").val()==$("#password").val() ){
+		return true;
+	}
+	else{ 
+		return "密码不一致";
+	}
+}
+//输入框获得、失去焦点效果
+$(".reg_box input").blur(function(){
+	$(this).parents(".reg_box").removeClass("selected");
+})
+ $(".reg_box input").focus(function(){
+	  $(this).parents(".reg_box").addClass("selected");
+})
+</script>
+<#include 'common/footer.html'/>

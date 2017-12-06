@@ -1,0 +1,214 @@
+<#assign title="商品结算" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<#if member??>
+    <#assign checkoutParamTag = newTag("checkoutParamTag") />
+    <#assign checkoutParam = checkoutParamTag() />
+
+    <#assign checkCmptIsOnTag = newTag("checkCmptIsOnTag") />
+    <#assign creditIsOn = checkCmptIsOnTag("{'componentName':'余额支付组件'}") />
+
+    <#assign defaultConsigneeTag = newTag("defaultConsigneeTag") />
+    <#assign defAddr = defaultConsigneeTag()!'none' />
+    <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/checkout.css"/>
+    <script type="text/javascript" src="${ctx}/statics/e_tools/js/library/jquery.cookie.min-1.4.1.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/page/checkout.js"></script>
+    <!-- 商品结算 -->
+    <div class="checkout">
+        <!--收货地址-->
+        <div class="eui-item address-list">
+            <div class="eui-inner-item">
+                <#if defAddr != 'none'>
+                    <a href="javascript:location.replace('../member/address-list.html?back=checkout');" class="eui-block">
+                        <div class="title-def-address">
+                            <div class="title-def-address-name">${defAddr.name}</div>
+                            <div class="title-def-address-phone">${defAddr.mobile}</div>
+                            <#if defAddr.isDel == 1>
+                                <div class="title-def-address-default" id="address-default">
+                                    默认
+                                </div>
+                            </#if>
+                        </div>
+                        <div class="contnet-def-address">
+                            <i class="location-icon"></i>
+                            <span class="address-where">${defAddr.province} ${defAddr.region} ${defAddr.city!''} ${defAddr.town!''} ${defAddr.addr!''}</span>
+                        </div>
+                    </a>
+                    <#else />
+                    <div class="no-address">新建收货地址以确保商品顺利送达</div>
+                </#if>
+            </div>
+            <i class="eui-item-point"></i>
+        </div>
+        <div class="address-list-hr"></div>
+        <!--商品清单-->
+        <div class="eui-item checkout-cart">
+            <div class="eui-inner-item">
+                <!--商品条目-->
+                <#include './checkout-cart.html'/>
+            </div>
+        </div>
+        <!--支付配送-->
+        <div class="eui-item checkout-pay">
+            <div class="eui-inner-item">
+                <!--支付配送-->
+                <div class="pay-ship">
+                    <a href="javascript:location.replace('./checkout-pay-ship.html?back=checkout');" class="eui-block">
+                        <div class="potive">
+                            <span class="pay-item">
+                                <p class="pay-title">支付配送</p>
+                                <p class="pay-way-box">
+                                    <#if checkoutParam.paymentType == 'online'>
+                                        <#assign paymentTypeStr = '线上支付' />
+                                    </#if>
+                                    <#if checkoutParam.paymentType == 'offline'>
+                                        <#assign paymentTypeStr = '线下支付' />
+                                    </#if>
+                                    <#if checkoutParam.paymentType == 'cod'>
+                                        <#assign paymentTypeStr = '货到付款' />
+                                    </#if>
+                                    <span class="pay-way" id="pay-way">${paymentTypeStr}</span>
+                                    <span class="ship-way">商家配送</span>
+                                </p>
+                            </span>
+                            <span class="point-left"></span>
+                        </div>
+                        <span class="ship-time">
+                        <span><i class="clock-pic"></i>配送时间： <span class="ship-day" style="right: 0;">${checkoutParam.receive_time}</span></span>
+                    </span>
+                    </a>
+                </div>
+            </div>
+            <i class="eui-item-point"></i>
+        </div>
+
+        <!--发票信息-->
+        <div class="eui-item checkout-receipt">
+            <div class="eui-inner-item">
+                <a href="javascript:location.replace('./checkout-receipt.html?back=checkout');" class="eui-block">
+                    <div class="receipt">
+                        <div class="receipt-box">
+                            <#if checkoutParam.receipt.need_receipt=='no'>
+                                <span class="title-receipt">发票信息</span>
+                                <div class="receipt-info">
+                                    <div class="dont-need-receipt">不开具发票</div>
+                                </div>
+                            </#if>
+                            <#if checkoutParam.receipt.need_receipt=='yes'>
+                                <span class="title-receipt have-receipt">发票信息</span>
+                                <div class="receipt-info">
+                                    <div class="content-receipt">纸质发票-${checkoutParam.receipt.title!''}</div>
+                                    <div class="mc re-info02"></div>
+                                    <div class="head-receipt">${checkoutParam.receipt.content!''}</div>
+                                </div>
+                            </#if>
+                            <span class="s-point"></span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <i class="eui-item-point"></i>
+        </div>
+
+        <!--优惠券-->
+        <div class="eui-item checkout-bonus">
+            <#assign myStoreBonusByWapAccountTag = newTag("myStoreBonusByWapAccountTag") />
+            <#assign canUseStoreList = myStoreBonusByWapAccountTag("{'is_usable':1}") />
+            <#assign totalNum = canUseStoreList.totalNum!0 />
+            <#assign totalPrice = 0 />
+
+            <#if canUseStoreList.totalNum gt 0>
+                <#list canUseStoreList.totalStoreBonus as canUseStore>
+                    <#if canUseStore.bonusList?size gt 0>
+                        <#list canUseStore.bonusList as canUseBonus>
+                            <#if canUseBonus.is_used ?? && canUseBonus.is_used == 1>
+                                <#assign totalPrice = totalPrice + canUseBonus.type_money!0 />
+                            </#if>
+                        </#list>
+                    </#if>
+                </#list>
+            </#if>
+            <div class="eui-inner-item">
+                <a href="${ctx}/checkout/checkout-bonus.html" class="eui-block">
+                    <div class="title-bonus">
+                        优惠券
+                        <i class="num-bonus">${totalNum}张可用</i>
+                    </div>
+                    <div class="use-bonus">
+                        <#if totalPrice != 0>
+                            <span style="color: #ff002d;">-${totalPrice}￥</span>
+                        </#if>
+                    </div>
+                    <div style="clear: both;"></div>
+                </a>
+            </div>
+            <i class="eui-item-point"></i>
+        </div>
+
+        <!--备注信息-->
+        <div class="eui-item checkout-remark">
+            <div class="eui-inner-item eui-hr-top">
+                <a href="javascript:;" class="eui-block" id="open-remark">
+                    <div class="title-bonus">
+                        备注信息：
+                    </div>
+                    <div class="use-bonus view-remark" id="view-remark">
+                        ${checkoutParam.remark!'未填写'}
+                    </div>
+                    <div style="clear: both;"></div>
+                </a>
+            </div>
+            <i class="eui-item-point"></i>
+        </div>
+
+        <#assign tradePriceTag = newTag("tradePriceTag") />
+        <#assign tradePrice = tradePriceTag() />
+        <#assign checkCmptIsOnTag = newTag("checkCmptIsOnTag") />
+        <#assign creditIsOn = checkCmptIsOnTag("{'componentName':'余额支付组件'}") />
+
+        <!--金额统计-->
+        <div class="eui-item checkout-count">
+            <div class="eui-inner-item">
+                <div class="count-item">
+                    <div class="title-count-item">商品金额</div>
+                    <div class="value-count-item">${tradePrice.goods_price?string("currency")}<#if (tradePrice.exchange_point)?? && tradePrice.exchange_point!=0>+${(tradePrice.exchange_point)!''}分</#if></div>
+                </div>
+
+                <div class="count-item">
+                    <div class="title-count-item">优惠金额</div>
+                    <div class="value-count-item">-${tradePrice.discount_price?string("currency")}</div>
+                </div>
+
+                <#if creditIsOn=="ON">
+                    <div class="count-item">
+                        <div class="title-count-item">余额支付金额</div>
+                        <div class="value-count-item">-${((tradePrice.credit_pay)!0)?string("currency")}</div>
+                    </div>
+                </#if>
+
+                <div class="count-item">
+                    <div class="title-count-item">运费</div>
+                    <div class="value-count-item">${tradePrice.freight_price?string("currency")}</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 50px; clear: both;"></div>
+
+        <!--提交订单浮动-->
+        <div class="submit-order">
+            <div class="left-submit-order">
+                <div class="inner-left">
+                    应付款：
+                    <span class="big-price">${tradePrice.total_price?string("currency")}</span>
+                </div>
+            </div>
+            <div class="right-submit-order" id="cerate-order">
+                提交订单
+            </div>
+        </div>
+    </div>
+</#if>
+</body>
+</html>

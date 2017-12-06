@@ -1,0 +1,76 @@
+<form class="refund-box" id="refund-form">
+    <input type="hidden" name="order_sn" value="${ordersn!''}">
+    <#if refundWayTag == 0>
+        <!--退款方式-->
+        <div class="sales-item">
+            <div class="title-sales">退款方式</div>
+            <div class="content-sales">
+                <select name="account_type" id="refundTypeSelect">
+                    <option value="0">请选择退款方式</option>
+                    <option value="alipayDirectPlugin">支付宝</option>
+                    <option value="weixinPayPlugin">微信</option>
+                    <option value="银行转账">银行转账</option>
+                </select>
+            </div>
+        </div>
+        <!--退款账户-->
+        <div class="sales-item">
+            <div class="title-sales">退款账户</div>
+            <div class="content-sales">
+                <input name="return_account" id="refundTypeAsOnline" class="return-account sales-account-input" placeholder="请务必认真填写" maxlength="30">
+                <div id="refundTypeAsBank" style="display:none;">
+                    <input name="bank_name" class="return-account" placeholder="银行名称"/>
+                    <input name="bank_deposit_name" class="return-account" placeholder="开户行"/><br>
+                    <input name="bank_account_name" class="return-account" placeholder="银行户名"/>
+                    <input name="bank_account_number" class="return-account" placeholder="银行账号"/>
+                </div>
+            </div>
+            <input type="hidden" name="refund_way" value="offline">
+        </div>
+        <#else/>
+        <div class="sales-item">
+            <div class="title-sales">退款方式</div>
+            <div class="content-sales">
+                <span class="sales-btn selected" style="width:auto;padding:0 10px;">原支付方式退款</span>
+                <input type="hidden" name="refund_way" value="original">
+            </div>
+        </div>
+    </#if>
+
+    <!--退款金额-->
+    <div class="sales-item">
+        <div class="title-sales">退款金额（订单金额 : ￥${orderDetail.order_price!''}）</div>
+        <div class="content-sales">
+            <input type="tel" name="refund_price" id="refundPrice" class="return-account" value="${orderDetail.order_price!''}" maxlength="9">
+            <input type="hidden" id="refundPayprice" value="${orderDetail.paymoney!''}"/>
+        </div>
+    </div>
+
+    <!--退款原因-->
+    <div class="sales-item">
+        <div class="title-sales">退款原因</div>
+        <div class="content-sales">
+            <select name="refund_reason" id="refundReason" class="sales-select">
+                <option value="0">请选择退款原因</option>
+                <option value="商品质量有问题">商品质量有问题</option>
+                <option value="收到商品与描述不符">收到商品与描述不符</option>
+                <option value="不喜欢/不想要">不喜欢/不想要</option>
+                <option value="发票问题">发票问题</option>
+                <option value="空包裹">空包裹</option>
+                <option value="快递无记录">快递无记录</option>
+                <option value="快递一直没有收到">快递一直没有收到</option>
+                <option value="买错/不想要">买错/不想要</option>
+                <option value="未按照时间发货">未按照时间发货</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+    </div>
+
+    <!--问题描述-->
+    <div class="sales-item">
+        <div class="title-sales">问题描述</div>
+        <div class="content-sales">
+            <textarea name="customer_remark" id="refundCustomerRemark" class="sales-remark sales-account-input" maxlength="180" placeholder="写下您出现的问题吧，最多180个字哦！"></textarea>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,314 @@
+<#include '../../store_header.html' />
+<!-- 调用地区标签 -->
+<#assign regionSelect = "com.enation.app.base.tag.regions.RegionSelectDirective"?new()>
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/uploadify.css" />
+<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="${staticserver}/e_tools/js/jquery.addressSelect-1.0.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+	.step2.current{
+	    background-position: -135px -130px;
+	    width: 100px;
+	}
+	.step3.current{
+	    background-position: -135px -130px;
+	    width: 100px;
+	}
+	.step4.current{
+	    background-position: -135px -130px;
+	    width: 100px;
+	}
+	.joinin-step ul .step5 span{
+		margin-left: -34px;
+	}
+	.left_sidebar .content .agreement .hideer{
+		    background-position: -280px 0;
+	}
+	.app-address-title{
+		height: 28px;
+		line-height: 28px;
+		border-radius: 3px;
+	}
+	.previous3{
+	    width: 40px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #DCDCDC;
+}
+</style>
+<#-- 获取店铺信息  判断店铺状态-->
+	<#assign applyShopTag=newTag("applyShopTag")/>
+	<#assign shop=applyShopTag('{"step":"step3"}')>
+<div class="store_main">
+ <form id="next3" class="validat">
+	<div class="open_store" id="financial_info">
+		<div class="bread_crumb">
+			<span class="icon_home"></span>
+			<span>
+				<a href="${ctx}/index.html">首页</a>
+			</span>
+			<span class="arrow">></span>
+			<span>商家入驻申请</span>
+		</div>
+		<!--左侧-->
+		<div class="left_sidebar">
+			<div class="title">
+				<h2>商家入驻申请</h2>
+			</div>
+			<div class="content">
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						入驻协议
+					</dt>
+				</dl>
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						基本信息
+					</dt>
+				</dl>
+				<dl class="certification">
+					<dt style="cursor: pointer;"> 
+					  <i class="hideer">  </i>	
+						认证信息
+					</dt>
+					<dd style="display: none;">
+						<ul>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>营业执照信息</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>阻止机构代码证</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>一般纳税人证明</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl class="agreement financial" >
+					<dt style="cursor: pointer;" > 
+					  <i class="hideer">  </i>	
+						财务资质信息
+					</dt>
+					<dd>
+						<ul>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a href="#license">开户行银行许可证</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a href="#certificate">税务登记证</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl >
+					<dt> 
+					  <i class="hideer">  </i>	
+						店铺信息
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<!--右侧信息-->
+		<div class="right-layout">
+			<div class="joinin-step">
+				<ul>
+					<li class="step1 current"><span>入驻协议</span></li>
+					<li class="step2 current"><span>基本信息</span></li>
+					<li class="step3 current"><span>认证信息</span></li>
+					<li class="step4 current"><span>财务资质信息</span></li>
+					<li class="step5"><span>店铺信息</span></li>
+				</ul>
+			</div>
+			<div class="joinin-content">
+				<div class="apply_agreement">
+					<div class="basic-information">
+							<h3 id="license">开户行银行许可证</h3>
+					</div>
+					<div class="basic-data">
+						<div id="form_saveMember">
+						     <table border="0" cellspacing="0" cellpadding="0">
+						     	<tr>
+						     		<th>银行开户名：</th>
+						     		<td>
+						     			<input type="text" name="bank_account_name" <#if (shop.bank_account_name??)>value="${shop.bank_account_name}"</#if>  isrequired="true" style="width: 60%;"  placeholder="请输入银行开户名" maxlength="10">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th>公司银行账号：</th>
+						     		<td>
+						     			 <input type="text" name="bank_number" <#if (shop.bank_number??)>value="${shop.bank_number}"</#if>  isrequired="true" style="width: 60%;"  placeholder="请输入公司银行账号" maxlength="20">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th>开户银行支行名称：</th>
+						     		<td>
+						     			<input type="text" name="bank_name" <#if (shop.bank_name??)>value="${shop.bank_name}"</#if> isrequired="true" style="width: 60%;"  placeholder="请输入开户银行支行名称" maxlength="50">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th>开户银行所在地：</th>
+						     			<td id="selectAddress_on" style="cursor: pointer;">
+						     				<script type="text/javascript" colspan="3" class="choseAddr ">
+												$(function() {
+													<#if (shop.bank_province??&&shop.bank_province!='')>
+														$('#selectAddress_on').addressSelect({
+															deData: [${shop.bank_province_id},${shop.bank_city_id!''},${shop.bank_region_id!''},${shop.bank_town_id!''}],
+															 names : {
+										                            province: 'bank_province',
+										                            city    : 'bank_city',
+										                            region  : 'bank_region',
+										                            town    : 'bank_town'
+										                     }
+														});
+													<#else>
+														$('#selectAddress_on').addressSelect({
+															 names : {
+										                            province: 'bank_province',
+										                            city    : 'bank_city',
+										                            region  : 'bank_region',
+										                            town    : 'bank_town'
+										                        }
+														});
+													</#if>
+												})
+											</script> 
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th>开户银行许可证电子版：</th>
+						     		<td>
+						     			<span class="upload-btn bank_img_btn">上传</span>
+						     			<div>允许上传的格式（jpg、png、jpeg）和大小（1mb)以内</div>
+						     			<#if (shop.bank_img?? && shop.bank_img!="")>
+						     				 <img class="temp-preview-image" src="${shop.bank_img}" height="200" width="200">
+						     			</#if>
+  										<input type="hidden"  name="bank_img" maxlength="100" autocomplete="off" <#if (shop.bank_img??)>value="${shop.bank_img}"</#if>>
+						     		</td>
+						     	</tr>
+						     	
+						     	   <tr style="margin-left: -77px;">
+						     	   	 <td>
+									   <h3 id="certificate">税务登记证</h3>
+									 </td>  
+								   </tr>
+								 	<tr>
+							     		<th>税务登记证号：</th>
+							     		<td>
+							     			<input type="text" name="taxes_certificate_num" <#if (shop.taxes_certificate_num??)>value="${shop.taxes_certificate_num}"</#if>  isrequired="true" style="width: 60%;"  placeholder="请输入税务登记证号" maxlength="20">
+							     		</td>
+						     		</tr>
+							  		<tr>
+							     		<th>纳税人识别号：</th>
+							     		<td>
+							     			<input type="text" name="taxes_distinguish_num" <#if (shop.taxes_distinguish_num??)>value="${shop.taxes_distinguish_num}"</#if> isrequired="true" style="width: 60%;"  placeholder="请输入纳税人识别号" maxlength="20">
+							     		</td>
+						     		</tr>
+								   	<tr>
+							     		<th>税务登记证电子版：</th>
+							     		<td>
+							     			<span class="upload-btn taxes_certificate_img_btn">上传</span>
+							     			<div>允许上传的格式（jpg、png、jpeg）和大小（1mb)以内</div>
+							     			<#if (shop.taxes_certificate_img?? && shop.taxes_certificate_img!="")>
+						     					 <img class="temp-preview-image" src="${shop.taxes_certificate_img}" height="200" width="200">
+						     				</#if>
+  											<input type="hidden" name="taxes_certificate_img" maxlength="100" autocomplete="off" <#if (shop.taxes_certificate_img??)>value="${shop.taxes_certificate_img}"</#if>>
+							     		</td>
+						     		</tr>
+								</div>
+						     </table>
+						</div>
+					</div>
+					<div class="bottom">
+						<a  class="btn previous3">上一步</a>
+						<a  class="btn next3">下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ </form>
+ </div>
+ <script type="text/javascript">
+ 	$(function(){
+ 		
+ 			//		 点击认证信息让其子内容显示和隐藏
+		$(".certification dt").click(function(){
+			if($(".certification dd").css("display")=="none"){
+				$(".certification dd").css("display","block");
+				$(".certification .hideer").css("background-position","-280px 0px")
+			}else{
+				$(".certification dd").css("display","none");
+				$(".certification .hideer").css("background-position","")
+			}
+		})
+		//点击财务认证信息让其子内容显示和隐藏
+		$(".financial dt").click(function(){
+			if($(".financial dd").css("display")=="none"){
+				$(".financial dd").css("display","block");
+				$(".financial .hideer").css("background-position","-280px 0px")
+			}else{
+				$(".financial dd").css("display","none");
+				$(".financial .hideer").css("background-position","")
+			}
+		})
+		//  财务资质信息页面跳转到店铺信息页
+	$(".next3").click(function(){
+		var options = {
+				url : "${ctx}/api/b2b2c/shop-api/step3.do",
+				type : "POST",
+				async: false,
+				dataType : "json",
+				success : function(result) {
+					if(result.result === 0){
+						$.alert(result.message);
+					}else{
+						window.location.href = "shop_info.html";
+					}
+					$(".next3").removeAttr("disabled");
+			 	},
+			 	error : function(e) {
+			 		$.alert("出现错误，请重试");
+				}
+			};
+		$('#next3').ajaxSubmit(options); 	
+	});
+	//点击上一步操作
+	$(".previous3").click(function(){
+		window.location.href = "certification_info.html";
+	})
+	
+	//开户银行许可证电子版
+		options={
+             //文件上传成功后回调
+	    		success:function(data){
+	    			$("[name='bank_img']").val(data);
+	    	       },
+	    	    error:function(error){
+	    			console.log(error);
+	    		}	
+	 }
+	 $('.bank_img_btn').FilesUpload(options);
+		
+		//税务登记证电子版
+		options={
+             //文件上传成功后回调
+	    		success:function(data){
+	    			$("[name='taxes_certificate_img']").val(data);
+	    	       },
+	    	    error:function(error){
+	    			console.log(error);
+	    		}	
+	 }
+	 $('.taxes_certificate_img_btn').FilesUpload(options);
+ 		
+ })
+ </script>

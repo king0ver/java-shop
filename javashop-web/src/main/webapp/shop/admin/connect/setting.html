@@ -1,0 +1,193 @@
+<#include '/admin/header.html' > 
+<style>
+#settingForm{min-height:240px;}
+table tr{
+	display:block;
+    margin:8px 0;
+}
+
+.layui-tab-item{
+	height: 200px;
+}
+</style>
+<div class="admin-main">
+<form method="post" name="settingForm" id="settingForm">
+	<div class="layui-tab">
+		<ul class="layui-tab-title ">
+			<li tabid="qq" class="layui-this">QQ信任登录</li>
+			<li tabid="wechat">微信信任登录</li>
+			<li tabid="weibo">微博信任登录</li>
+			<li tabid="wechat_mp">微信公众号信任登录</li>
+		</ul>
+		<div class="layui-tab-content" style="height: 150px;">
+			<div class="layui-tab-item layui-show" >
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th width="100">App ID：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="qq_appid" autocomplete="off"
+								value="${setting.qq_appid!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">App Key：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="qq_appkey" autocomplete="off"
+								value="${setting.qq_appkey!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="qq_redirecturi" id="qq_redirecturi" autocomplete="off"
+								value="${setting.qq_redirecturi!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">wap回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="qq_wap_redirecturi" id="qq_wap_redirecturi" autocomplete="off"
+								value="${setting.qq_wap_redirecturi!''}" class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="layui-tab-item">
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th width="100">App ID：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechat_appid" autocomplete="off"
+								value="${setting.wechat_appid!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">App Secret：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechat_appsecret" autocomplete="off"
+								value="${setting.wechat_appsecret!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechat_redirecturi" id="wechat_redirecturi"
+								autocomplete="off" value="${setting.wechat_redirecturi!''}"
+								class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+			<div class="layui-tab-item">
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th width="100">App Key：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="weibo_appkey" autocomplete="off"
+								value="${setting.weibo_appkey!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">App Secret：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="weibo_appsecret" autocomplete="off"
+								value="${setting.weibo_appsecret!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="weibo_redirecturi" id="weibo_redirecturi"
+								autocomplete="off" value="${setting.weibo_redirecturi!''}"
+								class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">wap回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="weibo_wap_redirecturi" id="weibo_wap_redirecturi"
+								autocomplete="off" value="${setting.weibo_wap_redirecturi!''}"
+								class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="layui-tab-item">
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th width="100">App ID：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechatMp_appid" autocomplete="off"
+								value="${setting.wechatMp_appid!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">App Secret：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechatMp_appsecret" autocomplete="off"
+								value="${setting.wechatMp_appsecret!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechatMp_redirecturi" id="wechatMp_redirecturi"
+								autocomplete="off" value="${setting.wechatMp_redirecturi!''}"
+								class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">wap回调网址：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="wechatMp_wap_redirecturi" id="wechatMp_wap_redirecturi"
+								autocomplete="off" value="${setting.wechatMp_wap_redirecturi!''}"
+								class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</form>
+<div class="layui-layer-btn layui-layer-btn-" style="margin-right: 800px;"> 
+	<a class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="connectSave">确认</a>
+</div>
+</div>
+<script type="text/javascript">
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+    
+    
+    var baseUrl = document.location.href.substring(0, document.location.href.indexOf('/shop/admin')) + "/connect";
+	var types = ["qq", "wechat", "weibo", "wechatMp"];
+	for(var i = 0; i < types.length; i++) {
+		var redirectUri = $('#' + types[i] + '_redirecturi').val();
+		if (redirectUri == '') {
+			$('#' + types[i] + '_redirecturi').val(baseUrl + "/" + types[i].toLowerCase() + ".do");
+		}
+
+	}
+    
+    //监听提交
+    form.on('submit(connectSave)', function(data){
+    	var options = {
+    			url: "connect-setting/save.do?ajax=yes",
+    			type: "post",
+    			dataType: "json",
+    			success:function(result){
+    				if(result.result==1){
+    					$.Loading.success(result.message);
+    				}else{
+    					$.error(result.message);
+    				}
+    			},
+    			error : function(e) {
+					$.Loading.error("出现错误 ，请重试");
+				}
+    	};
+   		$("#settingForm").ajaxSubmit(options);
+       return false;
+    });
+});
+
+
+</script>
+
+<#include '/admin/footer.html' >

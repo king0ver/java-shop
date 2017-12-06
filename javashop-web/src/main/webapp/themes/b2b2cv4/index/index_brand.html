@@ -1,0 +1,21 @@
+<#assign advListTag = newTag("advListTag") />
+<#assign adv = advListTag("'acid':'13'")!'' />
+<#assign advList = adv.advList />
+
+<div class="brand-channel clearfix" data-lift="brand">
+    <div class="home-brand-adv slide_lr_info">
+    	<#list advList as _adv>
+	        <a href="${ctx}${_adv.url!''}" title="${_adv.aname!''}" target="_blank">
+	            <img class="slide_lr_img lazy" src="${file_path}/images/img-loading.gif" data-original='<@imgurl pic="${_adv.atturl!''}"/>'  width="${adv.width!''}" height="${adv.height!''}" />
+	        </a>
+        </#list>
+    </div>
+    <div class="brand-list">
+        <div class="brand-list">
+            
+            <ul>
+                这里的品牌列表 标签报错，暂时去掉，应该换为楼层
+            </ul>
+        </div>
+    </div>
+</div>

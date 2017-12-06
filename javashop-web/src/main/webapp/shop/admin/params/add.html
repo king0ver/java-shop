@@ -1,0 +1,48 @@
+	 
+<style>
+    .demo-param-dialog {
+        box-shadow: 0px 0px 6px rgba(43, 43, 43, 0.17);
+        margin: 20px auto;
+        width: 90%;
+        background: white none repeat scroll 0 0;
+        padding: 10px;
+    }
+    
+    .demo-param-dialog .layui-form-item label {
+        text-align: right;
+    }
+</style>
+
+<div class="main demo-param-dialog">
+    <form class="layui-form form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数名: </label>
+            <div class="layui-input-block">
+                <input type="text" name="param-name" lay-verify="name" id="name" placeholder="请输入参数名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型: </label>
+            <div class="layui-input-block">
+                <select name="type" lay-verify="type" id="type">
+                    <option value=""></option>
+                    <option value="输入项" name="type[input]">输入项</option>
+                    <option value="选择项" name="type[required]">选择项</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">可选择值: </label>
+            <div class="layui-input-block">
+                <textarea name="value-chosen" placeholder="请输入可选择值,用回车分隔  (选择'选择项'时,必填!)" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选项</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="required" title="必填" value="必填">
+                <input type="checkbox" name="is_index" title="可索引" value="可索引">
+            </div>
+        </div>
+    </form>
+</div>

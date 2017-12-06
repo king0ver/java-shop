@@ -1,0 +1,30 @@
+<#assign storeTagsGoodsTag = newTag("storeTagsGoodsTag") />
+<#assign storeTagsGoods = storeTagsGoodsTag("{'mark':'hot','storeid':15,'num':5}") />
+<#if storeTagsGoods?size gt 0>
+    <div class="product_more">
+        <div class="product_more_title J_more_tab">
+            <a class="tab2" href="javascript:;">畅销排行榜<i></i></a>
+        </div>
+        <div class="list-con">
+            <div id="lastBuy" class="product_more_list" style="display: block;">
+                <#list storeTagsGoods.list as goods>
+                    <#if goods_index lt 6>
+                        <dl>
+                            <dt>
+                                <a href="${ctx}/goods-${goods.goods_id}.html" target="_blank" title="${goods.name!''}">
+                                    <img class="lazy" src="${file_path}/images/img-loading.gif" data-original='<@imgurl pic="${goods.thumbnail!''}"/>' alt="${goods.name!''}" style="width: 160px; height: 160px; display: inline;">
+                                </a>
+                            </dt>
+                            <dd class="dl_pm_name">
+                                <a href="${ctx}/goods-${goods.goods_id}.html" target="_blank">${goods.name!''}</a>
+                            </dd>
+                            <dd class="dl_pm_price">
+                                <span><i>￥</i>${goods.price?string("0.00")}</span>
+                            </dd>
+                        </dl>
+                    </#if>
+                </#list>
+            </div>
+        </div>
+    </div>
+</#if>

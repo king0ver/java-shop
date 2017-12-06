@@ -1,0 +1,1356 @@
+
+
+.mod_point_nav {
+    background: #eee none repeat scroll 0 0;
+    height: 55px;
+    margin:0px auto;
+    width:1200px;
+}
+.wrap{
+	margin:0px auto;
+    width:1200px;
+}
+.mod_point_nav h2 {
+    background: #d93600 none repeat scroll 0 0;
+    color: #fff;
+    float: left;
+    font-size: 20px;
+    height: 21px;
+    line-height: 21px;
+    padding: 17px 0;
+    text-align: center;
+    width: 205px;
+}
+.mod_point_nav h2 span {
+    background: rgba(0, 0, 0, 0) url("../images/index/u6.png") no-repeat scroll 0 0;
+    display: inline-block;
+    height: 21px;
+    margin-right: 10px;
+    vertical-align: middle;
+    width: 21px;
+}
+.mod_point_nav .nav_list {
+    color: #333;
+    float: left;
+}
+.mod_point_nav a {
+    color: #333;
+    display: inline-block;
+    font-size: 14px;
+    height: 16px;
+    line-height: 16px;
+    margin-top: 20px;
+    padding: 0 25px;
+}
+.mod_point_nav .cur {
+    color: #d93600;
+    font-weight: bold;
+}
+.mod_point_menu {
+    float: left;
+    height: 245px;
+    position: relative;
+    width: 205px;
+    z-index:1;
+    background: #eee;
+}
+.mod_point_menu li {
+    float: left;
+    width: 205px;
+}
+.mod_point_menu li h3 {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll 188px -70px;
+    border: 1px solid #eee;
+    font-size: 12px;
+    height: 33px;
+    line-height: 33px;
+}
+.mod_point_menu .gray_bg h3 {
+    background-color: #eee;
+}
+.mod_point_menu li h3 a {
+    display: block;
+    padding-left: 18px;
+}
+.mod_point_menu li .menu_child {
+    line-height: 20px;
+    padding: 0 50px 9px 10px;
+}
+.mod_point_menu li .menu_child a {
+    color: #333;
+    white-space: nowrap;
+}
+.mod_point_menu li .menu_child a:hover {
+    color: #e60012;
+}
+.mod_point_menu li.cur h3 {
+    background: #ffaa2b url("../images/index/index_sprite.png") no-repeat scroll 188px -30px;
+    border: 1px solid #ffaa2b;
+    
+}
+.mod_point_menu li.cur h3 a {
+    color: #fff;
+}
+.mod_point_menu li.cur .item a, .mod_point_menu li.cur .item a:hover {
+    color: #fff;
+}
+.mod_point_menu li .sub_menu {
+    background: #fff none repeat scroll 0 0;
+    border: 2px solid #ff9902;
+    display: none;
+    left: 205px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 265px;
+}
+.mod_point_menu li.cur .sub_menu {
+    display: block;
+}
+.mod_point_menu .sub_menu dl {
+    border-bottom: 1px solid #eee;
+    margin-bottom: -2px;
+    padding: 12px 10px;
+}
+.mod_point_menu .sub_menu dl dt {
+    padding-left: 10px;
+}
+.mod_point_menu .sub_menu dl a {
+    color: #333;
+}
+.mod_point_menu .sub_menu dl a:hover {
+    color: #f60;
+}
+.mod_point_menu .sub_menu dt {
+    font-weight: bold;
+    line-height: 18px;
+}
+.mod_point_menu .sub_menu dd a {
+    line-height: 20px;
+    margin: 0 11px;
+    white-space: nowrap;
+}
+.mod_point_slide {
+    float: left;
+    height: 245px;
+    margin-left: 10px;
+    overflow: hidden;
+    position: relative;
+    width: 550px;
+    z-index: 101;
+}
+.mod_point_slide ul {
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+.mod_point_slide ul li {
+    float: left;
+}
+.mod_point_slide ul img {
+    height: 245px;
+    width: 550px;
+}
+.mod_point_slide .slide_num {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.mod_point_slide ol li {
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    font: 28px/22px tahoma,Arial,Simsun;
+    height: 25px;
+    margin-left: 2px;
+    text-align: center;
+}
+.mod_point_slide ol li.cur {
+    color: #ffaa2b;
+    cursor: default;
+}
+.mod_point_slide a.show_next, .mod_point_slide a.show_pre {
+    background-color: rgba(204, 204, 204, 0.8);
+    display: block;
+    height: 100px;
+    position: absolute;
+    top: 70px;
+    width: 25px;
+}
+.mod_point_slide a.show_pre {
+    left: 0;
+}
+.mod_point_slide a.show_next {
+    right: 0;
+}
+.mod_point_slide a.show_next:hover, .mod_point_slide a.show_pre:hover {
+    background-color: rgba(255, 170, 43, 0.8);
+}
+.mod_point_slide a.show_pre s {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll -50px 0;
+    display: block;
+    height: 100px;
+    width: 25px;
+}
+.mod_point_slide a.show_next s {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll -90px 0;
+    display: block;
+    height: 100px;
+    width: 25px;
+}
+.mod_personal_info {
+    background: #fff9f0 none repeat scroll 0 0;
+    height: 170px;
+    margin-top: -65px;
+    position: relative;
+    width: 205px;
+}
+.mod_personal_info .unlogin_wrap {
+    color: #f60;
+    font-family: "Microsoft YaHei";
+    font-size: 14px;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+}
+.mod_personal_info .login_wrap {
+    height: 50px;
+    padding: 5px 0 0 10px;
+}
+.mod_personal_info .login_wrap .user_avata {
+    border: 1px solid #999;
+    display: block;
+    float: left;
+    height: 38px;
+    margin-top: 5px;
+    width: 38px;
+}
+.mod_personal_info .login_wrap .user_avata img {
+    height: 38px;
+    width: 38px;
+}
+.mod_personal_info .login_wrap .point_detail {
+    float: left;
+    line-height: 22px;
+    margin-left: 10px;
+    position: relative;
+}
+.mod_personal_info .login_wrap .point_num {
+    color: #f60;
+}
+.mod_personal_info .login_wrap .point_num em {
+    font-family: "Century Gothic";
+    font-size: 24px;
+    vertical-align: baseline;
+}
+.mod_personal_info .login_wrap a.view_detail {
+    color: #333;
+}
+.mod_personal_info .login_wrap a.view_detail:hover {
+    text-decoration: underline;
+}
+.mod_personal_info .login_wrap .point_detail s {
+    color: #c00;
+    position: absolute;
+    right: -12px;
+    text-decoration: none;
+    top: -8px;
+}
+.mod_personal_info .outdated_point {
+    bottom: 22px;
+    color: #f60;
+    height: 18px;
+    left: 0;
+    line-height: 18px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.mod_personal_info .sign_in_wrap {
+    background: rgba(0, 0, 0, 0) url("../images/index/u2.png") no-repeat scroll 0 0;
+    cursor: pointer;
+    height: 64px;
+    margin: 0 auto 18px;
+    padding: 8px 0 0;
+    position: relative;
+    width: 185px;
+}
+.mod_personal_info .add_point {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll -125px 0;
+    display: block;
+    height: 25px;
+    left: 114px;
+    position: absolute;
+    top: 3px;
+    width: 25px;
+}
+.mod_draw_wrap {
+    height: 130px;
+    margin-top: 10px;
+    overflow: hidden;
+    width: 205px;
+}
+.mod_draw_wrap a {
+    height: 130px;
+    width: 205px;
+}
+.mod_personal_info .notice {
+    background: #feeacb url("../images/index/index_sprite.png") no-repeat scroll -270px 0;
+    color: #333;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    padding-left: 40px;
+}
+.mod_personal_info .notice a {
+    color: #333;
+}
+.mod_personal_info .improve_tips {
+    background: #ffcfa4 none repeat scroll 0 0;
+    bottom: 0;
+    color: #333;
+    height: 30px;
+    left: 0;
+    line-height: 30px;
+    overflow: hidden;
+    padding-right: 25px;
+    position: absolute;
+    text-indent: 20px;
+    width: 180px;
+}
+.mod_personal_info .close_btn {
+    background: rgba(0, 0, 0, 0) url("../images/index/point_sprite.png") no-repeat scroll -100px -80px;
+    cursor: pointer;
+    display: block;
+    height: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 10px;
+}
+.mod_point_exchange {
+    margin-top: 10px;
+}
+.mod_point_exchange .right_banner {
+    float: right;
+    width: 205px;
+}
+.mod_point_exchange .right_banner a {
+    display: block;
+    height: 225px;
+    width: 205px;
+}
+.mod_point_exchange .point_exchange_list {
+    float: left;
+    height: 470px;
+   
+    position: relative;
+    width: 765px;
+}
+.mod_point_exchange .point_tit h3 {
+    float: left;
+    margin-right: 10px;
+}
+.mod_point_exchange .point_tit em {
+    color: #333;
+    float: left;
+    font-family: "Century Gothic";
+    font-size: 16px;
+}
+.mod_point_exchange .point_tit i {
+    color: #666;
+    display: block;
+    float: right;
+    font-family: "Century Gothic";
+    font-size: 16px;
+    font-style: normal;
+    width: 240px;
+}
+.mod_point_exchange .point_tit span {
+    color: #333;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+}
+.mod_point_exchange .active_state {
+    border-bottom: 1px solid #eee;
+    color: #333;
+    margin: 0 20px 48px;
+    padding-top: 15px;
+    text-align: center;
+}
+.mod_point_exchange .active_state em {
+    background: #fff none repeat scroll 0 0;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    margin-bottom: -12px;
+    padding: 0 10px;
+}
+.mod_point_exchange .active_state em i {
+    font-size: 20px;
+    font-style: normal;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.mod_point_exchange a.pro_img {
+    position: relative;
+}
+.mod_point_exchange a.pro_img span {
+    background-color: rgba(255, 255, 255, 0.7);
+    bottom: 0;
+    color: #333;
+    height: 25px;
+    left: 0;
+    line-height: 25px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.mod_point_exchange a.pro_img:hover span {
+    color: #333;
+}
+.mod_point_exchange a.pro_img .sold_out {
+    color: #c00;
+}
+.mod_point_exchange a.pro_img .more_gift {
+    color: #f60;
+}
+.mod_point_exchange a.pro_img:hover .sold_out {
+    color: #c00;
+}
+.mod_point_exchange a.pro_img:hover .more_gift {
+    color: #f60;
+}
+.mod_point_exchange .begining_wrap {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    float: left;
+    margin-right: -1px;
+    padding: 2px;
+    position: relative;
+    width: 205px;
+    z-index: 101;
+}
+.mod_point_exchange .big_begining {
+    background: #fff none repeat scroll 0 0;
+    height: 416px;
+}
+.mod_point_exchange .big_begining .active_state {
+    color: #ccc;
+}
+.mod_point_exchange .big_begining .pro_img {
+    display: block;
+    height: 160px;
+    margin: 10px auto 0;
+    width: 160px;
+}
+.mod_point_exchange .big_begining .pro_img img {
+    height: 160px;
+    width: 160px;
+}
+.mod_point_exchange .begining_wrap .pro_detail {
+    display: none;
+    margin: 0 auto;
+    width: 200px;
+}
+.mod_point_exchange .pro_name {
+    display: block;
+    height: 36px;
+    line-height: 18px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.mod_point_exchange .pro_point {
+    margin-top: 10px;
+}
+.mod_point_exchange .pro_point b {
+    color: #c00;
+    font-family: "Century Gothic";
+    font-size: 14px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.mod_point_exchange .pro_point del {
+    color: #999;
+    font-family: "Century Gothic";
+    font-size: 14px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+.mod_point_exchange .begin_soon_wrap {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    float: left;
+    height: 416px;
+    margin-left: 0;
+    padding: 2px;
+    position: relative;
+    width: 205px;
+    z-index: 100;
+}
+.mod_point_exchange .soon_begining {
+    background: #fff none repeat scroll 0 0;
+    height: 416px;
+}
+.mod_point_exchange .begin_soon_wrap .pro_detail {
+    display: none;
+    float: left;
+    width: 148px;
+}
+.mod_point_exchange .begin_soon_wrap .pro_list {
+    margin-bottom: 10px;
+}
+.mod_point_exchange .begin_soon_wrap .pro_img {
+    display: block;
+    height: 160px;
+    margin: 0 auto;
+    width: 160px;
+}
+.mod_point_exchange .begin_soon_wrap .pro_img em {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    display: none;
+    height: 80px;
+    left: 0;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 40px 20px;
+    position: absolute;
+    top: 0;
+    width: 120px;
+}
+.mod_point_exchange .begin_soon_wrap .cur em {
+    display: block;
+}
+.mod_point_exchange .begin_soon_wrap .cur span {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}
+.mod_point_exchange .tomorrow_list_wrap {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #eee;
+  
+    height: 420px;
+    padding: 0 10px 0 9px;
+    position: absolute;
+    right: -230px;
+    top: 24px;
+    width: 220px;
+    z-index: 102;
+    
+}
+.mod_point_exchange .tomorrow_list_wrap li {
+    float: left;
+    margin: 0 5px 15px;
+}
+.mod_point_exchange .tomorrow_list_wrap a.pro_img {
+    display: block;
+    height: 100px;
+    position: relative;
+    width: 100px;
+}
+.mod_point_exchange .tomorrow_list_wrap a.pro_img img {
+    height: 100px;
+    width: 100px;
+}
+.mod_point_exchange .tomorrow_list_wrap a.pro_img span {
+    background-color: rgba(255, 255, 255, 0.7);
+    bottom: 0;
+    display: none;
+    height: 25px;
+    left: 0;
+    line-height: 25px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.mod_point_exchange .tomorrow_list_wrap .tomorrow_list_mask {
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 358px;
+    left: 0;
+    position: absolute;
+    top: 62px;
+    width: 239px;
+}
+.mod_point_exchange .tomorrow_list_wrap .begin_time {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll -200px -70px;
+    font-family: "Tahoma";
+    font-size: 20px;
+    height: 78px;
+    padding-top: 22px;
+    text-align: center;
+    width: 100px;
+}
+.mod_point_exchange .begining {
+    background: #feeacb none repeat scroll 0 0;
+    border: 1px solid #ffd595;
+    width: 337px;
+    z-index: 101;
+}
+.mod_point_exchange .begining .pro_detail {
+    display: block;
+}
+.mod_point_exchange .begining .big_begining .pro_img {
+    display: block;
+    height: 200px;
+    margin: 10px auto 0;
+    width: 200px;
+}
+.mod_point_exchange .begining .big_begining .pro_img img {
+    height: 200px;
+    width: 200px;
+}
+.mod_point_exchange .begining .active_state {
+    color: #f60;
+}
+.mod_point_exchange .begining_noStart {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    width: 339px;
+    z-index: 101;
+}
+.mod_point_exchange .ending .active_state {
+    color: #ccc;
+}
+.mod_point_exchange .begining .pro_list .pro_img {
+    float: left;
+    margin: 0 10px;
+}
+.mod_good_exchange li {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    float: left;
+    margin-bottom: -1px;
+    margin-left: -1px;
+    position: relative;
+}
+.mod_good_exchange .exchange_list {
+    border: 2px solid #fff;
+    height: 302px;
+    padding: 30px 15px 0 16px;
+    width: 160px;
+}
+.mod_good_exchange .exchange_list .pro_name {
+    display: block;
+    height: 36px;
+    line-height: 18px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.mod_good_exchange .exchange_list .original_price {
+    color: #f60;
+    margin-top: 2px;
+}
+.mod_good_exchange .exchange_list .original_price b {
+    font-family: "Century Gothic";
+}
+.mod_good_exchange .exchange_list .original_price del {
+    color: #999;
+    font-family: "Century Gothic";
+    font-size: 14px;
+    margin-right: 4px;
+}
+.mod_good_exchange .exchange_list .original_price span {
+    color: #999;
+    font-family: "Century Gothic";
+    font-size: 14px;
+}
+.mod_good_exchange .exchange_list .pro_point {
+    color: #333;
+    margin-top: 2px;
+}
+.mod_good_exchange .exchange_list .pro_point em {
+    color: #c00;
+    font-family: "Century Gothic";
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 3px;
+}
+.mod_good_exchange .exchange_list .pro_btn {
+    display: none;
+}
+.mod_good_exchange .cur {
+    border: 1px solid #ffca79;
+    z-index: 101;
+}
+.mod_good_exchange .cur .exchange_list {
+    border: 2px solid #feeacb;
+}
+.mod_good_exchange .cur .exchange_list .pro_btn {
+    display: block;
+}
+.mod_good_exchange .pro_label {
+    background: #ff5c4d none repeat scroll 0 0;
+    color: #fff;
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    position: absolute;
+    right: 5px;
+    text-align: center;
+    top: 12px;
+    width: 40px;
+}
+.mod_good_exchange .pro_label i {
+    border-color: #ff5c4d transparent transparent;
+    border-style: solid dashed dashed;
+    border-width: 12px 20px;
+    font-size: 0;
+    height: 0;
+    left: 0;
+    line-height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 24px;
+    width: 0;
+}
+.mod_good_exchange .pro_label u {
+    border-color: transparent transparent #ff5c4d;
+    border-style: dashed dashed solid;
+    border-width: 12px 20px;
+    bottom: 24px;
+    font-size: 0;
+    height: 0;
+    left: 0;
+    line-height: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+}
+.mod_new_exchange .new_exchange_wrap {
+    position: relative;
+}
+.new_exchange_wrap .pro_label {
+    background: #ff5c4d none repeat scroll 0 0;
+    color: #fff;
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    position: absolute;
+    right: 5px;
+    text-align: center;
+    top: 12px;
+    width: 40px;
+}
+.new_exchange_wrap .pro_label i {
+    border-color: #ff5c4d transparent transparent;
+    border-style: solid dashed dashed;
+    border-width: 12px 20px;
+    font-size: 0;
+    height: 0;
+    left: 0;
+    line-height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 24px;
+    width: 0;
+}
+.new_exchange_wrap .pro_label u {
+    border-color: transparent transparent #ff5c4d;
+    border-style: dashed dashed solid;
+    border-width: 12px 20px;
+    bottom: 24px;
+    font-size: 0;
+    height: 0;
+    left: 0;
+    line-height: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+}
+.mod_new_exchange .new_exchange_sort {
+    background: #feeacb none repeat scroll 0 0;
+    height: 337px;
+    left: -1px;
+    position: absolute;
+    top: 0;
+    width: 197px;
+    z-index: 101;
+}
+.mod_new_exchange .sort_list a {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #eee;
+    color: #333;
+    display: block;
+    font-size: 14px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+}
+.mod_new_exchange .sort_list a.cur {
+    background: #ffaa2b none repeat scroll 0 0;
+    border: 1px solid #ffaa2b;
+    color: #fff;
+    font-weight: bold;
+}
+.mod_new_exchange .new_exchange_sort .key_word {
+    padding: 10px 5px;
+}
+.mod_new_exchange .new_exchange_sort .key_word a {
+    line-height: 20px;
+    padding: 0 5px;
+}
+.mod_new_exchange li {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    float: left;
+    margin-bottom: -1px;
+    margin-left: -1px;
+    position: relative;
+    z-index: 100;
+}
+.mod_new_exchange .exchange_list {
+    border: 2px solid #fff;
+    height: 302px;
+    padding: 30px 15px 0 16px;
+    width: 160px;
+}
+.mod_new_exchange .exchange_list .pro_name {
+    display: block;
+    height: 36px;
+    line-height: 18px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.mod_new_exchange .exchange_list .original_price {
+    color: #f60;
+    margin-top: 2px;
+}
+.mod_new_exchange .exchange_list .original_price b {
+    font-family: "Century Gothic";
+}
+.mod_new_exchange .exchange_list .original_price del {
+    color: #999;
+    font-family: "Century Gothic";
+    font-size: 14px;
+    margin-right: 4px;
+}
+.mod_new_exchange .exchange_list .original_price span {
+    color: #999;
+    font-family: "Century Gothic";
+    font-size: 14px;
+}
+.mod_new_exchange .exchange_list .pro_point {
+    color: #333;
+    margin-top: 2px;
+}
+.mod_new_exchange .exchange_list .pro_point em {
+    color: #c00;
+    font-family: "Century Gothic";
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 3px;
+}
+.mod_new_exchange .exchange_list .pro_btn {
+    display: none;
+}
+.mod_new_exchange .cur {
+    border: 1px solid #ffca79;
+    z-index: 102;
+}
+.mod_new_exchange .cur .exchange_list {
+    border: 2px solid #feeacb;
+}
+.mod_new_exchange .cur .exchange_list .pro_btn {
+    display: block;
+}
+.mod_ticket_exchange .point_tit span {
+    float: left;
+    font-size: 14px;
+    margin-left: 15px;
+}
+.mod_ticket_exchange ul {
+    margin-right: -20px;
+}
+.mod_ticket_exchange li {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll 0 -360px;
+    float: left;
+    height: 131px;
+    margin-right: 20px;
+    position: relative;
+    width: 230px;
+}
+.mod_ticket_exchange .ticket_left {
+    color: #ff8c3f;
+    float: left;
+    font-family: "Microsoft YaHei";
+    font-size: 22px;
+    line-height: 85px;
+    text-align: center;
+    width: 115px;
+}
+.mod_ticket_exchange .ticket_left em {
+    font-family: "Century Gothic";
+    font-size: 40px;
+}
+.mod_ticket_exchange .ticket_right {
+    color: #ff8c3f;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 65px;
+    line-height: 20px;
+    overflow: hidden;
+    padding-top: 20px;
+    width: 115px;
+}
+.mod_ticket_exchange .left_ticket {
+    background-color: rgba(68, 68, 68, 0.2);
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+.mod_ticket_exchange .btn_wrap {
+    display: none;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+.mod_ticket_exchange .btn_wrap em {
+    background: #feeacb none repeat scroll 0 0;
+    color: #ff6400;
+    float: left;
+    font-weight: bold;
+    width: 115px;
+}
+.mod_ticket_exchange .btn_wrap a {
+    background: #ff6400 none repeat scroll 0 0;
+    color: #fff;
+    float: left;
+    font-weight: bold;
+    width: 115px;
+}
+.mod_ticket_exchange .btn_wrap a.exchange_out {
+    background: #999 none repeat scroll 0 0;
+}
+.mod_ticket_exchange .cur .left_ticket {
+    display: none;
+}
+.mod_ticket_exchange .cur .btn_wrap {
+    display: block;
+}
+.mod_btm_banner {
+    margin-right: -8px;
+    margin-top: 42px;
+}
+.mod_btm_banner a {
+    display: block;
+    float: left;
+    height: 217px;
+    margin-right: 7px;
+    width: 487px;
+}
+.mod_btm_banner img {
+    height: 217px;
+    width: 487px;
+}
+.right_fix {
+    bottom: 50px;
+    height: 78px;
+    left: 50%;
+    margin-left: 490px;
+    overflow: hidden;
+    position: fixed;
+    width: 38px;
+}
+.right_fix a {
+    background: rgba(0, 0, 0, 0) url("../images/index/point_sprite.png") no-repeat scroll 0 0;
+    display: block;
+    height: 38px;
+    line-height: 100px;
+    margin-bottom: 2px;
+    overflow: hidden;
+    width: 38px;
+}
+.right_fix a.go_top {
+    background-position: -224px -460px;
+    display: none;
+}
+.right_fix a.go_top:hover {
+    background-position: -262px -460px;
+}
+.right_fix a.feedback {
+    background-position: -224px -510px;
+}
+.right_fix a.feedback:hover {
+    background-position: -262px -510px;
+}
+.ponit_pop_wrap {
+    background-color: rgba(204, 204, 204, 0.5);
+    padding: 5px;
+    width: 690px;
+}
+.point_pop_content {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #dbdbdb;
+    padding: 20px 28px;
+    position: relative;
+    text-align: center;
+}
+.point_pop_content .close_btn {
+    background: rgba(0, 0, 0, 0) url("../images/index/point_sprite.png") no-repeat scroll -130px -30px;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 17px;
+}
+.point_pop_content h4 {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0 0 15px;
+}
+.point_pop_content p {
+    line-height: 20px;
+}
+.point_pop_content p i {
+    color: #999;
+    font-style: normal;
+}
+.point_pop_content .pop_btn_box {
+    margin-top: 21px;
+    text-align: center;
+}
+.point_pop_content .pop_btn_box a {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll 0 0;
+    display: inline-block;
+    font-family: "Microsoft YaHei";
+    height: 28px;
+    line-height: 28px;
+    margin: 0 5px;
+    text-align: center;
+    width: 108px;
+}
+.point_pop_content .pop_btn_box span {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll 0 0;
+    display: inline-block;
+    font-family: "Microsoft YaHei";
+    height: 28px;
+    line-height: 28px;
+    margin: 0 5px;
+    text-align: center;
+    width: 45px;
+}
+.point_pop_content .pop_btn_box .btn_gray {
+    background-position: -160px 0;
+    color: #333;
+    font-size: 14px;
+}
+.point_pop_content .pop_btn_box .btn_red {
+    background-position: -160px -30px;
+    color: #fff;
+    font-size: 14px;
+}
+.point_pop_content .pop_btn_box .btn_gray2 {
+    background-position: 0 -500px;
+    width: 140px;
+}
+.w1200 .right_fix {
+    margin-left: 600px;
+}
+.w1200 .mod_point_slide {
+    width: 770px;
+}
+.w1200 .mod_point_slide ul img {
+    width: 770px;
+}
+.w1200 .mod_point_exchange .point_exchange_list {
+    width: 985px;
+}
+.w1200 .mod_point_exchange .point_tit i {
+    color: #333;
+    display: block;
+    float: right;
+    font-family: "Century Gothic";
+    font-size: 16px;
+    font-style: normal;
+    width: 240px;
+}
+.w1200 .mod_point_exchange .point_tit span {
+    display: none;
+}
+.w1200 .mod_point_exchange .begining_wrap {
+    width: 195px;
+}
+.w1200 .mod_point_exchange .begin_soon_wrap {
+    width: 195px;
+}
+.w1200 .mod_point_exchange .begining {
+    width: 339px;
+}
+.w1200 .mod_point_exchange .begining_noStart {
+    width: 339px;
+}
+.w1200 .mod_point_exchange .tomorrow_list_wrap {
+    border-left: 0 none;
+    box-shadow: none;
+    right: 0;
+    z-index: 100;
+}
+.w1200 .mod_good_exchange .exchange_list {
+    padding: 30px 17px 0 18px;
+}
+.w1200 .mod_new_exchange .exchange_list {
+    padding: 30px 17px 0 18px;
+}
+.w1200 .mod_new_exchange .new_exchange_sort {
+    width: 201px;
+}
+.w1200 .mod_ticket_exchange ul {
+    margin-right: -25px;
+}
+.w1200 .mod_ticket_exchange li {
+    background: rgba(0, 0, 0, 0) url("../images/index/index_sprite.png") no-repeat scroll 0 -190px;
+    height: 151px;
+    margin-right: 25px;
+    width: 281px;
+}
+.w1200 .mod_ticket_exchange .ticket_left {
+    line-height: 105px;
+    width: 140px;
+}
+.w1200 .mod_ticket_exchange .ticket_right {
+    height: 73px;
+    padding-top: 32px;
+    width: 140px;
+}
+.w1200 .mod_ticket_exchange .btn_wrap em {
+    width: 140px;
+}
+.w1200 .mod_ticket_exchange .btn_wrap a {
+    width: 140px;
+}
+.w1200 .mod_btm_banner {
+    margin-right: -10px;
+}
+.w1200 .mod_btm_banner a {
+    height: 265px;
+    margin-right: 10px;
+    width: 595px;
+}
+.w1200 .mod_btm_banner img {
+    height: 265px;
+    width: 595px;
+}
+.ponit_pop_wrap {
+    background-color: rgba(204, 204, 204, 0.5);
+    padding: 3px;
+}
+.point_pop_content {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #dbdbdb;
+    padding: 0 28px;
+    position: relative;
+}
+.point_pop_content .close_btn {
+    background: rgba(0, 0, 0, 0) url("../images/point_sprite.png") no-repeat scroll -130px -30px;
+    cursor: pointer;
+    display: block;
+    height: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 17px;
+}
+.point_pop_content h4 {
+    color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 20px 0 15px;
+}
+.point_pop_content p {
+    line-height: 20px;
+}
+.point_pop_content p i {
+    color: #999;
+    font-style: normal;
+}
+.point_pop_content .pop_btn_box {
+    text-align: center;
+}
+.point_pop_content .pop_btn_box a.view_pro {
+    background: #f90 none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: 15px 14px 0 0;
+    padding: 0 12px;
+}
+.point_pop_content .pop_btn_box a.view_account {
+    background: #f90 none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: -9px 6px 0 0;
+    padding: 0 12px;
+}
+.point_pop_content .pop_btn_box span.view_sure {
+    background: #f90 none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: -9px 6px 0 0;
+    padding: 0 12px;
+}
+.point_pop_content .pop_btn_box span.view_cancel {
+    background: #f90 none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    margin: -9px 6px 0 0;
+    padding: 0 12px;
+}
+.not_enough {
+    width: 332px;
+}
+.not_enough .point_pop_content {
+    height: 160px;
+}
+.only_one {
+    width: 260px;
+}
+.only_one .point_pop_content {
+    height: 120px;
+}
+.point_choice_popbox {
+    background-color: rgba(51, 51, 51, 0.3);
+    padding: 4px;
+}
+.point_choice_pop_content {
+    background: #fff none repeat scroll 0 0;
+    padding: 0 10px;
+    position: relative;
+    width: 360px;
+}
+.point_choice_pop_content .choice_tit {
+    background: rgba(0, 0, 0, 0) url("../images/tit_bg.png") repeat-x scroll 0 bottom;
+    color: #333;
+    font-weight: bold;
+    height: 36px;
+    line-height: 28px;
+    position: relative;
+}
+.point_choice_pop_content .choice_tit .close_btn {
+    background: rgba(0, 0, 0, 0) url("../images/choice_popbox.png") no-repeat scroll 0 0;
+    cursor: pointer;
+    display: block;
+    height: 15px;
+    position: absolute;
+    right: 5px;
+    top: 11px;
+    width: 15px;
+}
+.point_choice_pop_content .choice_list {
+    padding-top: 15px;
+}
+.point_choice_pop_content .choice_list li {
+    color: #333;
+    line-height: 20px;
+    margin-bottom: 5px;
+    padding: 0 0 0 50px;
+}
+.point_choice_pop_content .choice_list li label {
+    color: #999;
+    display: block;
+    float: left;
+    height: 20px;
+    margin-left: -40px;
+    width: 40px;
+}
+.point_choice_pop_content .choice_size span {
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 18px;
+    line-height: 18px;
+    margin: 0 10px 10px 0;
+    padding: 0 13px;
+    position: relative;
+    text-align: center;
+}
+.point_choice_pop_content .choice_color span {
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 60px;
+    margin: 0 10px 10px 0;
+    position: relative;
+    text-align: center;
+    width: 60px;
+}
+.point_choice_pop_content .choice_color img {
+    height: 60px;
+    width: 60px;
+}
+.point_choice_pop_content .choice_size .selected, .point_choice_pop_content .choice_color .selected {
+    border: 1px solid #e60012;
+}
+.point_choice_pop_content .choice_size .selected i, .point_choice_pop_content .choice_color .selected i {
+    background: rgba(0, 0, 0, 0) url("../images/choice_popbox.png") no-repeat scroll -20px 0;
+    bottom: 0;
+    height: 14px;
+    position: absolute;
+    right: 0;
+    width: 14px;
+}
+.point_choice_pop_content li .pro_price {
+    color: #333;
+    float: left;
+}
+.point_choice_pop_content li .pro_price b {
+    color: #e60012;
+    font-family: Arial;
+    font-size: 16px;
+    padding: 0 5px;
+}
+.point_choice_pop_content li .pro_price span {
+    color: #e60012;
+    font-family: "Microsoft Yahei";
+}
+.point_choice_pop_content .btn_box {
+    border-top: 1px solid #e5e5e5;
+    height: 28px;
+    margin: 0 auto;
+    padding: 20px 0;
+    text-align: center;
+    width: 340px;
+}
+.point_choice_pop_content .btn_box a {
+    background: rgba(0, 0, 0, 0) url("../images/choice_popbox.png") no-repeat scroll 0 0;
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    margin: 0 15px;
+    text-align: center;
+    width: 70px;
+}
+.point_choice_pop_content .btn_box a.cancel_btn {
+    background-position: 0 -50px;
+    color: #333;
+}
+.point_choice_pop_content .btn_box a.sure_btn {
+    background-position: 0 -20px;
+    color: #fff;
+}
+.notAllow {
+    cursor: not-allowed;
+    opacity: 0.3;
+}

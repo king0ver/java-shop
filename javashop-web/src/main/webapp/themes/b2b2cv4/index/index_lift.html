@@ -1,0 +1,17 @@
+<div class="index-lift index-lift-hide">
+    <div class="index-lift-list" id="lift-list">
+        <!--<div class="index-lift-item current" data-lift-cur="seckill"><span>秒杀</span></div>
+        <div class="index-lift-item" data-lift-cur="reco"><span>推荐</span></div>
+        <div class="index-lift-item current" data-lift-cur="brand"><span>品牌</span></div>
+        <div class="index-lift-item" data-lift-cur="talent"><span>达人</span></div>
+        <div class="index-lift-item" data-lift-cur="shop"><span>店铺</span></div>-->
+        <#assign floorTag = newTag("floorTag") />
+        <#assign floorList = floorTag ("{'client_type':'pc'}") />
+        <#list floorList as floor>
+            <div class="index-lift-item" data-lift-cur="floor-${floor_index}">
+                <span><@substring title="${floor.name!'商品'}" length=4 dot=""/></span>
+            </div>
+        </#list>
+        <div class="index-lift-item index-lift-item-top"><i class="icon icon-to-top"></i></div>
+    </div>
+</div>

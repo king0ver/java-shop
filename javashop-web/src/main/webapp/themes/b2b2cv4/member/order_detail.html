@@ -1,0 +1,340 @@
+<#assign  title="订单详细" />
+<#include 'member_header.html' />
+<#assign buyerOrderDetailTag = newTag("buyerOrderDetailTag")>
+<#-- 调用“订单详细”标签，并传递参数 -->
+<#assign buyerOrderDetail = buyerOrderDetailTag()!''>
+<#assign orderDetail = buyerOrderDetail.orderDetail>
+<#assign orderFlowList = buyerOrderDetail.orderFlowList>
+<#assign orderItemList = orderDetail.productList>
+
+<!-- 
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/button.css" />
+ -->
+<script  src="${ctx}${themes_path}/js/Order.js"  ></script> 
+<style>
+.ui_content{min-width:100px;}
+</style>
+<div class="user_order">
+	<div class="order_detail" style="margin:0px;">
+		<div class="order_intro">
+			<h1>订单信息</h1>
+			<div class="detail_list">
+				<dl>
+					<dt>下单时间：</dt>
+					<dd><@dateformat time="${orderDetail.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></dd>
+				</dl>
+				<dl>
+					<dt>收货地址：</dt>
+					<dd>${ orderDetail.ship_province }
+					${ orderDetail.ship_city }
+					${ orderDetail.ship_region }
+					${ orderDetail.ship_town }</dd>
+				</dl>
+				<dl>
+					<dt>收货人：</dt>
+					<dd>${orderDetail.ship_name!''}</dd>
+				</dl>
+				<#if orderDetail.need_receipt?? && orderDetail.need_receipt=='yes'>
+					<dl>
+						<dt>发票抬头:</dt>
+						<dd>
+							${orderDetail.receipt_title!'无'}
+						</dd>
+					</dl>
+					<dl>
+						<dt>发票内容:</dt>
+						<dd>
+							${orderDetail.receipt_content!'无'}
+						</dd>
+					</dl>
+					<dl>
+						<dt>发票税号:</dt>
+						<dd>
+							${orderDetail.duty_invoice!'无'}
+						</dd>
+					</dl>
+				<#else>
+					<dl>
+						<dt>发票信息:</dt>
+						<dd>
+							无
+						</dd>
+					</dl>
+				</#if>
+				<dl>
+					<dt>送货时间:</dt>
+					<dd>
+						${orderDetail.receive_time!'无'}
+					</dd>
+				</dl>
+				<dl>
+					<dt>客户留言：</dt>
+					<dd>${orderDetail.remark!'无'}</dd>
+				</dl>
+				<dl class="online">
+					<dt>订单编号：</dt>
+					<dd>${orderDetail.sn}</dd>
+				</dl>
+				<dl>
+					<dt>付款方式：</dt>
+					<dd>${orderDetail.payment_type_text!'无'}</dd>
+				</dl>
+				<dl>
+					<dt>商品总价：</dt>
+					<dd>${orderDetail.goods_price?string.currency}</dd>
+				</dl>
+				<dl class="bottom_line">
+					<dt>运费：</dt>
+					<dd>${orderDetail.shipping_price?string.currency}</dd>
+				</dl>
+<!-- 				<dl class="m_order_small"> -->
+<!-- 					<dt>促销减价:</dt> -->
+<!-- 					<dd>${orderDetail.discount_price?string.currency}</dd> -->
+<!-- 				</dl> -->
+				<dl class="m_order_small">
+					<dt>优惠金额:</dt>
+					<dd>${(orderDetail.discount_price!0)?string.currency}</dd>
+				</dl>
+				<dl class="m_order_middle">
+					<dt>订单总价：</dt>
+					<dd>${(orderDetail.order_price!0)?string.currency}</dd>
+				</dl>
+				<dl class="m_order_big">
+					<dt >实付金额：</dt>
+					<dd >${orderDetail.paymoney!0?string.currency}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="intro_staus">
+			<div class="orderdetail">
+				<i class="order_ok"></i>
+				订单状态：${orderDetail.order_status_text}
+			</div>	
+				<ul>
+					<li>
+						1. 您尚未对该订单进行支付，请
+						<strong>
+							<#if orderDetail.operateAllowable.allowPay>
+								<a target="_blank" href="${ctx}/order_pay_desk.html?ordersn=${orderDetail.sn}" class="green_btn">按此为订单付款</a>
+							<#else>
+								按此为订单付款
+							</#if> 
+						</strong>
+						以确保商家及时发货。
+					</li>
+					<li>
+						2. 如果您不想购买此订单的商品，请
+						<strong>
+							<#-- (订单已确认 && 订单没有申请取消)  -->
+							<#if orderDetail.operateAllowable.allowCancel>
+									<a href='javascript:;' class="cancelBtn order_delno" sn="${orderDetail.sn}" >取消订单</a>
+							<#else>
+								取消订单	
+							</#if> 
+						</strong>
+						订单操作。
+					</li>
+					<li>
+						3. 如果您已经收到商品，请
+						<strong>
+	
+						<#if orderDetail.operateAllowable.allowRog> 
+							<a href="javascript:;" ordersn="${orderDetail.sn}" class="orderdetail_ok rogBtn">确认收货</a>
+						<#else>
+							确认收货	
+						</#if> 
+						</strong>
+						订单操作。
+					</li>
+					<#if orderDetail.order_status=='SHIPPED' || orderDetail.order_status=='ROG' ||orderDetail.order_status=='COMPLETE'>
+							<#-- 创建“查询订单物流详细”标签-->
+							<#assign OrderExpressInfoTag = newTag("orderExpressInfoTag")>
+							<#-- 调用“查询订单物流详细”标签，并传递参数-->
+							<#assign kuaidiResult = OrderExpressInfoTag('{"ship_no":"${orderDetail.ship_no}","logi_id":"${orderDetail.logi_id}"}')>
+							<#if kuaidiResult?exists>
+						        <#if kuaidiResult.message??&& kuaidiResult.message=='ok'>
+						         	<#list kuaidiResult.data as kd>
+						       	  		<li <#if kd_index == 0>class="first"</#if>>
+						       	  		<i class="node-icon"></i>
+						       	  		<span class="ship-time">${kd.time}:</span>
+						       	  		<span class="ship-text">${kd.context}</span>
+						       	  		</li>
+						         	</#list>
+						        <#else>
+						         	<li class="order-ship-error">${kuaidiResult.message}</li>
+						       	</#if>
+							<#else>
+				       			<li class="order-ship-error">出现错误，请稍后重试  ${kuaidiResult.message}</li>
+							</#if>
+					</#if>
+				</ul>
+				<!--  
+				<div class="order_help">
+					<a href="help-27-1.html">我有疑问要咨询</a>
+				</div>
+				-->
+		</div>
+	</div>
+	 <!-- 流程图 -->
+     <div class="flow" id="flow">
+            	<div class="app-flow-control">
+                    <div class="inner-app-flow">
+                        <div class="box-app-flow">
+                        	
+                        	<#list orderFlowList as orderflow>
+                        	
+	                        	<div class="items-app-flow">
+	                        		<#if orderflow.show_status==0>
+	                        			<span class="app-flow-hr"></span>
+		                                <div class="app-flow-bg">
+		                                	<div class="app-flow-color">
+		                                		<i class="icomoon app-flow-c show"></i>
+		                                		<i class="icomoon app-flow-e"></i>
+		                                	</div>
+		                                </div>
+		                            <#elseif orderflow.show_status==1>
+		                            	<span class="app-flow-hr show"></span>
+	                                	<div class="app-flow-bg">
+	                                		<div class="app-flow-color show">
+	                                			<i class="icomoon app-flow-c show"></i>
+	                                			<i class="icomoon app-flow-e"></i>
+	                                		</div>
+	                                   </div>
+		                            <#elseif orderflow.show_status==2>
+		                            	<span class="app-flow-hr show end"></span>
+	                                	<div class="app-flow-bg">
+	                                		<div class="app-flow-color show">
+	                                			<i class="icomoon app-flow-c show"></i>
+	                                			<i class="icomoon app-flow-e"></i>
+	                                		</div>
+	                                   </div>
+	                                <#elseif orderflow.show_status==3>
+	                                	<span class="app-flow-hr show"></span>
+	                                	<div class="app-flow-bg">
+	                                		<div class="app-flow-color show">
+	                                			<i class="icomoon app-flow-c"></i>
+	                                			<i class="icomoon app-flow-e show"></i>
+	                                		</div>
+	                                   </div>
+	                        		</#if>
+	                                <div class="app-flow-title">${orderflow.text}</div>
+	                            </div>
+                        	</#list>
+                        </div>
+                     </div>
+                </div>
+            </div>
+	<!-- 商品列表 -->
+	<div class="detail_goodslist">
+		<table cellpadding="0" cellspacing="0" style="width: 99%;">
+			<thead>
+				<tr>
+					<th class="dt1" colspan="2">商品名称</th>		
+					<th class="dt2">单价(元)</th>	
+					<th class="dt3">数量</th>	
+					<th class="dt4">小计</th>	
+					<th class="dt5">状态</th>	
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="d1" colspan="5" style="padding:0px;border-bottom:0px none;">
+						<table>
+						<#list orderItemList as item>
+							<tr>
+								<td >
+									<#if item.snapshot_id==0>
+										<a target="_blank" href="../goods-${item.goods_id}.html">
+											<img height="50" src="${item.goods_image!''}"  style="cursor: pointer;" />
+										</a>	
+									<#else>
+										<a target="_blank" href="../snapshot-${item.snapshot_id}.html?snapshot_id=${item.snapshot_id}">
+											<img height="50" src="${item.goods_image!''}"  style="cursor: pointer;" />
+										</a>	
+									</#if>
+									
+								</td>
+								<td style="text-align:left;">
+									<#if item.snapshot_id==0>
+										<a target="_blank" href="../goods-${item.goods_id}.html">${item.name} 
+									<#else>
+										<a target="_blank" href="../snapshot-${item.snapshot_id}.html?snapshot_id=${item.snapshot_id}">${item.name}
+									</#if>
+									 
+									<#if item.specList?exists>
+										<span style="margin: ">
+									<#list item.specList as spec>
+										<#if spec_index!=0></#if>(<strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>)
+											</#list>
+										</span>
+									</#if>
+								</td>
+								<td style="width:100px;">
+									${item.purchase_price?string.currency}
+								</td>
+								<td style="width:100px;">
+									${item.num}
+								</td>
+								<td style="width:100px;">
+									${(item.num * item.purchase_price)?string.currency}
+								</td>
+
+							</tr>
+						</#list>
+						<#assign orderGiftTag = newTag("orderGiftTag")>
+						<#assign giftDetail = orderGiftTag("{'ordersn':${orderDetail.sn}}")>
+						<!-- 促销活动赠送的赠品信息 -->
+						<#if (giftDetail?size >0) >
+						<#list giftDetail as gift >
+							<tr>
+								<td>
+									<img height="50" width="50"  src="${gift.gift_img}"  style="cursor: pointer;" /><br>
+									<span class="full-icon">赠送</span>
+								</td>
+									<td style="text-align:left;">${gift.gift_name}</td>
+									<td style="width:100px;">${gift.gift_price?string.currency}</td>
+									<td style="width:100px;">1</td>
+									<td style="width:100px;">${gift.gift_price?string.currency}</td>
+							</tr>
+						</#list>
+						</#if>
+						<!-- 促销活动赠送的优惠券信息 -->
+						</table>
+					</td>
+					<td class="d2">
+						${orderDetail.order_status_text}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<#include 'order_cancel.html'/>
+<!-- 浮动窗口 取消订单结束 -->
+<script>
+$(function(){
+	Order.init();	
+	//快递
+	$(".order-ship-list").load("${ctx}/express/order-kuaidi.do?ajax=yes&ship_no=${orderDetail.ship_no!''}&logi_id=${orderDetail.logi_id!0}");
+})
+function showRogInfo(logino,logicode){
+ 	$("#store_content").load('${ctx}/api/shop/order/order_kuaidi.do?logino='+logino+'&code='+logicode,function(){});
+}
+function lookcode(id){
+	var timestamp = new Date().getTime();
+	$.get("code_list.html?itemid=" + id ,function(result){
+		var dialog = $.dialog({ 
+			title:"卡密列表", 
+			content: result,
+			lock:true,
+			init:function(){
+				
+			}
+		});
+	});
+	
+}
+</script>
+</div>
+<#include '../common/footer.html'/>
+

@@ -1,0 +1,43 @@
+<style>
+    .demo-param-dialog {
+        box-shadow: 0px 0px 6px rgba(43, 43, 43, 0.17);
+        margin: 20px auto;
+        width: 90%;
+        background: white none repeat scroll 0 0;
+        padding: 10px;
+    }
+    
+    .demo-param-dialog .layui-form-item label {
+        text-align: right;
+    }
+</style>
+
+<div class="admin-main demo-param-dialog">
+    <form class="layui-form form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数名: </label>
+            <div class="layui-input-block">
+                <input type="text" name="param-name" id="param_name" required lay-verify="required" placeholder="请输入参数名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型: </label>
+            <div class="layui-input-block">
+                <select name="type" lay-verify="required" id="type">
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">可选择值: </label>
+            <div class="layui-input-block">
+                <textarea name="value-chosen" placeholder="请输入可选择值,回车/空格分隔" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选项</label>
+            <div class="layui-input-block check">
+
+            </div>
+        </div>
+    </form>
+</div>

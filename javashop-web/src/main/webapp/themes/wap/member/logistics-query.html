@@ -1,0 +1,46 @@
+<#assign title="物流查询" />
+<#include '/common/header.html' />
+<#assign orderExpressInfoTag = newTag("orderExpressInfoTag") />
+<#assign kuaidiResult = orderExpressInfoTag('{"ship_no":"${ship_no}","logi_id":"${logi_id}"}') />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/order-detail.css">
+<style rel="stylesheet" type="text/css">
+    body {background-color: #fff}
+</style>
+<div class="logistics-query">
+    <div class="logistics">
+        <div class="logi-logo">
+            <img src="${ctx}${themes_path}/images/car.png" alt="">
+        </div>
+        <div class="text">
+            <p>物流公司：<span>${kuaidiResult.name!''}</span></p>
+            <p>物流单号：<span>${kuaidiResult.nu!''}</span></p>
+        </div>
+
+    </div>
+    <div class="logistics-info">
+        <ul>
+            <#list kuaidiResult.data as res>
+                <li>
+                    <div class="box<#if res_index == 0> active</#if>">
+                        <div class="radios">
+                        </div>
+                        <div class="logi-quer">
+                            <span>${res.context!''}</span>
+                            <p>${res.time!''}</p>
+                        </div>
+                    </div>
+                </li>
+            </#list>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var module = new Module();
+        module.navigator.init('物流查询');
+    });
+</script>
+</body>
+
+</html>

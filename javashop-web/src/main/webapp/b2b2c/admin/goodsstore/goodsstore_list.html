@@ -1,0 +1,185 @@
+<#include '/admin/header.html' >
+<div  class="admin-main">
+	<div>
+		<!--提示区域  -->
+        <div class="page_explain">
+            <h2>操作提示</h2>
+            <ul>
+                <li><span>·</span>商品库存展示店铺中每件商品相对应库存数量</li>
+                <li><span>·</span>商品库存功能为查看商品库存信息，搜索功能</li>
+            </ul>
+        </div>
+        <!--按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" class="layui-btn layui-btn-primary " title="说明" id="explain"><i class="icon iconfont icon-tishi1"></i></button>
+            </div>
+		<div class="table_search">
+	        <input type="text" id="searchKeyword" style="height: 28px; width: 250px;" placeholder="请输入商品名称,编号">
+	        <button type="button" class="layui-btn layui-btn-primary layui-btn-small" style="margin: 0px 0px 10px 0px;" onclick="searchGoodsStore()"><i class="layui-icon">&#xe615;</i></button>
+    	</div>
+		<div style="background-color: white; display:none;" class="searchAdvanced">
+			<input id="Advanced" name="Advanced" type="hidden" value="0" />
+			<input id="depotid" name="depotid" type="hidden" value="0" />
+			<table width="98%" border="0" cellspacing="0" cellpadding="8">
+				<tr>
+					<td width="70" align="right">商品编号</td>
+					<td><input type="text" value="" id="sn"
+						class="input_text">
+					</td>
+					<td width="70" align="right">商品名称</td>
+					<td><input type="text" value="" id="name"
+						class="input_text">
+					</td>
+					<td width="70" align="right"></td>
+					<td><a id="searchAdvance" class="button blueButton"
+						onclick="searchGoodsStore()" href="javascript:;">开始搜索</a></td>
+				</tr>
+			</table>
+		</div>
+		</div>
+	</div>
+	<div class="clear height10"></div>
+	<div class="tableDiv">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" lay-skin="line" >
+			<tr>
+				<td>
+					<div class="shadowBoxWhite">
+						<form id="advform">
+							<table id="goodsstoredata" class="layui-table site-table table-hover">
+       							 <thead>
+       								 <tr>
+            							<th>商品编号</th>
+            							<th>商品名称</th>
+            							<th>分类</th>
+            							<th>库存</th>
+            							<th>可用库存</th>
+            							<th>操作</th>
+        							</tr>
+       							 </thead>
+    						</table>
+						</form>
+					</div></td>
+			</tr>
+		</table>
+	</div>
+	<div id="goodsStoreInfo" style="display: none;"></div>
+</div>
+<script type="text/javascript">
+$.fn.dataTable.ext.errMode = 'none';
+var table;
+$(function(){
+	table = $('#goodsstoredata').on( 'error.dt', function ( e, settings, techNote, message ) {
+		alert("没有权限");
+	})
+	.DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    "initComplete": function(settings, json) {
+	    	 $(".dataTables_paginate").on("click", "a", function() {
+	    		 if($('#goodsstoredata_processing')[0].style.display=="block"){
+					  $(".dataTables_paginate li").addClass("disabled");//防止多次点击页码
+				  }  
+	         });   
+		  }, 
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/shop/admin/goods-store/list-goods-store-json.do',
+	    },
+	    columns: [ //定义列
+	        {data: "sn"},
+	        {data: "name"},
+	        {data: "cname"},
+ 			{data: function(obj) {
+ 				var val=0;
+ 				if(obj.d_store!=null){
+ 					val=obj.d_store;
+ 				}
+ 				return val;
+	       	}},
+	        {data: function(obj) {
+ 				var val=0;
+ 				if(obj.enable_store!=null){
+ 					val=obj.enable_store;
+ 				}
+ 				return val;
+	       	}},
+	        {data: null,"render": function(obj) {
+	        	return "<a class='edit layui-btn layui-btn-small layui-btn-normal' href='#' onclick=\"view("+obj.goods_id+")\">查看</a>";	
+	       	}}
+	     ]
+	});
+	
+	
+	//树菜单
+	layui.use('tree', function(){
+		$.ajax({
+			url :"${ctx}/shop/admin/goods-store/list-store-json.do",
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				  //生成一个模拟树
+				  var arr=[];
+				  var createTree = function(result){
+					  for (var i=0;i<result.length;i++){
+					        arr.push({ name: result[i].text,id: result[i].id});
+					  }
+					    return arr;
+					  };
+				  layui.tree({
+				    elem: '#depots', //指定元素
+				    nodes:createTree(result),
+				    /*点击事件  */
+				    click: function(node){
+				    	var index = node.id;
+				    	$("#depots li").removeClass("selected");
+				    	$("#depots li").eq(index).addClass("selected");
+				        console.log(index) //node即为当前点击的节点数据
+				        table.ajax.url("${ctx}/shop/admin/goods-store/list-goods-store-json.do?depot_id="+index).load();
+				      } 
+				  });
+				},
+			error : function(e) {
+					alert("出现错误 ，请重试");
+				}
+			});
+		});
+	
+});
+
+function searchGoodsStore(){
+	var stype = $("#Advanced").val();
+	var keyword = $("#searchKeyword").val();
+	var name = $('#name').val();
+	var sn = $('#sn').val();
+	var depotid=$("#depotid").val();
+	var param = "stype="+stype+"&keyword="+keyword+"&name="+name+"&sn="+sn+"&depotid="+depotid;
+	var url = table.ajax.url("${ctx}/shop/admin/goods-store/list-goods-store-json.do?"+param);
+	url.load();
+}
+
+//维护操作
+function view(goodsid){
+	layer.open({
+        title:"商品库存信息",//标题
+        maxmin :true,//右上角可否放大缩小
+        offset: '100px',//弹框位置
+        type:2,//弹框的类型
+        shade: [0.3, '#000'],//黑色背景
+        shadeClose:false,//黑色背景是否可以点击关闭
+        content:ctx+"/b2b2c/admin/store-goods-stock/get-stock-dialog-html.do?goodsid="+goodsid,//内容的URL
+        area:['500px','350px'],//弹框大小
+        scrollbar: false//是否允许浏览器出现滚动条
+    });
+	
+}
+
+</script>
+<#include '/admin/footer.html' >

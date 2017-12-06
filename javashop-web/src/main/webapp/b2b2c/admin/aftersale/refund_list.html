@@ -1,0 +1,256 @@
+<#include '/admin/header.html' >
+<style>
+.form-horizontal .form-group{
+	margin-left:0px;
+	margin-right:0px
+}
+.layui-form-select dl dd.layui-this{
+	background-color:#428bca;
+}
+
+</style>
+<div  class="admin-main">
+   <div>
+<!--         提示区域  -->
+        <div class="page_explain">
+            <h2>操作提示</h2>
+            <ul>
+                <li><span>·</span>退款状态分为：申请中、审核通过、审核拒绝、全部入库、部分入库、取消退货、退款中、退款失败、已完成几种状态。</li>
+                <li><span>·</span>类型分为：退款、退货两种状态。</li>
+                <li><span>·</span>列表中的操作可以查看退款详情。</li>
+            </ul>
+        </div>
+<!--         按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" class="layui-btn layui-btn-primary " title="提示" id="explain"><i class="icon iconfont icon-tishi1"></i></button>
+				<input type="hidden" value="${ident!0}" id="ident"><!-- 从后台消息进入此列表需要 -->
+            </div>
+             <!--条件筛选  -->
+            <div class="table_search">
+				 <input type="hidden" name="keyword" placeholder="请输入订单编号" id="searchbtn">
+
+				  <div id="templist" style="display: none">
+			            <form class="layui-form">
+			                <div class="form-group" style="display:inline-block;width:50%;">
+							    <label for="contain">售后申请单号：</label>
+							    <input class="form-control" type="text" id="sn" name="sn" style="width:86%"/>
+							 </div> 
+							  <div class="form-group" style="display:inline-block;width:50%;">
+							    <label for="contain">售后申请订单号：</label>
+							    <input class="form-control" type="text" id="order_sn" name="order_sn" style="width:86%"/>
+							  </div> 
+								<div style="clear:both"></div>
+							  <div class="form-group">
+							    <label for="contain">店铺名称：</label>
+							    <input  class="form-control" type="text" id="seller_name"  />
+							  </div> 
+							   <div class="form-group">
+							    <label for="filter">类型：</label>
+							    	<select id="refuse_type">
+										<option value=''>--类型--</option> 
+										<option value="return_money">退款</option>
+										<option value="return_goods">退货</option>
+									</select>
+							 	 </div>
+							 	   <div style="clear:both"></div>
+							   	<div class="form-group" style="display:inline-block;width:50%;">
+								    <label for="contain">下单时间：</label>
+								   <input class="layui-input" placeholder="开始日" id="start_time" style="width:99%">
+					  			</div> 
+							  	<div class="form-group" style="display:inline-block;width:50%;">
+								   <input class="layui-input" placeholder="截止日" id="end_time" style="width:99%">
+							  	</div> 
+							  	  <div style="clear:both"></div>
+							  	 <div class="form-group">
+								    <label for="filter">退货(款)单状态：</label>
+								    	<select id="refund_status">
+											<option selected value="" >--类型--</option> 
+											<option value="apply">申请中</option>
+											<option value="pass">审核通过</option>
+											<option value="refuse">审核拒绝</option>
+											<option value="all_stock_in">全部入库</option>
+											<option value="part_stock_in">部分入库</option>
+											<option value="cancel">取消退货</option>
+											<option value="refunding">退款中</option>
+											<option value="refundfail">退款失败</option>
+											<option value="completed">已完成</option>
+										</select>
+							 	 </div>
+			            </form>
+			      </div>
+			</div>
+        </div>
+    </div>
+    
+<!--     表格区域  -->
+    <table id="dg" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        <thead>
+        <tr>
+            <th>退款ID</th>
+			<th>售后申请单号</th>
+			<th>售后申请订单号</th>
+			<th>店铺名称</th>
+			<th>类型</th>
+			<th>退货状态</th>
+			<th>创建时间</th>
+			<th>申请金额</th>
+			<th>操作</th>
+        </tr>
+        </thead>
+
+    </table>
+<!--     传值等操作(暂定)  -->
+    <div id="addBrand" ></div>
+</div>
+
+<!-- js区域  -->
+<script>
+var table;
+$(function(){
+	//搜索栏
+    var cent = $("#templist").html();
+    $("#searchbtn").searchBox({
+        content: cent,
+        keywordSearch: function () {
+         var keyword = $("input[name=keyword]").val();
+		table.ajax.url("${ctx}/after-sale/admin/refund-all.do?order_sn="+keyword).load();
+        },
+        formSearch: function () {
+          var start_time = $("#start_time").val();
+			var end_time = $('#end_time').val();
+			var sn = $("#sn").val();
+			var order_sn = $("#order_sn").val();
+			var seller_name = $("#seller_name").val();
+			var refuse_type = $("#refuse_type").val();
+			var refund_status = $("#refund_status").val();
+			console.log(refund_status)
+			var param = "start_time="+start_time+"&end_time="+end_time+"&sn="+sn+"&order_sn="+order_sn+"&seller_name="+seller_name+"&refuse_type="+refuse_type+"&refund_status="+refund_status;
+			console.log(param)
+			table.ajax.url("${ctx}/after-sale/admin/refund-all.do?"+param).load();
+        }
+    });
+	
+	table = $('#dg').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"get",
+	        url: '${ctx}/after-sale/admin/refund-all.do?ident='+$("#ident").val(),
+	    },
+	    columns: [ //定义列
+	    	{
+				data:"id"
+			},
+			{
+				data : "sn"
+			},
+			{
+				data : "order_sn"
+			},
+			{
+				data : "seller_name"
+			},
+			{
+				data : function(data){
+					if(data.refuse_type=="return_goods"){
+						return "退货";
+					}else{
+						return "退款";
+					}
+				}
+			},
+			{
+				data : "refund_status_text"
+			},
+			{
+				data : function(data){
+					return $.dateFormat(data.create_time);
+				}
+			},
+			{
+				data : function(data){
+					if(data.refund_price==null){
+						return "";
+					}else{
+						return data.refund_price;
+					}
+					
+				}
+			},
+			
+			{
+				data : function(data) {
+					
+					var btn = "";
+					if(data.operateAllowable.allowAdminApproval){
+						btn = "退款"
+					}else{
+						btn = "查看";
+					}
+					return "<a class='layui-btn layui-btn-small '  onclick=\"newTab('查看退款单"+(data["sn"])+"','${ctx}/shop/admin/refund-detail.do?sn="+data["sn"]+"')\"  "
+							+" >"+btn+"</a>";
+				}
+			} ]
+	});
+	
+	//layui日期控件配置
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  
+		  var start = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      end.min = datas; //开始日选好后，重置结束日的最小日期
+		      end.start = datas //将结束日的初始值设定为开始日
+		    }
+		  };
+		  
+		  var end = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      start.max = datas; //结束日选好后，重置开始日的最大日期
+		    }
+		  };
+		  
+		  document.getElementById('start_time').onclick = function(){
+		    start.elem = this;
+		    laydate(start);
+		  }
+		  document.getElementById('end_time').onclick = function(){
+		    end.elem = this
+		    laydate(end);
+		  }
+		  
+		});
+
+});
+
+
+//筛选
+$("#searchReturned").click(function(){
+	_searchReturned(table);
+});
+
+function _searchReturned(table){
+
+	var state = $("#returnState").val();
+	var url = table.ajax.url("${ctx}/b2b2c/admin/store-order-report/refund-list-json.do?state="+state);
+	url.load();
+}
+	
+
+
+</script>
+<#include '/admin/footer.html' >

@@ -1,0 +1,25 @@
+<#assign exchangeCatList=newTag("exchangeCatListTag") />
+<#assign catList= exchangeCatList("{'catid':'0'}") />
+<div>
+	<#list catList as catTop>
+    	<ul>
+    			<li>
+	            	<h3><a href="javascript:void(0);">${catTop.name}</a></h3>
+	                <div>
+	                	<#assign childrenCatList=exchangeCatList("{'catid':'"+catTop.cat_id+"'}")>
+	                	<#list childrenCatList as children>
+	                    <dl>
+	                        <dt><a href="#">${children.name}</a></dt>
+	                        <dd>
+	                        	<#assign lastChildrenList=newTag("{'catid':'"+child.cat_id+"'}")>
+	                        		<#list latChildrenList as last>
+	                            	<a href="#">last.name</a>
+	                            	</#list>
+	                        </dd>
+	                    </dl>
+	                    </#list>
+	                </div>
+	            </li>	
+        </ul>
+    </#list>
+</div>

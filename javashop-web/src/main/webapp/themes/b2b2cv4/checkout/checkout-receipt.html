@@ -1,0 +1,94 @@
+<div class="content-ckt invoice">
+    <#assign receiptListTag = newTag("receiptListTag") />
+    <#assign receiptList = receiptListTag() />
+
+    <#if receiptParam?? && receiptParam.need_receipt?? && receiptParam.need_receipt == 'yes'>
+        <#assign needReceipt = 'yes'/>
+    <#else/>
+        <#assign needReceipt = 'no'/>
+    </#if>
+    <#list receiptList as receipt>
+        <#if receipt.is_default == 1>
+            <#assign defaultReceipt = receipt />
+        </#if>
+    </#list>
+    <#if needReceipt == 'no'>
+        <div class="receipt-title"></div>
+        <div class="receipt-content" style="cursor:default">无需发票</div>
+    <#else/>
+        <div class="receipt-title">${receiptParam.title!''}</div>
+        <div class="receipt-content">${receiptParam.content!''}</div>
+    </#if>
+    <a href="javascript: void(0);" class="edit-invoice">修改</a>
+    <#if needReceipt == 'yes'>
+        <a href="javascript: void(0);" class="cancel-invoice" style="margin-left: 10px; color: #ff3500;">取消发票</a>
+    </#if>
+    <div style="display: none;" id="invoice_content">
+        <div class="invoice-dialog" id="invoice_dialog">
+            <div class="invoice-head">
+                <div class="title-invoice-head">发票抬头：</div>
+                <div class="items-invoice-head" style="margin-bottom: 10px">
+                    <div class="ckt-checkbox head-invoice personal<#if receiptParam?? && receiptParam.title?? && receiptParam.title == '个人'> selected</#if>">
+                        <span>个人</span>
+                        <input class="company-invoice-input" value="个人" style="display: none;" />
+                    </div>
+                    <#list receiptList as receipt>
+                        <div class="ckt-checkbox head-invoice company<#if receiptParam?? && receiptParam.title?? && receiptParam.title == receipt.title> selected</#if>">
+                            <div class="__title__">${receipt.title}</div>
+                            <input class="company-invoice-input" maxlength="30" value="${receipt.title}" data-old_value="${receipt.title}" style="border: none; outline: none;" />
+                            <div class="__btns__">
+                                <a href="javascript:;" class="__edit__">编辑</a>
+                                <a href="javascript:;" class="__update__">保存</a>
+                                <a href="javascript:;" class="__delete__">删除</a>
+                            </div>
+                            <input type="hidden" name="receipt_id" value="${receipt.id}">
+                            <input type="hidden" name="receipt_content" value="${receipt.content}">
+                            <input type="hidden" name="receipt_duty" value="${receipt.duty}">
+                        </div>
+                    </#list>
+                    <#if receiptList?size lt 10 >
+                        <div class="ckt-checkbox head-invoice __add_ele__" style="display: none">
+                            <input class="company-invoice-input" maxlength="60" style="border: none; outline: none;" placeholder="新增单位发票抬头">
+                            <div class="__btns__ show">
+                                <a href="javascript:;" class="__save__">保存</a>
+                            </div>
+                        </div>
+                        <a href="javascript:;" style="color: #005ea7" class="add-invoice">新增单位发票</a>
+                    </#if>
+                </div>
+            </div>
+            <div class="invoice-head duty"<#if receiptParam?? && receiptParam.title?? && receiptParam.title == '个人'> style="display: none"</#if> >
+                <div class="title-invoice-head" style="margin-top: 10px">纳税人识别号：</div>
+                <input class="duty-invoice-input" placeholder="纳税人识别号" maxlength="50" value="${receiptParam.duty_invoice!''}">
+                <span style="color: #ff3500">必填</span>
+            </div>
+            <div class="invoice-content">
+                <div class="title-invoice-head">发票内容：</div>
+                <div class="items-invoice-content" style="float: left; width: 360px;">
+                    <div class="ckt-checkbox content-invoice personal<#if receiptParam?? && receiptParam.content?? && receiptParam.content == '明细'> selected</#if>">
+                    <span>明细</span>
+                </div>
+                <#if is_Self == "true">
+                    <#list receiptContentList as receiptContent>
+                        <div class="ckt-checkbox content-invoice<#if receiptParam?? && receiptParam.content?? && receiptParam.content == receiptContent.receipt_content> selected</#if>">
+                            <span>${receiptContent.receipt_content}</span>
+                        </div>
+                    </#list>
+                </#if>
+            </div>
+        </div>
+
+        <div class="invoice-inputs" style="display: none;">
+            <#if needReceipt == 'yes'>
+                <input type="hidden" name="receiptContent" value="${receiptParam.content!''}">
+                <input type="hidden" name="receiptTitle" value="${receiptParam.title!''}">
+                <input type="hidden" name="receiptDuty" value="${receiptParam.duty_invoice!''}">
+            <#else/>
+                <input type="hidden" name="receiptContent">
+                <input type="hidden" name="receiptTitle">
+                <input type="hidden" name="receiptDuty">
+            </#if>
+        </div>
+    </div>
+</div>
+</div>

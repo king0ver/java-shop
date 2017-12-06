@@ -1,0 +1,279 @@
+body {
+    width: 100%;
+    background-color: #eee;
+    font-size: 14px;
+}
+
+.login-tab {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 44px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.login-tab .item {
+    width: 50%;
+    text-align: center;
+}
+
+.login-tab .item span {
+    display: inline-block;
+    width: 60px;
+    height: 42px;
+    line-height: 42px;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-tab .item.selected span {
+    color: #ff002d;
+    border-bottom: 2px solid #ff002d;
+}
+
+/* 登录、注册表单
+============================================================================ */
+.login-form,
+.register-form {
+    width: 100%;
+    margin-top: 15px;
+    background-color: #fff;
+}
+
+.form {
+    display: none;
+    width: 100%;
+}
+
+.login-form .ordinary-form {
+    height: 137px;
+}
+
+.form.show {
+    display: block;
+}
+
+.inner-form {
+    padding: 7px 10px;
+}
+
+.inner-form .item {
+    position: relative;
+    width: 100%;
+    height: 50%;
+}
+
+.inner-form .item .inner-item {
+    height: 20px;
+    padding: 12px 0;
+}
+
+.inner-form .item {
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.inner-form .item:last-child {
+    border-bottom: none;
+}
+
+.inner-form .item i,
+.complete-info .item i{
+    display: inline-block;
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.inner-form .mobile i,
+.complete-info .mobile i{
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACFUlEQVRoQ+2a3U0DMQzHf0biDUQ3oH1DghNlgzIBbECZADYANoAJ6AgwAd2AohaJN44JAMEbEkFuU7hWB0mPtL1KOemeEjv+O/5I7AgL/skk8huqFVjdBtOYhM5/rrTh7U5IX3xpvAEYkn3gEqj4Mi84T4U/FLpXPvReAAybdVi69WEYbs7njnDfcfHzBJCoNvYGzMwT0HIxLjjeBFm3tNdCV3f9z88XwPOP6XzUhIfUxbjIuGGjCsuPljYVujUXH18AZshI6Ipd6AaouhbwHE/hY1cVY0hG1nLRFwSwdQpy4mI+2bg5E3qnEUCe1sa1YsjuwEBzk2nbhoMcPnPYgQjA+tLcfCDuQNwBZwCJUegXFeWF4xhGYyJzetTPhGhCQIDTaExkMZE53S4mspjIfjeSGIUghtEYRv8bRtuA/kW+BoitdM/tTlxE7twz7ywLW0nTltpDSa98tKTemsmFRlczKAgTqDYqWsjtV7xnBiCk6rO8SgPAXlYObBGxJfTOfECXAsDoTWsotl/CKwuANNNpGSLwaliUBECijbq1UZMxT0LP6fQlAbB1DnI0BuBC6B27/KAkALSfvKJdHM0XGhzViZ3CTzOMZkxiVk0+P5PzvQ9k2qykqlGXKRQb7+/Y0E9CtlkXvNFtbVObzqr5sehSTNd/UL0CzaBPDb5TUf+xx0odmNJjDz2Wv3em8tgjuJ4DMfwC7Sc5T/uGCw0AAAAASUVORK5CYII=') no-repeat center;
+    background-size: 20px 20px;
+}
+
+.inner-form .validcode i {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAE1ElEQVRoQ+2Z3W0bRxDHf6s4T7ERu4LIbwFEwlIFpiqwVIHtCixXELoCUxWEqsDqIFIFpkEayFvoCkJB9JMcTjB3e9Tu3t738cGAF+AL725u/vP5nznDd37Md64/PwCoB4Xf9+Gn57B3CHIIZh/Qn3uWIEswM9jM4L9rw9/LrhHQ2gPC/mN4+BJ4BeawnSIyA6awvjAsV21kNAaQKv7ofap4r2cCt++aAmkEQBi8ATMGHudVl0/AJXCVXvu2zEIkDbEHWUidACMwzyLwVyBjw+K8rmlqAbDh8gHMyBcsX1JAt5dNLWc9eaIKg/ktkHsF69M6MisBCAeHsPeXb3W1thkb5mrxzkcYZkBcr6xgc2z4rHlSeEoBFCh/blicddY6EGC9rN5441yqBFEIII3bnz86lr8BOTEsbIz3DSGVJww0P9Szv9o3rODuqKjklgAYfHTK4w1sRlXu7AuS9bwayoKQmWFxFJMfBSAM1JV/3D+wOdqV8sLBGRgJK48FoRFgj7wzLLQCeicHIB868Qf7sLYwnALaDIHNW8PniSs3MGQ0lCIABpP7RJJPhkXLLlsO0Vc+ufc0VtWEwey+Z0iugEQADP91EjcqtKv1I8pfGObRzp6WWD5kCW2YP3Hf7wHwb5YvhkVIyLrqThPlt9HPQElg1uw8owYAvPDpvd5HlNfCOYP1cVnXFYr1CgFcgXluK/Jxm5ovDDUUnoGo97SLXqucuPJbG5eCsL1B2YACVnlbShOGkDhlqxEAW/Y0VmNhp7zf/f/Ckr4/nVKdq0JOCGlzswDAMN/qXQjAvakq8OOUo/CpbcJab1kQUmowYbg17g4AeEmmlGOaTl7JdOZwm3xZTvuOWrV8OqsLQKci275vn9Shs0GZy1EOP35V1bunVcqGvgtllHhg0DiJ/W6ZbzRJ2tFcbtCRnRwoTeLmZTQAEOUrwlDZ5YsiylCdY7XLqNf1lob502rhSsb2dEZWW18aFqeREHAaUXmyxt4nFLODGJVw8oDXhrkSrsJjyd8/Tvk9y5hlZAFwY5hH5uky+Z5Rc8/HyJxLpWt6wWWViTLZDkiJoKNwc2YruHNJLTKXrE208WTDRDSu/SRLdkRaAGKbhuzWQsJWZP+ATt/A7X5YGQsGGjeuE/E1QikBocOJzsvZOKjPamkdh1y/Rm7pMqH5QOO0b6ekovua07rcKK3bSVKv2kxy+c5ePJeUzMTRsKj0RJVlq67bpqWcKsudaOhkcmqsVYzSAje2p4b56ypFml63FUvncHdlU7lMqLHY2r0nhIOXae64S2Ld+ukap8Ni6z4fksqkA7cdwJs3o3xzU5m/vIA93TQEFFyuYX1Sh4tVesAvl7pmVOZYbpW8ssmSTEdCjesRiHKb2LKgccVqBCCv2FC5vE5gE8P8rQ823C2VZoVS8AmsJ3Ws7krqCiA6ZPiDSpniuiTW2eHrtKnitapQVSWJDRn2G4K3oLI9Qb8fKM/S/jKDu1nTuSCmT2sP+Ks/rRjfRvDgPRjd49ijFl6P2lq3yoBpPrY8/qojsawel7jtXPmOAIZKoQsWX3IO6/EuLd8pB4I52PGhhhKv6nKmls73HmsVQvn1e/qtrGr46UPhUEZLAElj0rXJqu1Hvr7AtALQ18v7kPMDQB9W7CLjf9fRLE9lV/3HAAAAAElFTkSuQmCC') no-repeat center;
+    background-size: 20px 20px;
+}
+
+.inner-form .ordinary i {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAD1UlEQVRoQ+1Z3U0bQRD+BoWnBAUqCLxFwhZQQaACoAJwBTEVxKkAUwF2BTgVgCuA6IyUt5gKYmS/gRg0d2vd797O2kcsJK9kv+ze7nwz8+38LOGdD3rn8mMJYNEWrNwCjM11YG0HwDrAuxFAugn/EfSrBlwJgEjoj4cAHUU/6xgBfANwj3DfrQLM3AAY2yfASjvSuM/gOwBnhEFonVnHzAAirX+6Bsi4SVIE7gMk2hYhZexHAElcKzs6hKDxXwEwtneBleu01vkBoBYw7hGGoyKBGF83gQ+nADUBfI7XCNDJge27MnDeFrAI/5MwaGm1aIgubncyLwgvAAVu8wi87BPup66ixRCuY9RPAVwmPvJ2J08AtavELTOX8FOh8yBezgj3Yh3VUANg1PYBEr+fjgYh6KhOcSxi1NoAfTfLRsB4S8sHHwBy48htIqNLCMT8lQ1GbQjQl2hDVnNKBcAQ9zaW9mmL8GdYmfR5PowIwYZmfyWAWgugH2+l/ZgPSSvgmBD0XCC0AG4TAUu1sevgovk0F/iCMJB4UTqUAOoc7zLe0BLMdXh2Pn1R8B1hsOfawwkgs2mfMJgS2bX3TPOMWFmEwCmfc8ESgKcdGPV/cY7ldtelBTwV7Fz+BhyQFHj1rzlZHWCckhYsSAdMfiAMNl37OF0oDOyoS35v8veXvVmzT5cwmcTuFyEoK0/D7bQAJCIe+uYpLoHzcaCeOEeXlWoBiCauzIFDQrDlK5xrvSly5AYyQ5dvqQDk3QiVpdJTcTNphDpgegBIJXRDYLxXVUqRz3b5QNut8AAQNqwkhTZklt7O4NjlGq75fJnKau2rSZwwc7Yq865hk4CKa+ynXZ9aQ22BYl8N2dEDJg1fd4rchi4zfSVvbnkDMISWWjjREoE0sdrA5MIFJOoNrUr9m831vYX3dqG0+VOknk4JEClECntEjO0msHKe4cWjgJm1QTCTBdKcQCcuxqMZWx6fzHNMUOwD3Jwnss8FIAaSblDpAOivyrKbbC4Axp93oncA6Yv6WICbAN0B498u3lQKwAQdIbCkF4XZos4CKUZJi11us64vGLUFoncAks6yoya2p8Hp5pVVrx2Au5VFYlMTSwO2SNuP5g0g8Ujx3LEFori9HgovDyISGIveDCS+yJ7SoSt9ALFawASac4vG5Xmop2k86VKJtSOAxbrf8usFyHPDppQSAHWpwpJaF223AbuGXcK65s2lIJdBMkjKZ9YUvgRAqtl6AUxavgRzCWybzwOx86oEwPQ56O007gIYc8Yug/oWch22qPklgEVpPo76i5ZgzvNfAURujkC+mY0KAAAAAElFTkSuQmCC') no-repeat center;
+    background-size: 20px 20px;
+}
+
+.inner-form .password i {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC50lEQVRoQ+2Z300bQRDGf2Mlb4lCKoh5i4QtTAWBCgIVBDqggzgVJFRAqABTQdxBjGykvIV04AjyRORBe96Tz8edb/+cg1BuJYQl78zON9/seGZWeOJLnrj9NACyDCpv2/DsPbAP0gbMH6AjkBHMhvDnQrie1sV8LQzMDX/+ETh0MGwK+gVuT+oAEg1A6RqjPwMbDsZnthhW9Ei4GvnJLe+OAqB0vwIfcgZcAAO4Gwo/rpMAorML2gM5BnmT2W9C6UgYD0JBBAOwnj9dHKyXoIdVHlW2jqHVB15Z2SnM9qrkygAGAVC2etD6nlF6Joxd4n9+pRN5GWTYmMLNZsidCATQGYK8sxnmUpj0fEPAOmG4YEJPhMmxrx5vADbj/FwcdLeZxrrv4Up3HzhfyN289mUhAEASwybrmOUVOkUAlY75jdi235kLbRKD8woAkA0fDmIyyPw+JGk4TQYXwtiw4rxCAGQ8NtsJzR6phcsJQUfCZMfZevCvhZSupgcIY28HFIdRuE5vAxoABRTEOKVhwOfCle1dGwPzDMG2re3t+WLqGLs08zkGSplONcXg5apMVxhCSnsDXpyCeOXkGAirZXUAt0dFv9IlADrn5cabLGrE0v91mO2iUwfC5CB/2gMARZUmJFTaNduAVg9mI2jV1BqW6Uza0ky/8fCHswhArbVOLD+5pulBrVQAoNMHMf2tCZNPwqSmixoGRVltTwMgzK/uUg0DMXdgXuvPVLg6c/f58s5HYyDXqHh3Wot+4ZEucZXnXBmp0rO2LFR1cAMgLS3znvhXnmsYWD8DyVuBmbwBf3fDh1+PlIVcQ6RqX1VIry0LVRnm+n0DIKaUcPXyqn3/IwNLI+9ruNsLzSCxDNhR/rfMa+eeMLGZba694BKbicRL0wOnT0CxdtQl/xtu2vnJRMlUIv/wUJcNUXoKR/mlo0U7nejb18Xsy2KUFX7C+ss+kPfLhlves1E/A9a/uwGwfh+vPuEeuzWqQBZkTEsAAAAASUVORK5CYII=') no-repeat center;
+    background-size: 20px 20px;
+}
+
+.inner-form .email i {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACoElEQVRoQ+2Y3W0TQRSFv4vgDYQ7wI9I8QqnApwO4gqSdBAqiKkAd4BdAaGCpAOM1pF4NB3YinkCedB4/TOenXV2PbPZRNp5Szx755x77t+M8MyXPHP81ASqVrBWoFbA0wN1CHk60PtzpwKKozOQS5C29wlBDKgRqL5wN7TNpQgooq/AeZBzwxsZCPGFaXaHgCLSwDWBp7wuhHiwBmgRaP0wwmYI95fCZFoFG0WzAW++pKNBjYTxcQaBSG1/iCurUAn41zdZOShssdkhVDmBDPA6ec9czs1FwEjsvhB/KiukFEdtePENaBpnLGNe4Y6OvAQ2yoC6hXk3dG6swN8ADRu8/tuXgM76jYSg6/K/rvBrEkINB/iZTl4hvl7b9yKQeKDVA7kyAE9hcSLcjXxIOEr3DBYd2643gZWMrj6xU5eLkMkL3juETFAruW+Bt9v/q54w/lwMfOsKpGfY+AnzTlZuBVFgG4/vm/DyGuSDATrV5rMIpccVtRd8UAW2JJbNRpP4aHhxBPOTfRXKMWt9h/vzh6paUAV2QyqyKhQTWHTTSejsrkMhzjU4lkYgI7mnoLrCWOcKWd01L/hSQsiOb0V0Cmg1jOSmD2oKor2c6q7Fkt6jE+c9KKlQovPi3Z5vDiq7pYbQbk64knu5I9Vd8zrmUULIHVJKX0kboCbwZ/BQpdlH6NEUKOLVIntrAkW8VcbeWoEyvFrEZq1AEW+VsTevAvoNaDUKLI59b1uhiChaHRB9X142RCHe3JvtS705WWoyg2SWqXKJBqtnqTXonQnWIqAvKq/0HdccyKpEb589g79t8zHB8bibayCrgJT6DerUDuvM58NkPF7OMk9gych8YjEBVfb+GcorNYFQnjzUTq3AoZ4L9V2tQChPHmrnP/McTUAUe/njAAAAAElFTkSuQmCC') no-repeat center;
+    background-size: 20px 20px;
+}
+
+.operate {
+    position: absolute;
+    top: 8px;
+    right: 22.5px;
+}
+
+
+.inner-form input {
+    height: 20px;
+    border: none;
+    outline: none;
+}
+
+.inner-form input:focus {
+    outline: none;
+}
+
+.inner-form  input {
+    width: 200px;
+}
+
+.inner-form .validcode .get-validcode-mobile {
+    display: block;
+    float: right;
+    position: absolute;
+    top: 12.5px;
+    right: 0;
+    height: 20px;
+    color: #333333;
+    border: 0;
+    background-color: #ffffff;
+    outline: none;
+}
+
+.inner-form .validcode-img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 75px;
+    height: 25px;
+    border: none;
+}
+
+.login {
+    padding: 10px;
+}
+
+.login-btn,
+.register-btn {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #ff002d;
+    color: #ffffff;
+    text-align: center;
+    line-height: 40px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.login-btn:disabled,
+.register-btn:disabled {
+    background-color: #c2c2c2;
+}
+
+.other {
+    display: none;
+    height: 20px;
+    line-height: 20px;
+    margin: 10px;
+}
+
+.warm-tips.show,
+.other.show {
+    display: block;
+}
+
+.warm-tips {
+    display: none;
+    padding: 10px;
+}
+
+.warm-tips .inner {
+    width: 100%;
+    font-size: 14px;
+    word-break: break-all;
+}
+
+.control-switch.open {
+    background-color: #ff002d;
+}
+/* 用合作网站账号登录 */
+.oauth-wrapper{
+	margin-top: 15px;
+}
+
+.oauth-wrapper .title-wrapper{
+	position: relative;
+	border-bottom: 1px solid #CCC;
+	width: 80%;
+	overflow: visible;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+.oauth-wrapper .title {
+    position: absolute;    
+    top: -10px;  
+    left: 50%;
+    margin-left: -75px;
+    width: 150px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+   	background: #eee;
+}
+
+.oauth-wrapper .oauth {
+    margin-top: 3rem;
+    width: 70px;
+    padding-left: calc(50% - 35px);
+}
+
+.oauth-wrapper .oauth >a:last-child{
+    float: right;
+    margin-right: 0;
+}
+
+.oauth-link {
+    float: left;
+    margin-right: 20px;
+    width: 18px;
+    height: 18px;
+    background:url(../images/login_icon.png) no-repeat;
+    
+}
+
+.oauth-qq{
+	background-position: 0 -19px;
+}
+
+.oauth-qq:hover{
+	background-position: 0 -37px;
+}
+
+.oauth-weixin {    
+    background-position: 0 -163px;
+}
+
+.oauth-weixin:hover {    
+    background-position: 0 -91px;
+}
+
+.oauth-weibo {
+    background-position: 0px -109px;
+}
+
+.oauth-weibo:hover {
+    background-position: 0px -73px;
+}
+
+/***************************************/
+

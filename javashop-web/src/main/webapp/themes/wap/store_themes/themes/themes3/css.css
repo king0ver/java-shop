@@ -1,0 +1,250 @@
+body{background:#ebebeb;}
+.themes-box{width:100%;overflow:hidden;}
+.banner{width:100%;text-align:center;}
+.banner img{width:100%;}
+.store-detail{width:100%;overflow:hidden;text-align:center;}
+.store-detail ul{width:100%;height:100%;overflow:hidden;text-align:center; background:#fff;}
+.store-detail ul li{
+	list-style: none outside none;
+    text-align: center;
+    width: 32%;
+    display:inline-block;
+    height: 100%;
+    padding:0.5rem 0;
+    position:relative;
+    font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+}
+.store-detail ul li span{font-size:0.8rem;}
+.store-detail ul li p{font-size:0.8rem;}
+.store-detail ul li i{width:1px;height:2rem;display:block;border-right:1px solid #dedede;position:absolute;top:0.9rem;right:0px;}
+.goods-anchor{height:8rem;background:#fff;padding:1rem;overflow:hidden;margin:0.5rem 0 0 0;text-align:center;
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+    box-pack: center;
+    -webkit-box-pack: center;
+}
+.goods-anchor div{
+	 -webkit-box-flex: 1;
+    box-flex: 1;
+    width: 100%;
+    height:8rem;
+     font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+     color:#fff;
+     background:#3e4b6d;
+}
+.goods-anchor div p{color:#fff;margin:2.5rem 0 0 0;font-size:1.2rem;}
+.goods-anchor div span{color:#fff;font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size:0.9rem;font-weight:200;}
+.goods-anchor .rec-anchor{margin:0 1rem;background:#e3c23f;}
+.goods-anchor .hot-anchor{background:#3e4b6d;}
+.goods-anchor .new-anchor{background:#2f54b7;}
+.hot-goods{width:100%; background:#fff;margin:0.5rem 0 0 0;padding:0.5rem 0;}
+.hot-goods ul{width:100%;overflow:hidden;}
+.hot-goods ul li{width:100%;overflow:hidden;margin:0.5rem 0 1rem 0;padding:0.5rem 0;}
+.hot-goods ul li .hot-img{float:right;width:60%;text-align:center;}
+.hot-goods ul li .hot-img img{border-radius:20rem;width:80%;box-shadow: 0px 1px 16px #dedede;padding:0.3rem}
+.hot-goods ul li .hot-detail{float:left;width:33%;margin:4rem 0 0 5%;font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+.hot-goods ul li .hot-detail p{margin:0 0 1rem;font-size:0.9;font-weight:200;width:100%;}
+.hot-goods ul li .hot-detail span{font-size:0.7rem;font-weight:200;display:block;width:100%;}
+.hot-goods ul li .hot-detail span b{display:inline;color:#3e4b6d;font-size:1.1rem;font-size:200;}
+.hot-goods ul li .hot-detail i{font-size:0.7rem;margin:0.3rem 0 0 0;color:#bbb;font-weight:200;font-style: normal;}
+.hot-goods ul .hot-right .hot-img{float:left;}
+.hot-goods ul .hot-right .hot-detail{float:right;margin:4rem 5% 0 0;}
+
+.recommend-goods{width:100%; background:#fff;margin:0.5rem 0 0 0;padding:0.5rem 0;}
+.recommend-goods ul{width:100%;overflow:hidden;}
+.recommend-goods ul li{width:100%;overflow:hidden;margin:0.5rem 0 1rem 0;padding:0.5rem 0;position:relative;}
+.recommend-goods ul li .recommend-img{overflow:hidden;text-align:center;margin:1rem;border-bottom:1px dashed #dedede;}
+.recommend-goods ul li .recommend-img img{width:100%;}
+.recommend-detail{position:absolute;width:80%;height:5rem;left:10%;bottom:2rem;z-index:99;}
+.recommend-goods .detail-color{position:absolute;width:80%;z-index:9;height:5rem;left:10%;bottom:2rem;opacity: 0.3;background:#ccc;}
+.recommend-detail i{float:left;width:4rem;height:4rem;margin:0.5rem;display:block;background:url(images/gouwuche.png) no-repeat center center #404a6d;background-size:70%}
+.recommend-detail .recommend-word{float:left;width:70%;}
+.recommend-detail .recommend-word h3{
+	 color:#040404;
+	 font-size:1.1rem;
+	 margin: 1rem 0 0.3rem 0;
+}
+.recommend-detail .recommend-word p{font-size:1.1rem;color:#ff0048;font-weight:200;}
+.recommend-detail .recommend-word p span{font-size:0.7rem;color:#979797;}
+
+
+.new-goods{
+	margin:0.5rem 0;
+	    padding: 0.5rem 2%;
+    position: relative;
+    overflow: hidden;
+    background:#fff;
+    
+}
+.new-goods ul{
+	width: 106%;
+    text-align: center;
+    padding: 5px 0px;
+}
+
+.new-goods ul li{
+	    float: left;
+    background: #fff;
+    width: 46%;
+    margin: 0px 2% 0.5rem 0px;
+    overflow: hidden;
+    position: relative;
+    padding: 0.6rem 0px;
+    box-shadow: 0px 1px 16px #dedede;
+}
+.new-goods ul li .new-list-img img{
+	    width: 90%;
+    margin: 0px auto;
+    max-width: 200px;
+}
+.new-goods ul li h2{
+	font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;
+	font-size:0.9rem;
+	font-weight:200;
+	margin: 0 0 0.3rem 0;
+	display:block;
+	text-align: left;
+	width:90%;
+	padding:0 5%;
+}
+.new-goods ul li p{
+	font-size:0.8rem;
+	font-weight:200;
+	color:#3e4b6d;
+	font-family: georgia;
+	width:90%;
+	padding:0 5%;
+}
+.store-bonus-box{width:100%;overflowe:hidden;margin:0.5rem 0; background:#fff;padding:0.5rem;}
+.store-bonus-box ul{width:110%;overflow:hidden;}
+.store-bonus-box ul li{float: left;
+    background: #fff;
+    width: 42%;
+    margin: 0px 2% 0.5rem 0px;
+    overflow: hidden;
+    position: relative;
+    padding: 0.6rem 0px;
+    border:1px solid #dedede;
+    height:4.5rem;
+    text-align:center;
+}
+.store-bonus-box ul li p{font-size:1.2rem;width:100%;text-align:center;font-weight:400;}
+.store-bonus-box ul li p span{font-size:0.8rem;color:#ccc;font-weight:200;height:1.5rem;line-height:1.5rem;}
+.store-bonus-box ul li b{width:100%;height:1rem;line-height:1rem;text-align:center;font-size:0.8rem;color:#ccc;font-weight:200;display:block;margin:0.3rem 0; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+.store-bonus-box ul li label{padding:0 0.3rem;border:1px solid #dedede;font-size:0.8rem;color:#ccc;font-weight:200; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+
+.go-top{
+	position: fixed;
+    bottom: 4rem;
+    right: 1rem;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABuElEQVRoQ+2XzU3DQBBGP1cAdJASoAJCBVACdLAn+4hztE/TASUAFZASKAE6gAqMRtpFUeT9845lWxrfktjxe/PNrscVNn5UG+eHCiydoCaw2gS6rmurqnpeGpDvPwzDoWmadozF20J93w9rgHcMdV2PsnoFNp/AmqofYtFdaOmkZkvAGHMN4BXAJYAnInqbQ3YWAQv/YeEd9w0RfUpLiAt44Jn7B8CdtISoQADeFV5cQkwgAX4WCRGBEfhfAEcA95b6HcAewIX9LJZEsYAHnmEfALhZ6gCAdyGWEpUoEvDB80I1xvDw9S9ARK09X1RiskAInttkTMB+z88HMYlJAjH4kIC0RLZACnxMQFIiSyAVPkVASiJZIAc+VUBCIkeAF96t3cd5n9+HxgLfIh6bhUp2pxyBRwAvAL55j4/NNDkCviSI6Co2/CUL2JvsiOgr9qc5LXT6X2dJcMp8P35qe48sgRRwd05uAifX7QBw2kci4rYNHqsTiAGf/64CvopNbSFNILcCmkBhxXQRawtpCxVWQFuosIC6C2kLrbiFeK538zy/fia9COX6zLYGckGmnq8CUysndd0fGQwzQNc+1UAAAAAASUVORK5CYII=') no-repeat center;
+    border-radius: 50%;
+    background-size: 65% 65%;
+    display: block;
+    width: 37px;
+    height: 37px;
+    box-shadow: rgb(226, 226, 226) 0px 2px 3px 0px;
+}
+
+.nav-box{width:60%;position:absolute;top:0px;right:-70%;background:#fff;box-shadow: -2px 1px 16px #dedede;display:none;}
+.nav-box .nav-listbox{width:100%;margin:1rem 0;}
+.nav-box .nav-listbox .nav-list{width:85%;margin:0 0 0 5%;padding:0.1rem 0 0.1rem 5%;line-height:1.7rem; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size:0.9rem;font-weigth:200;color:#000;}
+.nav-box .nav-listbox .nav-list a{display:block;width:95%;border-bottom:1px dashed #dedede;padding:0 0 0 5%;background:url(images/golist.png) no-repeat 95% center ;background-size:1rem}
+.nav-box .nav-listbox .nav-list ul{width:100%;}
+.nav-box .nav-listbox .nav-list ul li{width:90%;padding:0.1rem 0 0.1rem 5%;line-height:1.7rem; font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size:0.8rem;font-weigth:200;color:#aaa;}
+.nav-box .nav-listbox .nav-list ul li a{width:100%;}
+.nav-box-position{position:relative;width:100%;height:100%;}
+.nav-close{width:2rem;height:2rem;position:absolute;top:-1rem;left:-2rem;background:url(images/close.png) no-repeat center center #fff;background-size:1.5rem;    box-shadow: -2px 1px 6px #dedede;}
+
+#nav-right{background:url(images/daohang5.png) no-repeat 70% center ;background-size:1.5rem}
+.store-detail-word{text-align:center;font-weight:200;width:90%;overflow:hidden;margin:0.5rem 0 3rem 0;background:#fff;padding:0.5rem 5%;font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;}
+.store-detail-word h3{
+	 font-size:1.1rem;line-height:2rem;font-weight:200;color:#000;
+}
+.store-detail-word h6{font-size:0.7rem;line-height:2rem;font-weight:200;color:#ccc;}
+.store-detail-word p{font-size:0.9rem;line-height:1.5rem;text-align: justify;color:#000;}
+
+
+/*********store_goodslist.html 商品列表******/
+.themes-list-box{width:100%;}
+.store-search{width:90%;height:2rem;
+	padding:0.5rem 5%;
+	   background:#fff;
+}
+.search_form{width:100%;height:2rem;background:#fff;}
+.store-search .ncs-search-input-text{
+float:left;
+    width:55%;
+    border:1px solid #dedede;
+    height:1.5rem;
+    line-height:1.5rem;
+    text-align:center;
+}
+.store-search .title-same-input{width:22%;float:left;height:1.6rem;line-height:1.6rem;text-align:center;background:#3487ed;color:#fff;font-size:0.8rem;font-weight:200;border:1px solid #3487ed}
+.store-search .ncs_search_shop{background:#ff4a00;border:1px solid #ff4a00}
+.store_goods_search{width:100%;overflow:hidden;}
+.store_goods_search .ncs_array{display: box;display: -webkit-box;box-align: center;-webkit-box-align: center;box-pack: center;-webkit-box-pack: center;}
+.store_goods_search .ncs_array li{
+	-webkit-box-flex: 1;
+    box-flex: 1;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+.store_goods_search .ncs_array li a{width:100%;height:100%;display:block;position:relative;font-size:0.8rem;height:2rem;line-height:2rem;}
+.store_goods_search .ncs_array li i{position:absolute;display:block;}
+.store_goods_search .ncs_array li .sort_num5 .up{width:1rem;height:0.5rem;background:url(images/hui1.png) no-repeat center center;top:0.6rem;right:15%;background-size:1.3rem;}
+.store_goods_search .ncs_array li .sort_num5 .down{width:1rem;height:0.5rem;background:url(images/hui3.png) no-repeat center center;top:1rem;right:15%;background-size:1.3rem;}
+.store_goods_search .ncs_array li .sort_num5 .up5{background:url(images/hui11.png) no-repeat center center;background-size:1.3rem;}
+.store_goods_search .ncs_array li .selected .desc{background:url(images/hui33.png) no-repeat center center;background-size:1.3rem;} 
+.store_goods_search .ncs_array li .selected .up5{background:url(images/hui1.png) no-repeat center center;background-size:1.3rem;}
+
+.goods-list-box{
+    padding: 0.5em 2% 0.8rem 2%;
+    position: relative;
+    border-top: 1px solid #ECECEC;
+    overflow: hidden;
+    margin:0 0 2.2rem 0;
+}
+.goods-list-box ul{
+	width: 106%;
+    overflow: hidden;
+    text-align: center;
+    padding: 0 ;
+}
+.goods-list-box ul li{
+	float: left;
+    background: #fff;
+    width: 46%;
+    margin: 0px 2% 0.5rem 0px;
+    overflow: hidden;
+    position: relative;
+    padding: 0.6rem 0px;
+}
+
+.goods-list-box .goods-list-left{
+	width: 90%;
+    margin: 0px auto;
+    max-width: 200px;
+}
+.goods-list-box .goods-list-left img{width:100%;}
+.goods-list-box .goods-list-right{widht: 90%;margin: 0px 5%;}
+.goods-list-box .goods-list-right h3{
+	height: 3rem;
+    line-height: 1.3rem;
+    overflow: hidden;
+    text-align: left;
+}
+.goods-list-box .goods-list-right h3 a{font-family: PingFang SC,Verdana,Helvetica Neue,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif;font-size:0.9rem;font-weight:200;}
+
+.goods-list-box .goods-list-right p{
+	width: 100%;
+    height: 1rem;
+    line-height: 1rem;
+    margin: 0.3rem 0px;
+    text-align: right;
+    font-size: 1rem;
+}
+

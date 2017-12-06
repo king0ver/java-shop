@@ -1,0 +1,369 @@
+<#include 'member_header.html' />
+ 
+ <#assign memberCommentListTag = newTag("memberCommentListTag")>
+<!-- 调用会员评论标签-->
+<#assign memberCommentList = memberCommentListTag()>
+<!-- 获得会员咨询列表标签 -->
+<#assign memberAskListTag = newTag("memberAskListTag")>
+<!-- 调用会员咨询列表标签 -->
+<#assign memberAskList = memberAskListTag()>
+<!-- 获取会员收藏列表标签 -->
+<#assign collectTag = newTag("collectTag")>
+<!-- 调用会员收藏列表标签 -->
+<#assign collect = collectTag()!''>
+<!-- 获取会员订单列表标签 -->
+<#assign memberOrderList = newTag("buyerOrderListTag")>
+<!-- 调用会员订单列表标签 -->
+<#assign orderPage = memberOrderList()>
+<!-- 获得会员订单列表 -->
+<#assign orderList = orderPage.orderList.result>
+<!-- 获取商品列表标签 -->
+<!-- 获取订单状态标签 -->
+<#assign orderStautsTag = newTag("orderStautsTag")>
+<!-- 调用订单状态标签 -->
+<#assign orderState = orderStautsTag()>
+<!--调用"商品列表"标签，并传递参数-->
+
+
+ 
+<!-- 鼠标点击左右滚动 共2个js-->
+<script src="${ctx}${themes_path}/js/scroll.1.3.js"></script>
+
+
+<div class="member_right">
+	<div class="user_title changeborder" >
+		<ul>
+			<li class="first">
+				<div class="userico">
+					<#if member.face?exists && member.face != ''>
+	  						<img src="<@imgurl pic='${member.face}'/>" width="120" height="120"/>
+	  				<#else>
+	  					<img src="${ctx}${themes_path}/images/default_face.jpg" width="120" height="120">
+	   				</#if>
+	   				<div class="ico_cover">
+	   				</div>
+				</div>
+				<div class="user_info">
+				 <h1>${member.uname!''}<!-- <span>${member.lvname!''}</span> --></h1>
+				<input type="hidden" value="${member.mobile!''}" id = "member_mobile"/>
+				<p>联系方式：<span id = "membermobile">${member.mobile!''}</span></p>
+			</div>
+			</li>
+			<!-- 购买余额支付组件后 可去除注释 -->
+			<#-- 检测组件是否启用 -->
+			<#assign checkCmptIsOnTag = newTag("checkCmptIsOnTag") /> 
+			<#assign groupbuyIsOn = checkCmptIsOnTag("{'componentName':'余额支付组件'}") />
+			<#if groupbuyIsOn=="ON">
+			<li>
+				<a href="#">
+					<h1>余额账户</h1>
+					<i class="u_t1"></i>
+					<p>${member.advance?string("currency")}</p>
+				</a>
+			</li>
+			</#if>
+			<li>
+				<a href="${ctx}/member/order.html">
+					<h1>我的订单</h1>
+					<i class="u_t3"></i>
+					<p>${orderPage.totalCount}</p>
+				</a>
+			</li>
+			<li>
+				<a href="${ctx}/member/favorite.html">
+					<h1>收藏的商品</h1>
+					<i class="u_t5"></i>
+					<p>${collect.totalCount}</p>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<!-- 会员中心右侧第二层 -->
+	<div class="u_floor1">
+		<!-- 订单列表 -->
+		<div class="u_orderlist changeborder">
+			<div class="order_title">
+				<#assign orderstatus= "com.enation.app.shop.trade.tag.OrderStatusDirectiveModel"?new()>
+				<#assign orderNumTag = newTag("orderNumTag")>
+				<#assign orderNum = orderNumTag()>
+
+				<h1>我的订单</h1>
+				<ul>
+					<li>所有订单(${orderNum.TOTAL!'0'})</li>
+					<li>等待付款(${orderNum.CONFIRM!'0'})</li>
+					<li>已完成(${orderNum.COMPLETE!'0'})</li>
+				</ul>
+			</div>
+			<div class="uorderlist">
+				<ul>
+				<#if orderPage.totalCount gt 0 >
+				<#list orderList  as order>
+					<!-- 某个订单ID下的商品列表，暂时只输出第一个 -->
+					<#assign orderItemList = order.productList >
+					<!-- 统计某个订单下的商品总数 -->
+					<#assign orderDetailGoodsNumTag = newTag("orderDetailGoodsNumTag")>
+					<#assign orderDetailnum = orderDetailGoodsNumTag("{'ordersn':'${order.sn}'}")>
+					<#if order_index lt 3>
+						<li>
+							<div class="o_u_listimg">
+								<#list orderItemList as item>
+									<#if item_index lt 1>
+									<a target="_blank" href="../goods-${item.goods_id}.html">
+										<img src="${item.goods_image!''}" height="50px">
+									</a>
+									</#if>
+								</#list>
+							</div>
+							<div class="o_u_list">
+								<h1>
+									<#list orderItemList as item>
+										<#if item_index lt 1>
+											<a target="_blank" href="../goods-${item.goods_id}.html"><@substring	title="${item.name}" length="48" dot="..." /></a>
+										</#if>
+									</#list>
+								</h1>
+								<p>
+									<span class="u_ordersamelist">
+										下单时间：${order.create_time}
+									</span>
+									<span class="">
+										订单金额：<em>${order.order_amount?string.currency}</em>
+									</span>
+								</p>
+								<p>
+									<span class="u_ordersamelist">订单状态：<@orderstatus status="${order.order_status}" type="order" /><i class="u_itemnum">订单共有（${orderDetailnum})种商品</i></span>
+								</p>
+							</div>
+							<a class="go_detailDetail" href="order_detail.html?ordersn=${order.sn}">查看订单</a>
+						</li>
+					</#if>
+				</#list>
+				<#else>
+					<li class="no_orderlist" style="padding:0px;"><p>暂时您还没有订单</p></li>
+				</#if>
+				</ul>
+			</div>
+		</div>
+		<!-- 会员购物车 -->
+		<div class="member_cart changeborder" style="width:357px;height:382px;">
+			<h1>购物车</h1>
+			<div class="u_cart">
+				<#assign cartTotalListTag= newTag("cartTotalListTag")> 
+				<#assign cartList = cartTotalListTag() >
+				
+				<#if cartList?exists && cartList?size gt 0>
+					<div class="my_cartlist_all">
+						<#list cartList as cart >
+							<#list cart.productList as product >
+								<#if product_index lt 4>
+									<dl itemid="${product.product_id}" class="item">
+										<dd class="goods_thumb">
+											<span class="thumb size40" >
+												<a target="_blank" href="${ctx}/goods-${product.goods_id}.html" title="${product.name}" >
+													<@image height="40" width="40" src="${product.goods_image!''}" style="cursor: pointer;" />
+												</a>	
+											</span>
+										</dd>
+									<dt class="goods_name">
+										<a href="${ctx}/goods-${product.goods_id}.html">${product.name}
+										</a>
+									</dt>
+									<dd class="goods_price"><p>${(product.subtotal)?string("0.00")}</p></dd>
+									<dd class="handle">
+										<a href="javascript:void(0)" itemid="${product.product_id}" class="delete">删除</a>
+									</dd>
+								</dl>
+							</#if>
+						</#list>
+					</#list>
+				</div>
+					<div class="checkout">
+						<a  class="btn-cart" href="${ctx}/cart.html">查看我的购物车</a>
+					</div>
+				<#else>
+					<p style="border:0px!important;" class="no_cartlist">您的购物车中还没有任何商品</p>
+				</#if>
+			</div>
+			<div class="u_gocart">
+				<a href="../cart.html">查看购物车所有商品</a>
+			</div>
+		</div>
+	</div>
+	<!-- 会员第三层 -->
+	<div class="u_floor2">
+		<!-- 会员收藏 -->
+		<div class="u_favorite changeborder">
+		<#assign collectTag = newTag("collectTag")>
+		<#assign collect = collectTag()!''>
+		<#assign collectList = collect.result>
+			<h1>商品收藏</h1>
+			<div class="favoritelist">
+				<#if collectList?exists && collectList?size gt 0>
+					<#if collectList?size gte 3>
+					<div class="favorite_left" id="left"></div>
+					</#if>
+					<div class="favorite_middel" id="wrapBox_left">
+						<ul id="count_left">
+							<#list collectList as favorite>
+								<li>
+									<div class="favorite_photo">
+										<a href="../goods-${favorite.goods_id!''}.html" title="${favorite.name!''}" class="img"> 
+											<@image src="${favorite.thumbnail!''}" />
+										</a>
+										<span>￥${favorite.price?string("0.##")}</span>
+									</div>
+									<p><a href="../goods-${favorite.goods_id!''}.html">${favorite.name!''}</a></p>
+								</li>
+							</#list>
+						</ul>
+					</div>
+					<#if collectList?size gte 3>
+					<div class="favorite_right" id="right"></div>
+					</#if>
+				<#else>
+					<p class="no_f">暂无符合条件的收藏记录</p>
+				</#if>
+			</div>
+			<div class="go_favorite"><a href="favorite.html">查看所有商品收藏</a></div>
+		</div>
+		<!-- 店铺收藏 -->
+		<div class="u_store changeborder" style="width:363px;height:245px;">
+			<h1>店铺收藏</h1>
+			<div class="u_storelist ">
+				<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+				<#assign storeCollectTag = newTag("storeCollectTag")>
+				<#assign storeCollect = storeCollectTag()!''>
+				<#if storeCollect.totalCount !=0 >
+					<#if storeCollect.totalCount gt 3>
+						<div class="storelist_left" id="left1"></div>
+					</#if>
+					<div class="storelist_middel" id="wrapBox1" >
+						<ul id="count1">
+							<#list storeCollect.storelist.result as sl>
+								<li>
+									<a target="_blank" href="${ctx}/store_themes/${(sl.shop_id)!0}/index.html?store_id=${(sl.shop_id)!0}&menu=store" title="${sl.shop_name!''}" class="img"> 
+										<@image src="${sl.shop_logo!''}" alt="${sl.shop_name!''}" height="80" width="80" /> 
+									</a>
+									<p><a target="_blank" href="${ctx}/store_themes/${(sl.shop_id)!0}/index.html?store_id=${(sl.shop_id)!0}&menu=store">${sl.shop_name!''}</a></p>
+									<div class="storegoodsnum">
+										<#assign storeGoodsNumTag = newTag("shopGoodsNumTag")>
+										<#assign storeGoodsNum = storeGoodsNumTag("{'shopid':${sl.shop_id}}")>
+										商铺有${storeGoodsNum}件商品
+									</div>
+								</li>
+							</#list>
+						</ul>
+					</div>
+					<#if storeCollect.totalCount gt 3>
+					<div class="storelist_right" id="right1"></div>
+					</#if>
+				<#else>
+					<li class="no_storelist">您暂时没有收藏任何店铺</li>
+				</#if>
+			</div>
+			<div class="no_store">
+				<a href="collect_store.html">查看所有店铺收藏</a>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+			
+
+<script>
+	$(function(){
+	    //将手机号码中间位数隐藏
+	    var mobile = $("#member_mobile").val();
+        var dh=mobile.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+		$("#membermobile").html(dh);
+
+		$(".u_orderlist").mouseover(function(){
+			$(this).addClass("user_border");
+			$(this).attr({"style":"border:1px solid #fd6760;z-index:5;width:560px;"});
+		})
+		$(".u_orderlist").mouseout(function(){
+			$(this).removeClass("user_border");
+			$(this).attr("style","1px solid #e7e7e7;z-index:5;width:560px;");
+		})
+		
+		
+		
+		
+		
+		$(".member_cart").mouseover(function(){
+			$(this).addClass("user_border");
+			$(this).attr({"style":"border:1px solid #fd6760;z-index:5;width:357px;height:382px;"});
+		})
+		$(".member_cart").mouseout(function(){
+			$(this).removeClass("user_border");
+			$(this).attr("style","1px solid #e7e7e7;z-index:5;width:357px;height:382px;");
+		})
+		
+		
+		
+		$(".u_favorite").mouseover(function(){
+			$(this).addClass("user_border");
+			$(this).attr({"style":"border:1px solid #fd6760;z-index:5;width:560px;"});
+		})
+		$(".u_favorite").mouseout(function(){
+			$(this).removeClass("user_border");
+			$(this).attr("style","1px solid #e7e7e7;z-index:5;width:560px;");
+		})
+		
+		
+		$(".u_store").mouseover(function(){
+			$(this).addClass("user_border");
+			$(this).attr({"style":"border:1px solid #fd6760;z-index:5;width:363px;height:245px;"});
+		})
+		
+		$(".u_store").mouseout(function(){
+			$(this).removeClass("user_border");
+			$(this).attr("style","1px solid #e7e7e7;z-index:5;width:363px;height:245px;");
+		})
+		
+		if(Sys.ie < 10){
+			$(".u_store").css("height","260px");
+			$(".u_store").mouseover(function(){
+				$(this).addClass("user_border");
+				$(this).attr({"style":"border:1px solid #fd6760;z-index:5;width:363px;height:260px;"});
+			})
+			
+			$(".u_store").mouseout(function(){
+				$(this).removeClass("user_border");
+				$(this).attr("style","1px solid #e7e7e7;z-index:5;width:363px;height:260px;");
+			})
+		}
+		
+		$("#count1").dayuwscroll({
+			parent_ele:'#wrapBox1',
+			pre_btn:'#left1',
+			next_btn:'#right1',
+			path: 'left',
+			time:3000,
+			num:3,
+			gd_num:3,
+			waite_time:1000
+		});
+		
+		$("#count_left").dayuwscroll({
+			parent_ele:'#wrapBox_left',
+			pre_btn:'#left',
+			next_btn:'#right',
+			path: 'left',
+			time:3000,
+			num:3,
+			gd_num:3,
+			waite_time:1000
+		});
+		
+	})
+</script>
+
+
+
+
+</div>
+<!-- 浮动窗口 取消订单结束 -->
+<#include '/common/footer.html'/>
+		

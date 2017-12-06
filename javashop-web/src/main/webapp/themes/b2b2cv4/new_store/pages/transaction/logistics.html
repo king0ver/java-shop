@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '快递模板' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/logistics.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/transaction/logistics.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_transaction' />
+<#assign lowerPageName = 'lower_transaction_logistics' />
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav">
+        <li class="active"><a href="javascript: void(0);" onclick="location.reload(); ">快递模板</a></li>
+        <li><a href="./logistics_add.html">新增模板</a></li>
+        <li><a href="./logistics_company.html">物流公司</a></li>
+    </ul>
+</div>
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler"> 
+        <#assign shipTplTag= newTag("shipTplTag") >
+        <#assign shipTpls = shipTplTag()>
+        <div class="logistics"> 
+            <div class="logistics-top-tools">
+                <a href="./logistics_add.html" class="btn btn-success logistics-add" title="添加新模板">新增模板</a>
+            </div>
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                    <th>模板名称</th> 
+                    <th>首重(g)</th>
+                    <th>运费(元)</th>
+                    <th>续重(g)</th>
+                    <th>运费(元)</th> 
+                    <th>模版类型</th>  
+                    <th>编辑</th>  
+                </tr>
+                </thead>
+                <tbody>
+                <#list shipTpls as tpl>  
+                    <tr>
+                    <td>${tpl.name}</td>
+                    <td>${tpl.first_company}</td>
+                    <td>${tpl.first_price}</td>
+                    <td>${tpl.continued_company}</td>
+                    <td>${tpl.continued_price}</td>
+                    <td>
+                    	<#if tpl.type == 1>重量算运费</#if>
+                    	<#if tpl.type == 2>计件算运费</#if> 
+                    </td>
+                    <td>
+	                    <a href="./logistics_edit.html?tpl_id=${tpl.template_id}">编辑</a>
+	                    <a href="#" onclick="deletetpl(${tpl.template_id})">删除</a></td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 
+
+<form id="tpl"></form>
+</body>
+<script type="text/javascript">
+function deletetpl(tpl_id){
+	if(!confirm("确认要删除此快递模板吗？")){ 
+		return;
+	}
+	var options = {
+            url : ctx + '/shop/seller/ship-template.do?template_id='+tpl_id,
+            type : "DELETE",
+            dataType : 'json',
+            success : function(result) {
+                if (result.result == 1) {
+                    $.message.success('操作成功！');
+                    setTimeout(function(){
+                        location.href = './logistics.html';
+                    }, 1000);
+                }else {
+                    $.message.error(result.message);
+                };
+            },
+            error : function() {
+                $.message.error("出现错误 ，请重试");
+            }
+        };
+        $("#tpl").ajaxSubmit(options); 
+}
+
+
+</script>
+</html>

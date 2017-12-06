@@ -1,0 +1,283 @@
+<#include '/admin/header.html'/>
+<#assign dateFormat ="com.enation.framework.directive.DateformateDirective"?new() />
+<#assign permssion = "com.enation.app.base.core.directive.PermssionDirective"?new() />
+<style type="text/css">
+	td .layui-btn {
+		background: #1E9FFF;
+	}
+
+	#start_time_one {
+		height: 25px;
+	}
+
+	#end_time_one {
+		height: 25px;
+	}
+
+	._inline {
+		margin-right: 16px !important;
+		margin-top: 5px;
+		height: 25px;
+	}
+
+	.search_conditions {
+		display: block
+	}
+
+	.form-horizontal .form-group {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.layui-form-select dl dd.layui-this {
+		background-color: #428bca;
+		color: #fff;
+	}
+</style>
+<div id="loading"></div>
+<div class="admin-main">
+	<div>
+		<!-- 提示区域 -->
+		<div class="page_explain">
+			<h2>操作提示</h2>
+			<ul>
+				<li><span>·</span>此列表显示的是积分换购的商品。</li>
+			</ul>
+		</div>
+		<!-- 按钮操作 -->
+		<div class="table_control">
+			<div class="table_opera">
+				<@permssion actid="goods,super_admin">
+					<button type="button" class="layui-btn layui-btn-primary " title="刷新" onclick="refresh();"><i class="layui-icon">&#x1002;</i></button>
+					<button type="button" class="layui-btn layui-btn-primary " title="保存排序" onclick="updateSort()"><i class="icon iconfont icon-xuanze"></i></button>
+					<button type="button" title="提示" class="layui-btn layui-btn-primary" id="explain"><i class="icon iconfont icon-tishi1"></i></button>
+				</@permssion>
+			</div>
+			<!-- 搜索区域操作 -->
+			<div class="table_search">
+				<input type="text" name="keyword" placeholder="请输入商品关键字" id="searchbtn">
+				<div id="templist" style="display: none">
+					<form class="layui-form">
+						<div class="form-group">
+							<label for="contain">商品名称：</label>
+							<input class="form-control" type="text" id="goods_name" name="goods_name"/>
+						</div>
+						<div class="form-group">
+							<label for="contain">商品编号：</label>
+							<input class="form-control" type="text" id="goods_num" name="goods_num"/>
+						</div>
+						<div class="form-group">
+							<label>店铺名称：</label>
+							<input class="form-control" type="text" id="seller_name" name="seller_name"/>
+						</div>  
+						<div class="form-group">
+							<label for="">商品类别：</label>
+							<div class="layui-form-item">
+								<div class="layui-input-inline" style="width: 140px">
+									<select name="select_cat-1" lay-filter="select_cat" lay-search>
+										<option value=" ">请选择</option>
+									</select>
+								</div>
+							</div>
+							<input class="form-control" type="hidden" id="cat_id" name="cat_id" value=""/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--表格区域  -->
+	<form id="gridform">
+		<table id="goodsdata" class="layui-table site-table table-hover"
+			width="100%" lay-skin="line">
+			<thead>
+		    <tr>
+		        <th width="10px"><input type='hidden'  class='btn-checkall fly-checkbox' id='selected-all'></th>
+		        <th width="70px">商品图片</th>
+		        <th>商品编号</th>
+		        <th>排序</th>
+		        <th width="70px">店铺名称</th>
+		        <th width="300px">商品名称</th>
+		        <th>分类</th>
+		        <th>价格</th>
+		        <th>上架</th>
+		        <th>品牌</th>
+		    </tr>
+	    </thead>
+		</table>
+		<!-- 传值等区域(暂定) -->
+		<div id="addBrand"></div>
+	</form>
+</div>
+
+<!--js区域  -->
+<script type="text/javascript">
+	
+	var index = parent.layer.getFrameIndex(window.name);
+
+	layui.use(['form', 'layedit', 'laydate'], function(){
+		var form = layui.form()
+			,layer = layui.layer
+			,layedit = layui.layedit
+			,laydate = layui.laydate;
+		form.on('submit(highsearch)', function(data){
+			 $(".layui-form-one>ul").remove();
+		$(".high_search").css("display","block");
+
+		var kelo=$(".kelong ul").clone();
+		kelo.appendTo($(".high_search form"));
+		var gjname=$("#goods_name").val();
+		$("#goods_name_one").val(gjname);
+		var gjnum=$("#goods_num").val();
+		$("#goods_num_one").val(gjnum);
+		var gjcatname=$("#cat_name").val();
+		$("#cat_name_one").val(gjcatname);
+		var gjcatid=$("#cat_id").val();
+		$("#cat_id_one").val(gjcatid);
+		$(".closeSelf").click(function(){
+			$(this).parent().parent().detach();
+			})
+		});
+
+		//  监听选择框
+        form.on('select(select_cat)', function(data){
+            loadCat(data.value, Number(/\d+/.exec($(data.elem).attr('name'))[0]) + 1);
+            $('#cat_id').val(data.value);
+        });
+
+        //  加载一级
+		loadCat(0, 1);
+
+		//  加载数据渲染DOM
+		function loadCat(parent_id, level) {
+			$.ajax({
+				url: ctx + '/shop/admin/exchange-cat/'+parent_id+'/children.do',
+				dataType: 'json',
+				success: function (success) {
+				    var _option = '<option value=" ">请选择</option>';
+				    success.forEach(function (item) {
+						_option += '<option value="'+ item.category_id +'">'+ item.name +'</option>';
+                    });
+				    var _selectEle = $("select[name='select_cat-"+ level +"']"),
+						_nextSelectEle = $("select[name='select_cat-"+ (level + 1) +"']");
+                    _selectEle[0] && _selectEle.html(_option);
+                    _nextSelectEle[0] && _nextSelectEle.html('<option value="">请选择</option>');
+				    setTimeout(function () {
+                        form.render('select');
+                    })
+                }
+			});
+        }
+	});
+
+	var table;
+	$(function(){
+        //搜索栏
+        var cent = $("#templist").html();
+        $("#searchbtn").searchBox({
+            content      : cent,
+            keywordSearch: function () {
+                var keyword = $("input[name='keyword']").val();
+                var param = "?keyword=" + keyword + "&stype=" + 0;
+                var url = table.ajax.url("${ctx}/shop/admin/exchange-goods.do" + param);
+                url.load();
+            },
+            formSearch   : function () {
+                var name = $("#goods_name").val();
+                var sn = $("#goods_num").val();
+                var catid = $("#cat_id").val();
+                var seller_name = $("#seller_name").val();
+                var param = "?stype=" + 1 + "&goods_name=" + name + "&goods_sn=" + sn + "&seller_name=" + seller_name+"&category_id="+catid;
+                var url = table.ajax.url("${ctx}/shop/admin/exchange-goods.do" + param);
+                url.load();
+            }
+        });
+		table = $('#goodsdata').DataTable({
+			"language": {
+				"url":ctx + "/zh_CN.txt"
+			},
+			"processing": true,
+			"serverSide": true,
+			"initComplete": function(settings, json) {
+				 $(".dataTables_paginate").on("click", "a", function() {
+					 if($('#goodsdata_processing')[0].style.display === "block"){
+						  $(".dataTables_paginate li").addClass("disabled");
+					  }
+				 });
+			  },
+			"ordering": false,
+			"searching": false,
+			"lengthChange": false,
+			ajax: {
+				//指定数据源
+				url: '${ctx}/shop/admin/exchange-goods.do',
+			},
+			columns: [ //定义列
+				{data: function (obj) {  return '<input type="hidden" name="goods_id" class="fly-checkbox" value=' + obj.goods_id + '>'; }},
+				   {data: function (obj){return '<a href="${domain!''}/goods-'+obj.goods_id+'.html" target="_blank"><img alt="" style="height: 60px;" src="'+convertToUrl(obj.thumbnail)+'"></a>';}},
+				   {data: "sn"},
+				   {data: function(obj) {
+		 	        	return '<input type="text" name="sord"  class="receiptsInputText" value="'+obj.sord+'" id="sorts">';		
+		 	       	}},
+					{data: "seller_name"},
+					{data: function (obj) {
+						return '<a href="${domain!''}/goods-'+obj.goods_id+'.html" target="_blank">'+obj.goods_name+'</a>';
+					}},
+					{data: "category_name"},
+					{data: function (obj) {
+						return '￥'+obj.price;
+					}},
+					{data: function (obj) {
+						if(obj.market_enable === 1){
+							return "售卖中";
+						}else if(obj.market_enable === 0){
+							return "已下架";
+						}else{
+							return "预览商品";
+						}
+					}},
+					{data: "brand_name"}
+			 ]
+		});
+
+		$("#if-reload").click(function(){
+			//var index = parent.layer.getFrameIndex(window.name);
+			//parent.layer.close(index);
+			parent.closeOther();
+
+			//console.log(window.parent.name);
+		});
+	});
+
+	function updateSort(){
+		var t=$("#sorts").val();
+		if(t==undefined){
+			alert("目前该页面没有数据！");
+			return;
+		};
+		
+		var z= /^[0-9]*$/;
+		if(!z.test(t)&&t!=undefined){
+		   $.Loading.error("请输入数字！");
+		   return;
+		};
+		
+		var options = {
+				url :"${ctx}/shop/admin/exchange-goods/update-sort.do",
+				success : function(result) {				
+				 		$.Loading.success("保存成功！！");
+				 		location.reload()
+				},error:function (e){
+					$.Loading.error(e.responseJSON.error_message);
+				}
+			};
+
+		$("#gridform").ajaxSubmit(options);		
+	}
+    //刷新
+    function refresh() {
+        table.ajax.url("${ctx}/shop/admin/exchange-goods.do").load();
+    }
+</script>
+<#include '/admin/footer.html' />

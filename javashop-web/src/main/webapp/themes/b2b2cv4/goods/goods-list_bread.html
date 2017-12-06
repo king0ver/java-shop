@@ -1,0 +1,24 @@
+<div class="g-l-title">
+    <!--<span>共 <b>22222</b> 件商品</span>-->
+    <span style= "float:left">全部</span>
+    <#if selected_cat?size gt 0>
+        <#list selected_cat as selector >
+            <em></em>
+            <a class="gl-bar-trigger" href="${selector.url!''}">
+                <h1>${selector.name}</h1>
+                <#if selector.otherOptions?size gt 0><i class="arr"></i></#if>
+            </a>
+            <#if selector.otherOptions?size gt 0>
+                <div class="gl-bar-cont">
+                    <div class="gl-list">
+                        <ul class="clearfix" style="display: block;">
+                            <#list selector.otherOptions as other>
+                                <li><a <#if other.name == selector.name>class="int"</#if> href="${other.url!''}">${other.name}</a></li>
+                            </#list>
+                        </ul>
+                    </div>
+                </div>
+            </#if>
+        </#list>
+    </#if>
+</div>

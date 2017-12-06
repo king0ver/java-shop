@@ -1,0 +1,155 @@
+<#include '/admin/header.html'>
+    <style>
+        body {
+            background: #ebedf3;
+            height: 100%;
+        }
+
+        .app-push-container {
+            width: 850px;
+            height: 280px;
+            margin: 50px auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            border: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .app-push-container .cell {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .app-push-container .cell>span {
+            display: inline-block;
+            margin: 0 1rem;
+            font-size: 20px;
+        }
+
+        .app-push-container .cell input {
+            outline: none;
+            width: 50%;
+            padding: 0 0.5rem;
+        }
+
+        .app-push-container .select-goods-button {
+            width: 150px;
+        }
+
+        .app-push-container .preview-goods {
+            display: none;
+            align-items: center;
+            justify-content: flex-start;
+            width: 350px;
+            height: 80px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+        }
+
+        .app-push-container .preview-goods img {
+            width: 70px;
+            height: 70px;
+            margin-right: 1rem;
+        }
+
+        .app-push-container .preview-goods .goods {
+            width: 250px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-push-container .preview-goods .goods .goods-name {
+            display: inline-block;
+            word-break: break-all;
+            font-size: 17px;
+        }
+
+        .app-push-container .preview-goods .goods .seller-name {
+            font-size: 20px;
+            color: darkred;
+        }
+
+        .app-push-container .push-button {
+            width: 120px;
+        }
+    </style>
+
+    <body>
+        <div class="app-push-container">
+            <div class="cell">
+                <span>推送的标题</span>
+                <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            </div>
+            <div class="cell">
+                <span>推送的商品</span>
+                <button type="button" class="layui-btn layui-btn-normal select-goods-button"><i class="layui-icon">&#xe67c;</i>添加</button>
+                <div class="preview-goods">
+                    <img src="#">
+                    <div class="goods">
+                        <span class="goods-name"></span>
+                        <span class="seller-name"></span>
+                    </div>
+                </div>
+            </div>
+            <button class="layui-btn layui-btn-normal push-button">推送</button>
+        </div>
+        <script>
+            (function () {
+                var selectButton = $(".cell .select-goods-button");
+                var preview = $(".app-push-container .preview-goods");
+                var goodsImg = $(".app-push-container .preview-goods img");
+                var goodsName = $(".app-push-container .preview-goods .goods .goods-name");
+                $(".app-push-container .select-goods-button").click(function () {
+                    $.GoodsAdminSelector({
+                        maxLength: 1,
+                        confirm: function (goods) {
+                            // goods 是用户选择的商品数据.
+                            // 当maxLength为1时,goods为一个对象;>1时,goods为对象数组
+                            selectButton.remove();
+                            preview.css("display", "flex");
+                            preview.attr("data-goods-id", goods.goods_id);
+                            goodsImg.attr("src", goods.thumbnail);
+                            goodsName.text(goods.name);
+                        }
+                    });
+                });
+
+                $(".app-push-container .push-button").click(function () {
+                    var inputInfo = $(".app-push-container .cell input").val();
+                    var goodsId = preview.attr("data-goods-id");
+                    if (!inputInfo || !goodsId) {
+                        alert("参数不存在!")
+                        return;
+                    }
+                    $.post("push/goods-all.do", {
+                        content: inputInfo,
+                        goodsid: goodsId
+                    }, function (response) {
+                        if (response.result == 1) {
+                            alert("推送成功")
+                        } else {
+                            if (!response.data) {
+                                alert(response.message);
+                            } else {
+                                var info = ""
+                                response.data.android_errorcause ? info += response.data.android_errorcause :
+                                    info = "";
+                                response.data.ios_errorcause ? info += response.data.ios_errorcause :
+                                    info += "";
+                                info ? alert(info) : alert("推送失败");
+                            }
+                        }
+                    })
+                })
+            })()
+        </script>
+    </body>
+
+    <#include '/admin/footer.html'>

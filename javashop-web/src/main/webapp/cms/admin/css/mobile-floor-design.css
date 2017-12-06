@@ -1,0 +1,883 @@
+.floor-design {
+	width: 322px;
+	margin: 25px auto;
+	margin-bottom: 4rem;
+}
+
+.floor-design .header {
+	height: 60px;
+	width: 200px;
+	display: block
+}
+
+.floor-design .header H2 {
+	position: relative;
+	display: block;
+	float: left;
+	padding-left: 40px;
+	font-size: 20px;
+	line-height: 30px;
+	color: #333;
+	margin-top: 19px;
+}
+
+.floor {
+	width: 100%;
+	min-height: 1000px;
+	background: #fff;
+	display: block;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.floor .header .tab {
+	float: right;
+	display: inline;
+	z-index: 1;
+	height: 34px;
+	border: solid 1px #ededed;
+	border-bottom: 0 none;
+	line-height: 34px;
+}
+
+.floor .header .tab a {
+	color: #996633
+}
+
+.floor-design .floor .side {
+	width: 480px;
+}
+
+.floor .panel {
+	width: 100%;
+	display: block;
+	float: right;
+	position: relative;
+	border: 1px dashed #ccc
+}
+
+.floor .main {
+	position: relative;
+	z-index: 1;
+	background-color: #FFF;
+}
+
+.floor .side .single_image-block {
+	width: 250px;
+	height: 300px;
+}
+
+.floor .side .single_image {
+	width: 250px;
+	height: 300px;
+	position: relative;
+	float: left;
+}
+
+.floor .panel .panelhandle {
+	padding: 0px 10px;
+	height: 30px;
+	background: #13BBD5;
+	position: absolute;
+	top: -30px;
+	line-height: 30px;
+	color: white;
+	text-align: center;
+}
+
+.floor .main .goods-list li {
+	float: left;
+	display: block;
+	height: 280px;
+	width: 200px;
+	margin: 10px 36px 0 0;
+}
+
+.floor .main .goods-list li .goods {
+	position: relative;
+	float: left;
+	z-index: 2;
+	display: none;
+}
+
+.floor-design .handle {
+	position: absolute;
+	/* top: -17px;*/
+	display: block;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+
+/* 2017-7-17-陈小博: 或许其他地方的css的改动影响到了这个地方的样式(遮罩层扩充到了全屏).所以不动存在的css,单独加了个选择器,把遮罩层缩小到字体上面 */
+
+body>div.floor-design>div.header>div.handle {
+	top: 45px;
+	left: 25px;
+	width: 150px;
+	height: 50px;
+}
+
+.floor-design .handle .handle-body {
+	position: relative;
+	top: 2px;
+	left:0px;
+	display: none;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	filter: Alpha(opacity=10);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.floor .handle span {
+	display: none;
+	position: absolute;
+	z-index: 4;
+	top: 5px;
+	right: 10px;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 2px;
+	padding: 3px 5px;
+	font-size: 12px;
+	font-family: "宋体";
+	color: #000;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+i.fa.fa-paint-brush {
+	margin-right: 4px;
+}
+
+.fa-paint-brush:before {
+	content: "\f1fc";
+}
+
+.floor .panel .panel-handle {
+	height: 95px;
+	width: 30px;
+	position: absolute;
+	top: 0px;
+	right: -30px;
+	z-index: 10;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	/* background: #13BBD5; */
+}
+
+.floor .panel .panel-handle .del {
+	border-bottom: none;
+}
+
+.floor .panel .panel-handle span {
+	display: block;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid white;
+}
+
+.floor .panel .panel-handle span a {
+	color: white;
+	display: block;
+	width: 30px;
+	height: 30px;
+	border-bottom: solid 1px #FFF;
+	color: #FFF;
+	text-align: center;
+}
+
+.fa-chevron-up:before {
+	content: "\f077";
+}
+
+.fa-chevron-down:before {
+	content: "\f078";
+}
+
+.fa-gear:before,
+.fa-cog:before {
+	content: "\f013";
+}
+
+.fa-trash:before {
+	content: "\f1f8";
+}
+
+.floor .panel .goods-list li .g-img {
+	width: 200px;
+	height: 200px;
+}
+
+.floor .panel .goods-list li .g-img img {
+	width: 100%;
+	height: 100%;
+}
+
+.floor .panel .goods-list li .g-name {
+	color: #555;
+	line-height: 20px;
+	font-size: 14px;
+	margin-top: 10px;
+	height: 38px;
+	overflow: hidden;
+}
+
+.floor .panel .goods-list li .g-price {
+	font-size: 16px;
+	color: #f42424;
+	margin-top: 8px;
+	line-height: 20px;
+}
+
+.floor .panel .goods-list li .g-price i {
+	font-style: normal;
+}
+
+.brand-hidden {
+	display: none;
+}
+
+.brand-show {
+	display: block;
+}
+
+
+/* 2017-7-24-陈小博 修改商品楼层管理-设计页图片的遮罩层样式*/
+
+body>div.floor-design>div.floor>div>div.side.layout.bd-left>div.single_image-block {
+	position: relative;
+}
+
+body>div.floor-design>div.floor>div>div.side.layout.bd-left>div.single_image-block .handle-body {
+	top: 0;
+	left: 0;
+}
+
+body>div.floor-design>div.floor>div>div.main.layout.bd-right>ul>li.g-list {
+	position: relative;
+}
+
+body>div.floor-design>div.floor>div>div.main.layout.bd-right>ul>li.g-list .handle-body {
+	top: 0;
+	left: 0;
+}
+
+
+/* 2017-8-1-陈小博-继续修改楼层设计里的遮罩样式 */
+
+div.floor div.panel .swiper-wrapper {
+	display: flex;
+}
+
+div.floor div.panel .single_image-block {
+	width: 480px;
+	height: 280px;
+}
+
+.floor .side .single_image a,
+.floor .side .single_image img {
+	display: inline-block;
+	width: 480px;
+	height: 280px;
+}
+
+div.floor div.panel .block,
+div.floor div.panel .single_image {
+	position: relative;
+}
+
+div.floor div.panel .handle {
+	top: 0;
+}
+
+
+/* 2017-8-3-陈小博: 楼层设计里,品牌面板的样式 */
+
+ul.block {
+	display: flex;
+}
+
+ul.block li {
+	width: 480px;
+	height: 80px;
+}
+
+ul.block img {
+	width: 480px;
+	height: 80px;
+}
+
+ul.block li.brand-hidden {
+	width: 200px;
+}
+
+
+/* 品牌多的话,允许多行显示 */
+
+#panel-brand-list {
+	flex-wrap: wrap;
+}
+
+body>div.floor-design>div.floor>div {
+	display: flex;
+}
+
+body>div.floor-design>div.floor>div>div.main.layout.bd-right {
+	width: 730px;
+	margin-left: 40px;
+}
+
+body>div.floor-design>div.floor>div>div.side.layout.bd-left>div.floor-swiper-container {
+	overflow: hidden;
+}
+
+.floor-design .panel:last-child {
+	min-width: 70%;
+}
+
+.floor-design .panel:last-child .main {
+	width: 100%;
+}
+
+
+/*.floor-design .panel:last-child .main img {
+    width: 159px;
+    height: 55px;
+}*/
+
+
+/* 2017-8-21-陈小博: 专为移动端调整调整样式 */
+
+.floor .single-image-module img {
+	width: 100%;
+	height: 130px;
+}
+
+
+/* 隐藏掉头部 新板块 的字样 */
+
+body>div.mobile-floor-design-container>div.floor-view>div>div.floor>div>div.panelhandle {
+	display: none;
+}
+
+
+/* 2017-08-21 houxuedan 左一右二图片模板 */
+
+.left-one-right-two-module .left-one {
+	width: 160px;
+	height: 130px;
+	float: left;
+	overflow: hidden;
+}
+
+.left-one-right-two-module .right-two {
+	float: left;
+	width: 160px;
+	height: 65px;
+	overflow: hidden;
+}
+
+.left-one-right-two-module .right-two {
+	width: 160px;
+	height: 65px;
+	float: left;
+}
+
+.left-one-right-two-module .left-one .single_image {
+	height: 130px;
+	width: 160px;
+}
+
+.left-one-right-two-module .left-one .single_image a {
+	height: 130px;
+	width: 160px;
+}
+
+.left-one-right-two-module .right-two .single_image {
+	height: 65px;
+	width: 160px;
+}
+
+.left-one-right-two-module .right-two .single_image a {
+	height: 65px;
+	width: 160px;
+}
+
+.left-one-right-two-module .left-one .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+.left-one-right-two-module .right-two .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+/* 2017-09-11 houxuedan 左二右一竖排模板 */
+.left-one-right-two-vertical-module .left-one{
+ float:left;
+ height:125px;
+ width:160px;
+ }
+ .left-one-right-two-vertical-module .right-two{
+	float:left;
+	height:125px;
+	width:80px
+}
+
+.left-one-right-two-vertical-module .left-one .single_image {
+	height: 125px;
+	width: 160px;
+}
+
+.left-one-right-two-vertical-module .right-two .single_image {
+	height: 125px;
+	width: 80px;
+}
+
+.left-one-right-two-vertical-module .left-one .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+.left-one-right-two-vertical-module .right-two .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+/*2017-08-22 houxuedan 左二右一图片模板 */
+
+.floor .left-two-right-one-module .left-two-block {
+	float: left;
+	width: 160px;
+	height: 65px;
+}
+
+.floor .left-two-right-one-module .right-one-block {
+	width: 160px;
+	height: 130px;
+	float: right;
+	overflow: hidden;
+}
+
+.floor .left-two-right-one-module .left-two-block .single_image {
+	height: 65px;
+	width: 160px;
+}
+
+.floor .left-two-right-one-module .right-one-block .single_image {
+	height: 130px;
+	width: 160px;
+}
+
+.floor .left-two-right-one-module .left-two-block .single_image a {
+	height: 65px;
+	width: 160px;
+}
+
+.floor .left-two-right-one-module .right-one-block .single_image a {
+	height: 130px;
+	width: 160px;
+}
+
+.floor .left-two-right-one-module .right-one-block .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+.floor .left-two-right-one-module .left-two-block .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+
+/*2017-08-22 houxuedan 三列单行图片模板*/
+
+.floor .three-column-one-row-module .main .edit-enable {
+	float: left;
+	width: 105px;
+	height: 130px;
+	overflow: hidden;
+	letter-spacing: normal;
+}
+
+.floor .three-column-one-row-module .main .edit-enable .single_image {
+	width: 105px;
+	height: 130px;
+}
+
+.floor .three-column-one-row-module .main .edit-enable .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+
+/*2017-08-22 houxuedan 五列单行图片模板*/
+
+.floor .five-column-one-row-module .main .edit-enable {
+	float: left;
+	width: 64px;
+	height: 64px;
+	overflow: hidden;
+	letter-spacing: normal;
+}
+
+.floor .five-column-one-row-module .main .edit-enable .single_image {
+	width: 64px;
+	height: 64px;
+	overflow: hidden;
+}
+
+.floor .five-column-one-row-module .main .edit-enable .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+.floor .five-column-one-row-module .panel-handle {
+	height: 80px;
+	top: 0px;
+}
+
+.floor .five-column-one-row-module .panel-handle span {
+	height: 20px;
+	line-height: 20px;
+}
+
+.floor .five-column-one-row-module .panel-handle span a {
+	height: 20px;
+	line-height: 20px;
+}
+
+.floor .five-column-one-row-module .panel-handle span i {
+	font-size: 14px!important;
+}
+
+
+/*2017-08-22 houxuedan 四列单行图片模块*/
+
+.floor .four-column-one-row-module .main .edit-enable {
+	width: 80px;
+	height: 105px;
+	overflow: hidden;
+	float: left;
+}
+
+.floor .four-column-one-row-module .main .edit-enable .single_image {
+	width: 80px;
+	height: 105px;
+}
+
+.floor .four-column-one-row-module .main .edit-enable .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+/*2017-09-11 houxuedan 四列单行小图模板  */
+.floor .four-column-one-row-small-image-module .edit-enable{
+	width:80px;
+	height:65px;
+	overflow:hidden;
+	float:left
+}
+.floor .four-column-one-row-small-image-module .edit-enable .single_image{
+	width:80px;
+	height:65px;
+}
+.floor .four-column-one-row-small-image-module .edit-enable .single_image a>img{
+	width: 100%;
+	height: 100%;
+}
+/*2017 08-22 houxuedan 标题模块*/
+
+.floor .title-module .main .edit-enable {
+	width: 320px;
+}
+
+.floor .title-module .main .edit-enable .single_image {
+	height: 40px;
+	width: 320px;
+	text-align: center;
+}
+
+.floor .title-module .main .edit-enable .single_image a>img {
+	height: 40px;
+	max-width: 320px;
+	vertical-align: middle;
+}
+/* 文本模块 */
+.floor .text-selector-module .text{
+	height:40px;
+	line-height:40px;
+	overflow:hidden;
+}
+.floor .text-selector-module .text a{
+	font-size:14px;
+	padding-left:10px;
+}
+/* 2017-09-11 houxuedan 手动选择商品模块 */
+.floor .two-manual-selection-module{
+	width:100%;
+	height:220px;
+} 
+.floor .two-manual-selection-module .edit-enable{
+	width:154px;
+	margin:0px 0px 4px 4px;
+	float:left;
+	height:220px;
+}
+.floor .two-manual-selection-module .edit-enable .goods .g-price{
+	color:red;
+}
+/*2017-08-22 houxuedan 轮播图模块*/
+
+.floor .swiper-module {
+	width: 320px;
+	height: 150px;
+}
+
+.floor .swiper-module .main {
+	height: 150px;
+	width: 320px;
+}
+
+.floor .swiper-module .main .swiper-container-horizontal {
+	height: 150px;
+	width: 320px;
+	overflow: hidden;
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets,
+.swiper-pagination-custom,
+.swiper-pagination-fraction {
+	position: absolute;
+}
+
+.floor .swiper-module .main .edit-enable {
+	float: left;
+	height: 150px;
+}
+
+.floor .swiper-module .main .edit-enable .single_image {
+	width: 320px;
+	height: 150px;
+}
+
+.floor .swiper-module .main .edit-enable .single_image a>img {
+	width: 100%;
+	height: 100%;
+}
+
+
+/*选择添加模块区的样式*/
+
+.mobile-floor-design-container {
+	width: 1200px;
+	height: 600px;
+	background: #F9FAFC;
+	margin: 50px auto;
+}
+
+.mobile-floor-design-container .floor-modules {
+	width: 270px;
+	height: 100%;
+	background: #F5F5F5;
+	border: 1px solid #C0CCDA;
+	float: left;
+	overflow: auto;
+}
+
+.mobile-floor-design-container .floor-modules .module-title {
+	font-size: 23px;
+	text-align: center;
+	line-height: 50px;
+	background: #FFFFFF;
+	color: #555;
+}
+
+.mobile-floor-design-container .floor-view {
+	margin-left: 272px;
+	height: 100%;
+	width: 928px;
+	width: calc(100% - 272px);
+	background: #E5E7EA;
+	overflow: scroll;
+}
+
+.mobile-floor-design-container .floor-modules .modules-container span {
+	margin-top: 10px;
+	color: #ACB0B9;
+	font-size: 12px;
+}
+
+.mobile-floor-design-container .floor-view .mobile-view {
+	margin: 20px auto;
+	height: 1000px;
+	width: 322px;
+	background: darkgreen;
+}
+
+.mobile-floor-design-container .floor-view .floor .floor-top-bar {
+	width: 100%;
+	height: 24px;
+	background: url(../images/mobile_template.png) no-repeat -30px -100px;
+}
+
+.mobile-floor-design-container .modules-container {
+	width: 244px;
+	margin: 35px auto;
+	background: #aaa;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.mobile-floor-design-container .modules-container .module {
+	box-sizing: 120px;
+	width: 120px;
+	height: 120px;
+	border: 1px solid #D9E0E7;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: #FFFFFF;
+	cursor: pointer;
+}
+
+.mobile-floor-design-container .module.left {
+	margin: 0px -1px -1px 0;
+}
+
+.mobile-floor-design-container .module.right {
+	margin: 0;
+	margin-bottom: -1px;
+}
+
+.mobile-floor-design-container .module .module-img {
+	width: 50px;
+	height: 50px;
+}
+
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+	background-color: #8492A6;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #E5E9F2;
+}
+
+
+/* 滚动条的滑轨背景颜色 */
+
+ ::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+/* 滑块颜色 */
+
+ ::-webkit-scrollbar-button {
+	background-color: #E5E9F2;
+}
+
+
+/* 滑轨两头的监听按钮颜色 */
+
+ ::-webkit-scrollbar-corner {
+	background-color: #E5E9F2;
+	height: 0;
+}
+
+
+/* 横向滚动条和纵向滚动条相交处尖角的颜色 */
+
+
+/* 楼层相关CSS,覆盖掉大部分PC端的样式 */
+
+.mobile-floor-design-container .header {
+	display: none;
+}
+
+.floor-modules .modules-container .mod-focus-adv .module-img {
+	background: url(../images/mobile_template.png) no-repeat 0px 0px;
+}
+
+.floor-modules .modules-container .mod-five-col .module-img {
+	background: url(../images/mobile_template.png) no-repeat -600px 0px;
+}
+
+.floor-modules .modules-container .mod-single-sheet .module-img {
+	background: url(../images/mobile_template.png) no-repeat -180px 0px;
+}
+
+.floor-modules .modules-container .mod-leftone-righttwo .module-img {
+	background: url(../images/mobile_template.png) no-repeat -240px 0px;
+}
+
+.floor-modules .modules-container .mod-lefttwo-rightone .module-img {
+	background: url(../images/mobile_template.png) no-repeat -300px -0px;
+}
+
+.floor-modules .modules-container .mod-double-row .module-img {
+	background: url(../images/mobile_template.png) no-repeat -420px 0px;
+}
+
+.floor-modules .modules-container .mod-leftone-landscape .module-img {
+	background: url(../images/mobile_template.png) no-repeat -660px 0px;
+}
+
+.floor-modules .modules-container .mod-three-col .module-img {
+	background: url(../images/mobile_template.png) no-repeat -360px 0px;
+}
+
+.floor-modules .modules-container .mod-columns-single-line .module-img {
+	background: url(../images/mobile_template.png) no-repeat -720px 0px;
+}
+
+.floor-modules .modules-container .mod-headings .module-img {
+	background: url(../images/mobile_template.png) no-repeat -120px 0px;
+}
+
+.floor-modules .modules-container .mod-double-row-multiline .module-img {
+	background: url(../images/mobile_template.png) no-repeat -480px 0px;
+}
+
+.floor-modules .modules-container .mod-scrolling-text .module-img {
+	background: url(../images/mobile_template.png) no-repeat -540px 0px;
+}
+.floor-modules .modules-container .four-column-one-row-small-image-module .module-img{
+	background: url(../images/mobile_template.png) no-repeat -720px 0px;
+}
+.floor-modules .modules-container .two-manual-selection-module .module-img{
+	background: url(../images/mobile_template.png) no-repeat -480px 0px;
+}
+.floor-modules .modules-container .text-selector-module .module-img{
+	background: url(../images/mobile_template.png) no-repeat -540px 0px;
+}
+
+/* 轮播图 */
+
+.mobile-floor-design-container>div.floor-view>div>div.floor>div>div.main>div>div.test-swiper-pagination {
+	bottom: 10px;
+	width: 120px;
+	left: calc(50% - 60px);
+	z-index: 42;
+}
+
+.mobile-buttons .save-mobile {
+	margin: 25px;
+}
+
+.mobile-floor-design-container .floor .panel .panel-handle{
+	display: none;
+}

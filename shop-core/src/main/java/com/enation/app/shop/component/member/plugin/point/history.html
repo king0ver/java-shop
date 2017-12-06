@@ -1,0 +1,64 @@
+<table id="pt" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+        <thead>
+          <tr>
+           <th>日期</th>
+           <th>类型</th>
+		   <th>摘要</th>
+		   <th>积分</th>
+          </tr>
+        </thead>
+</table>
+
+<script>
+var table;
+$(function(){
+	
+	table = $('#pt').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/api/shop/point/get-point.do?member_id=${member_id}&type=0',
+	    },
+	    columns: [
+			{data:null,"render":function(data,type,row){
+				if(data.time==null){
+					return " ";
+				}else{
+					return  getFormatDateByLong(data.time, "yyyy-MM-dd hh:mm:ss");
+				}
+			}},
+			{data:null,"render":function(data,type,row){
+				if(data.type == 1){
+					return "获得";
+				}else{
+					return "使用";
+				}
+			}},
+			{data: "reason"},
+			{data:"point"}
+	     ]
+	});
+	// // 监听窗口滚动,重新设置表格宽度
+	setTimeout(function () {
+		$('#cbg thead tr th:first-child').css('width', '70%');
+	}, 400)
+
+	$(window).resize(function () {
+		var setTime = setTimeout(function () {
+			// 不存在%号
+			clearTimeout(setTime)
+			$('#cbg thead tr th:first-child').css('width', '70%');
+		}, 400)
+	})
+
+});
+
+</script>

@@ -1,0 +1,125 @@
+<!--退货-->
+<div class="returns-box" id="returns-form">
+    <input type="hidden" name="order_sn" id="returnsOrderSn" value="${ordersn!''}">
+    <#if refundWayTag == 0>
+        <!--退款方式-->
+        <div class="sales-item">
+            <div class="title-sales">退款方式</div>
+            <div class="content-sales">
+                <select name="account_type" id="returnsTypeSelect">
+                    <option value="0">请选择退款方式</option>
+                    <option value="alipayDirectPlugin">支付宝</option>
+                    <option value="weixinPayPlugin">微信</option>
+                    <option value="银行转账">银行转账</option>
+                </select>
+            </div>
+        </div>
+        <!--退款账户-->
+        <div class="sales-item">
+            <div class="title-sales">退款账户</div>
+            <div class="content-sales">
+                <input name="return_account" id="returnsTypeAsOnline" class="return-account sales-account-input"
+                       placeholder="请务必认真填写" maxlength="30">
+                <div id="returnsTypeAsBank" style="display:none;">
+                    <input name="bank_name" class="return-account" placeholder="银行名称"/>
+                    <input name="bank_deposit_name" class="return-account" placeholder="开户行"/><br>
+                    <input name="bank_account_name" class="return-account" placeholder="银行户名"/>
+                    <input name="bank_account_number" class="return-account" placeholder="银行账号"/>
+                </div>
+            </div>
+            <input type="hidden" name="refund_way" id="refundWay" value="offline">
+        </div>
+        <#else/>
+        <div class="sales-item">
+            <div class="title-sales">退款方式</div>
+            <div class="content-sales">
+                <span class="sales-btn selected" style="width:auto;padding:0 10px;">原支付方式退款</span>
+                <input type="hidden" name="refund_way" id="refundWay" value="original">
+            </div>
+        </div>
+    </#if>
+
+    <!--退货数量-->
+    <div class="sales-item">
+        <div class="title-sales">退货数量</div>
+        <#list orderDetail.productList as item>
+            <div class="item-goods">
+                <input type="checkbox" class="item-goods-checkbox" checked data-goods_id="${item.goods_id!''}" data-sku_id="${item.product_id!''}"/>
+                <img class="item-goods-img" src="${item.goods_image!''}" alt="${item.name!''}">
+                <div class="item-goods-name">${item.name!''}</div>
+                <div class="content-sales sales-update-num">
+                    <div class="goods-update-num">
+                        <input type="hidden" class="max-num" value="${item.num!1}">
+                        <input type="hidden" class="this-num" value="${item.num!1}">
+                        <a class="goods-symbol symbol-less<#if item.num lt 2> disabled</#if>"
+                           href="javascript:;"></a>
+                        <input type="tel" class="goods-num" size="4" value="${item.num!1}" maxlength="4" readonly/>
+                        <a class="goods-symbol symbol-add disabled" href="javascript:;"></a>
+                    </div>
+                </div>
+            </div>
+        </#list>
+    </div>
+
+    <!--退款金额-->
+    <div class="sales-item">
+        <div class="title-sales">退款金额（订单金额 : ￥${orderDetail.order_price!''}）</div>
+        <div class="content-sales">
+            <input type="tel" name="refund_price" id="returnsPrice" class="return-account"
+                   value="${orderDetail.order_price!''}" maxlength="9">
+            <input type="hidden" id="returnsPayprice" value="${orderDetail.paymoney!''}"/>
+        </div>
+    </div>
+
+    <!--退货-->
+    <div class="sales-item">
+        <div class="title-sales">退货原因</div>
+        <div class="content-sales">
+            <select name="reason" id="returnsReason" class="sales-select">
+                <option value="0">请选择退货原因</option>
+                <option value="商品质量有问题">商品质量有问题</option>
+                <option value="收到商品与描述不符">收到商品与描述不符</option>
+                <option value="不喜欢/不想要">不喜欢/不想要</option>
+                <option value="发票问题">发票问题</option>
+                <option value="空包裹">空包裹</option>
+                <option value="快递无记录">快递无记录</option>
+                <option value="快递一直没有收到">快递一直没有收到</option>
+                <option value="买错/不想要">买错/不想要</option>
+                <option value="未按照时间发货">未按照时间发货</option>
+                <option value="其他">其他</option>
+            </select>
+        </div>
+    </div>
+
+    <!--问题描述-->
+    <div class="sales-item">
+        <div class="title-sales">问题描述</div>
+        <div class="content-sales">
+        <textarea name="customer_remark" id="returnsCustomerRemark" class="sales-remark sales-account-input" maxlength="180"
+                  placeholder="写下您出现的问题吧，最多180个字哦！"></textarea>
+        </div>
+    </div>
+    <style type="text/css">
+        .item-goods {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .item-goods-img {
+            width: 80px;
+            height: 80px;
+            padding: 5px;
+        }
+        .item-goods-name {
+            padding: 5px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+        .item-goods-checkbox {
+            flex-shrink: 0;
+            -webkit-appearance: checkbox;
+        }
+    </style>
+</div>

@@ -1,0 +1,83 @@
+<#include '/admin/header.html' > 
+<#assign dateFormat="com.enation.framework.directive.DateformateDirective"?new()>
+
+<div  class="admin-main">
+   <div>
+        <!--提示区域  -->
+        <div class="page_explain">
+           
+        </div>
+    </div>
+    
+		<form id="auditform">
+			<table 
+				 class="layui-table site-table table-hover" id="auditdata">
+				<thead>
+					<tr>
+						<th style="width: 30px;"><input type="checkbox" id = "check" /></th>
+				   	 	<th>店铺名称</th>
+				   	 	<th>会员名称</th>
+				   	 	<th>所在地</th>
+				   	 	<th>店铺状态</th>
+				   	 	<th>操作</th>
+					</tr>
+				</thead>
+			</table>
+		</form>
+	</div>
+	<div id="storeInfo" style="display: none;"></div>
+</div>
+
+<script type="text/javascript">
+function formatAction (value,row,index){
+	var val="<a href='#' class='edit' onclick=\"newTab('审核店铺详细','${ctx}/b2b2c/admin/store/pass.do?storeId="+row.store_id+"\') \"title='修改'></a>";
+	
+	return val;
+}
+$(function(){
+	
+	 table = $('#auditdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/b2b2c/admin/shop/shop-list-json.do?shop_disable=apply',
+	    },
+	    columns: [ //定义列
+            {data: null,"render": function(obj) {
+	   	       		return obj.shop_id;
+   	       	}},
+	        {data: "shop_name"},
+	        {data: "member_name"},
+		    	{data: "shop_add"},
+	       	{data: null,"render": function(obj) {
+	       		if(obj.shop_disable=="refused")
+	       			return "未通过审核";
+	       		if(obj.shop_disable=="apply")
+	       			return "待审核";
+	       		if(obj.shop_disable=="open")
+	       			return "已审核"; 
+	       		if(obj.shop_disable=="closed")
+	       			return "已关闭";
+	       	}},
+	       	{data: null,"render": function(obj) {
+	       		return "<a href='#' class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('审核"+obj.shop_name+"店铺','${ctx}/b2b2c/admin/shop/edit.do?shopId="+obj.shop_id+"\') \">审核</a>";
+	       	}},
+	     ]
+	});   
+});
+
+
+
+
+
+
+</script>
+<#include '/admin/footer.html' >

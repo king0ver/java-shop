@@ -1,0 +1,46 @@
+<#assign storeTagsGoodsTag = newTag("storeTagsGoodsTag") />
+<div class="details-left fl">
+    <h3 class="marTop_15" style="cursor:pointer">热销商品</h3>
+    <#assign storeTagsGoods = storeTagsGoodsTag("{'mark':'hot','storeid':${store_id},'num':5}") />
+    <div class="details-left-con details-left-con02">
+        <ul>
+            <#if storeTagsGoods?size gt 0>
+                <#list storeTagsGoods.list as st>
+                    <li class="clearfix">
+                        <div class="sPic fl">
+                            <@image src="${st.thumbnail!''}" style="display: inline; width: 50px; height: 50px" />
+                        </div>
+                        <div class="sbox fr">
+                            <div class="sName">${st.goods_name}</div>
+                            <div class="sPri"><strong><span class="rmb">¥</span>${st.price?string("0.00")}</strong></div>
+                        </div>
+                        <a href="${ctx}/goods-${st.goods_id}.html"
+                           title="${st.goods_name}" target="_blank"></a>
+                    </li>
+                </#list>
+            </#if>
+        </ul>
+    </div>
+
+    <h3 class="marTop_15" style="cursor:pointer">新品推荐</h3>
+    <#assign storeTagsGoods = storeTagsGoodsTag("{'mark':'new','storeid':${store_id},'num':5}") />
+    <div class="details-left-con details-left-con02">
+        <ul>
+            <#if storeTagsGoods?size gt 0>
+                <#list storeTagsGoods.list as st>
+                    <li class="clearfix">
+                        <div class="sPic fl">
+                            <@image src="${st.thumbnail!''}" style="display: inline; width: 50px; height: 50px" />
+                        </div>
+                        <div class="sbox fr">
+                            <div class="sName">${st.goods_name}</div>
+                            <div class="sPri"><strong><span class="rmb">¥</span>${st.price?string("0.00")}</strong></div>
+                        </div>
+                        <a href="${ctx}/goods-${st.goods_id}.html"
+                           title="${st.goods_name}" target="_blank"></a>
+                    </li>
+                </#list>
+            </#if>
+        </ul>
+    </div>
+</div>

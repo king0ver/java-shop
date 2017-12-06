@@ -1,0 +1,112 @@
+<#assign  title="商城首页" />
+<#include '/common/header.html'/>
+<!-- 头部 -->
+	<div class="header">
+		<p>
+			Javashop示例商城
+		</p>
+	</div>
+<#include 'common/adv.html'/>
+<#include 'common/search.html'/>
+<#include 'common/quick.html'/>
+
+<!-- 团购分类 -->
+<#assign groupBuyCatListTag=newTag("groupBuyCatListTag")>
+<#assign groupBuyCatList=groupBuyCatListTag()>
+<!-- 团购活动 -->
+<#assign groupBuyActTag=newTag("groupBuyActTag")>
+<#assign groupBuyAct=groupBuyActTag()>
+<!-- 团购地区列表 -->
+<#assign groupBuyAreaListTag=newTag("groupBuyAreaListTag")>
+<#assign groupBuyAreaList=groupBuyAreaListTag()>
+<#if groupBuyAct!="">
+<!-- 团购时间 -->
+<#assign groupBuyActSurplusTag=newTag("groupBuyActSurplusTag")>
+<#assign groupBuyActSurplus=groupBuyActSurplusTag("{'end_time':${groupBuyAct.end_time}}")>
+</#if>
+
+  <div class="groupbuy_time"> 
+		<div class="dc"> 
+			<a onclick="set_sort_type('1')" type="1" href="javascript:void(0)">
+	      <!-- 倒计时 距离本期结束 -->
+	      <#if groupBuyAct!="">
+	      <h5>距离${groupBuyAct.act_name!''}结束：</h5>
+	      <#else>
+	      <h5>暂未有团购活动</h5>
+	      </#if>
+	      <#if groupBuyAct!="">
+	      <p>
+	      	<i class="icon-chronometer"></i>
+	      	<span id="d1"></span><strong>天</strong>
+	      	<span id="h1"></span><strong>小时</strong>
+	      	<span id="m1"></span><strong>分</strong>
+	      	<span id="s1"></span><strong>秒</strong>
+	      </p>
+	      <script type="text/javascript">
+             tms[tms.length] = "${groupBuyActSurplus.cha}";
+             day[day.length] = "d1";
+             hour[hour.length] = "h1";
+             minute[minute.length] = "m1";
+             second[second.length] = "s1";
+         </script> 
+         </#if>
+         </a>
+	    </div>
+	    <div class="trailer">
+	    	<#if groupBuyAct!="">
+	   			<a onclick="set_sort_type('2')" type="2" href="javascript:void(0)">即将开始</a>
+	   		<#else>
+	   			<a href="javascript:;">敬请期待团购</a>	
+	   		</#if>
+	    </div>
+  	</div>
+	<div id="groupbuyGoods">
+	</div>
+	<input type="hidden" name="catid" value=""/>
+	<input type="hidden" name="minprice" value=""/>
+	<input type="hidden" name="maxprice" value=""/>
+	<input type="hidden" name="sort_key" value=""/>
+	<input type="hidden" name="sort_type" value=""/>
+	<input type="hidden" name="area_id" value=""/>
+<div class="clear"></div>
+<script type="text/javascript">
+$(function(){
+	loadPage(1);
+});
+
+function set_sort_type(value){
+	$("input[name='sort_type']").val(value);
+	loadPage();
+	
+	$("#sort_type li").removeClass("current");
+	$("#sort_type li a[type='"+value+"']").parents("li").addClass("current");
+}
+function loadPage(page){
+	var minprice=$("input[name='minprice']").val();
+	var maxprice=$("input[name='maxprice']").val();
+	var sort_key=$("input[name='sort_key']").val();
+	var sort_type=$("input[name='sort_type']").val();
+	var catid=$("input[name='catid']").val();
+	var area_id=$("input[name='area_id']").val();
+	var url=""
+	if(page!=null){
+		 url="${ctx}/groupbuy_goods_list.html?page="+page+"&minprice="+minprice+"&maxprice="+maxprice+"&sort_key="+sort_key+"&catid="+catid+"&sort_type="+sort_type+"&area_id="+area_id;
+	}else{
+		url="${ctx}/groupbuy_goods_list.html?minprice="+minprice+"&maxprice="+maxprice+"&sort_key="+sort_key+"&catid="+catid+"&sort_type="+sort_type+"&area_id="+area_id;
+	}
+	$("#groupbuyGoods").load(url,function(){
+		$(".page li a").click(function(){
+			var pageno= $(this).attr("page");
+			loadPage(pageno);
+		});
+	});	
+}
+
+//自动居中
+$(function(){
+	var timeheight = $(".groupbuy_time").height();
+	$(".trailer").css("line-height",timeheight+"px");
+})
+
+</script>
+<#include 'common/footer.html'/>

@@ -1,0 +1,83 @@
+<#include '/admin/sonheader.html' >
+<style>
+.goods-info{
+	background-color: white;
+	margin-top: 10px;
+	margin-left: 50px;
+}
+.layui-elem-field legend{
+	margin-left: 0px;
+	padding:  0px 30px;
+	margin: 0px;
+}
+.goods-content{
+	margin-left: 20px;
+	margin-right: 20px;
+}
+</style>
+	<div style="padding:10px">
+	<form id="goodsInfoForm" method="post" class="layui-form" >
+		<input type="hidden" name="goodsId" value="${storeGoods.goods_id }"/>
+			<table class="layui-table">
+				<tr>
+					<td>商品名称</td>
+					<td>${storeGoods.goods_name!''}</td>
+				</tr>
+				<tr>
+					<td>商户名称</td>
+					<td>${storeGoods.seller_name!''}</td>
+				</tr>
+				<tr>
+					<td>商品价格</td>
+					<td>${(storeGoods.price!'0')? string .currency}</td>
+				</tr>
+				<tr>
+					<td>审核状态</td>
+				    <div class="layui-input-block" >
+				    <td><input type="radio" name="pass" value="1" title="审核通过" >
+				    <input type="radio" name="pass" value="2" title="审核不通过" checked ></td>
+				    </div>
+				</tr>
+				<tr>
+					<td>备注(120字以内)</td>
+					<td>
+						<textarea name="message" maxlength="120" cols="35" rows="8" id="message"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div class="goods-info">
+				<div class="goods-content">
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+				      	<button class="layui-btn" id="save" type="submit"  lay-submit="" lay-filter="goodsinput">保存</button>
+				 	  	<button id="reset" class="layui-btn layui-btn-primary">还原</button>
+				    	</div>
+			  		</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+<script>
+var index = parent.layer.getFrameIndex(window.name);
+layui.use('form', function(){
+	  var form = layui.form();
+	  form.on('submit(goodsinput)', function(data) {
+		  var options = {
+					url : "${ctx}/shop/admin/goods/auth/pass.do",
+					type : "POST",
+					success : function() {
+						$.Loading.success("操作成功");
+						parent.layer.close(index); //再执行关闭   
+						parent.table.ajax.url(ctx+"/shop/admin/goods/auth/list.do").load();
+						},
+				 	error : function(e) {
+				 		alert('出现错误，请重试');
+				 		}
+				};
+				$('#goodsInfoForm').ajaxSubmit(options);
+				return false;
+	});
+	form.render();//更新全部
+});
+</script>

@@ -1,0 +1,83 @@
+<#include '/admin/sonheader.html'>
+	<style>
+		.goods-info {
+			background-color: white;
+			margin-top: 10px;
+			margin-left: 50px;
+		}
+
+		.layui-elem-field legend {
+			margin-left: 0px;
+			padding: 0px 30px;
+			margin: 0px;
+		}
+
+		.goods-content {
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+	</style>
+	<div style="padding:10px">
+		<form id="goodsInfoForm" class="layui-form">
+			<input type="hidden" name="goodsId" value="${goods.goods_id }" />
+			<table class="layui-table">
+				<tr>
+					<td>商品名称</td>
+					<td>${goods.goods_name!''}</td>
+				</tr>
+				<tr>
+					<td>商户名称</td>
+					<td>${goods.seller_name!''}</td>
+				</tr>
+				<tr>
+					<td>商品价格</td>
+					<td>${(goods.price!'0')? string .currency}</td>
+				</tr>
+				<tr>
+					<td>备注(120字以内)</td>
+					<td>
+						<textarea name="message" maxlength="120" cols="35" rows="8" id="message"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div class="goods-info">
+				<div class="goods-content">
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" id="save" type="button" lay-submit="" lay-filter="goodsinput">下架</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script>
+		var index = parent.layer.getFrameIndex(window.name);
+
+		$('#save').click(function () {
+			var text = $('#goodsInfoForm textarea').val();
+			if (!text && text !== 0) {
+				layer.msg('请输入备注信息!', {
+					time: 3000, //3s后自动关闭
+					offset: "t",
+					icon: 5
+				});
+			} else {
+				var options = {
+					url: "${ctx}/shop/admin/goods/under.do",
+					type: "POST",
+					success: function () {
+						$.Loading.success("操作成功");
+						parent.layer.close(index); //再执行关闭   
+						parent.table.ajax.url('${ctx}/shop/admin/goods/list-json.do?market_enable=${market_enable!''}').load();
+					},
+					error: function (e) {
+						alert('出现错误，请重试');
+					}
+				};
+				$('#goodsInfoForm').ajaxSubmit(options);
+				return false;
+			}
+		})
+	</script>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <#assign title='店铺幻灯片' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/uploadify.css" />
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.uploadify.min.js"></script>
+    <!--<script type="text/javascript" src="${ctx}${themes_path}/js/store_slide.js"></script>-->
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/store/slideshow.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.flexslider-min.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/store/slideshow.css">
+    <style type="text/css">
+        .mormal-div {
+            width: 150px;
+            height: 215px;
+            border: 1px solid #f5f5f5;
+            ;
+            padding: 28px 10px 10px 10px;
+            position: relative;
+        }
+
+        .goods_images li.normal {
+            width: 160px;
+            padding: 0px;
+            padding-right: 14px;
+            margin-left: 6px;
+            margin-top: 10px;
+        }
+
+        #cloning li.normal {
+            width: 160px;
+            padding: 0px;
+            padding-right: 14px;
+            margin-left: 6px;
+            margin-top: 10px;
+        }
+
+        .mormal-div .remove {
+            width: 40px;
+            height: 20px;
+            position: absolute;
+            top: 3px;
+            right: 10px;
+            background: white;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
+            line-height: 20px;
+            font-weight: 900;
+            color: rgba(153, 153, 153, 0.64);
+            border: 1px solid #ccc;
+        }
+
+        .add {
+           display: inline-block;
+            width: 170px;
+            border: 1px solid #f5f5f5;
+            height: 253px;
+            color: white;
+            line-height: 25px;
+            font-size: 16px;
+            margin: 10px 10px;
+            position: relative;
+        }
+		.themask{
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: #000000;
+			opacity: 0.5;
+			width: 167px;
+			height: 253px;
+			display: none;
+		}
+        #content {
+            display: inline;
+            height: 297px;
+            overflow: hidden;
+        }
+
+        .goods_images {
+            height: 300px;
+        }
+
+        .goods_images li .url input {
+            width: 120px;
+        }
+
+        #cloning li .url input {
+            width: 120px;
+        }
+
+        .add .picture {
+            background-color: #fff;
+            border: 1px solid #f5f5f5;
+            height: 152px;
+            line-height: 0;
+            margin: 28px auto;
+            overflow: hidden;
+            text-align: center;
+            vertical-align: middle;
+            width: 145px;
+        }
+
+        .add .picture img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .add a {
+            width: 80px;
+            height: 28px;
+            color: #337ab7;
+             position: absolute;
+             top: 63%;
+             left: 25%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 13px;
+            border: 1px solid #d8d8d8;
+            margin-top: 36px;
+            display: inline-block;
+        }
+        .uploadify{
+        	margin: 0 auto;
+        }
+        .removeadd{
+        	display: none;
+        }
+        .upload-btn-container{
+            margin-top: 11px;
+        }
+    </style>
+</head>
+
+<body>
+    <#assign mainPageName='main_store' />
+    <#assign lowerPageName='lower_store_slideshow' />
+
+    <#include '/new_store/common/sidebar.html' />
+
+    <div class="app-nav">
+        <ul class="list-nav" onclick="location.reload(); ">
+            <li>
+                <a href="javascript: void(0); ">幻灯片设置</a>
+            </li>
+        </ul>
+    </div>
+
+    <!--主页面区↓-->
+    <div class="app-wappler">
+        <div class="inner-app-wappler">
+            <#-- 调用店铺幻灯片标签 -->
+                <#assign storeSlideListTag=newTag( "storeSlideListTag")>
+                    <#assign storeSlideList=storeSlideListTag()>
+                        <div class="slideshow">
+                            <!-- 说明 -->
+                            <div class="slide_intro">
+                                <ul>
+                                    <li>1. 最多可上传5张幻灯片图片。</li>
+                                    <li>2. 支持jpg、jpeg、gif、png格式上传，建议图片宽度1920px、高度在400px到500px之间、大小4.00M以内的图片。提交2~5张图片可以进行幻灯片播放，一张图片没有幻灯片播放效果。</li>
+                                    <li>3. 操作完成以后，按“保存”按钮，可以在当前页面进行幻灯片展示。</li>
+                                    <li>
+                                        4. 跳转链接必须是
+                                        <b style="color:red;">http:// 或 https://</b>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 设置 -->
+                            <div class="slide_tool">
+                                <div class="flexslider">
+                                    <ul class="slides">
+                                        <#list storeSlideList as storeSlide>
+                                            <li>
+                                                <@image src="${storeSlide.img!''}" />
+                                            </li>
+                                        </#list>
+                                    </ul>
+                                </div>
+                                <form method="post" id="slideForm" enctype="multipart/form-data">
+                                    <!-- 图片上传部分 -->
+                                    <ul id="goods_images" class="goods_images">
+                                        <div id="content">
+                                            <#list storeSlideList as storeSlide>
+                                                <li class="normal">
+                                                    <div class="mormal-div">
+                                                        <span class="remove" style="display: none;cursor: pointer;" rel="${storeSlide.silde_id}">删除</span>
+                                                        <input type="hidden" name="silde_id" value="${storeSlide.silde_id}" />
+                                                        <input type="hidden" name="store_fs" value="${storeSlide.img!''}" />
+                                                        <div class="picture">
+                                                            <span class="thumb">
+                                                                <#if storeSlide.img??>
+                                                                    <@image src="${storeSlide.img}" id="img${storeSlide.silde_id}"/>
+                                                                    <#else>
+                                                                        <img id="img${storeSlide.silde_id}" src="${ctx}/themes/b2b2c/images/default_sildeshow.gif" style="display: inline;">
+                                                                </#if>
+                                                            </span>
+                                                        </div>
+                                                        <div class="url" style="width: 160px;">
+                                                            <label>跳转URL...</label>
+                                                            <input class="form-control" type="text" value="${storeSlide.silde_url!''}" name="silde_url" class="text">
+                                                        </div>
+                                                        <div class='upload-btn-container'>
+                                                            <span class="upload-btn" id="slideFile${storeSlide.silde_id}" fs="${storeSlide.silde_id}">上传按钮</span>
+                                                            <input type="hidden" name="" maxlength="100" autocomplete="off" value="">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </#list>
+                                        </div>
+                                        <div class="add">
+                                        	<p class="themask"></p>
+                                            <div class="picture">
+                                                <img src="${ctx}/themes/b2b2cv4/images/denglu.jpg" alt="" />
+                                            </div>
+                                            <a style=" cursor: pointer;"><span>+</span>新增</a>
+                                        </div>
+                                    </ul>
+
+                                    <!-- 图片上传部分 -->
+                                    <a href="javascript: void(0);" id="saveSlide" class="btn btn-success" style="width: 100px; margin-top: 20px; ">保存</a>
+                                </form>
+                            </div>
+                            <!--克隆的li-->
+                            <div id="cloning" style="display: none;">
+                                <li class="normal">
+                                    <div class="mormal-div">
+                                        <span class="remove" style="display: none;cursor: pointer;" rel="0">删除</span>
+                                         <input type="hidden" name="silde_id" value="0" />
+                                         <input type="hidden" name="store_fs" value="${ctx}/themes/b2b2cv4/images/denglu.jpg" />  
+
+                                        <div class="picture">
+                                            <span class="thumb">
+				                                <img src="${ctx}/themes/b2b2cv4/images/denglu.jpg" style="display: inline;">
+								            </span>
+                                        </div>
+                                        <div class="url" style="width: 160px;">
+                                            <label>跳转URL...</label>
+                                            <input class="form-control" type="text" value="" name="silde_url" class="text">
+                                        </div>
+                                        <div class='upload-btn-container'>
+                                            <span class="upload-btn">上传按钮</span>
+                                            <input type="hidden" name="" maxlength="100" autocomplete="off" value="">
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        (function () {
+            // 鼠标移上li删除按钮显示
+
+            var bindFileEvent = function ($this) {
+                var options = {
+                    preview: false,
+                    //文件上传成功后回调
+                    success: function (img,ele) {
+                        var container = ele.closest('.normal');
+                        // 替换下方图片地址
+                        container.find('input[name=store_fs]').val(img);
+                        container.find('.picture img').attr('src', img);
+                        // 替换轮播图图片地址
+                        var index = container.index();
+                        $($('.slide_tool ul.slides li img')[index]).attr('src', img);
+                    },
+                    error: function (error) {
+                        $.message.error('上传图片失败,请联系官方人员!');
+                    }
+                };
+                $this.FilesUpload(options);
+            };
+
+            $(".goods_images li").hover(function () {
+                $(this).find('span:first').css("display", "block");
+            }, function () {
+                $(this).find('span:first').css("display", "none");
+            })
+            $("#cloning li").hover(function () {
+                $(this).find('span:first').css("display", "block");
+            }, function () {
+                $(this).find('span:first').css("display", "none");
+            })
+            //  	点击新增按钮克隆出新的li
+            $(".add a").click(function () {
+                var lilis = $(".goods_images li").length;
+                if (lilis < 5) {
+                    var tempEle = $("#cloning li").clone(true);
+                    tempEle.appendTo($(".goods_images #content"));
+                    bindFileEvent(tempEle.find('span.upload-btn'));
+                };
+                if (lilis >= 4) {
+                    $(".add").addClass("removeadd");
+                };
+
+            });
+            //  	 鼠标移上删除按钮后字体变红
+            $(".remove").hover(function () {
+                $(this).css("color", "red");
+            }, function () {
+                $(this).css("color", "");
+            });
+
+            $("input[name=silde_url]").each(function () {
+                $(this).unbind('blur').on('blur', function () {
+                    var value = $(this).val();
+                    if (value != "") {
+                        var index = $(this).val().indexOf("http://");
+                        var indexs = $(this).val().indexOf("https://");
+                        if (index != 0 && indexs != 0) {
+                            $(this).parent("div").addClass("has-error");
+                        } else {
+                            $(this).parent("div").removeClass("has-error");
+                        }
+                    } else {
+                        $(this).parent("div").removeClass("has-error");
+                    }
+                })
+            })
+
+            //点击删除按钮删除
+            $(".remove").click(function () {
+                var lilis = $(".goods_images li").length;
+                var silde_id = $(this).attr("rel");
+                if (silde_id == 0) {
+                    $(this).parent().parent().remove();
+                } else {
+                    if (confirm("确定要删除此幻灯片")) {
+                        $.ajax({
+                            type: "GET",
+                            url: "${ctx}/api/b2b2c/store-silde/delete-store-silde.do?silde_id=" + silde_id,
+                            data: "ajax=1",
+                            dataType: "json",
+                            success: function (result) {
+                                window.location.reload();
+                            },
+                            error: function () {
+                                alert("操作失败，请重试");
+                            }
+                        });
+                    }
+                };
+                if (lilis <= 5) {
+                    $(".add").removeClass("removeadd")
+                }
+
+            })
+            window.onload = function () {
+                $('.upload-btn').each(function () {
+                    bindFileEvent($(this));
+                })
+            }
+            $("#saveSlide").unbind('click').on('click', function () {
+                if ($(".has-error").length > 0) {
+                    alert("链接错误,请检查修改后保存");
+                    return;
+                }
+                var options = {
+                    url: ctx + "/api/b2b2c/store-silde/edit-store-silde.do?ajax=yes",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.result == 1) {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            $.message.error(data.message);
+                        };
+                    },
+                    error: function (e) {
+                        $.message.error("出现错误 ，请重试");
+                    }
+                };
+                $("#slideForm").ajaxSubmit(options);
+            });
+        })()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<#include '/admin/header.html' />
+<style type="text/css">
+    #specEditForm table th, #specEditForm table td {
+        text-align: center;
+        padding: 5px 12px;
+    }
+    #specBtns {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        line-height: 50px;
+        text-align: center;
+        background: #ffffff;
+    }
+
+    #specContent {
+        margin-bottom: 50px;
+    }
+
+    .save-spec_value {
+        width: 80px;
+        margin-right: 20px;
+    }
+
+    #specEditForm .__image_placeholdermap, #specEditForm .__image_review__ {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        margin-left: 15px;
+    }
+</style>
+<div class="admin-main">
+    <input type="hidden" id="spec_id" value="${spec_id!''}">
+    <input type="hidden" id="spec_type" value="${spec_type!'0'}">
+    <form id="specEditForm" class="layui-form" Content-Type="multipart/form-data">
+        <table id="specContent" class="layui-table">
+            <thead>
+                <tr id="spec-thead-tr">
+                    <th>规格值名称</th>
+                    <th>规格值图片</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="spec-tbody"></tbody>
+        </table>
+        <div id="specBtns">
+            <button type="button" class="layui-btn layui-btn-small layui-btn-normal save-spec_value"> 保存 </button>
+            <button type="button" class="layui-btn layui-btn-small layui-btn-normal add-spec_value"> 添加规格值 </button>
+        </div>
+    </form>
+</div>
+<div id="upload"></div>
+<script type="text/javascript">
+    $(function () {
+        var specEditForm = $('#specEditForm'),
+            specBtnsDom = $('#specBtns'),
+            specTbodyDom = $('#spec-tbody');
+        var specId = $('#spec_id').val(),
+            specType = Number($('#spec_type').val());
+        var hasImg = specType === 1;
+
+        //  根据规格类型调整table
+        (function () {
+            var theadThDom = $('#spec-thead-tr').find('th');
+            if(specType === 1) {
+                theadThDom.css({width: 100 / 3 + '%'})
+            }else {
+                theadThDom.eq(1).remove();
+                theadThDom.css({width: '50%'})
+            }
+        })();
+
+        //  绑定删除,添加,保存事件
+        (function () {
+            window.onresize = function(){
+                changespecBtnsStyle()
+            };
+            //  删除值
+            specTbodyDom.on('click', '.delete-spec_value', function () {
+                var $this = $(this), value_id = $this.data('value_id');
+                if(value_id === 0) {
+                    $this.closest('tr').remove();
+                }else {
+                    $.ajax({
+                        url: ctx + '/goods-info/admin/spec/check-value-used.do',
+                        data: {spec_value_id: value_id},
+                        type: 'GET',
+                        success: function (res) {
+                            res ? alert('此规格正在被商品使用，不能删除!') : $this.closest('tr').remove();
+                        },error: function (e) {
+                            alert("抱歉检测规格是否使用出错!", + e);
+                        }
+                    })
+                }
+            });
+            //  添加值
+            specEditForm.on('click', '.add-spec_value', function () {
+                specTbodyDom.append('\
+                    <tr>\
+                        <td><input name="spec_value" required  lay-verify="required" placeholder="请输入规格值" autocomplete="off" class="layui-input"></td>\
+                        '+ (hasImg ? '<td><span class="upload-btn">上传图片</span><input type="hidden" name="spec_image"></td></td>' : null) +'\
+                        <td><button type="button" class="layui-btn layui-btn-small layui-btn-danger delete-spec_value" data-value_id="0"> <i class="layui-icon">&#xe640;</i>删除 </button></td>\
+                    </tr>\
+                ');
+                setTimeout(changespecBtnsStyle);
+                if(hasImg) {
+                    var _tr = specTbodyDom.find('tr').last();
+                    _tr.find('.upload-btn').FilesUpload({
+                        success: function (data, ele) {
+                            ele.siblings('input').val(data);
+                        }
+                    });
+                }
+                var h = $(document).height() - $(window).height();
+                $('body,html').animate({scrollTop: h + 50});
+            });
+            //  保存值
+            specEditForm.on('click', '.save-spec_value', function () {
+                var _data = [];
+                var _has_empty = false;
+                specTbodyDom.find('tr').each(function () {
+                    var $this = $(this);
+                    var _spec_value = $this.find("input[name='spec_value']").val();
+                    var _spec_image = $this.find("input[name='spec_image']").val();
+                    if(!_spec_value || (hasImg && !_spec_image)){
+                        _has_empty = true
+                    }
+                    _data.push({
+                        spec_id: specId,
+                        spec_value: _spec_value,
+                        spec_image: _spec_image
+                    })
+                });
+                //  检查是否有未填写的表单
+                if(_has_empty) {
+                    alert('表单填写不完整，请检查！');
+                    return false
+                }
+                $.ajax({
+                    url: ctx + '/goods-info/admin/save/spec-value/' + specId + '.do',
+                    type: 'POST',
+                    data: JSON.stringify(_data),
+                    contentType: 'application/json',
+                    success: function () {
+                        layer.msg('保存成功', {
+                            icon: 1,
+                            time: 1000,
+                            end: function () {
+                                closeCurrent();
+                            }
+                        });
+                    },
+                    error: function (e) {
+                        alert('保存规格值出错，请稍候重试！' + e.statusText);
+                    }
+                });
+            })
+        })();
+
+        //  获取默认数据
+        $.ajax({
+            url: ctx + '/goods-info/admin/get/spec-value/' + specId + '.do',
+            type: 'GET',
+            success: function (res) {
+                processDefaultValues(res)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+
+        //  处理默认数据
+        function processDefaultValues(res) {
+            var _trs = '';
+            $.each(res, function (i, data) {
+                _trs += '<tr>\
+                        <td><input name="spec_value" required  lay-verify="required" placeholder="请输入规格值" autocomplete="off" class="layui-input" value="'+ data.spec_value +'"></td>\
+                        '+ (hasImg ? '<td><span class="upload-btn">上传图片</span><input type="hidden" name="spec_image" value="'+ data.spec_image +'"></td>' : null) +'\
+                        <td><button type="button" class="layui-btn layui-btn-small layui-btn-danger delete-spec_value" data-value_id="'+ data.spec_value_id +'"> <i class="layui-icon">&#xe640;</i>删除 </button></td>\
+                    </tr>';
+            });
+            specTbodyDom.html(_trs);
+            hasImg && initDefaultFileUpload(res);
+            setTimeout(changespecBtnsStyle)
+        }
+
+        //  处理默认数据的上传按钮
+        function initDefaultFileUpload(res) {
+            $('.upload-btn').each(function (i) {
+                var $this = $(this);
+                $this.FilesUpload({
+                    defaultData: [res[i]['spec_image']],
+                    success: function (data, ele) {
+                        ele.siblings('input').val(data);
+                    }
+                })
+            });
+        }
+
+        //  操作栏的样式
+        function changespecBtnsStyle() {
+            specBtnsDom.css({width: specEditForm[0].offsetWidth + 'px'})
+        }
+    })
+</script>
+<#include '/admin/footer.html' />

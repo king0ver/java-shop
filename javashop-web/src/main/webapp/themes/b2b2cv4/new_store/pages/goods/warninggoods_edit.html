@@ -1,0 +1,138 @@
+<#-- 商品规格标签 -->
+	<#assign warningGoodsTag=newTag( "warningGoodsTag")/>
+	<#assign warningGoods=warningGoodsTag( "{'goods_id':${goods_id}}") />
+	<style type="text/css">
+		.have_spec {
+			font-size: 12px;
+		}
+
+		.have_spec th,
+		.have_spec td {
+			text-align: center;
+		}
+
+		.have_spec tbody tr td {
+			line-height: 30px;
+			vertical-align: middle;
+		}
+
+		.have_spec tr {
+			height: 30px;
+		}
+
+		#goodsStoreForm .form-control {
+			margin: 0 auto;
+			text-align: center;
+			height: 30px;
+			line-height: 30px;
+			padding: 0;
+			font-size: 12px;
+			color: #333333;
+		}
+
+		.control-group {
+			margin-bottom: 0;
+		}
+	</style>
+	<form id="goodsStoreForm">
+		<input type="hidden" name="goods_id" value="${goods_id}">
+
+		<table class="table table-bordered table-hover have_spec">
+			<thead>
+				<tr id="spec-th">
+					<th>货号</th>
+					<th>商品名称</th>
+					<th class='usable-quantity'>可用库存</th>
+					<th style="width: 100px;">库存</th>
+				</tr>
+				<script type="text/javascript">
+					$(function () {
+						var th = $('#spec-th').find('th'), thLen = th.length;
+						if (thLen < 4) {
+							th.css({ width: 100 / thLen + '%' });
+						};
+					})
+				</script>
+			</thead>
+			<tbody>
+				<#list warningGoods as sku>
+					<tr data-sku='${sku.specs!' '}' class='tr-specs'>
+						<input type="hidden" value="${sku.sku_id}" name="productIds" />
+						<td title="${sku.sn}">${sku.sn}</td>
+						<td title="${sku.goods_name}" class='spec-goods-name'>
+							<@substring title="${sku.goods_name}" length=16 dot="" />
+						</td>
+						<td>
+							${sku.enable_quantity!''}
+						</td>
+						<td>
+							${sku.quantity!''}
+						</td>
+					</tr>
+				</#list>
+	</form>
+
+	<script>
+			(function () {
+				// 所有规格
+				var specs = [];
+				var specNames = [];
+
+				// 获取所有规格
+				var getSpecs = function () {
+					$('.tr-specs').each(function () {
+						var temp = $.trim($(this).attr('data-sku'));
+						if (!temp || temp.length === 0) {
+							return;
+						}
+						specs.push(JSON.parse(temp));
+					});
+				}
+
+				// 获取规格项
+				var getSpecNames = function () {
+					if (!specs || specs.length === 0) {
+						return;
+					}
+					specs.forEach(function (tempArray) {
+						tempArray.forEach(function (tempObj) {
+							if (specNames.indexOf(tempObj.spec_name) < 0) {
+								specNames.push(tempObj.spec_name);
+							}
+						});
+					});
+				};
+
+
+				// 生成表格头部
+				var generateThead = function () {
+					if (!specNames || specNames.length === 0) {
+						return;
+					}
+					specNames.forEach(function (name) {
+						$('<th>' + name + '</th>').insertBefore($('#spec-th th.usable-quantity'));
+					})
+				};
+
+
+				// 规格表格
+				var generateTbody = function () {
+					$('#goodsStoreForm .tr-specs').each(function (index) {
+						if (!specs || specs.length === 0) {
+							return;
+						}
+						var specArray = specs[index];
+						var html = '';
+						specArray.forEach(function (ele) {
+							html += '<td>' + ele.spec_value + '</td>';
+						});
+						$(html).insertAfter($(this).find('.spec-goods-name'));
+					})
+				};
+
+				getSpecs();
+				getSpecNames();
+				generateThead();
+				generateTbody();
+			})()
+	</script>

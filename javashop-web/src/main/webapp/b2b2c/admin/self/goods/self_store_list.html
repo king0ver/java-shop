@@ -1,0 +1,201 @@
+<#include '/admin/header.html' >
+   <link rel="stylesheet" href="../css/list.css"/>
+    <link rel="stylesheet" href="../css/demo.css"/>
+    <link rel="stylesheet" href="../css/metroStyle/metroStyle.css"/>
+    <style>
+    .classification span{
+    	margin-left:0px;
+    	line-height:0px;
+    }
+    #adv-search{
+    	margin:3px;
+    }
+    </style>
+    
+<div class="admin-main">
+<div class="row">
+	<div class="col-sm-3">
+		<div class="paperbox" style="height: 200px;">
+			<div class="paperbox-s">
+				 <span style="color:orange;font-size:18px">仓库</span>          
+			</div>
+            <!-- //插件 -->
+            <div class="node">
+                <div class="zTreeDemoBackground left">
+                    <ul id="treeDemo" class="ztree" style="overflow: hidden;"></ul>
+                </div>
+            </div>
+       </div>
+	</div>
+</div>
+<div class="row">
+	 <div class="col-sm-12">
+		 <div class="article" style="white-space:nowrap;height:605px;"> 
+            <div class="classification">
+            	 <span style="display:inline-block;margin:0 10px 0 0;float:right;width:auto;">
+   					<input type="text" name="keyword" class="keyword"  id="searchbtn" placeholder="请输入关键字">
+     			</span>
+ 			</div>
+			<div class="shadowBoxWhite">
+				<form id="storeForm">
+					<table id="storedata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+						<thead>
+							<tr>
+								<th>商品编号</th>
+								<th>商品名称</th>
+								<th>分类</th>
+								<th>库存</th>
+								<th>可用库存</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+					</table>
+					<!--传值等操作  -->
+					<div id="addBrand"></div>
+				</form>
+			</div>
+		</div>		
+	</div>	
+</div>
+	<div id="goodsStoreInfo" style="display: none;"></div>
+</div>
+<script type="text/javascript">
+$.fn.dataTable.ext.errMode = 'none';
+
+var table;
+$(function() {
+	
+	$.fn.zTree.init($("#treeDemo"), setting);
+	table = $('#storedata').on( 'error.dt', function ( e, settings, techNote, message ) {
+		alert("没有权限");
+	})
+	.DataTable(
+			{
+				"language" : {
+					"url":ctx + "/zh_CN.txt"
+				},
+				"processing" : true,
+				"serverSide" : true,
+				"ordering" : false,
+				"searching" : false,
+				"lengthChange" : false,
+				ajax : {
+					//指定数据源
+					type : "post",
+					url : '${ctx}/b2b2c/admin/self-store-goods-stock/self-list-goods-store-json.do',
+				},
+				columns : [ //定义列
+						{
+							data : "sn"
+						},
+						{
+							data : "name"
+						},
+						{
+							data : "cname"
+						},
+						{
+							data : "d_store"
+						},
+						{
+							data : "enable_store"
+						},
+						{
+							data : null,
+							"render" : function(data, type, row) {
+								return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick='view("
+										+ data["goods_id"]
+										+ ")' >修改</a>"; 
+							}
+						} ]
+			});
+	//搜索栏
+    var cent = $("#templist").html();
+    $("#searchbtn").searchBox({
+    	  content: cent,
+        keywordSearch: function () {
+        	var depotId = achieveDepot();
+    		var keyword = $("input[name=keyword]").val();
+    		var url = table.ajax.url("${ctx}/b2b2c/admin/self-store-goods-stock/self-list-goods-store-json.do?keyword="+keyword+"&stype="+0+"&depot_id="+depotId);
+    		url.load();
+           
+        },
+        advanced: true,
+    });
+	
+})
+	
+	
+function achieveDepot(){
+	var is = $("#treeDemo").find("a").hasClass("curSelectedNode");
+	if(is){
+		var depotName =  $(".curSelectedNode").find(".node_name").text();
+		if(depotName == "海淀仓库"){
+			return "1";
+		}else if(depotName == "总库存"){
+			return "0";
+		}
+	}
+	return "0";
+}
+		
+	var setting = {
+			view: {
+				showLine:false,
+	            showIcon: showIconForTree
+	        },
+	        async: {
+	            enable: true,
+	            url:"${ctx}/shop/admin/goods-store/list-store-json.do",
+	            autoParam:["id"]
+	        },
+	        callback: {
+	            onClick: zTreeOnClick
+	        }
+	    };
+	
+	function filter(treeId, parentNode, childNodes) {
+        if (!childNodes) return null;
+        for (var i=0, l=childNodes.length; i<l; i++) {
+            childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+        }
+        return childNodes;
+ 	}
+ 
+    function showIconForTree(treeId, treeNode) {
+        return !treeNode.isParent;
+    };
+
+ 
+
+//点击ztree单个节点事件
+	function zTreeOnClick(event, treeId, treeNode) {   
+		var name = treeNode.name;
+   	 	loadData(treeNode.id);
+   		 depot_id = treeNode.id;
+	};
+	
+	//加载商品库存
+	function loadData(depot_id){
+	    var keyword = $(".keyword").val();
+	    var param = "depot_id="+depot_id+"&keyword="+keyword+"&stype="+0;
+	    var url = table.ajax.url("${ctx}/b2b2c/admin/self-store-goods-stock/self-list-goods-store-json.do?"+param);
+	    url.load();
+	}
+	
+	//修改库存
+	function view(goodsid){
+		layer.open({
+	        title:"修改库存",//标题
+	        maxmin :true,//右上角可否放大缩小
+	        type:2,//弹框的类型
+	        shade: [0.3, '#000'],//黑色背景
+	        shadeClose:false,//黑色背景是否可以点击关闭
+	        content:ctx+"/shop/admin/goods-store/get-store-dialog-html.do?ajax=yes&goodsid="+goodsid,//内容的URL
+	        area:['500px','260px'],//弹框大小
+	        scrollbar: false//是否允许浏览器出现滚动条
+	    });
+	}
+
+</script>
+<#include '/admin/footer.html' >

@@ -1,0 +1,27 @@
+
+	<div class="layui-form-item" >
+		<span class="upload-btn upload-btn1">上传</span>
+		<#if value?? && value != "">
+			<img class="temp-preview-image" src="${value!''}" height="200" width="200">
+		</#if>
+		<input type="hidden" id="upload_src" name="${fieldname}" maxlength="100" autocomplete="off" value="${value!''}">
+	</div>
+
+<script>
+$(function(){
+	//修改文件上传控件
+	var options = {
+		success: function (data) {
+			// 先移除初始化时手动添加的预览图,然后再让插件自动添加预览图
+			$("#upload_src").val(data);
+		},
+		error: function (error) {
+			console.log(error);
+		}
+
+	}
+	$('.upload-btn1').FilesUpload(options);
+})
+</script>
+
+

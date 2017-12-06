@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '订单列表' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/order.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/transaction/order.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_transaction' />
+<#assign lowerPageName = 'lower_transaction_order' />
+
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav">
+        <li><a href="./order.html">订单列表</a></li>
+    </ul>
+</div>
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+        <!-- 获取店铺订单标签 -->
+        <#assign sellerOrderListTag=newTag("sellerOrderListTag")/>
+        <#assign result=sellerOrderListTag()/>
+        <#assign pageData=result.storeOrder />
+        <#assign orderList=pageData.result />
+        
+        <div class="order-wappler">
+            <div class="filter-tools">
+               <div class="filter-box filter-sn">
+                    <span>订单编号：</span>
+                    <input type="text" class="form-control" id="filter_sn" onkeyup="value=value.replace(/[\W]/g,'')">
+                </div>
+                <div class="filter-box filter-customer">
+                    <span>买家：</span>
+                    <input type="text" class="form-control" id="filter_customer" onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')">
+                </div>
+                <div class="filter-box filter-customer">
+                    <span>订单包含商品：</span>
+                    <input type="text" class="form-control" id="filter_goods" onkeyup="value=value.replace(/[^\w\u4E00-\u9FA5]/g, '')">
+                </div>
+                <div class="filter-box filter-time">
+                    <span>下单时间：</span>
+                    <input type="text" class="form-control" id="filter_start_time" onclick="WdatePicker();" readonly>
+                    <span style="float: left; ">&nbsp;-&nbsp;</span>
+                    <input type="text" class="form-control" id="filter_end_time" onclick="WdatePicker();" readonly>
+                </div>
+                <div class="filter-box filter-seach">
+                    <a href="javascript: void(0);" class="btn btn-info" id="filter_seach">搜索</a>
+                </div>
+            </div>
+            <div class="app-tab-tools">
+                <ul>
+                    <li <#if order_state?? && order_state=="all"> class="active" order_state="${order_state}"</#if> ><a href="javascript: void(0);" order_state="all">全部</a></li>
+                    <li <#if order_state?? && order_state=="wait_pay"> class="active" order_state="${order_state}"</#if> ><a href="javascript: void(0);" order_state="wait_pay">待付款</a></li>
+                    <li <#if order_state?? && order_state=="wait_ship"> class="active" order_state="${order_state}"</#if> ><a href="javascript: void(0);" order_state="wait_ship">待发货</a></li>
+                    <li <#if order_state?? && order_state=="wait_rog"> class="active" order_state="${order_state}"</#if> ><a href="javascript: void(0);" order_state="wait_rog">待收货</a></li>
+                </ul>
+            </div>
+            <div class="order-list">
+                <table class="order-table">
+                    <thead class="thead-order-table">
+                        <tr class="tools-thead">
+                            <th class="goods-price-num"><span class="goods">商品</span><span class="price-num">单价/数量</span></th>
+                            <th class="customer">买家</th>
+                            <th class="time">下单时间</th>
+                            <th class="state">订单状态</th>
+                            <th class="client_type">订单来源</th>
+                            <th class="pay-price">实付金额</th>
+                        </tr>
+                    </thead>
+                    <#if pageData.totalCount != 0 >
+                        <tbody class="order-list-item">
+                            <#list orderList as order >
+                                
+                            <tr class="order-list-hr"></tr>
+                           
+                            <tr class="order-header">
+                                <td class="sn-order-header">订单编号：${order.sn}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="tools-order-header">
+                                    <a href="javascript: void(0);" sn="${order.sn}">查看详情</a>
+                                </td>
+                            </tr>
+                            <#assign orderItemList = order.productList />
+                            <tr class="order-content">
+                                <td class="goods-price-num">
+                                    <#list orderItemList as item>
+                                        <p class="item-goods-price-num">
+                                            <#if item.goods_image?? >
+                                                <img src="${item.goods_image!''}" />
+                                            <#else>
+                                                <img src="${ctx}/statics/images/no_picture.jpg" />
+                                            </#if>
+                                            <a target="_blank" href="${ctx}/goods-${item.goods_id}.html"><@substring title="${item.name}" length="48" dot="..." />
+                                            <#if item.specList?exists>
+												<span style="margin: ">
+													<#list item.specList as spec>
+														<#if spec_index!=0></#if>(<strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>)
+													</#list>
+												</span>
+											</#if>
+                                            </a>
+                                            <span class="price-num">${item.purchase_price?string.currency}&nbsp;x&nbsp;${item.num}</span>
+                                        </p>
+                                    </#list>
+                                </td>
+                                <td class="order-customer">
+                                    <span>${order.member_name!''}</span>
+                                </td>
+                                <td class="order-time">
+                                    <span>${order.create_time}</span>
+                                </td>
+                                <td class="order-state">
+                                    <span>
+                                    <#-- 判断是否申请取消订单 -->
+										${order.order_status_text}
+                                    </span>
+                                </td>
+                                <td class="order-time">
+                                    <span>${order.client_type!'PC'}</span>
+                                </td>
+                                <td class="order-pay-price">
+                                    <div>
+                                        <strong style="color: red; ">${order.order_amount?string.currency}</strong>
+                                        <p class="other">
+                                            <span>运费(${(order.shipping_amount!0)?string.currency})</span><br>
+                                            <span style="position: relative; top: 5px;;">${order.payment_name!''}</span>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </#list>
+                    </tbody>
+                </table>
+                    <div class="app-paging-tools">
+                        <div class="demo"></div>
+                        <div class="paging">
+                            <@pager pageno="${ pageData.currentPageNo!'1'}" pagesize="${ pageData.pageSize}" totalcount="${ pageData.totalCount}" />
+                        </div>
+                    </div>
+                <#else>
+                </table>
+                    <div style="height: 10px; background-color: #FFFFFF; "></div>
+                    <div class="app-no-data">
+                        <span class="a-no-data">暂无相关数据</span>
+                    </div>
+                </#if>
+            </div>
+        </div>
+    </div>
+</div>
+<!--主页面区↑-->
+
+<!--<div class="app-help">
+    <div class="head-help">
+        <span class="icomoon question-ico"></span>
+        <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+        <span class="icomoon close-ico" title="关闭">x</span>
+    </div>
+    <div class="body-help">
+        <p>帮</p>
+        <p>助</p>
+        <p>与</p>
+        <p>客</p>
+        <p>服</p>
+    </div>
+</div>
+<div class="open-help">
+    <span class="icomoon question-ico"></span>
+    <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+</div>-->
+
+</body>
+</html>

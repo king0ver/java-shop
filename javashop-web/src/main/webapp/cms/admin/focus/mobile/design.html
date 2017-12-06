@@ -1,0 +1,27 @@
+<#include '/admin/header.html'>
+    <script type="text/javascript" src="${ctx}/cms/admin/js/mobile-focus-design.js"></script>
+    <script type="text/javascript" src="${ctx}/cms/admin/js/jquery.singleImageSelector.js"></script>
+    <link rel="stylesheet" href="${ctx}/cms/admin/css/mobile-focus-design.css" />
+    <!-- <script type="text/javascript" src="${ctx}/selector/js/jquery.areaSelector.js"></script> -->
+
+    <div class="tool-bar" style="width:100%">
+        <button id="addFocus" class="btn-normal layui-btn layui-btn-small layui-btn-normal" type="button" >新增焦点图片</button>
+    </div>
+
+    <div class="focus-design">
+        <div class="focus">
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript">
+        // $.areaSelector({ confirm: function (data) { console.log('-->', data); } });
+        $(function () {
+            var design = new FocusDesign($(".focus"));
+            $("#addFocus").click(function () {
+                design.addFocus();
+            });
+        });
+    </script>
+    <#include '/admin/footer.html'>

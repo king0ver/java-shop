@@ -1,0 +1,106 @@
+<#assign  title="结算" />
+<#include '/common/header.html' />
+<!-- 头部 -->
+	<div class="header">
+		<p>
+			确认发票信息
+		</p>
+	</div>
+	<div class="i_content">
+		<h2>发票抬头:</h2>
+		<ul>
+			<li class="about_receipt">	
+				<label>
+					<input type="radio" name="receiptType" value="1" checked="true" class="geren_o geren">
+					<p class="order_personal">个人</p>
+					<span class=""></span>
+				</label>
+				<label>
+					<input  name="receiptType" type="radio" value="2" class="geren_p geren">
+					<p>单位</p>
+					<span class=""></span>
+					<input type="text" name="receiptTitle" id="receiptTitle" maxlength="15" value="" class="order_company" style="display:none;"/>
+				</label>
+			</li>
+			<li class="r_intro">
+			<span>发票内容：</span>
+				<select name="receiptContent" id="testSelect" class="receiptContent">
+					<option value="办公用品">办公用品</option>
+					<option value="劳保用品">劳保用品</option>
+					<option value="耗材">耗材</option>
+				</select>
+			</li>
+			<li class="notice">发票在您收到货30天后通过平邮寄出，请注意查收 </li>
+			<li class="warning">注：内容不全默认为不索取发票</li>
+		</ul>
+	</div>
+	<div class="receipt_save">
+		<a href="javascript:void(0)" class="receipt_to_save">保存发票信息</a>
+		<a href="checkout.html" class="receipt_to_back">返回继续结算</a>
+	</div>
+
+	<span  name="receiptContent" value="" class="receiptContentspan" ></span>
+	<span   value="" class="receiptTitlespan" name="receiptTitle"></span>
+	<input type="hidden" value="" name="receipt" class="receiptspan">
+	
+	
+<script>
+	$(function(){
+		
+		//显示发票抬头
+		$(".i_content [name=receiptType]").click(function(){
+			var demo = $(this).val();
+			if(demo=="1"){
+				$("#receiptTitle").hide();
+			}else{
+				$("#receiptTitle").show();
+			}
+		}); 
+		
+		//个人与单位切换
+		var own=$('input:radio[name="receiptType"]:checked').val();
+		if(own==1){
+			$(".geren_o").nextAll("span").addClass("selected");
+		}
+		else{
+			$(".geren_p").nextAll("span").addClass("selected");
+		}
+		$(".geren").click(function(){
+			$(".about_receipt label span").removeClass("selected");
+			$(this).nextAll("span").addClass("selected");
+		})
+		
+		//保存发票信息
+		
+		$(".receipt_to_save").click(function(){
+			var rType=$('input:radio[name="receiptType"]:checked').val();
+			var rContent= $(".receiptContent").find("option:selected").text(); 
+			var rTitle=$("#receiptTitle").val();
+			//判断如果是个人，则去掉发票抬头信息
+			if(rType=="1"){
+				$(".receiptspan").attr("value",rType);
+				$(".receiptContentspan").attr("value",rContent);
+				$(".receiptTitlespan").attr("value","");
+			}else{
+				$(".receiptContentspan").attr("value",rContent);
+				$(".receiptTitlespan").attr("value",rTitle);
+				if(typeof(rTitle)=="undefined"||rTitle==""){
+					alert("请输入发票抬头");
+					return;
+				}
+				$(".receiptspan").attr("value",rType);
+			}
+			
+			//返回结算，并传递选择好的发票参数
+			var receipt = $(".receiptspan").val();   //发票类型  1为个人，2为单位
+			var content = $(".receiptContentspan").val(); //发票内容
+			var title = $(".receiptTitlespan").val();    //发票抬头
+			location.href="checkout.html?receipt="+receipt+"&r_content="+content+"&r_title="+title;
+			
+		});
+		
+		
+	})
+</script>
+
+<#include 'common/footer.html'/>

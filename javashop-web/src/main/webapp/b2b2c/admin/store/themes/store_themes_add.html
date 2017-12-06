@@ -1,0 +1,90 @@
+<#include '/admin/sonheader.html' >
+<style>
+ .layui-select-title input{
+  width:100%;
+ }
+ .layui-unselect {
+  width:50%;
+ }
+ .layui-input{
+  width: 75%;
+ }
+</style>
+<div class="main">
+    <!--表单区域  -->
+	<form id="editForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data" style="padding-top:10px">
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">名称：</label>
+    		<div class="layui-input-block">
+      			<input type="text" name="name" maxlength="20" value="" lay-verify="name" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  		
+  		 
+  		
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">文件夹：</label>
+    		<div class="layui-input-block">
+      			<input type="text" id="path" name="path" maxlength="20" value=""  lay-verify="path" autocomplete="off" class="layui-input" style="display:inline;">&nbsp;
+    		</div>
+  		</div>
+  		<div class="layui-form-item">
+  			<div class="layui-input-block">
+				图片存储在：模板文件夹下的：preview.jpg 
+    		</div>
+  		</div>
+  		
+  		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 98%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a class="layui-layer-btn0" type="button" id="savebtn"  lay-submit="" lay-filter="addstore">保存</a>
+  			<a class="layui-layer-btn1" type="button" id="restbtn"  layposition: fixed;left: 1px;width: 98%;height: 40px; background:rgba(230,230,230,0.8)-submit="" lay-filter="">取消</a>
+  		</div>
+  	</form>
+</div>
+<script type="text/javascript">	
+var index = parent.layer.getFrameIndex(window.name);
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+    
+    
+    form.verify({
+    	name:function(value){
+    		if($.trim(value) == ""){
+    			return "请输入名称";
+    		}
+    	},
+    	path:function(value){
+    		if($.trim(value) == ""){
+    			return "请输入文件夹";
+    		}
+    	}
+    });
+    //取消按钮
+	$(".layui-layer-btn1").click(function(){
+    	parent.layer.close(index);
+    }); 
+    
+form.on('submit(addstore)', function(data){
+    	var options = {
+   			url:ctx+"/b2b2c/admin/store-themes/save-add.do",
+   			type:"post",
+   			dataType:"json",
+   			success:function(data){
+   				if(data.result==1){	
+   					parent.$.Loading.success("添加成功");
+   					parent.layer.close(index); //再执行关闭     
+   					parent.table.ajax.url(ctx+"/b2b2c/admin/store-themes/list-json.do").load();
+   				}else{
+   					parent.$.Loading.error(data.message);
+   				}
+   			}
+   		};
+   		$("#editForm").ajaxSubmit(options); 
+       return false;
+    });
+
+});
+</script>

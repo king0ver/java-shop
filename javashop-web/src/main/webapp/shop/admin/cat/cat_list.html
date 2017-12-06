@@ -1,0 +1,280 @@
+<#include '/admin/header.html' />
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/plugins/select2/css/select2.min.css"/>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/plugins/select2/js/select2.min.js"></script>
+<style>
+    .__GCD__content .__GCD__input input {
+        height: 30px;
+        line-height: 30px;
+        padding: 4px 10px;
+    }
+</style>
+<div class="admin-main" id="__cat_box__" style="margin-top: 30px;">
+    <script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.goodsCatsEdit.js"></script>
+    <script type="text/javascript">
+	    var ctx = '${ctx}';
+	    var _goodsCatEdit;
+        $(function () {
+            _goodsCatEdit = $('#__cat_box__').goodsCatsEdit({
+                api     : "/goods-info/category/@id/children.do?format=plugin",
+                canEdit : true,
+                addCat  : function (cat) {
+                    addCat(cat)
+                },
+                callback: function (cat) {
+                    console.log(cat);
+                },
+                itemBtns: [
+                    {text: '参数', onClick: function (cat) {
+                        bingparams(cat.id);
+                    }},
+                    {text: '品牌', onClick: function (cat) {
+                        bingbrand(cat.id);
+                    }},
+                    {text: '规格', onClick: function (cat) {
+                        bingspec(cat.id);
+                    }},
+                    {text: '编辑', onClick: function (cat) {
+                        editCat(cat)
+                    }},
+                    {text: '删除', textStyle: 'color: red', onClick: function (cat) {
+                        deleteCat(cat.id)
+                    }}
+                ]
+            }).init();
+
+            //  添加分类
+            function addCat(cat) {
+                $.ajax({
+                    url    : ctx + '/shop/admin/add.do',
+                    success: function (html) {
+                        layer.open({
+                            type   : 1,
+                            title  : '添加分类',
+                            area   : ['600px', 'auto'],
+                            content: html,
+                            btn    : ['确定', '取消'],
+                            success: function (layero, index) {
+                                cat.leave === 1 && (function () {
+                                    var parent_dom = layero.find("input[name='parent_id']");
+                                    parent_dom.val(0);
+                                    parent_dom.closest('.layui-form-item').hide();
+                                })();
+
+                                cat.leave !== 1 && (function () {
+                                    layero.find('#cat_parent').replaceWith('<select name="parent_id" id="cat_parent" class="layui-input" style="width: 235px;"></select>');
+                                    layero.find('#cat_parent').html('<option value="' + cat.parent_data['data']['id'] + '">' + cat.parent_data['data']['text'] + '</option>');
+                                    layero.find('#cat_parent').select2({data: cat.parent_data.datas});
+                                })();
+
+                            },
+                            yes    : function (index, layero) {
+                                var _name = layero.find('#name').val(), _sort = layero.find('#sort').val();
+                                if (!_name || !_sort || isNaN(_sort)) {
+                                    layer.msg('表单填写有误，请核对！', {icon: 2});
+                                } else {
+                                    layero.find('#addForm').ajaxSubmit({
+                                        url     : ctx + '/goods-info/admin/category/save-add.do',
+                                        type    : 'POST',
+                                        success : function (res) {
+                                            layer.msg('保存成功！', {icon: 1});
+                                            _goodsCatEdit.refreshData();
+                                            layer.close(index);
+                                        }, error: function () {
+                                            layer.msg('出现错误，请重试！', {icon: 5});
+                                        }
+                                    });
+                                }
+                            },
+                            btn2   : function (index, layero) {
+
+                            }
+                        });
+                    }
+                });
+            }
+            //  编辑分类
+            function editCat(cat) {
+                $.ajax({
+                    url    : ctx + '/shop/admin/edit.do',
+                    data   : {cat_id: cat.id},
+                    success: function (html) {
+                        layer.open({
+                            type   : 1,
+                            title  : '编辑分类',
+                            area   : ['600px', '445px'],
+                            content: html,
+                            btn    : ['确定', '取消'],
+                            success: function (layero, index) {
+                                cat.leave !== 1 && (function () {
+                                    layero.find('#cat_parent').replaceWith('<select name="parent_id" id="cat_parent" class="layui-input" style="width: 235px;"></select>');
+                                    layero.find('#cat_parent').html('<option value="' + cat.parent_data['data']['id'] + '">' + cat.parent_data['data']['text'] + '</option>');
+                                    layero.find('#cat_parent').select2({data: cat.parent_data['datas']});
+                                })();
+                            },
+                            yes    : function (index, layero) {
+                                var _name = layero.find('#name').val(), _sort = layero.find('#sort').val();
+                                if (!_name || !_sort || isNaN(_sort)) {
+                                    layer.msg('表单填写有误，请核对！', {icon: 2});
+                                } else {
+                                    layero.find('#editForm').ajaxSubmit({
+                                        url     : ctx + '/goods-info/admin/category/save-edit.do',
+                                        type    : 'POST',
+                                        success : function (res) {
+                                            layer.msg('保存成功！', {icon: 1});
+                                            _goodsCatEdit.refreshData();
+                                            layer.close(index);
+                                        }, error: function () {
+											layer.msg('出现错误，请重试！', {icon: 5});
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            //  删除分类
+            function deleteCat(id) {
+                layer.confirm('确定要删除这个分类吗？', {icon: 3, title: '提示'}, function (index) {
+                    layer.close(index);
+                    var __load = layer.load(2);
+                    $.ajax({
+                        url    : ctx + '/goods-info/admin/category/delete/' + id + '.do',
+                        type   : 'delete',
+                        success: function (res) {
+                            layer.close(__load);
+                            layer.msg('删除成功！', {icon: 1});
+                            _goodsCatEdit.refreshData();
+                        },
+                        error  : function (e) {
+                            layer.close(__load);
+							layer.msg('出现错误，请重试！', {icon: 5});
+                        }
+                    });
+                });
+            }
+
+            // 绑定参数
+            function bingparams(id) {
+                newTab("参数管理-参数", "${ctx}/shop/admin/cat/params.do?id=" + id);
+            }
+
+            //绑定品牌
+            function bingbrand(id) {
+                $.ajax({
+                    url    : "${ctx}/goods-info/admin/brand-page.do",
+                    success: function (data) {
+                        layer.open({
+                            type   : 1,
+                            content: data,
+                            area   : ['580px', '385px'],
+                            title  : "绑定品牌",
+                            btn    : ["保存"],
+                            success: function (layero, index) {
+                                $.ajax({
+                                    url    : "${ctx}/goods-info/admin/category/" + id + "/brand.do",
+                                    async  : false,
+                                    success: function (result) {
+                                        if (result !== null) {
+                                            var options = "";
+                                            for (var i = 0; i < result.length; i++) {
+                                                var data = result[i];
+                                                options += "<option value='" + data.id + "' ";
+                                                if (data.selected) {
+                                                    options += "selected = 'selected'";
+                                                }
+                                                options += ">" + data.text + "</option>";
+                                            }
+                                            layero.find(".select-category-brand").append(options);
+                                        }
+                                    }
+                                });
+                                layero.find("input[name=category_id]").val(id);
+                                layero.find(".select-category-brand").select2();
+                            },
+                            yes    : function (index, layero) {
+                                var choose_brands = layero.find('#choose_brands').val();
+                                if (!choose_brands) {
+                                    layer.msg('表单填写有误，请核对！', {icon: 2});
+                                } else {
+                                    layero.find('#addForm').ajaxSubmit({
+                                        url     : "${ctx}/goods-info/admin/category/" + id + "/brand.do",
+                                        type    : 'POST',
+                                        success : function (res) {
+                                            layer.msg('保存成功！', {icon: 1});
+                                            layer.close(index);
+                                        }, error: function (e) {
+											layer.msg('出现错误，请重试！', {icon: 5});
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            //绑定规格
+            function bingspec(id) {
+                $.ajax({
+                    url    : "${ctx}/goods-info/admin/spec-page.do",
+                    success: function (data) {
+                        layer.open({
+                            type   : 1,
+                            content: data,
+                            area   : ['580px', '385px'],
+                            title  : "绑定规格",
+                            btn    : ["保存"],
+                            success: function (layero, index) {
+                                $.ajax({
+                                    url    : "${ctx}/goods-info/admin/category/" + id + "/spec.do",
+                                    data   : {
+                                        "category_id": id
+                                    },
+                                    async  : false,
+                                    success: function (result) {
+                                        if (result !== null) {
+                                            var options = "";
+                                            for (var i = 0; i < result.length; i++) {
+                                                var data = result[i];
+                                                options += "<option value='" + data.id + "' ";
+                                                if (data.selected) {
+                                                    options += "selected = 'selected'";
+                                                }
+                                                options += ">" + data.text + "</option>";
+                                            }
+                                            layero.find(".select-category-spec").append(options);
+                                        }
+                                    }
+                                });
+
+                                layero.find("input[name=category_id]").val(id);
+                                layero.find(".select-category-spec").select2({tags: true});
+                            }, yes : function (index, layero) {
+                                var choose_specs = layero.find('#choose_specs').val();
+                                if (!choose_specs) {
+                                    layer.msg('表单填写有误，请核对！', {icon: 2});
+                                } else {
+                                    layero.find('#addForm').ajaxSubmit({
+                                        url     : "${ctx}/goods-info/admin/category/" + id + "/spec.do",
+                                        type    : 'POST',
+                                        success : function (res) {
+                                            layer.msg('保存成功！', {icon: 1});
+                                            layer.close(index);
+                                        }, error: function () {
+                                            layer.msg('出现错误，请重试！', {icon: 5});
+                                        }
+                                    });
+
+                                }
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+    </script>
+</div>
+<#include '/admin/footer.html' />

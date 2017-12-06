@@ -1,0 +1,239 @@
+/**
+ * Created by Andste on 2017/11/23.
+ */
+
+#navigator {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+#exchange {
+    margin-top: 44px;
+}
+
+/** 焦点图 */
+.exchange-container {
+    position: relative;
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+}
+
+.exchange-container img {
+    width: 100%;
+    height: 100%;
+}
+
+/** 分类 */
+.category-wrapper {
+    margin-top: 5px;
+}
+.category-wrapper.fixed-top {
+    position: fixed;
+    top: 43px;
+    left: 0;
+    z-index: 99;
+    width: 100%;
+    margin-top: 0;
+}
+
+.category-wrapper ul {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    background: #fff;
+    border-top: solid 1px #dedede;
+    border-bottom: solid 1px #dedede;
+    text-align: center;
+    color: #9a9a9a;
+    padding: 0 5px;
+}
+
+.category-wrapper ul li {
+    flex: 1;
+    border-right: solid 1px #dedede;
+    font-size: 14px;
+}
+
+.category-wrapper ul li:last-child {
+    border-right: 0;
+}
+
+.category-wrapper ul li:last-child span {
+    display: block;
+    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC4UlEQVR4Xu2bzXXTQBCAZ+xnX0kHpAPoAFMBoQLsg6XnE+mAUEHCyW9XB4UKCB0kFWAqwOkgvtqyhzew4ilCsbRyVl7tas+SNfPN3+7sGMHzhZ7rDx2AzgM8J9CFgOcO0EwSjOP4ZLPZvLIB9na7vZ/NZstUFqMhEEXRaLfbxYh4aoPyGRkeAOAiCIIvxgBIKV8DwA/LFM+LMzEGQAhxjYgfLAewMAZASnkLAG8sB2AuCUoprwDgo+UA7ox5AGf+9Xq9RMQXtkJAxLfGALDS8/n8tN/vsydwQnxpAwgiWiEihydXAXM5wAZlq8hg1AOqCHDsZzoAx7bAsb/feUAdC6gSNw7DkDN8q5e2B6g9fgwAqyAIRq3WHkBvJyiEOENEVv4EAO68AhBF0SciushY3A8AKt75TH+Wc3f3AWTinbey+eU2gFy8F+U6dwEUxLsfAPbEe20AHEaI+M6ycrmYTqffWaZ/+wAWlIi+aTQwS0NASsklc2yZ8qk4i8Fg8LcfIKVkIS9Vfa8q714A6jcZgLWLiL6iEOISEc9rSFkG4AYAbHP9R2oS0RIPsFTrAQDA/Z8QUBcYN5r9uzIAHFb2h0DqEyoJ3mpAKE2CNt8NENHP4XA4enQa1IRQCkAlWK4u+W10jZTzrK8swjDkHPX/aZA7ub1ej8Oh7DKzEoBnFdvAjxX2A9SGiMNhHwR3ATDoChDcBpCBcPXEJaf7ANKQeyKb+wOAQRRA8AuAgnCOiHxm4OUfgMzBiXd4fgLIQBh71RXO70G4TE4mEx42avXSvhhptbYFwncAXLOorj5GPUAdrLhscmPUlmHJByLic85noyMyajz2l2afUdeABz1vdEjK+zE57wclbW6HpXHDbTFjSbANw9JE9N4YgLTbTETXtgxJZiy/4kFJHvExCiD9IFeEJEmKrtgPyuJ1Xk6SZNnYHybqCNj0O414QNNK6XyvA6BDy8VnOw9w0ao6OnnvAb8BQc89sThwloYAAAAASUVORK5CYII=") no-repeat center;
+    background-size: 60%;
+}
+
+.item-category.active {
+    color: #f15353;
+}
+
+/** 商品 */
+.goods-wrapper.margin-top {
+    margin-top: 41px;
+}
+.item-goods {
+    display: flex;
+    border-bottom: solid 1px #dedede;
+    padding: 8px;
+    background: #fff;
+}
+
+.item-goods dt {
+    width: 120px;
+    height: 100px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.item-goods dt img {
+    width: 100px;
+    height: 100px;
+}
+
+.item-goods dd {
+    flex: 2;
+    position: relative;
+    padding-left: 8px;
+}
+
+.item-goods .name-goods {
+    font-size: 14px;
+    margin-bottom: 0;
+    line-height: 20px;
+    height: 38px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #252525;
+}
+
+.item-goods .descrip-goods {
+    padding-top: 15px;
+}
+
+.item-goods .descrip-goods p {
+    color: #f15353;
+}
+
+.item-goods .price-goods {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.item-goods .price-goods span {
+    color: #f15353;
+}
+
+.item-goods .grab-btn {
+    padding: 4px 12px;
+    color: #fff;
+    background: #e83433;
+    border-radius: 4px;
+    position: absolute;
+    right: 5px;
+    bottom: 32px;
+    font-size: 14px;
+}
+
+/** 侧边栏 */
+.slider-wrapper {
+    position: fixed;
+    top: 0;
+    right: -310px;
+    z-index: 101;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 10px 0 #333;
+    transition: all ease-out .3s;
+}
+.slider-wrapper.open { right: 0; }
+
+.slider-mask {
+    display: none;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.6);
+    transition: all ease-out .3s;
+}
+.slider-mask.open { display: block }
+.slider-mask.show { opacity: 1 }
+
+.slider-navigator {
+    position: absolute;
+    z-index: 105;
+    width: 100%;
+    height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #e2e2e2;
+    background-color: #fff;
+}
+
+.slider-navigator .close-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 44px;
+    height: 44px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC0UlEQVR4Xu2bXVLbMBCAd/1YHpqj0BMAjxiY5gjhBNATEG7QG5AbADPEr6UnaI8CzzDZjjyEyY8daVe7sq0mj0S29vu0kqXgxePxeHTw9nYDiBMiegGi26qqZpDhpyzLCSDeIOIIiGbz+fwHlufnPxHgapWXFovL3CQ4eCyKuzVOgFsn4BkBjjYHPCcJTfCOlwB+Y3l29oCI35syPgcJbfC1AKJHLMvyEBCfEfFrbhI88K9AdIwOOkcJIfBVVf2tBeQmIRTecX8KyEUCB35LwNAlcOEbBQxVggS+VcDQJEjhdwoYioQYeK+AvkuIhQ8S4BqdXlyMC6L7tvNRFztGDfhgAR+ZsHWY6OoApQXPEtAXCZrwbAFdS9gFXx9uBMf4tZ1g2xzf/LtFIL6+rfoUCUidCVbwoimwOlKWgS37se5DnAEpArSGj84ASwkp4NUEaK8JqeBVBWhJSAmvLiBWQmp4EwFSCV3AmwngSugK3lRAqIQ6iI3/2KQ8ZEXvA2K3sLuul+ztffFsfm8uICQTmoJOAW8+BTjb5pRpv9pXkgwI3TG6dqlGfhnTXgB30ZC29z3qsp4CHPiliFRTwXwKSOBTSjAV4IN3o5ztRigEfvkeEqetdA1qu84kAyRAkms0ZKgLiAGJuVYqQ1WABoDGPTgy1ARoBq55L58MFQEWAVvcs0lGtADLQC3vrXIWSBGgdR/iDLAOjHOUjtk2iwSkhA89SkslsAV0AW8pgSWgS3iGhG/uFVjf44+9CPYBPlDCCy0WJ6ESgjLAvUyNRfGnzap0/oWOUlM7z4AES/AK+ID/BQCjLn+9tZKwU0Cf4bWmQ6uAIcBrSGgUMCT4WAlbAoYIHyNhq2ACi6KXC17oE4P7dFgrmRk6vCQTPoumcoHnSqjL5nKD50jYF07uS2f/9+JpVz7/5f19CkQTAHDl89PcKsdX1wRAnNbnGsRZ9fR0/Q8YPtGya8Xo+QAAAABJRU5ErkJggg==") no-repeat center;
+    background-size: 35%;
+}
+
+.slider-content {
+    position: relative;
+    width: 300px;
+    height: calc(100% - 44px);
+    margin-top: 44px;
+    z-index: 102;
+}
+
+.slider-content li {
+    padding: 10px 0;
+    width: 250px;
+    margin-left: 50px;
+    border-bottom: 1px dashed #e2e2e2;
+}
+
+.slider-content li:last-child {
+    border-bottom: 0;
+}
+
+/** 没有更多、没有商品、加载中 */
+.no-more, .is-loading {
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    width: 100%;
+    background-color: #fff;
+    font-size: 14px;
+    border-top: 1px solid #e5e5e5;
+    clear: both;
+}
+
+.no-goods {
+    display: block;
+    background-color: #fff;
+    width: 100%;
+    z-index: 1;
+    line-height: 200px;
+    text-align: center;
+}

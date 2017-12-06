@@ -1,0 +1,76 @@
+<#assign checkCmptIsOnTag = newTag("checkCmptIsOnTag") />
+<#assign groupbuyIsOn = checkCmptIsOnTag("{'componentName':'多商户团购组件'}") />
+<#assign title = "商城首页" />
+<#include 'common/header.html' />
+<#assign isIndex = 'true' />
+<#include 'common/reception_header.html'/>
+<script type="text/javascript" src="${file_path}/js/swiper-3.4.2.min.js"></script>
+<link rel="stylesheet" href="${file_path}/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="${file_path}/css/index.css" type="text/css"/>
+<script type="text/javascript" src="${file_path}/js/index.js"></script>
+
+<div class="clear"></div>
+<div class="index_top">
+    <#include '/index/index_banner.html'/>
+    <div class='user-info-above-banner'></div>
+</div>
+
+<div class="clear"></div>
+<!-- index_content: 首页楼层容器 -->
+<div class="index_content">
+    <div class="channel-cont" style="height:20px">
+    </div>
+    
+    <#assign floorTag =newTag("floorTag")>
+    <#assign floorList=floorTag ("{'client_type':'pc'}") >
+    <#list floorList as floor>
+        <div class="floor-line-con floor-color-${floor_index}" data-lift="floor-${floor_index}">
+                <div class="floor-hd">
+                    <i class="box_hd_arrow"></i>
+                    <i class="box_hd_dec"></i>
+                    <div class="hd-tit" style="cursor:default">
+                       ${floor.name}
+                    </div>
+                    <div class="hd-tags">
+                        <ul>
+                            <#list floor.panelList as pl>
+                                <#if pl_index lt 8>
+                                    <li<#if pl_index==0> class="current"</#if>>
+                                <span>${pl.panel_name}</span><i class="arrowImg"></i>
+                                </li>
+                                </#if>
+                            </#list>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="floor-body">
+                    <#list floor.panelList as pl>
+                        ${pl.panel_html}
+                    </#list>
+                </div>
+            </div>
+    </#list>
+
+    <div class="other-content">
+        <#--<#include '/index/index_talent.html' />
+        <#include '/index/index_shop.html' />-->
+        <#include '/index/index_goods.html' />
+    </div>
+    
+</div>
+<#include '/index/index_lift.html' />
+<script>
+    var url = '${ctx}/index/index_search_bar.html'
+    $.ajax({
+        url: url,
+        methods: 'GET',
+        async: false,
+        success: function (result) {
+            // $('body > div.goods > div.controllerg-goods > div.contents.clearfix .info_right').html(result)
+            $(result).insertAfter($('body > div.index-lift'));
+        }
+    })
+</script>
+<!-----footer------>
+<#include 'common/footer.html'/> 

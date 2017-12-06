@@ -1,0 +1,90 @@
+<#include '/admin/header.html' >
+
+<style>
+	body > div.admin-main{
+		width: fit-content;
+		height: 5rem;
+		padding: 1rem 2rem;
+		margin: 3rem 4rem;
+		min-width: 280px;
+	}
+
+	#clean{
+		margin-top: 0.5rem;
+	}
+
+	#clean,#clean > div:nth-child(1) > div{
+		display: flex;
+	}
+
+	#clean > div:nth-child(1) > label{
+		width: fit-content;
+		font-size: 16px;
+		color: #666;
+		margin-right: 1rem;
+	}
+
+	#clean > div:nth-child(1) > div{
+		margin: 0;
+		height: auto;
+	}
+
+	#clean > div:nth-child(2){
+		margin-left: 1rem;
+	}
+
+	#clean > div:nth-child(2) > div{
+		margin: 0;
+	}
+	
+</style>
+
+<div class="admin-main">
+		<form  class="layui-form" id="clean">
+		
+		   <div class="layui-form-item">
+		    <label class="layui-form-label">清除全部示例数据</label>
+		    <div class="layui-input-block">
+		      <input type="checkbox" name="switchs" value="1" lay-skin="switch" lay-text="是|否">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button type="submit" class="layui-btn" lay-submit="" lay-filter="formDemo">确认</button>
+		    </div>
+		  </div>
+		</form>
+</div>
+<script type="text/javascript">
+	layui.use(['form', 'layedit', 'laydate'], function(){
+		var form = layui.form()
+		 	,layer = layui.layer
+	        ,layedit = layui.layedit
+	        ,laydate = layui.laydate;
+		form.on('switch(filter)', function(data){
+			console.log(data.value);
+	    	});  
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+		  if(!confirm("确定要清除示例数据吗？")){	
+				return ;
+			}
+	    	var options = {
+              	url: '${ctx}/core/admin/example-data-clean/clean.do',
+	   			async: false,
+	   			beforeSend:function(){  
+	   			  $('.layui-btn').attr("disabled", true);		       	
+	   			}, 
+	   			success:function(data){
+	   				$.Loading.success('清除成功');
+	   			},error:function(e){
+	   				$.Loading.error(e.responseJSON.error_message);
+	   				$('.layui-btn').attr("disabled", false);
+				}
+	   		};
+	   		$("#clean").ajaxSubmit(options);
+	    return false;
+	  });
+	});
+</script>
+<#include '/admin/footer.html' >

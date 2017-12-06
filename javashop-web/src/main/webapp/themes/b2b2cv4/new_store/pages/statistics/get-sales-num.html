@@ -1,0 +1,183 @@
+<!-- 统计图div -->
+<div id="sales_num_statistics" style="height: 400px;">
+	
+</div>
+
+<script type="text/javascript" >
+var topNum = 30;	//排行数
+var numChart = echarts.init(document.getElementById('sales_num_statistics'));
+$(function() {
+	getGoodsNum();
+	var type = $("#cycle_type").val();
+	// 如果统计类型 是按年统计
+	if(type == "2") {
+		$("#month").hide();
+	} else {
+		$("#month").show();
+	}
+	
+	// 统计类型变更事件
+	$("#cycle_type").change(function(){
+		
+		var type = $(this).val();
+		
+		// 如果统计类型 是按年统计
+		if(type == "2") {
+			$("#month").hide();
+		} else {
+			$("#month").show();
+		}
+		//设置全部tab需要刷新
+	});
+	
+});
+
+
+
+/**
+ * 获取json数据
+ * @param startDate 开始时间
+ * @param endDate 结束时间
+ */
+function getGoodsNum(){
+	
+	var year =$("#year").val();
+	var month=$("#month").val();
+	var cycle_type=$("#cycle_type").val();
+	// ajax配置
+	var options = {
+		url :  "${ctx}/api/operator-statistics/get-sales-num.do",
+		data : {'year' : year, 'month' : month,'cycle_type':cycle_type,'storeid':store_id},
+		type : "post",
+		dataType:"json",
+		success:function(data){
+			
+			//如果获得正确的数据
+			if (data.result == 1) {
+				
+				if(data.message && data.message.length < 1) {
+					// alert("当前条件下没有统计数据");
+				}
+				
+				// 初始化统计图
+				initNumChart(data.message,cycle_type);
+				
+			} else {
+				$.message.error("调用action出错：" + data.message);
+			} 
+		},
+		error:function(){
+			$.message.error("系统错误，请稍后再试");
+		}
+	};
+	$.ajax(options);
+}
+
+/**
+ * 根据服务返回的数据 生成统计图所需要的配置
+ * @param json 数据
+ * @returns json格式的配置
+ */
+function initNumChart(json,cycle_type){
+	var conf = {}; //配置
+
+	//var data = []; // Y轴 排名数据
+	var categories = []; //X轴 名次数据
+
+	var self="";
+	var last="";
+	if(parseInt(cycle_type)==1){
+		self="本月";
+		last="上月";
+		for(var i=0;i<31;i++){
+			categories.push(parseInt(i) + 1);
+		}
+	}else{
+		self="本年";
+		last="去年";
+		for(var i=0;i<12;i++){
+			categories.push(parseInt(i) + 1);
+		}
+	}
+	
+	var options = {
+		    title: {
+		    	x: 'center',
+		        text: '下单量统计'
+		    },
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		    	bottom : 20,
+		        data:[self,last]
+		    },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            magicType : {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    xAxis:  {
+		        type: 'category',
+		        boundaryGap : 'true',
+		        data: categories
+		    },
+		    yAxis: {
+		    	type: 'value',
+		    	boundaryGap : 'true',
+	            name: '下单量',
+	            position: 'left'
+		    },
+		    series: [
+		        {
+		            name:self,
+		            type:'line',
+		            data: function (){
+			            var list = [];
+			            	for(var i=0;i<json.selfmessage.length;i++){
+			            		list.push(json.selfmessage[i]);
+			            		}
+			            	return list;
+			         }(),
+			         itemStyle: {
+				            normal: {
+				            	color:'#7cb5ec',
+				                label: {
+				                    show: true,
+				                    position: 'top',
+				                    formatter: '{c}'
+				                }
+				            }
+				        }
+		        },
+		        {
+		            name:last,
+		            type:'line',
+		            data: function (){
+			            var list = [];
+			            	for(var i=0;i<json.lastmessage.length;i++){
+			            		list.push(json.lastmessage[i]);
+			            		}
+			            	return list;
+			         }(),
+			         itemStyle: {
+				            normal: {
+				            	color:'#2f4554',
+				                label: {
+				                    show: true,
+				                    position: 'top',
+				                    formatter: '{c}'
+				                }
+				            }
+				        }
+		        }
+		    ]
+		};
+	numChart.setOption(options);
+};
+
+</script>

@@ -1,0 +1,81 @@
+<#include '/admin/header.html' >
+	<!--表格区域  -->
+	<div class="admin-main">
+		<form id="shopform">
+			<table id="billdata" class="layui-table site-table table-hover">
+				<thead>
+					<tr>
+						<th>账单编号</th>
+						<th>店铺名称</th>
+						<th>订单金额</th>
+						<th>收取佣金</th>
+						<th>退单金额</th>
+						<th>退还佣金</th>
+						<th>本期应结</th>
+						<th>账单状态</th>
+						<th>出账日期</th>
+						<th>开始日期</th>
+						<th>结束日期</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+			</table>
+		</form>
+	</div>
+<script>
+var table;
+$(function(){
+	var sn = "${sn}";
+	
+	table = $('#billdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax:{
+	    	url : "${ctx}/order-bill/admin/bill.do?sn="+sn,
+	    },
+	    columns : [ //定义列
+			{data: "bill_sn"},
+	        {data: "shop_name"},
+	       	{data: "price"},
+	       	{data: "commi_price"},
+	       	{data: "returned_price"},
+	       	{data: "returned_commi_price"},
+	       	{data: "bill_price"},
+	       	{data: null,"render": function(obj) {
+	       		if(obj.status == 0)
+	       			return "未确认";
+	       		if(obj.status == 1)
+	       			return "已出账";
+	       		if(obj.status == 2)
+	       			return "已对账"; 
+	       		if(obj.status == 3)
+	       			return "已审核"; 
+	       		if(obj.status == 4)
+	       			return "已付款";
+	       		if(obj.status == 5)
+	       			return "已完成";
+	       	}},
+	       	{data: null,"render": function(obj) {
+	        	return getFormatDateByLong(obj.create_time, "yyyy-MM-dd");	
+	       	}},
+	       	{data: null,"render": function(obj) {
+	        	return getFormatDateByLong(obj.start_time, "yyyy-MM-dd");		
+	       	}},
+	       	{data: null,"render": function(obj) {
+	        	return getFormatDateByLong(obj.end_time, "yyyy-MM-dd");		
+	       	}},
+	       	{data: null,"render": function(obj) {
+	       		return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick = \"newTab('"+obj.bill_sn+"账单详细','${ctx}/shop/admin/order-bill/bill/order-detail.do?id="+obj.id+"')\">查看</a>" ;
+	       	}}
+		]
+	});
+});
+
+</script>
+<#include '/admin/footer.html' >

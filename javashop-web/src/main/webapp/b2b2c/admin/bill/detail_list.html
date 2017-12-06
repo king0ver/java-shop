@@ -1,0 +1,128 @@
+<#include '/admin/header.html' >
+<#assign dateFormat="com.enation.framework.directive.DateformateDirective"?new()>
+<div id="loading"></div>
+<div class="admin-main">
+	
+	 <div class="table_search" style="line-height: 47px;" id="simpleSearch">
+            <input type="text" id="searchKeyword" class="keysearch" placeholder="请输入店铺名称" style="margin-top: 0px;">
+		   <button type="button" class="layui-btn layui-btn-primary layui-btn-small" id="data" onclick="searchOrder()"><i class="layui-icon">&#xe615;</i></button>
+		      	 
+            </div>
+	<div class="clear height10"></div>
+	<div class="shadowBoxWhite tableDiv">
+	
+		<form id="storeBillDetailForm">
+		    <table id="billdetaildata" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+		        <thead>
+		          <tr>
+		            <th>账单编号</th>
+		            <th>店铺名称</th>
+		            <th>订单金额</th>
+		            <th>货到付款金额</th>
+		            <th>收取佣金</th>
+		            <th>退单金额</th>
+		            <th>退还佣金</th>
+		            <th>本期应结</th>
+		            <th>账单状态</th>
+		            <th>出账日期</th>
+		            <th>开始日期</th>
+		            <th>结束日期</th>
+		            <th>操作</th>
+		          </tr>
+		        </thead>
+		    </table>
+		    <!--传值等操作(暂定)  -->
+		    <div id="addBrand" ></div>
+		   </form>
+	
+	
+		
+	</div>
+</div>
+<script type="text/javascript">
+var table;
+$(function(){
+	
+	table = $('#billdetaildata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/b2b2c/admin/store-bill/detail-list-json.do?bill_id=${bill_id}',
+	    },
+	    columns: [ //定义列
+	        {data: "sn"},
+	        {data: "store_name"},
+	        {data: null,"render":function(data,type,row){
+	   	    	return "￥"+data.price;
+	   	    }},
+	   	 	{data: null,"render":function(data,type,row){
+	   	    	return "￥"+data.cod_price;
+	   	    }},
+	   		 {data: null,"render":function(data,type,row){
+	   	    	return "￥"+data.commi_price;
+	   	    }},
+	   	 	{data: null,"render":function(data,type,row){
+	   	    	return "￥"+data.returned_price;
+	   	    }},
+	   	 	{data: null,"render":function(data,type,row){
+	   	    	return "￥"+data.returned_commi_price;
+	   	    }},
+	   	 	{data: null,"render":function(data,type,row){
+	   	    	return "￥"+data.bill_price;
+	   	    }},
+	   	 	{data: null,"render":function(data,type,row){
+	   	 		var value=data.status;
+		   	 	if(value==1){
+		   			return "已出账";
+		   		}else if(value==2){
+		   			return "已确认";
+		   		}else if(value==3){
+		   			return "已审核";
+		   		}else{
+		   			return "已付款";
+		   		};
+	   	    }},
+	   	 {data : null,"render" : function(data, type, row) {
+				return getFormatDateByLong(
+						data.bill_time,
+						"yyyy-MM-dd");
+			}},
+			{data : null,"render" : function(data, type, row) {
+				return getFormatDateByLong(
+						data.start_time,
+						"yyyy-MM-dd");
+			}},
+			{data : null,"render" : function(data, type, row) {
+				return getFormatDateByLong(
+						data.end_time,
+						"yyyy-MM-dd");
+			}},
+	        {data: null,"render":function(data,type,row){
+		   		return "<a class='layui-btn layui-btn-small _aa' name='id'onclick='newTab(\""
+				+"结算单详细\",\"${ctx}/b2b2c/admin/store-bill/detail.do?bill_id="
+				+ row.bill_id + "\")' >查看</a>";	
+		   	    }},
+	       
+	     ]
+	});
+	
+	
+	
+});
+//搜索
+function searchOrder(){
+	var keyword = $.trim($("#searchKeyword").val());
+	var param = "keyword="+keyword;
+	var url = table.ajax.url("${ctx}/b2b2c/admin/store-bill/detail-list-json.do?bill_id=${bill_id}&"+param);
+	url.load();
+}
+</script>
+<#include '/admin/footer.html' >

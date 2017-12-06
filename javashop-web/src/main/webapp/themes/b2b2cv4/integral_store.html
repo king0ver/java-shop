@@ -1,0 +1,59 @@
+<#assign checkCmptIsOnTag=newTag( "checkCmptIsOnTag") />
+<#assign groupbuyIsOn=checkCmptIsOnTag( "{'componentName':'多商户团购组件'}") />
+<#assign title="商城首页" />
+<#include 'common/header.html' />
+<#assign isIndex='true' />
+<#include 'common/reception_header.html'/>
+<script type="text/javascript" src="${file_path}/js/swiper-3.4.2.min.js"></script>
+<link rel="stylesheet" href="${file_path}/css/swiper-3.4.2.min.css">
+<link rel="stylesheet" href="${file_path}/css/index.css" type="text/css" />
+<link rel="stylesheet" href="${file_path}/css/integral_store.css" type="text/css" />
+<div class="index_top">
+    <#include '/index/index_banner.html'/>
+</div>
+
+<div class='index-body'>
+    <div class='category-nav'>
+        <ul>
+            <li class='all this'><span class='first'>全部</span></li>
+            <#assign exchangeCategoryTag=newTag( "exchangeCategoryTag")>
+                <#list exchangeCategoryTag() as categoryNav>
+                    <li data-id='${categoryNav.id}'>
+                        <span style='color: black'>∙</span>${categoryNav.text}</li>
+            </#list>
+        </ul>
+    </div>
+    <div class='category-body'>
+        <ul>
+            <#assign exchangeGoodsListTag1=newTag("exchangeGoodsListTag")>
+            <#assign exchangeGoodsListTag=exchangeGoodsListTag1("{'page':1 }")>
+                <#list exchangeGoodsListTag.goodsList as tempGoodsObj>
+                    <li>
+                        <a href='${ctx}/goods-${tempGoodsObj.goods_id}.html'><img src='${tempGoodsObj.thumbnail}'></a>
+                        <div>
+                            <p class='integral'><span>￥${tempGoodsObj.exchange_money}+${tempGoodsObj.exchange_point}积分</span><span class='origin-price'>原价：￥${tempGoodsObj.price}</span></p>
+                            <p class='name'>${tempGoodsObj.goods_name}</p>
+                            <p><span>${tempGoodsObj.buy_count!'0'}</span>人兑换</p>
+                        </div>
+                    </li>
+                </#list>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="${file_path}/js/integral_store.js"></script>
+<#include '/index/index_lift.html' />
+<script>
+    var url = '${ctx}/index/index_search_bar.html'
+    $.ajax({
+        url: url,
+        methods: 'GET',
+        async: false,
+        success: function (result) {
+            // $('body > div.goods > div.controllerg-goods > div.contents.clearfix .info_right').html(result)
+            $(result).insertAfter($('body > div.index-lift'));
+        }
+    })
+</script>
+<!-----footer------>
+<#include 'common/footer.html'/>

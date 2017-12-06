@@ -1,0 +1,84 @@
+<#assign  title=" 账户安全" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member??>
+    <script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/lrz/lrz.bundle.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.form-3.51.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/member-items.css"/>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/page/my-info.js"></script>
+   	<form enctype="multipart/form-data" id="infoForm" >
+	    <div class="my-info">
+	        <!--头像修改-->
+	        <div class="eui-item-vh">
+	            <div class="inner-eui-item-vh img-head">
+	                <div class="title-eui-item">头像</div>
+	                <div class="sub-eui-item">
+	                    <#if member.face?exists && member.face != ''>
+	                        <img class="img-head-img" src="<@imgurl pic='${member.face}'/>">
+	                    <#else />
+	                        <img class="img-head-img" src="${ctx}${themes_path}/images/default_face.jpg">
+	                    </#if>
+	                    <input id="update-head-img" class="update-head-img" type="file" name='file' accept="image/jpg,image/jpeg,image/png" />
+	                    <input type="hidden" id="head-img-base64" name="face" value="${member.face!''}"/>
+	                </div>
+	            </div>
+	            <i class="eui-item-vh-point"></i>
+	        </div>
+	
+	        <!--用户名-->
+	        <div class="eui-item-vh hr-top-no-icon">
+	            <hr>
+	            <div class="inner-eui-item-vh">
+	                <div class="title-eui-item">用户名</div>
+	                <div class="sub-eui-item">${member.uname!''}</div>
+	            </div>
+	        </div>
+	
+	        <!--昵称-->
+	        <div class="eui-item-vh hr-top-no-icon">
+	            <hr>
+	            <div class="inner-eui-item-vh">
+	                <div class="title-eui-item">真实姓名</div>
+	                <div class="sub-eui-item fill-name">${member.name!''}</div>
+	                <input type="hidden" name="truename" value="${member.name!''}">
+	            </div>
+	            <i class="eui-item-vh-point"></i>
+	        </div>
+	
+	        <!--性别-->
+	        <div class="eui-item-vh hr-top-no-icon">
+	            <hr>
+	            <div class="inner-eui-item-vh">
+	                <div class="title-eui-item">性别</div>
+	                <div class="sub-eui-item sex-select"><#if member.sex == 1>男<#else/>女</#if></div>
+	                <input type="hidden" name="sex" value="${member.sex!'1'}">
+	            </div>
+	            <i class="eui-item-vh-point"></i>
+	        </div>
+	
+	        <!--出生日期-->
+	        <div class="eui-item-vh hr-top-no-icon">
+	            <hr>
+	            <div class="inner-eui-item-vh">
+	                <div class="title-eui-item">出生日期</div>
+	                <#if member.birthday?exists && (member.birthday > 0)>
+	                    <input type="date" class="user-date" name="mybirthday" value="<@dateformat time='${(member.birthday)?c}' pattern='yyyy-MM-dd' />" />
+	                <#else />
+	                    <input type="date" class="user-date" name="mybirthday" value="1990-01-01" pattern="yyyy-mm-dd"/>
+	                </#if>
+	            </div>
+	            <i class="eui-item-vh-point"></i>
+	        </div>
+	    </div>
+    </form>
+
+    <div class="eui-save-button">
+        <button type="button" id="save-info-btn">保存修改</button>
+    </div>
+    <style type="text/css">
+        body { background-color: #f0f2f5; }
+    </style>
+</#if>
+</body>
+</html>

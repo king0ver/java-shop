@@ -1,0 +1,101 @@
+<#assign title=" 待评论商品" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<#if member??>
+    <#assign memberWaitCommontListTag = newTag("memberWaitCommontListTag") />
+    <#assign memberWaitCommontList = memberWaitCommontListTag() />
+    <div class="goods-list">
+        <#if memberWaitCommontList.waitcommentsList?size gt 0>
+            <#list memberWaitCommontList.waitcommentsList as goods>
+                <div class="item-goods-list">
+                    <div class="image-item-goods">
+                        <img src="${goods.small!''}" alt="${goods.goods_name!''}">
+                    </div>
+                    <div class="detail-item-goods">
+                        <div class="name-item-goods">
+                            <span class="name-span">${goods.goods_name!''}</span>
+                            <span class="orderid-span">订单编号：${goods.order_id}</span>
+                        </div>
+                        <div class="oper-item-goods">
+                            <a href="${ctx}/member/goods-comment.html?goods_id=${goods.goods_id}&product_id=${goods.product_id}&order_id=${goods.order_id}" class="btn-item-goods">发表评论</a>
+                        </div>
+                    </div>
+                </div>
+            </#list>
+        <#else/>
+            <div style="width: 100%;text-align: center; line-height: 50px">暂无待评论商品...</div>
+        </#if>
+    </div>
+
+    <style type="text/css">
+        body {
+            background-color: #fafafa;
+        }
+        .item-goods-list {
+            display: flex;
+            height: 100px;
+            padding: 10px;
+            margin-top: 5px;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        .image-item-goods {
+            width: 100px;
+            height: 100px;
+        }
+
+        .image-item-goods img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .detail-item-goods {
+            width: calc(100% - 110px);
+            margin-left: 10px;
+        }
+        .name-item-goods {
+            height: 50px;
+        }
+        .name-item-goods .name-span {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+        .name-item-goods .orderid-span {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .oper-item-goods {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            height: 50px;
+        }
+        .btn-item-goods {
+            display: block;
+            width: 80px;
+            border: 1px solid red;
+            color: red;
+            text-align: center;
+            font-size: 12px;
+            line-height: 25px;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+    </style>
+
+    <script type="text/javascript">
+        new Module().navigator.init({
+            title: '待评论商品列表',
+			left: {
+				click: function () {
+					location.href = ctx + '/member.html'
+				}
+			}
+        });
+    </script>
+</#if>
+</body>
+</html>

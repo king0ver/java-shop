@@ -1,0 +1,20 @@
+<#assign title="积分商城" /> 
+<#assign index_type=1 />
+<#include 'common/header.html'/> 
+<#include 'common/reception_header.html'/>
+<#assign exchangeGoodsListTag = newTag("exchangeGoodsListTag")>
+<link rel="stylesheet" href="${ctx}/themes/kaben/css/index.css" type="text/css" />
+<link rel="stylesheet" href="${ctx}/themes/kaben/exchange/exchange_index.css" type="text/css" />
+<script src="${ctx}/themes/kaben/js/slider.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function(){
+		//去除页面上的"编辑"按钮 
+		var a=$(".floor");
+		a.remove();
+	});
+</script>
+<!-- 获取商品列表标签 -->
+<#include 'exchange/point_header.html' />
+<!--  相同楼层 -->
+
+<#include 'common/footer.html'/>

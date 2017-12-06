@@ -1,0 +1,142 @@
+<#include '/common/header.html' />
+
+<style>
+
+    button{ margin: 20px}
+
+</style>
+<input type="button" value="确认订单" id="confirmBtn"  />
+<input type="button" value="去支付" id="toPayBtn"  />
+<input type="button" value="确认付款" id="confirmPayBtn"  />
+<input type="button" value="发货" id="shipBtn"  />
+<input type="button" value="确认收货" id="rogBtn"  />
+<input type="button" value="买家-取消订单" id="buyerCancelBtn"  />
+<input type="button" value="卖家-取消订单" id="sellerCancelBtn"  />
+<input type="button" value="管理员-取消订单" id="adminCancelBtn"  />
+
+<script>
+
+    var ordersn ="0001";
+    $(function ()
+    {
+
+        //确认订单
+        $("#confirmBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/seller/order/confirm/"+ordersn+".do",
+                data:"is_agree=true",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+
+        //确认付款
+        $("#confirmPayBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/admin/order/pay.do",
+                data:"ordersn="+ordersn+"&payprice=7",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+        //发货
+        $("#shipBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/seller/order/delivery/"+ordersn+".do",
+                data:"ship_no=123",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+
+        //确认收货
+        $("#rogBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/mine/order/rog/"+ordersn+".do",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+
+        //买家取消订单
+        $("#buyerCancelBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/mine/order/cancel/"+ordersn+".do",
+                data:"reson=test",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+        //卖家取消订单
+        $("#sellerCancelBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/seller/order/cancel/"+ordersn+".do",
+                data:"reson=test",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+        //卖家取消订单
+        $("#adminCancelBtn").click(function () {
+            $.ajax({
+                url:ctx+"/order-opration/admin/order/cancel/"+ordersn+".do",
+                data:"reson=test",
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                    console.log(result);
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+        });
+
+
+    });
+
+</script>
+
+<#include '/common/footer.html' />

@@ -1,0 +1,146 @@
+<#assign  title="基本资料" />
+<#include 'member_header.html' />
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.addressSelect-1.0.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/member-info.js"></script>
+<style>
+	.address_list thead tr th, td {
+		border: 0px none;
+		background: none;
+		width: 60%;
+		height: 40px;
+	}
+	.info_right input[type=text] {
+		height: 17px;
+		width: 205px;
+		font-size: 12px;
+	}
+	.app-address{z-index:99}
+</style>
+<div class="member_center">
+	<div class="favorite_title">
+		<ul>
+			<li class="selected"><a href="javascript:;"><span>我的基本信息</span></a></li>
+		</ul>
+	</div>
+	<div class="userinfo">
+		<form id="form_saveMember"   method="post"    class="validate"  action="#" enctype="multipart/form-data">
+			<div class="info_left">
+				<div class="userico">
+					<#if member.face?exists && member.face != ''>
+					    <img class="__face__" src="<@imgurl pic='${member.face}'/>" style="width: 120px; height: 120px;"/>
+					<#else />
+					    <img class="__face__" src="${ctx}${themes_path}/images/default_face.jpg" style="width: 120px; height: 120px;">
+					</#if>
+				</div>
+				<div class="uploadIco">
+					<div class="file clearfix">
+						<div class="ifUpfile">
+							<label>
+								<i>上传头像：</i>
+								<input type="file" name="file" id="changeFace">
+								<span>&nbsp;</span>
+							</label>
+						</div>
+						<span id="imgS"></span>
+					</div>
+					<!--file end-->
+					<p class="prompt">建议尺寸120*120像素</p>
+					<input name="txtIco" type="hidden" id="txtIco" value="/ajax/MImageHandler.ashx?d=ico\default.jpg" />
+				</div>
+			</div>
+			<div class="info_right">
+				<table width="100%" cellspacing="0" cellpadding="0"	class="perfection">
+					<tr>
+						<th style="width:150px;">用户名：</th>
+						<td>
+							<span class="def"><span id="lbNickName">${member.uname!''}</span></span>
+						</td>
+					</tr>
+					<tr>
+						<th class="member_turename"><em style="color: red;">*</em> 真实姓名：</th>
+						<td colspan="3">
+							<input type="text" isrequired="true" name="truename" value="${member.name!''}" class="form-control" placeholder="请务必填写您的真实姓名!" />
+						</td>
+					</tr>
+					<tr id="gender">
+						<th style="width:150px;">性别：</th>
+						<td class="middle" colspan="3">
+							<label class="gender" style="float:left;"><input type="radio" name="sex" <#if member.sex!=0>checked</#if> value="1"  style="margin:4px 10px 0 0;float:left;"/><span>男</span></label>
+							<label class="gender" id="lgender" style="float:left;margin:0 0 0 10px"><input type="radio" value="0"  name="sex" <#if member.sex==0>checked</#if> style="margin:4px 10px 0 0;float:left;"/><span>女</span></label>
+						</td>
+					</tr>
+					<tr>
+						<th style="width:150px;"><em style="color: red;">*</em> 生日：</th> 
+						<td colspan="3" class="birthday middle">    <!--  mybirthday   -->
+							<input class="Wdate form-control" type="text" name="mybirthday" isrequired="true" onClick="WdatePicker()" readonly style="background-color: #ffffff; cursor: pointer;"
+								<#if member.birthday??> value="<@dateformat time="${(member.birthday)?c}" pattern="yyyy-MM-dd"/>"</#if>>
+						</td>
+					</tr>
+					
+					<tr> 
+					<th style="width:150px;">
+						<em style="color: red;">*</em> 居住地：
+					</th>
+					<td id="selectAddress">
+						<script type="text/javascript" colspan="3" class="choseAddr ">
+							$(function() {
+								<#if member.province_id??>
+									$('#selectAddress').addressSelect({
+										deData: [${member.province_id},${member.city_id!''},${member.region_id!''},${member.town_id!''}]
+									});
+								<#else>
+									$('#selectAddress').addressSelect();
+								</#if>
+							})
+						</script> 
+					</td>
+					</tr>
+					
+					<tr>
+						<th style="width:150px;"><em style="color: red;">*</em> 联系地址：</th>
+						<td colspan="3" class="birthday middle">
+							<input type="text" name="address" class="form-control" maxlength="100" value="${member.address!''}" isrequired="true" placeholder="请务必认真填写，以免您的宝贝迷路！"/>
+						</td>
+					</tr>
+					<tr>
+						<th style="width:150px;"><em style="color: red;">*</em> 手机号：</th>
+						<td colspan="3" class="birthday middle">
+							<input type="text" name="mobile" id="mobile" class="form-control" maxlength="11" value="${member.mobile!''}" onkeyup="this.value=this.value.replace(/[^\d-]/g,'')" isrequired="true" onafterpaste="this.value=this.value.replace(/[^\d-]/g,'')"   placeholder="请输入你的手机号！"/>
+						</td>
+					</tr>
+					<tr>
+						<th style="width:150px;">邮编：</th>
+						<td colspan="3" class="birthday middle">
+							<input name="zip" type="text" class="form-control" value="${member.zip!''}" id="zipcode"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6">
+						</td>
+					</tr>
+					<tr>
+						<th style="width:150px;">注册邮箱：</th>
+						<td colspan="3" class="birthday middle">
+							<input name="email" type="text" class="form-control" value="${member.email!''}" id="email" />
+						</td>
+					</tr>
+					<tr>
+						<th style="width:150px;">固定电话【选填】：</th>
+						<td colspan="3">
+							<input id="tel" name="tel" type="text" value="${member.tel!''}" class="form-control" onkeyup="this.value=this.value.replace(/[^\d-]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d-]/g,'')" maxlength="12"/>
+						</td>
+					</tr>
+					<tr>
+						<th style="width:150px;">
+							<#if member.info_full == 0>
+								即可获得<strong>20奖励积分</strong>！
+							</#if>
+						</th>
+						<td>
+							<a href="javascript: void(0);" class="btn btn-success" id="btnSubmit" name="btnSubmit">保存资料</a>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<#include '../common/footer.html'/>

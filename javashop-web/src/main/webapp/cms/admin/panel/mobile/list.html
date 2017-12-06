@@ -1,0 +1,82 @@
+<#include '/admin/header.html' >
+<div class="admin-main">
+<div class="table_control">
+            	<div class="table_opera">
+                	<!-- <button type="button" id="add_showcase_button" title="添加" onclick='newTab("面板添加","${ctx}/cms/admin/panel/mobile/add-page.do");'class="layui-btn layui-btn-primary "><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button> -->
+           		<button type="button" class="layui-btn layui-btn-primary " title="刷新" onclick="refresh();"><i class="layui-icon">&#x1002;</i></button>
+            	</div>
+        	</div>
+
+<form id="panelForm">
+	<table id="paneldata" class="layui-table site-table table-hover">
+		<thead>
+			<tr>
+				<th>楼板名称</th>
+				<th>类型</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+	</table>
+</form>
+</div>
+<script>
+	 var table;
+	$(function() {
+		table = $('#paneldata').DataTable({
+				"language": {
+					"url":ctx + "/zh_CN.txt"
+			    },
+			    "processing": true,
+			    "serverSide": true,
+			    "ordering": false,
+			    "searching": false,
+			    "lengthChange": false,
+			    ajax:{
+			    	
+			    	url : "${ctx}/cms/admin/panel-tpl.do?client_type=mobile",
+			    },
+			columns : [ //定义列
+					{data : "tpl_name"},
+					{data : function(obj) {
+							if(obj.tpl_type=="main"){
+								return "主面板";
+							}else{
+								return "普通面板";
+							}
+						}
+					},
+					{data : function(data) {
+							return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=newTab('"+data.tpl_name+"-面板详细','${ctx}/cms/admin/panel/mobile/edit_page.do?tpl_id="+data.tpl_id+"\') \" >修改</a>"
+									+ "&nbsp"                                             
+									+ "<a class='layui-btn layui-btn-small layui-btn-danger' onclick='del("
+									+ data.tpl_id + ")'>删除</a>";
+						}
+				} ]
+		});
+
+	}); 
+	
+	//删除
+	function del(tpl_id) {
+		if(!confirm("确认删除此面板吗？")){
+			return;
+		}
+		var options = {
+				url:"${ctx}/cms/admin/panel-tpl/"+ tpl_id+".do",
+				type : "delete",
+				success:function(data){
+						$.Loading.success("删除成功");
+						table.ajax.url( "${ctx}/cms/admin/panel-tpl.do?client_type=mobile").load();
+						
+				},error:function(e){
+                $.error(e.responseJSON.error_message);
+            }
+		};
+		$("#panelForm").ajaxSubmit(options);
+	}
+	//刷新
+	function refresh (){
+		table.ajax.url("${ctx}/cms/admin/panel-tpl.do?client_type=mobile").load();
+	}
+</script>
+<#include '/admin/footer.html' >

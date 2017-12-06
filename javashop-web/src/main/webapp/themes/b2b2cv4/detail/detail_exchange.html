@@ -1,0 +1,50 @@
+<#assign exchange=promotionVo.exchange>
+    <div class="pro-list clearfix exchange">
+        <label class="exchange-label" style="float: left">
+            <div class="pro-title">积分购
+                <input type="checkbox" name="is_exchange" id="is_exchange" style="display: none;" checked>
+                <input type="hidden" name="e-activityId" id="e-activityId" value="${promotionVo.activity_id}">
+            </div>
+            <div style="display: none" id="__set__">
+                <!--设置积分各项数据，然后移除页面中的代码-->
+                <script type="text/javascript">
+                    $('#is_exchange').data({
+                        point: '${exchange.exchange_point}',
+                        max_store: '${exchange.exchange_max_count!0}',
+                        old_store: '${goods.enable_quantity}'
+                    });
+                    $('#__set__').remove();
+
+                    if ($('#is_exchange').is(':checked')) {
+                        $("#activity_id").val($("#e-activityId").val());
+                    } else {
+                        $("#activity_id").val("");
+                    }
+                    //  积分兑换
+                    var exchange = $('.pro-list.exchange');
+                    (function () {
+                        $.ajax({
+                            url: ctx + '/api/shop/exchange/check-point.do?exchange_point=' + $('#is_exchange').data('point'),
+                            success: function (res) {
+                                var max_store = $('#is_exchange').data('max_store');
+                                $('#stock').val(max_store);
+                                $('.enable_store').html(max_store);
+                                $('#exchange').val('true');
+                            },
+                            error: function () {
+                                $.message.error('积分检查失败！');
+                                $('#is_exchange')[0].checked = false;
+                                $('#exchange').val('false');
+                            }
+                        })
+                    })()
+                    $('#buyNumVal').val(1);
+                    $('.oper-num.up').removeClass('not-oper');
+
+                </script>
+            </div>
+        </label>
+        <div class="pro-content">
+            <strong style="color: #e93a38; font-size: 20px; font-weight: normal;">￥${exchange.exchange_money?string("0.00")} + ${exchange.exchange_point}积分</strong>
+        </div>
+    </div>

@@ -1,0 +1,125 @@
+<#include '/admin/header.html' >
+<style>
+ td .layui-btn{
+  background:#1E9FFF;
+  }
+  ._inline{
+  margin-right:16px!important;
+  margin-top:5px;
+  height:25px;
+  }
+  .search_conditions{
+   display:block
+}
+</style>
+<div  class="admin-main">
+   <div style="margin-top: 25px">
+        <!-- 按钮操作 -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" title="添加" class="layui-btn layui-btn-primary " onclick='addMessage()'>
+                    <i class="icon iconfont icon-llalbumshopselectorcreate"></i>
+                </button>
+            </div>
+          </div> 
+        </div>   
+    <!--表格区域  --> 
+   <table id="messagedata" class="layui-table site-table table-hover" width="100%" lay-skin="line" >
+      <thead>
+        <tr>
+          <th>模板编号</th>
+          <th>模板模板名称</th>
+          <th>管理操作</th>
+        </tr>
+      </thead>
+   </table>
+</div>
+
+<script type="text/javascript">
+var table;
+$(function(){
+	table = $('#messagedata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: 'list-json.do?type=${type}',
+	    },
+	    columns: [ //定义列
+	        {data: "tpl_code"},
+	        {data: "tpl_name"},
+	        {data: null,"render": function(data, type, row) {
+	        	var val="";
+	        	val+="<a class='layui-btn layui-btn-small layui-btn-normal' onclick='editMessage("+data["id"]+")'>站内信</a>&nbsp";
+	        	val+="<a class='layui-btn layui-btn-small layui-btn-danger' name='change_btn' onclick='editSMS("+data["id"]+")'>短信</a>&nbsp";
+	        	val+="<a class='layui-btn layui-btn-small layui-btn-danger' name='change_btn' onclick='editEmail("+data["id"]+")'>邮件</a>";
+	        	return val;
+	       	}}
+	     ]
+	});
+});
+
+//修改系统消息
+function editMessage(messageId){
+	layer.open({
+        title:"编辑系统消息",//标题
+        maxmin :true,//右上角可否放大缩小
+        type:2,//弹框的类型
+        shade: [0.3, '#000'],//黑色背景
+        shadeClose:false,//黑色背景是否可以点击关闭
+        content:"edit.do?id="+messageId+"&type=1",//内容的URL
+        area:['490px','380px'],//弹框大小
+        scrollbar: false//是否允许浏览器出现滚动条
+    });
+}
+
+//添加系统消息
+function addMessage(){
+	layer.open({
+        title:"编辑系统消息",//标题
+        maxmin :true,//右上角可否放大缩小
+        type:2,//弹框的类型
+        shade: [0.3, '#000'],//黑色背景
+        shadeClose:false,//黑色背景是否可以点击关闭
+        content:"add.do?type=${type}",//内容的URL
+        area:['470px','345px'],//弹框大小
+        scrollbar: false//是否允许浏览器出现滚动条
+    });
+}
+
+//修改短信
+function editSMS(messageId){
+	layer.open({
+        title:"编辑短信消息",//标题
+        maxmin :true,//右上角可否放大缩小
+        type:2,//弹框的类型
+        shade: [0.3, '#000'],//黑色背景
+        shadeClose:false,//黑色背景是否可以点击关闭
+        content:"edit.do?id="+messageId+"&type=2",//内容的URL
+        area:['490px','380px'],//弹框大小
+        scrollbar: false//是否允许浏览器出现滚动条
+    });
+}
+
+//修改邮件
+function editEmail(messageId){
+	layer.open({
+        title:"编辑邮件消息",//标题
+        maxmin :true,//右上角可否放大缩小
+        type:2,//弹框的类型
+        shade: [0.3, '#000'],//黑色背景
+        shadeClose:false,//黑色背景是否可以点击关闭
+        content:"edit.do?id="+messageId+"&type=3",//内容的URL
+        area:['800px','500px'],//弹框大小
+        scrollbar: false//是否允许浏览器出现滚动条
+    });
+}
+</script>
+<#include '/admin/footer.html' >

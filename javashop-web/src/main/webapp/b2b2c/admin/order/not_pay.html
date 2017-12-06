@@ -1,0 +1,256 @@
+<#include '/admin/header.html' >
+<#assign dateFormat="com.enation.framework.directive.DateformateDirective"?new()>
+<style>
+ td .layui-btn{
+  background:#1E9FFF;
+  }
+    #start_time_one{
+  height:25px;
+  }
+  #end_time_one{
+  height:25px;
+  }
+  ._inline{
+  margin-right:16px!important;
+  margin-top:5px;
+  height:25px;
+  }
+  .search_conditions{
+display:block
+}
+.form-horizontal .form-group{
+	margin-left: 0px;
+	margin-right: 0px;
+}
+</style>
+<div id="loading"></div>
+<div  class="admin-main">
+   <div>
+        <!--提示区域  -->
+        <div class="page_explain">
+            <h2>操作提示</h2>
+            <ul>
+                <li><span>·</span>删除订单操作，只能删除作废订单，并且删除成功后，会放到回收站，您可以对其进行彻底清除或者还原其订单。</li>
+                <li><span>·</span>该列表中，只会显示确认，但是未付款的订单，可以点击操作其进行其他操作，但是付款后，该订单便不会出现在此列表。</li>
+            </ul>
+        </div>
+        <!--按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" class="layui-btn layui-btn-primary " title="说明" id="explain"><i class="icon iconfont icon-tishi1"></i></button>
+            </div>
+            <!--搜索区域  -->
+            <div class="table_search">
+                <input type="text" name="keyword" placeholder="请输入待结算订单编号" id="searchbtn" class=".keyword">
+                <div id="templist" style="display: none">
+		            <form class="layui-form">
+	            		<div class="form-group">
+						    <label for="contain">订单号：</label>
+						    <input class="form-control" type="text" id="sn" maxlength="20"/>
+					  	</div> 
+					  	<div class="form-group">
+						    <label for="contain">收货人：</label>
+						    <input class="form-control" type="text" id="ship_name" value="${name!''}" maxlength="20"/>
+					  	</div> 
+					  	<div class="form-group">
+						    <label for="contain">支付方式：</label>
+						   <select id="payment_id"  lay-filter="">
+                                    <option value="">---所有---</option>
+									<#if payTypeList??>
+										<#list payTypeList as plist>
+											<option value="${plist.id}">${plist.name}</option>
+										</#list>
+									</#if>
+                            </select>
+					  	</div> 
+					  	<div class="form-group">
+						    <label for="contain">下单时间：</label>
+						   <input class="layui-input" placeholder="开始日" id="start_time">
+					  	</div> 
+					  	<div class="form-group">
+						   <input class="layui-input" placeholder="截止日" id="end_time">
+					  	</div> 
+		            </form>
+	            </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--表格区域  -->
+   <form id="orderform">
+    <table id="orderdata" class="layui-table site-table table-hover" style="width:100%">
+        <thead>
+          <tr>
+            <th>订单号</th>
+            <th>店铺名称</th>
+            <th>下单日期</th>
+            <th>发货日期</th>
+            <th>应付总额</th>
+            <th>实付金额</th>
+            <th>收货人</th>
+            <th>订单状态</th>
+            <th>付款状态</th>
+            <th>发货状态</th>
+            <th>配送方式</th>
+            <th>支付方式</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+    </table>
+    <!--传值等操作(暂定)  -->
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<!--js区域  -->
+<script>
+
+/* 监听开始搜索按钮 */
+var index = parent.layer.getFrameIndex(window.name);
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+
+});
+
+
+var table;
+$(function(){
+	//搜索栏
+        var cent = $("#templist").html();
+        $("#searchbtn").searchBox({
+            content: cent,
+            keywordSearch: function () {
+             var keyword = $(".keyword").val();
+			table.ajax.url(ctx+"/b2b2c/admin/store-order/list-json.do?order_state=wait_pay&store_id=${store_id!""}"+"&keyword="+keyword+"&stype="+0+"&sort=order_id&order=desc").load();
+            },
+            formSearch: function () {
+              var start_time = $("#start_time").val();
+				var end_time = $('#end_time').val();
+				var sn = $("#sn").val();
+				var ship_name = $("#ship_name").val();
+				var payment_id = $("#payment_id").val();
+				var param = "&start_time="+start_time+"&end_time="+end_time+"&sn="+sn+"&ship_name="+ship_name+"&payment_id="+payment_id;
+				table.ajax.url(ctx+"/b2b2c/admin/store-order/list-json.do?order_state=wait_pay"+param+"&stype="+1+"&sort=order_id&order=desc").load();
+            }
+        });
+	
+	table = $('#orderdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/b2b2c/admin/store-order/list-json.do?order_state=wait_pay&store_id=${store_id!""}&sort=order_id&order=desc',
+	    },
+	    columns: [ //定义列
+	        {data: "sn"},
+	        {data: "store_name"},
+	        {data: function(c_time) {
+	        	if(c_time.create_time==null){
+	        		return " ";
+	        	}else{
+	        		return  getFormatDateByLong(c_time.create_time, "yyyy-MM-dd");
+	        	}
+	       	}},
+	        {data: function(sale_time) {
+	        	if(sale_time.sale_cmpl_time==null||sale_time.sale_cmpl_time==0){
+	        		return " ";
+	        	}else{
+	        		return  getFormatDateByLong(sale_time.sale_cmpl_time, "yyyy-MM-dd");
+	        	}
+	       	}},
+	        {data: "need_pay_money"},
+	        {data: "paymoney"},
+	        {data: "ship_name"},
+	        {data: null,"render": function(data,type,row){
+	        	var val;
+	        	val = getType(${status_Json!''},data.status);
+	        	return val;
+	        }},
+	        {data: null,"render": function(data,type,row){
+	        	var val;
+	        	val = getType(${payStatus_Json!''},data.pay_status);
+	        	return val;
+	        }},
+	        {data: null,"render": function(data,type,row){
+	        	var val;
+	        	val = getType(${ship_Json!''},data.ship_status);
+	        	return val;
+	        }},
+	        {data: null,"render": function(data,type,row){
+   	    		return forType(data.shipping_type,type,row);
+   	        }},
+	        {data: "payment_name"},
+	        {data: null,"render": function(data, type, row) {
+	        	return "<a class='layui-btn layui-btn-small _aa' name='change_btn' onclick=\"newTab('查看订单详细"+(data["sn"]).substring(0,6)+"','${ctx}/b2b2c/admin/store-order/order-detail.do?orderId="+data["order_id"]+"&sn="+data["sn"]+"&logi_no="+data["logi_no"]+"&uname="+data["uname"]+"&ship="+data["ship_name"]+"&status="+data["status"]+"')\">操作</a>";		//获取值:data["brand_id"]
+	       	}}
+	     ]
+	});
+	
+	//layui日期控件配置
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  
+		  var start = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      end.min = datas; //开始日选好后，重置结束日的最小日期
+		      end.start = datas //将结束日的初始值设定为开始日
+		    }
+		  };
+		  
+		  var end = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      start.max = datas; //结束日选好后，重置开始日的最大日期
+		    }
+		  };
+		  
+		  document.getElementById('start_time').onclick = function(){
+		    start.elem = this;
+		    laydate(start);
+		  }
+		  document.getElementById('end_time').onclick = function(){
+		    end.elem = this
+		    laydate(end);
+		  }
+		  
+		});
+});
+
+
+//状态
+function getType(exMap,value){
+	var val;
+	$.each(exMap,function(key,values){ 
+	    if(value==values.key){
+	    	val=values.value;
+	    	return val;
+	    }
+	});
+	return val;
+}
+
+//当商家包邮时，配送方式暂定为免邮(也就是订单配送方式为空时)
+function forType(value, row, index) {
+	if(value == '' || value == null){
+		value = "免邮"; 
+	}
+	return value;
+}
+</script>
+<#include '/admin/footer.html' >

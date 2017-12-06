@@ -1,0 +1,296 @@
+<#include '../../store_header.html' />
+<!-- 调用地区标签 -->
+<#assign regionSelect = "com.enation.app.base.tag.regions.RegionSelectDirective"?new()>
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/uploadify.css" />
+<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="${staticserver}/e_tools/js/jquery.addressSelect-1.0.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+ .step2.current{
+	    background-position: -135px -130px;
+	    width: 100px;
+	}
+	.step3.current{
+	    background-position: -135px -130px;
+	    width: 100px;
+	}
+	.step4.current{
+	    background-position: -135px -130px;
+	    width: 100px;
+	}
+	.step5.current{
+	    background-position: -120px -130px;
+	    width: 100px;
+	}
+	.joinin-step ul .step5 span{
+		margin-left: -34px;
+	}
+	.left_sidebar .content .agreement .hideer{
+		    background-position: -280px 0;
+	}
+	.previous4{
+		    width: 40px;
+	    height: 20px;
+	    text-align: center;
+	    line-height: 20px;
+	    border: 1px solid #DCDCDC;
+    }
+    
+    #apply{
+	     width: 48px;
+	    height: 20px;
+	    text-align: center;
+	    line-height: 20px;
+	    border: 1px solid #DCDCDC;
+    }
+    #form_saveMember table .checkinput{
+    	width:10px;
+    	height: 10px;
+    	float: inherit;
+    }
+</style>
+<#-- 获取店铺信息  判断店铺状态-->
+	<#assign applyShopTag=newTag("applyShopTag")/>
+	<#assign shop=applyShopTag('{"step":"step4"}')>
+<div class="store_main">
+<form id="applyForm" class="validat">
+	<div class="open_store"  id="shop_info">
+		<div class="bread_crumb">
+			<span class="icon_home"></span>
+			<span>
+				<a href="${ctx}/index.html">首页</a>
+			</span>
+			<span class="arrow">></span>
+			<span>商家入驻申请</span>
+		</div>
+		
+		<!--左侧-->
+		<div class="left_sidebar">
+			<div class="title">
+				<h2>商家入驻申请</h2>
+			</div>
+			<div class="content">
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						入驻协议
+					</dt>
+				</dl>
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						基本信息
+					</dt>
+				</dl>
+				<dl class="certification">
+					<dt style="cursor: pointer;"> 
+					  <i class="hideer">  </i>	
+						认证信息
+					</dt>
+					<dd style="display: none;">
+						<ul>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>营业执照信息</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>阻止机构代码证</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>一般纳税人证明</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl class="financial">
+					<dt style="cursor: pointer;"> 
+					  <i class="hideer">  </i>	
+						财务资质信息
+					</dt>
+					<dd style="display: none;">
+						<ul>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a >开户行银行许可证</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a>税务登记证</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl class="agreement">
+					<dt> 
+					  <i class="hideer">  </i>	
+						店铺信息
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<!--右侧信息-->
+		<div class="right-layout">
+			<div class="joinin-step">
+				<ul>
+					<li class="step1 current"><span>入驻协议</span></li>
+					<li class="step2 current"><span>基本信息</span></li>
+					<li class="step2 current"><span>认证信息</span></li>
+					<li class="step2 current"><span>财务资质信息</span></li>
+					<li class="step5 current"><span>店铺信息</span></li>
+				</ul>
+			</div>
+			<div class="joinin-content">
+				<div class="apply_agreement">
+					<div class="basic-information">
+							<h3 id="license">店铺信息</h3>
+					</div>
+					<div class="basic-data">
+						<div id="form_saveMember">
+						     <table border="0" cellspacing="0" cellpadding="0">
+						     	<tr>
+						     		<th><span>店铺名称</span>:</th>
+						     		<td>
+						     			<input type="text" name="shop_name"  <#if (shop.shop_name??)>value="${shop.shop_name}"</#if>  isrequired="true" style="width: 60%;"  placeholder="请输入店铺名称" maxlength="20">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>店铺地址</span>：</th>
+						     		<td id="selectAddress_ad" style="cursor: pointer;">
+					     				<script type="text/javascript" colspan="3" class="choseAddr ">
+											$(function() {
+												<#if (shop.shop_province??)>
+													$('#selectAddress_ad').addressSelect({
+														deData: [${shop.shop_province_id},${shop.shop_city_id!''},${shop.shop_region_id!''},${shop.shop_town_id!''}],
+														names : {
+								                            province: 'shop_province',
+								                            city    : 'shop_city',
+								                            region  : 'shop_region',
+								                            town    : 'shop_town'
+								                        }
+													});
+												<#else>
+													$('#selectAddress_ad').addressSelect({
+														 names : {
+									                            province: 'shop_province',
+									                            city    : 'shop_city',
+									                            region  : 'shop_region',
+									                            town    : 'shop_town'
+									                        }
+													});
+												</#if>
+											})
+										</script> 
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th>经营类目：</th>
+						     		<td style="padding-right:110px;">
+						     			 <div style="width: 260px;">	
+						     			 	<#assign goodsParentsTypeTag = newTag("goodsParentsTypeTag")>
+									       	<#assign goodsType = goodsParentsTypeTag()>
+									       	<#list goodsType as type>
+									       		<div style="display: inline-block;">
+									            	<input type="checkbox" class="checkinput" value="${type.category_id}" name="goods_management_category">
+									            	<span>${type.name}</span>
+									            </div>
+									        </#list>
+									        <input type="hidden"  <#if (shop.goods_management_category??)>value="${shop.goods_management_category}"</#if>  name="goodsmanagementcategory">
+									     </div>   
+						     		</td>
+						     	</tr>
+								</div>
+						     </table>
+						</div>
+					</div>
+					<div class="bottom">
+						<a  class="btn previous4">上一步</a>
+						<a  class="btn apply" id="apply">申请开店</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ </form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		
+		//		 点击认证信息让其子内容显示和隐藏
+		$(".certification dt").click(function(){
+			if($(".certification dd").css("display")=="none"){
+				$(".certification dd").css("display","block");
+				$(".certification .hideer").css("background-position","-280px 0px")
+			}else{
+				$(".certification dd").css("display","none");
+				$(".certification .hideer").css("background-position","")
+			}
+		})
+		//点击财务认证信息让其子内容显示和隐藏
+		$(".financial dt").click(function(){
+			if($(".financial dd").css("display")=="none"){
+				$(".financial dd").css("display","block");
+				$(".financial .hideer").css("background-position","-280px 0px")
+			}else{
+				$(".financial dd").css("display","none");
+				$(".financial .hideer").css("background-position","")
+			}
+		});
+				//		对店铺信息页面进行校验
+		var span ='<span class="error">请输入此字段 !</span>';
+//		店铺名称不能为空
+		$("#form_saveMember tr input[name=shop_name]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+//		    提交
+		<!-- 申请-->
+		$("#apply").click(function(){
+			var ch_cat_id = $("input[name='goods_management_category']").is(':checked');
+			var shopProvince = $("input[name='shop_province']").val();
+			if (shopProvince == "" || shopProvince == null) {
+				$.Loading.error("所在地地址选择不能为空！！")
+				return false;
+			}
+			if(ch_cat_id === false){
+				$.Loading.message("请选择经营类目");
+				return false;
+			}
+			var options = {
+					url : "${ctx}/api/b2b2c/shop-api/step4.do",
+					type : "POST",
+					async: false,
+					dataType : "json",
+					success : function(result) {
+						if(result.result === 0){
+							$.alert(result.message);
+						}else{
+							location.href="./audit.html";
+						}
+						$("#apply").removeAttr("disabled");
+				 	},
+				 	error : function(e) {
+				 		$.alert("出现错误，请重试");
+					}
+				};
+			$('#applyForm').ajaxSubmit(options); 
+		});
+		//点击上一步操作
+	$(".previous4").click(function(){
+		window.location.href = "financial_info.html";
+	})
+	
+	var arr =  $("input[name='goodsmanagementcategory']").val().split(',');
+	$.each(arr,function(index,obj){
+		$("[name='goods_management_category'][value="+obj+"]").attr("checked","checked");
+ 	});
+})
+</script>

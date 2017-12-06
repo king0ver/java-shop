@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<#assign title = '发票信息' /> <#include '/new_store/common/header.html' />
+<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/order_detail.css">
+</head>
+<body>
+<style>
+	.inner-app-wappler{min-width:400px;}
+	.order-detail-box{min-width:400px;}
+	.order_detail .order_intro{width:100%;}
+	.detail_list{padding:17px 0;}
+	.order_detail .order_intro dl{width:96%;padding:0 2%}
+</style>
+	<!--主页面区↓-->
+	<div class="app-wappler" style="padding: 0;">
+		<div class="inner-app-wappler">
+			<div class="order-detail-box">
+				<div class="order_detail">
+					<div class="order_intro">
+						<h1 id="">发票信息</h1>
+						<div class="detail_list" name="order_info">
+							<dl>
+								<dt>订单：</dt>
+								<dd>${ordersn}</dd>
+							</dl>
+							<dl class='title'>
+								<dt>发票抬头:</dt>
+								<dd>${receipt_title!''}</dd>
+							</dl>
+							<dl class="online">
+								<dt>发票类型：</dt>
+								<dd>${receipt_type}</dd>
+							</dl>
+							<dl class='content'>
+								<dt>发票内容:</dt>
+								<dd>${receipt_content!''}</dd>
+							</dl>
+							<dl>
+								<dt>发票税号:</dt>
+								<dd>${receipt_duty!''}</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		(function(){
+			var href = location.href;
+			var type = decodeURI(href.match(/receipt_type=(.*)&receipt_duty/)[1]);
+			var content = decodeURI(href.match(/receipt_content=(.*)&receipt_title/)[1]);
+			var title = decodeURI(href.match(/receipt_title=(.*)/)[1]);
+			$('.order_intro .online dd').text(type);
+			$('.order_intro .title dd').text(title);
+			$('.order_intro .content dd').text(content);
+			
+		})()
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<#include '/admin/header.html' >
+<style>
+td .layui-btn-small{
+background:#1E9FFF;
+}
+</style>
+<div  class="admin-main">
+   <div>
+    <!--表格区域  -->
+   <form id="advform">
+    <table id="advdata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        
+    </table>
+    <!--传值等操作(暂定)  -->
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<script>
+var table;
+$(function(){
+	
+	var dataSet = [
+    ['1', '地区', 'regionInit'],
+    ['2', '分类', 'categoryInit'],
+    
+];
+	
+	table = $('#advdata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "searching": false,
+	    "lengthChange": false,
+		data: dataSet,
+    	columns: [
+			
+			{ title: "序号" },
+			{ title: "名称" },
+			{"title":'操作',"data": function (obj) {
+				return "<a class='layui-btn layui-btn-small _aa' onclick='"+obj[2]+"()'>初始化</a>";		
+			}},
+		]
+	});
+});
+function regionInit(){
+	if (!confirm("确认要将地区初始化吗，此操作会清除当前地区数据？")) {
+        return false;
+    }
+    $("#initRegion").attr("disabled","disabled");
+    $.Loading.show("正在初始化地区数据......");
+    $.ajax({
+        url : "${ctx}/shop/admin/region/reset.do?ajax=yes",
+        dataType : "json",
+        success : function(res) {
+            $.Loading.success(res.message);
+            location.reload();
+        },
+        error : function() {
+            alert("初始化所需时间较长,请三分钟之后再来查看");
+            $("#initRegion").removeAttr("disabled");
+            $.Loading.hide();
+        }
+
+    });
+}
+function categoryInit(){
+	if (!confirm("确认要将分类初始化吗，此操作会清除当前分类数据？")) {
+        return false;
+    }
+    $("#categoryInit").attr("disabled","disabled");
+    $.Loading.show("正在初始化分类数据......");
+    $.ajax({
+        url : "${ctx}/goods-info/init-cache.do?",
+        success : function(res) {
+            $.Loading.success("初始化成功");
+            location.reload();
+        },
+        error : function() {
+            $.Loading.error("初始化错误，请刷新后重试");
+            $("#categoryInit").removeAttr("disabled");
+            $.Loading.hide();
+        }
+
+    });
+}
+
+
+
+</script>
+<#include '/admin/footer.html' >

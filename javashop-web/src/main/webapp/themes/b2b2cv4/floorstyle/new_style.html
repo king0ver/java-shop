@@ -1,0 +1,116 @@
+<#assign floorTag = newTag("floorTag") />
+<#assign floorMap = floorTag("'floor_id':'${floor_id}','limit':4") />
+<#if floorMap?exists && floorMap?size gt 0>
+    <#assign floor = floorMap.floor />
+    <#assign guid_cat_id = floor.guid_cat_id!'' />
+    <#assign brand_ids = floor.brand_ids!'' />
+    <#assign cat_id = floor.cat_id!'' />
+    <#assign adv_ids = floor.adv_ids!'' />
+    <#assign goods_tag_id = floor.goods_tag_id!'' />
+    <#assign goodsnum = floor.goodsnum!'6' />
+    <#assign childFloorList = floorMap.childFloors />
+</#if>
+<#assign floorAdvListTag = newTag("floorAdvListTag") />
+<#assign floorGoodsTag = newTag("floorGoodsTag") />
+<#assign floorGoodsListTag = newTag("floorGoodsListTag") />
+<#assign isAdmin = "${is_admin!''}" />
+<div class="floor-line-con floor-color-${floors_index}" data-lift="floor-${floors_index}">
+    <div class="floor-hd">
+        <i class="box_hd_arrow"></i>
+        <i class="box_hd_dec"></i>
+        <div class="hd-tit">
+            <#list childFloorList as childs>
+                <#if childs_index lt 2 ><@substring title="${childs.title}" length=4 dot="" />、
+                    <#elseif childs_index == 3><@substring title="${childs.title}" length=4 dot="" />
+                </#if>
+            </#list>
+        </div>
+        <div class="hd-tags">
+            <ul>
+                <#list childFloorList as childs>
+                    <#if childs_index lt 8 >
+                        <li<#if childs_index == 0 > class="current"</#if>>
+                            <#if isAdmin == 'yes'>
+                                <button type="button"  class="floor-btn b_tags" data-floorId="${childs.id}">编辑</button>
+                            </#if>
+                            <span>${childs.title}</span><i class="arrowImg"></i>
+                        </li>
+                    </#if>
+                </#list>
+            </ul>
+        </div>
+    </div>
+    <div class="floor-bd bd-mode-2">
+        <div class="bd-left">
+            <div class="floor-left-slide">
+                <div class="bd">
+                    <#if isAdmin == 'yes'><button type="button"  class="floor-btn b_advs" data-floorId="${floor.id}" data-goods-index="right">编辑</button></#if>
+                    <div class="swiper-container swiper-container-index-floor">
+                        <ul class="swiper-wrapper">
+                            <#assign advList = floorAdvListTag("'aid':'${adv_ids}','position':'right'")!'' />
+                            <#list advList as adv>
+                                <#if adv_index lt 3>
+                                    <li class="swiper-slide">
+                                        <a href="${adv.url!''}" target="_blank">
+                                            <img class="lazy" src="${ctx}${themes_path}/images/img-loading.gif"
+                                                 data-original='<@imgurl pic="${adv.atturl!''}"/>'>
+                                        </a>
+                                    </li>
+                                </#if>
+                            </#list>
+                        </ul>
+                        <div class="swiper-pagination swiper-pagination-index-floor"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="floor-left-adv">
+                <#if isAdmin == 'yes'><button type="button" class="floor-btn b_advs" data-floorId="${floor.id}" data-goods-index="left">编辑</button></#if>
+                <#if adv_ids??&& adv_ids!='' >
+                    <#assign advList = floorAdvListTag("'aid':'${adv_ids}','position':'left'")!'' />
+                    <#list advList as adv3>
+                        <#if adv3_index lt 2>
+                            <a href="${adv3.url!''}" class="mb10" target="_blank">
+                                <img class="lazy" src="${ctx}${themes_path}/images/img-loading.gif"
+                                     data-original='<@imgurl pic="${adv3.atturl!''}"/>' style="width: 474px; height:
+                                280px">
+                            </a>
+                        </#if>
+                    </#list>
+                </#if>
+            </div>
+        </div>
+
+        <div class="bd-right">
+            <div class="floor-tabs-content clearfix">
+                <#list childFloorList as childs>
+                    <#if childs_index lt 8>
+                        <#include '${childs.path}' />
+                    </#if>
+                </#list>
+            </div>
+        </div>
+    </div>
+    <div class="floor-fd">
+        <div class="floor-fd-brand clearfix">
+            <#if isAdmin == 'yes'><button type="button" class="floor-btn b_brand" data-floorId="${floor.id}">编辑</button></#if>
+            <#if brand_ids??&& brand_ids!='' >
+                <#assign floorBrandListByCatidTag = newTag("floorBrandListByCatidTag") />
+                <#assign brandListByCatid = floorBrandListByCatidTag("'brand_ids':${brand_ids}")!'' />
+                <#list brandListByCatid as brand>
+                    <#if brand_index lt 10>
+                        <div class="item">
+                            <a href="${ctx}/goods_list.html?brand=${brand.brand_id!''}" target="_blank"
+                               title="${brand.name!''}">
+                                <div class="link-l"></div>
+                                <div class="img"><img class="lazy" src="${ctx}${themes_path}/images/img-loading.gif"
+                                                      data-original='<@imgurl pic="${brand.logo!''}"/>'>
+                                </div>
+                                <div class="link"></div>
+                            </a>
+                        </div>
+                    </#if>
+                </#list>
+            </#if>
+        </div>
+    </div>
+</div>

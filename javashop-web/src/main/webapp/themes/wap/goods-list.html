@@ -1,0 +1,21 @@
+<#include '/common/header.html' />
+<#assign  title="商品列表" />
+<#assign searchSelectorTag = newTag("searchSelectorTag") />
+<#assign goodsSelector = searchSelectorTag() />
+<#assign sortList = goodsSelector.sort![] />
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/goods-list.js"></script>
+<link type="text/css" rel="stylesheet" href="${ctx}${themes_path}/css/goods-list.css">
+<ul class="goods-list-selector">
+    <#assign seachUrlTag = newTag("seachUrlTag") />
+    <#assign searchUrl = seachUrlTag('"name":"sort"')!'search' />
+    <#assign searchParamTag = newTag("searchParamTag") />
+    <#assign sort = searchParamTag('"name":"sort"')!'0' />
+    <#list sortList as selector >
+        <li data-href="${selector.url!''}" class="<#if selector.isSelected>active</#if>">
+            <span>${selector.name}</span>
+        </li>
+    </#list>
+</ul>
+<ul class="goods-list"></ul>
+</body>
+</html>

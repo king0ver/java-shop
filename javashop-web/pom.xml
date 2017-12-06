@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.enation.app.javashop</groupId>
+		<artifactId>javashop-parent</artifactId>
+		<version>6.4.0</version>
+		<relativePath>../javashop-parent</relativePath>
+	</parent>
+
+	<artifactId>javashop-web</artifactId>
+	<packaging>war</packaging>
+	<name>javashop-web Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Javashop 工程依赖 -->
+ 		<dependency> 
+			<groupId>com.enation.app.javashop</groupId>
+			<artifactId>shop-core</artifactId>
+			<version>6.4.0</version>
+ 		</dependency>  
+		<dependency>
+			<groupId>com.enation.app.javashop</groupId>
+			<artifactId>cms-core</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+       
+	</dependencies>
+	<build>
+		<finalName>javashop</finalName>
+	</build>
+</project>

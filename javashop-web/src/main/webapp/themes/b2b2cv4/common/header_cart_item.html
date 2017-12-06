@@ -1,0 +1,31 @@
+<#assign cartTotalListTag = newTag("cartTotalListTag") />
+<#assign cartList = cartTotalListTag() />
+<#if cartList?exists && cartList?size gt 0>
+    <ul>
+        <#list cartList as cart >
+            <#list cart.productList as product >
+                <li class="item-header-cart" data-item_id="${product.seller_id}" data-item_product_id="${product.product_id}" data-item_price="${product.purchase_price}">
+                    <div class="p-img">
+                        <a href="${ctx}/goods-${product.goods_id}.html" target="_blank" title="${product.name}">
+                            <@image src="${product.goods_image!''}" style="cursor: pointer; width: 50px; height: 50px;" />
+                        </a>
+                    </div>
+                    <div class="p-name"><a href="${ctx}/goods-${product.goods_id}.html" target="_blank">${product.name}</a></div>
+                    <div class="p-number">
+                        <span class="num">${product.num}</span>
+                        <div class="count">
+                            <a href="javascript:void(0);" class="count-oper count-add"><i class="cart-icon icon-up"></i></a>
+                            <a href="javascript:void(0);" class="count-oper count-remove"><i class="cart-icon icon-down"></i></a>
+                        </div>
+                    </div>
+                    <div class="p-oper">
+                        <div class="price"><em>¥</em><span class="item-total">${(product.subtotal)?string("0.00")}</span></div>
+                        <a href="javascript:void(0);" class="remove">删除</a>
+                    </div>
+                </li>
+            </#list>
+        </#list>
+    </ul>
+<#else/>
+    <p style="text-align: center; padding: 20px 0;cursor:default"> 暂无商品... </p>
+</#if>

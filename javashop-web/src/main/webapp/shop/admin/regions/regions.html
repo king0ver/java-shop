@@ -1,0 +1,89 @@
+<#include '/admin/header.html' />
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/plugins/select2/css/select2.min.css"/>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.goodsCatsEdit.js"></script>
+<style>
+.__GCD__content .__GCD__input input{
+    height:30px;
+    line-height:30px;
+    padding:4px 10px;
+}
+</style>
+<div class="admin-main" id="__cat_box__" style="margin-top: 30px;">
+    <script type="text/javascript">
+        var _goodsCatEdit;
+        $(function () {
+            _goodsCatEdit = $('#__cat_box__').goodsCatsEdit({
+                canEdit  : true,
+                api	: '/shop/admin/region/list-children.do?parentid=@id',
+                maxLeave : 4,
+                addCat   : function (region) {
+                    addRegion(region)
+                },
+                itemBtns: [
+                    {text: '编辑', onClick: function (region) {
+                        editRegion(region.id);
+                    }},
+                    {text: '删除', textStyle: 'color: red', onClick: function (region) {
+                        deleteRegion(region.id);
+                    }}
+                ]
+            }).init();
+
+            function addRegion(region) {
+                var url = region.parent_data
+                    ? "${ctx}/shop/admin/region/children.do?region_id=" + region.parent_data.data.id
+                    : "${ctx}/shop/admin/region/add.do";
+                layer.open({
+                    type: 2,
+                    title: '添加地区',
+                    area: ['600px', '400px'],
+                    content: url,
+                    scrollbar: true,
+                    maxmin :true
+                });
+            }
+
+            //  编辑地区
+            function editRegion(id) {
+                layer.open({
+                    type: 2,
+                    title: '修改地区',
+                    area: ['600px', '400px'],
+                    content: "${ctx}/shop/admin/region/edit.do?region_id=" + id,
+                    scrollbar: true,
+                    maxmin :true
+                });
+            }
+
+            //  删除地区
+            function deleteRegion(id) {
+                layer.confirm('确定要删除这个地区吗？', {icon: 3, title:'提示'}, function (index) {
+                    layer.close(index);
+                    var __load = layer.load(2);
+                    $.ajax({
+                        url: "${ctx}/shop/admin/region/delete.do?ajax=yes",
+                        data: { region_id: id },
+                        type: 'POST',
+                        success: function (res) {
+                            layer.close(__load);
+                            if(res.result === 1){
+                                layer.msg('删除成功！', { icon: 1 });
+                                _goodsCatEdit.refreshData();
+                            }else {
+                                layer.msg(res.message, { icon: 5 });
+                            }
+                        },
+                        error: function () {
+                            layer.close(__load);
+                            layer.msg('出现错误，请稍候再试！', { icon: 2 });
+                        }
+                    })
+                });
+            }
+
+        });
+    </script>
+</div>
+
+<#include '/admin/footer.html' />

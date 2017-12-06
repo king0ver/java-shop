@@ -1,0 +1,337 @@
+<#include '/admin/header.html' />
+<style type="text/css">
+    .clear{
+        clear: both;
+    }
+    .__left {
+        float: left;
+        width: 60%;
+    }
+    .__right {
+        float: left;
+        width: 40%;
+    }
+    .order-detail-header {
+        padding: 6px 0;
+        height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+        color: #333;
+        background-color: #f5f7fa;
+        border-bottom: 1px solid #e1e8ed;
+    }
+
+    .order-detail-header h2 span {
+        padding-left: 20px;
+    }
+
+    .order-detail-body {
+        min-height: 50px;
+    }
+
+    .order-detail-content li {
+        width: 100%;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+        padding: 16px 0 16px 20px;
+        line-height: 24px;
+        white-space: nowrap;
+    }
+
+    .detail-label {
+        float: left;
+        margin-right: 20px;
+        font-size: 14px;
+        color: #999;
+    }
+
+    .detail-value {
+        overflow: hidden;
+        white-space: normal;
+        word-break: break-all;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .order-goods table {
+        width: 100%;
+        font-size: 12px;
+    }
+    .order-goods table a {
+        color: #337ab7;
+        text-decoration: none;
+        background-color: transparent!important;
+    }
+
+    .order-goods table thead th {
+        border-color: #e2e7eb;
+        padding: 8px 12px;
+        color: #242a30;
+        font-weight: 600;
+        border-bottom: 2px solid #e2e7eb!important;
+    }
+
+    .order-goods tbody td {
+        border-color: #e2e7eb;
+        padding: 8px 12px;
+        border-top: 1px solid #ddd;
+        vertical-align: middle;
+        cursor: default;
+    }
+
+    .order-goods tbody td:hover {
+        background: #dcf8ff;
+    }
+
+    .order-goods .pic-thumb a {
+        display: block;
+        width: 50px;
+        height: 50px;
+    }
+    .order-goods .pic-thumb a img {
+        max-width: 50px;
+        max-height: 50px;
+        vertical-align: middle;
+    }
+
+    .order-log li {
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+</style>
+<div class="admin-main" style="background-color: #FFFFFF">
+    <div class="tool-bar" style="padding: 10px">
+        <button type="button" title="确认收款" id="confirmpay" class="layui-btn layui-btn-small layui-btn-normal" style="margin-right: 10px">确认收款</button>
+        <button type="button" title="取消订单" id="cancelorder" class="layui-btn layui-btn-small layui-btn-normal">取消订单</button>
+    </div>
+    <div class="order-detail">
+        <div class="order-detail-section">
+            <div class="order-detail-header">
+                <h2 class="__left"><span>基本信息</span></h2>
+                <h2 class="__right"><span>商家信息</span></h2>
+            </div>
+            <div class="order-detail-body">
+                <div class="order-detail-content __left">
+                    <ul>
+                        <li>
+                            <div class="detail-label">订单编号</div>
+                            <div class="detail-value">${orderDetail.sn}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">订单金额</div>
+                            <div class="detail-value">
+                                <p>￥${orderDetail.goods_price} + ￥${orderDetail.shipping_price} - ￥${orderDetail.discount_price!0.00} = ￥${orderDetail.order_price}</p>
+                                <p>商品 +  运费 - 优惠 = 应付</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="detail-label">支付方式</div>
+                            <div class="detail-value">
+                            	<!-- 支付类型 -->
+								${orderDetail.payment_type_text}<#if orderDetail.payment_method_name??>${orderDetail.payment_method_name}</#if>
+							</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">订单状态</div>
+                            <div class="detail-value">${orderDetail.order_status_text}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">下单时间</div>
+                            <div class="detail-value">${orderDetail.create_time_str}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="order-detail-content __right">
+                    <ul>
+                        <li>
+                            <div class="detail-label">卖家账号</div>
+                            <div class="detail-value">${orderDetail.seller_name!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">发货时间</div>
+                            <div class="detail-value">${orderDetail.ship_time_str!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">物流公司</div>
+                            <div class="detail-value">${orderDetail.logi_name!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">快递单号</div>
+                            <div class="detail-value">${orderDetail.ship_no!''}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="order-detail-section">
+            <div class="order-detail-header">
+                <h2 class="__left"><span>买家信息</span></h2>
+                <h2 class="__right"><span>发票信息</span></h2>
+            </div>
+            <div class="order-detail-body">
+                <div class="order-detail-content __left">
+                    <ul>
+                        <li>
+                            <div class="detail-label">收货人</div>
+                            <div class="detail-value">${orderDetail.ship_name}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">收货地址</div>
+                            <div class="detail-value">${orderDetail.ship_province!''}${orderDetail.ship_city!''}${orderDetail.ship_region!''}${orderDetail.ship_town!''}${orderDetail.ship_addr!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">联系方式</div>
+                            <div class="detail-value">${orderDetail.ship_mobile!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">买家留言</div>
+                            <div class="detail-value">${orderDetail.remark!''}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="order-detail-content __right">
+                    <ul>
+                        <li>
+                            <div class="detail-label">抬头</div>
+                            <div class="detail-value">${orderDetail.receipt_title!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">内容</div>
+                            <div class="detail-value">${orderDetail.receipt_content!''}</div>
+                        </li>
+                        <li>
+                            <div class="detail-label">税号</div>
+                            <div class="detail-value">${orderDetail.duty_invoice!''}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="order-goods">
+        <table>
+            <thead>
+            <tr>
+                <th>商品</th>
+                <th>单价(元)</th>
+                <th>数量</th>
+                <th>小计(元)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list orderDetail.productList as product>
+            	<tr>
+	                <td>
+	                    <div class="pic-thumb">
+	                        <a href="${ctx}/goods-${product.goods_id}.html" target="_blank">
+	                            <img src="${product.goods_image!''}">
+	                        </a>
+	                    </div>
+	                    <dl class="goods-name">
+	                        <dt>
+	                            <a href="${domain}/goods-${product.goods_id}.html" target="_blank">${product.name}</a>
+	                        </dt>
+	                        <dd>
+								<#if product.specList?exists>
+									<#list product.specList as spec>
+										${spec.spec_name}:${spec.spec_value};
+									</#list>
+								</#if>
+							</dd>
+	                    </dl>
+	                </td>
+	                <td>
+	                    ${product.purchase_price}
+	                    <p class="green"></p>
+	                </td>
+	                <td>${product.num}</td>
+	                <td>${product.subtotal}<b></b> </td>
+            	</tr>	
+            </#list>
+            <#if giftlist??&&(giftlist?size >0) >
+			<#list giftlist as gift >
+              <tr>  
+                  <td>  
+                      <div class="pic-thumb">  
+                          <a>  
+                              <img src="${gift.gift_img}">  
+                          </a>  
+                      </div>  
+                      <dl class="goods-name">  
+                          <dt>  
+                              【赠品】${gift.gift_name}  
+                          </dt>  
+                  <td>${gift.gift_price}</td>  
+                  <td>1</td>  
+                  <td>${gift.gift_price}</td>  
+            </tr> 
+            </#list>
+            </#if>
+            </tbody>
+        </table>
+    </div>
+    <div class="order-log">
+        <div class="order-detail-header">
+            <h2><span>订单日志</span></h2>
+        </div>
+        <div class="order-detail-body">
+            <ul>
+            	<#list orderLogs as log>
+                	<li>${log.op_name} 于 ${log.op_time_str} ${log.message}</li>
+            	</#list>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //确认收款
+        if ("${orderDetail.operateAllowable.allowPay?c}" == "true") {
+            $("#confirmpay").on("click", function () {
+                if (confirm("确认要确认收款吗？")) {
+                    $.ajax({
+                        url     : "${ctx}/order-opration/admin/order/pay.do",
+                        data    : "ordersn=${orderDetail.sn}&payprice=${orderDetail.order_price}",
+                        method  : "POST",
+                        dataType: "json",
+                        success : function (result) {
+                            window.location.reload();
+                        },
+                        error   : function () {
+                            console.error(" confirm error");
+                        }
+                    });
+                }
+            });
+        } else {
+            $("#confirmpay").attr("disable", true).addClass('layui-btn-disabled');
+        }
+
+        //取消订单
+        if ("${orderDetail.operateAllowable.allowCancel?c}" == "true") {
+            $("#cancelorder").on("click", function () {
+                if (confirm("确任要取消订单吗？")) {
+                    $.ajax({
+                        url     : ctx + "/order-opration/admin/order/cancel/${orderDetail.sn}.do",
+                        data    : "reson=test",
+                        method  : "POST",
+                        dataType: "json",
+                        success : function (result) {
+                            window.location.reload();
+                        },
+                        error   : function () {
+                            console.error(" confirm error");
+                        }
+                    });
+                }
+            });
+        } else {
+            $("#cancelorder").attr("disable", true).addClass('layui-btn-disabled');
+        }
+    });
+</script>
+<#include '/admin/footer.html' />

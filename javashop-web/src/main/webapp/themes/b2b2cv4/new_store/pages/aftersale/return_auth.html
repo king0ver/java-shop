@@ -1,0 +1,200 @@
+<#-- 商家中心审核详情页 -->
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#-- 退货申请标签 -->
+<#assign storeRefundDetailTag = newTag("storeRefundDetailTag")>
+<#assign storeRefundDetail = storeRefundDetailTag()>
+<#-- 退货申请 -->
+<#assign refund = storeRefundDetail.refundDetail.refund>
+<#-- 退货订单 -->
+<#assign orderinfo = storeRefundDetail.orderDetail>
+<#-- 退货商品列表 -->
+<#assign goodsList=storeRefundDetail.refundDetail.goods>
+<style>
+	input.form-control{
+		width: 100px;
+		height: 15px;
+		display: inline-block;
+	}
+</style>
+<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/return_auth.css">
+<script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/transaction/return_auth.js"></script>
+<div class="return-auth">
+    <div class="return_detail">
+        <div class="return-info" style="border-right: 1px solid #d8d8d8">
+            <h1>订单信息</h1>
+            <div class="return_info-list">
+                <input type="hidden" value="${refund.refuse_type}" id="i_type"/>
+                 <input type="hidden" value="${goodsList.price}" id="i_price"/>
+                 <input type="hidden" value="${goodsList.return_num!0}" id="i_num"/>
+                 <input type="hidden" value="${goodsList.ship_num!0}" id="i_ship_num"/>
+                <ul>
+                    <li style="margin-top: 15px;"><span>退<span class="i-type"></span>单号：</span><span>${refund.sn }</span></li>
+                    <li><span>关联订单：</span><span>${orderinfo.sn }</span></li>
+                    <li><span>支付金额：</span><span>${goodsList.price?string("currency")}</span></li>
+                    <li><span>申请退款金额：</span><span>${refund.refund_price?string("currency")}</span></li>
+                    <#if refund.refund_point gt 0>
+                    <li><span>消费积分：</span><span>${refund.refund_point!''}</span></li>
+                    </#if>
+                    <li><span>退<span class="i-type"></span>人　：</span><span>${orderinfo.ship_name }</span></li>
+                    <li>
+                        <span>退<span class="i-type"></span>状态：</span>
+                        <span>${refund.refund_status_text}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="return-oper">
+            <form id="theForm">
+                <input type="hidden" name="sn" value="${refund.sn}"/>
+                <table>
+                    <tr>
+                        <td class="return-table-title">申请时间：</td>
+                        <td><@dateformat time="${refund.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></td>
+                    </tr>
+                    <#if refund.alltotal_pay??>
+	                    <tr>
+	                        <td class="return-table-title">退款金额：</td>
+	                        <td>${refund.refund_price}</td>
+	                    </tr>
+                    </#if>
+                    <tr style="line-height: 20px; ">
+                        <td class="return-table-title">退<span class="i-type"></span>原因：</td>
+                        <td>
+                        	<@substring title="${refund.refund_reason!''}" length=78 dot="..."/>
+                        </td>
+                    </tr>
+                    <tr>
+                   		<td class="return-table-title">详细描述：</td>
+                   		<td>
+                   			<#if (refund.customer_remark?length > 39)>
+                               <a href="javascript: void(0);" class="show-remark" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="bottom" data-content="${refund.remark!''}">查看全部</a>
+                               <script type="text/javascript">
+                                   $('.show-remark').popover();
+                               </script>
+                           <#else>
+                           	${refund.customer_remark}
+                           </#if>
+                   		</td>
+                    </tr>
+                     <tr>
+                        <td class="return-table-title">退款金额：</td>
+                        <td>
+                         <#if refund.refund_status=="apply">
+                        	<input type="text" name="refund_price" class="form-control" value="${refund.refund_price!''}">元
+                         <#else>
+                        		${refund.refund_price?string("currency")}
+                         </#if>
+                         </td>
+                        
+                    </tr>
+                    <#if (refund.refund_point)!=0>
+                    <tr>
+                        <td class="return-table-title ">退还积分：</td>
+                        <td>
+                         <#if refund.refund_status=="apply">
+                        	<input type="text" name="refund_point" class="form-control" value="${refund.refund_point!''}">
+                         <#else>
+                        		${refund.refund_point}
+                         </#if>
+                         </td>
+                        
+                    </tr>
+                    </#if>
+                    <tr>
+                        <td class="return-table-title">审核备注：</td>
+                        <td>
+                        <#if refund.refund_status=="apply">
+                        
+                        	<textarea type="text" class="form-control" name="remark" maxlength="120" style="height: 50px;">${refund.seller_remark!''}</textarea>
+                        <#else>
+                        	${refund.seller_remark!''}
+                        </#if>
+                        </td>
+                    </tr>
+                     <#if refund.operateAllowable.allowSellerApproval>
+	                    <tr style="line-height: 55px; ">
+	                        <td class="return-table-title">审核：</td>
+	                        <td class="check-oper" style="vertical-align: middle; ">
+	                            <a href="javascript: void(0);" class="btn btn-success check-btn" status="true">通过</a>
+	                            <a href="javascript: void(0);" class="btn btn-info check-btn" status="false" style="margin-left: 10px;">不通过</a>
+	                            <input id="agree" type="hidden" name="agree" value="true" />
+	                        </td>
+	                    </tr>
+                    </#if>
+                    <#if refund.operateAllowable.allowStockIn>
+	                    <tr style="line-height: 55px; ">
+	                        <td class="return-table-title">审核：</td>
+	                        <td class="check-oper" style="vertical-align: middle; ">
+	                            <a href="javascript: void(0);" class="btn btn-success stock-in" status="true">全部入库</a>
+	                        </td>
+	                    </tr>
+                    </#if>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="return-table">
+        <table class="table table-bordered table-responsive">
+            <thead>
+            <tr style="background-color: #f2f2f2">
+                <th style="min-width: 85px; ">商品图片</th>
+                <th>商品名称</th>
+                <th>单价</th>
+                <th>购买数量</th>
+                 <#if refund.refuse_type == "return_goods">
+                <th>退货数量</th>
+                </#if>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width:85px">
+                        <a target="_blank" href="${ctx}/goods-${goodsList.goods_id}.html">
+                            <span style="display: block; height: 50px;" class="cart-product-img">
+                                <img src="${goodsList.goods_image!''}"  style="cursor: pointer;" />
+                            </span>
+                        </a>
+                    </td>
+                    <td style="width:300px;">
+                        <a target="_blank" href="${ctx}/goods-${goodsList.goods_id}.html">
+                            ${goodsList.goods_name!''}
+                            <#if goodsList.specList?exists>
+							<span style="margin: ">
+							<#list goodsList.specList as spec>
+								<#if spec_index!=0></#if>(<strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>)
+							</#list>
+							</span>
+						</#if>
+                            <#if goodsList.other?? >
+                                ${goodsList.other}
+                            </#if>
+                        </a>
+                    </td>
+                    <td><span>${goodsList.price?string.currency}</span></td>
+                    <td>
+                        <span>${goodsList.ship_num!0}</span>
+                    </td>
+                    <#if refund.refuse_type == "return_goods">
+                    <td>
+                        <span>${goodsList.return_num!0}</span>
+                    </td>
+                    </#if>
+                </tr>
+				<!-- 促销活动赠送的赠品信息 -->
+				<#if goodsList.giftList?exists>
+				<#list goodsList.giftList as gift>
+					<tr >
+						<td style="width:85px">
+							<@image height="50" width="50" src="${gift.gift_img}"  style="cursor: pointer;" />
+						</td>
+							<td style="width:300px;" style="color: #333;">${gift.gift_name}<span style="color: red; ">（赠品）</span></td>
+							<td ><span>${gift.gift_price?string.currency}</span></td>
+							<td><span>1</span></td>
+							<td><span>1</span></td>
+					</tr>
+				</#list>
+				</#if>
+            </tbody>
+        </table>
+    </div>
+</div>

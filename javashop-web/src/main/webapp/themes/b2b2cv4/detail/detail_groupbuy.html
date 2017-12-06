@@ -1,0 +1,60 @@
+<!-- 团购标签 -->
+<#assign groupBuy=promotionVo.groupBuy>
+
+<!-- 团购时间 -->
+<#assign groupBuyActSurplusTag=newTag("groupBuyActSurplusTag")>
+<#assign groupBuyActSurplus=groupBuyActSurplusTag("{'end_time':${promotionVo.end_time} }")>
+<div class="pro-list clearfix groupbuy">
+	<span class="origin-price-by-group" style="display:none;">${groupBuy.price}</span>
+	<!-- 倒计时 距离本期结束 -->
+	<div class='group-buy-section'>
+		团购剩余时间： <span id="d1"></span><strong>天</strong> <span id="h1"></span><strong>小时</strong>
+		<span id="m1"></span><strong>分</strong> <span id="s1"></span><strong>秒</strong>
+		<strong>已售出</strong><span class='howmany'>${groupBuy.buy_num+groupBuy.visual_num}</span><strong>件</strong>
+	</div>
+	<script type="text/javascript">
+		tms[tms.length] = "${groupBuyActSurplus.cha}";
+		day[day.length] = "d1";
+		hour[hour.length] = "h1";
+		minute[minute.length] = "m1";
+		second[second.length] = "s1";
+		$(".price-by-group").text('￥' + $(".origin-price-by-group").text())
+	</script>
+</div>
+<style>
+	#price{
+		font-size: 12px;
+		text-decoration:line-through;
+		color: grey;
+		display: inline-block;
+		margin-left:0.5rem;
+	}
+
+	.group-buy-section{
+		width: 100%;
+		background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAAAgBAMAAACLLZ68AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAVUExUReg+SOhEQO9VSO1NQ90kRuMzS/NlSoFV9jwAAAUpSURBVFjDrZlPj6M4EMXtzjBn3I73nDEdzjFIfWd3uZvZ5L5iJL7/R5gq/6MgyQQaKlFLIw0dXn71XpVp9u9O1bJQ1t58XW/t8sstXJkzUjnnLFN5ngvBxat61z+EqLSvQhdFUdWkcraXSutvLnMVRLYrvqOLq5wzHiTmTHRYKhf5K5VaCyF1rKqq6gJescxuKgPKLKK8gsjrdfl3dGEH/xu4Y6oUCL0p0Ql4vxRZUZRVBShRJOB0P2qxm0rL3iLLm0MJJNegBJbwPnCvtOtA51E08O6EEutQFhpZgjwnE967qYwokaV1KNe58hJZYsfyjjMlOMjsFLJcirIP7epsOTas2E2lvcueda5khwPIvLhfobC4PYLIoxCNeBk/1QSldiiL2K6F2U0l3Oab9dHj+vXqavl3hBwP8YvqWI4kIXsaATK71LHm8WsSsJivhdeIVSDKvVQSlHb9GGmBI7B0KLlzJVbTNNCzr02ZXNlTW6LIiHInlYDyxKYo183KyBHDh1vwJbxc7KjXMqcoqxCxLn4Cyp1UAkqkaUeU61yJHIMrA0iOKBuwphBRp3yK0iDKkrasY+kWA7ObyoCSjbNyrSsPZOnJckyfo8eoXsJ810VAWXqNiDNsPgHlVpXtjaDEho0s23WuTPmaUNqm6Ro1UygxgWY/Ko+SJKxbCeLus4dK4OZQns+0X2EfWIOS5mumZI+jBO7f4Kg8vhqXAWU5SVgvEZcC/9VsU9k6lXbcCFz2tCtdeYn56uqzPHWcC1NLM+tW+XhWRpRBaKU/h6IKk8SIHViiB8cNNmzpoPEffV4/hCLK4aSUlLWEe1RCkGH5qGRyZR/aVVfD0Nduv6tqsYNKgHaLt5m57AmHEeic63KUlxElt59lf2JcGuNM1dxveMYLlp7t+yxgQefnMPwK6WP2UElR+uzxrvwJH/ZtDcoDQdn3rHP9mrLjQc+a+G9ZkFnpxqUekKXf78QOKilKABlEQsGnvX0sR5k82XXZZ4m2lF4jqrwned+0xJUaXDkMfiXwKOVGlShofEQQXelRLmU5cSXLwJU9Y6JGmYa03HNjjoeRsPkgysIPy3TRBpUTlGlWth7lQpV+7QkwM8W+e1cmlmYSPmbWrgRlT1EW8fS8Q8e2BCX2awzYv/HD2Pq1J8u7/4IrwZaYsffGTBoNWfD0qLMoBtewk2vlBpUTlCytPRiw+qw/lq49Y7fC6y9wJUVZP+lSE0jCsUtSTxa6dChxiFTk2o0qx6c9gWV7c648L3blhQSs6AcdUJp0zn/5nAApxoZ1KMMWSzL5yypnKFk6i+CH/fxY7sp0Mu3sd4LSzFVKPzkeBmwypnOlP44Yct02lePTnpsfI9croDz358WujPsALBWZ8K6UpGPrPyx3MriyJ9PSofSPQ6iNv6pyOivT2tOiK/VpuSsTTOVRWu5Fmge+lPeSZ7PSuZLMyq2+bCezMh5GrmtdmTyZwUpQlhpmJRWZiMwyNg6RacDqqvSu9Bus3KyydctdWntApE2uPC+dlYe09EC+qux9KE8Zn2QPIWIeqk0gy4jylx+VdLSaLSonhxGywa5ASc4imUCU3pWyrp9MEjPt3mnAOpU1ni7DBiu3saQoyWHktnJWRpQW+tW+9f3/mXMlHEjMg/AxTzbY5EsUqcNfSKb//esq7w8jGLD9KpSHJFNxQJkxIWjAVuaPa4+pJgEbsqdIT3u2ZixFGf9mANGzCiV5PJAplSFKtxFQW4onC56czkpPM7gSRf6YXZT/Br9wXT1SeqTpAAAAAElFTkSuQmCC');
+		color: #fbe2e2;
+		height: 32px;
+		line-height: 32px;
+		padding-left: 10px;
+		box-sizing: border-box;
+	}
+
+	.group-buy-section >span:not(.howmany){
+		background: #443b3b;
+		display: inline-block;
+		width: 25px;
+		height: 25px;
+		line-height: 25px;
+		text-align: center;
+		position: relative;
+		top: 1px;
+		font-size: 15px;
+		margin: 2px;
+	}
+
+	.group-buy-section >span.howmany{
+		margin: 2px;
+		font-size: 15px;
+	}
+</style>

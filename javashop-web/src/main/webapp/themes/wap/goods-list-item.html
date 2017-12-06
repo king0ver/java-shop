@@ -1,0 +1,22 @@
+<#assign goodsSearchTag = newTag("goodsSearchTag") />
+<#assign webpage = goodsSearchTag('{"pageSize":10,"pageNo":${page!1},"url":"search-cat-1.html"}') />
+<#assign goodsList = webpage.result />
+<#if goodsList?size gt 0>
+    <#list goodsList as goods>
+        <li class="item-goods" data-goods_id='${goods.goods_id}'>
+            <a href="${ctx}/goods-${goods.goods_id}.html">
+                <div class="image-item-goods">
+                    <@image src="${goods.small!''}" alt="${goods.name}"/>
+                </div>
+                <div class="other-item-goods">
+                    <div class="name-item-goods">
+                        <span>${goods.name}</span>
+                    </div>
+                    <div class="price-item-goods">
+                        <span>￥${goods.price}</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </#list>
+</#if>

@@ -1,0 +1,53 @@
+	<script type="text/javascript" src="${ctx}${themes_path}/js/touchslider.js"></script>
+	<!-- 滚动广告 -->
+	<div class="adv" id="slider">
+		<ul class="major">
+			<!-- 创建广告标签 -->
+		<#assign advListTag= newTag("advListTag")>
+		<!-- 调用广告信息,传递参数acid:1 -->
+		<#assign adv = advListTag("'acid':'1'")!'' >
+		<!-- 获取广告列表 -->
+		<#assign advList = adv.advList />
+		<#if !advList?exists || advList?size==0> 
+			没有上传广告 
+		<#else>
+			<#list advList as adv>
+				<li class="" <#if adv_index == 0>style="display: list-item;"<#else>style="display:none;"</#if>>
+					<a target="_blank" title="${adv.aname!''}" href="${ctx}${adv.url}">
+						<@image border="0" src="${adv.atturl}" alt="${adv.aname!''}" />
+					</a>
+				</li>
+			</#list>
+		</#if>
+		</ul>
+		<div id="pagenavi"></div>
+	</div>
+
+	<script>
+$(function(){
+	var geshu= $(".major li").length;    //获取大幅图片中li的总个数。
+	for(i=1;i<=geshu;i++){    //for循环，定i=1,每次循环就加1; 当i的值由1循环到等于result的值一样时（即“文本框的name='text'的值”）就停止循环
+		var createobj = $("<a></a>"); //把div定义为变量createobj
+		$("#pagenavi").append(createobj); //把createobj这个变量追加到html中的'body'里
+		};
+		/*具体我也没太读懂*/
+		var active=0,                   
+		as=document.getElementById('pagenavi').getElementsByTagName('a');	
+		for(var i=0;i<as.length;i++){
+			(function(){
+				var j=i;
+				as[i].onclick=function(){
+					t2.slide(j);
+					return false;
+				}
+			})();
+		};
+		var t2=new TouchSlider({id:'slider', speed:600, timeout:4000, before:function(index){
+				as[active].className='';
+				active=index;
+				as[active].className='active';
+			}});
+	  /*循环滚动结束*/
+	
+})
+</script>

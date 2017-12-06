@@ -1,0 +1,253 @@
+@charset "UTF-8";
+/* 订单详情页
+ ============================================================================ */
+.detail-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #f3f3f3;
+}
+.detail-footer .item-btn {
+  font-size: 12px;
+  border: none;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 15px;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+.detail-footer .item-btn.white-btn {
+  background-color: #fff;
+  color: #333;
+}
+.detail-footer .item-btn.red-btn {
+  background-color: #F35E5C;
+  color: #fff;
+}
+
+/*****  售后申请、去评价按钮 *****/
+.detail-list-tools {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 3px;
+  right: 0;
+  width: 51%;
+  height: 25px;
+}
+.detail-list-tools .tools-btn {
+  padding: 0 10px;
+  height: 23px;
+  background-color: #fff;
+  border: 1px solid #e3e3e3;
+  border-radius: 2px;
+  font-size: 12px;
+  line-height: 23px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/* 售后申请
+ ============================================================================ */
+.eui-save-button button {
+  background-color: #ff002d;
+}
+
+.after-sales {
+  font-size: 14px;
+}
+.after-sales .after-sales-nav {
+  position: relative;
+  width: 100%;
+  height: 39px;
+  border-bottom: 1px solid #f2f2f2;
+  font-size: 14px;
+  background-color: #fff;
+}
+.after-sales .after-sales-nav .nav-item {
+  display: block;
+  float: left;
+  width: 50%;
+  text-align: center;
+  margin-top: -1px;
+  -webkit-transition: all 100ms ease-out;
+  -moz-transition: all 100ms ease-out;
+  -ms-transition: all 100ms ease-out;
+  -o-transition: all 100ms ease-out;
+  transition: all 100ms ease-out;
+  color: #333;
+}
+.after-sales .after-sales-nav .nav-item a {
+  display: inline-block;
+  border-bottom: 1px solid #ffffff;
+  line-height: 39px;
+}
+.after-sales .after-sales-nav .nav-item.active a {
+  color: #ff002d;
+  border-bottom: 1px solid #ff002d;
+}
+.after-sales .after-sales-nav .nav-hr {
+  display: block;
+  position: absolute;
+  height: 20px;
+  width: 1px;
+  background-color: #e3e3e3;
+  top: 10px;
+  left: 50%;
+}
+.after-sales .after-sales-content {
+  position: relative;
+}
+.after-sales .after-sales-content .content-item {
+  position: relative;
+  display: none;
+  width: 100%;
+}
+.after-sales .after-sales-content .content-item.show {
+  display: block;
+}
+
+.goods-box {
+  display: flex;
+  height: 80px;
+  padding: 10px;
+  background-color: #fff;
+}
+.goods-box .goods-img {
+  width: 22%;
+  height: 100%;
+}
+.goods-box .goods-img .img-goods-img {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.goods-box .goods-info {
+  width: 78%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  justify-content: space-around;
+}
+.goods-box .name-goods-info {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.goods-box .other-goods-info .price-goods-info {
+  margin-right: 15px;
+}
+
+.sales-item {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 10px;
+}
+.sales-item .title-sales {
+  line-height: 17px;
+  font-size: 14px;
+}
+.sales-item .content-sales {
+  padding-top: 10px;
+}
+.sales-item .content-sales .sales-btn {
+  display: inline-block;
+  width: 80px;
+  height: 23px;
+  line-height: 23px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+  border: 1px solid #c3c5c2;
+  margin-right: 10px;
+  border-radius: 2px;
+}
+.sales-item .content-sales .sales-btn.selected {
+  color: #ff002d;
+  border-color: #ff002d;
+}
+
+.return-account {
+  border: none;
+  width: 100%;
+  height: 35px;
+  border-bottom: 1px solid #e3e3e3;
+  border-radius: 0;
+  outline: none;
+}
+
+.sales-select {
+  width: 100%;
+  height: 25px;
+  border: none;
+  outline: none;
+}
+
+.sales-remark {
+  width: 98%;
+  height: 60px;
+  padding: 1%;
+  border: none;
+  outline: none;
+  background-color: #fff;
+  resize: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sales-update-num {
+  position: relative;
+}
+.sales-update-num .goods-update-num {
+  display: flex;
+  top: 0;
+  right: 0;
+  width: 84px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  height: 23px;
+  font-size: 0;
+  border: 1px solid #cbcbcb;
+  border-radius: 3px;
+}
+.sales-update-num .goods-symbol {
+  width: 25px;
+  height: 22px;
+  margin-top: -1px;
+}
+.sales-update-num .symbol-less {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAXklEQVRYR+3VsQ3AMAhEUd88NPFEWS0jJcXNg9tIkdwRu/gMAMcTEmqLS4vnNwIggAACCCCwn0BEXJLOii+Zmbft/u79ESgO8Ng+pgEqNp/13O8GEEAAAQQQQOBvgQE/TBAhHZBqPwAAAABJRU5ErkJggg==") no-repeat center;
+  background-size: 70%;
+  border-right: 1px solid #cbcbcb;
+}
+.sales-update-num .symbol-less.disabled {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAX0lEQVRYR+3VwQ2AQAhEUaYjDfRjaxbEQSvCq4nJ3nD38CkAhhcSZJNLk+cbARBAAAEEEFhPIDNPSUfHl6yqKyL2d++PQGcAM7vdfRsG6Nh81HO9G0AAAQQQQACBvwUewk4NITNiPgEAAAAASUVORK5CYII=") no-repeat center;
+  background-size: 70%;
+}
+.sales-update-num .symbol-add {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAjklEQVRYR+2W0QmAMAxEzQS6Rwq6giO4aUdwBIXrPJH+iaLSllKE63fae3mBUOkaH2mc3xGgyICqehHpAcy5oywCcM5ZDAaQ/U72xRhMABqgARqoYkBVNxEZc1frxz0PYDnX3DZhTQAz20MI0ytASudVRkAAGqABGvibgdXMhut6TWmi6FecEvRUS4DmBg4+2Wgham7wbgAAAABJRU5ErkJggg==") no-repeat center;
+  background-size: 70%;
+  border-left: 1px solid #cbcbcb;
+}
+.sales-update-num .symbol-add.disabled {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAj0lEQVRYR+2W0QmAMAxErxPoJgrJAo7gph3BARrQiSr9E0WhLaUI1++09/ICoQ6dj+ucDwJUGQgheACDqi6lo6wCMLOYgkWk+J3iiymYADRAAzTQxICZ7QCm0tX6dS/G6FV1vdY8NmFLAACHiMyfADmdNxkBAWiABmjgbwY2AON9veY0UfUrzgl6qyVAdwMnrxRlIYH8bHYAAAAASUVORK5CYII=") no-repeat center;
+  background-size: 70%;
+}
+.sales-update-num .goods-num {
+  border: none;
+  outline: none;
+  background: #fff;
+  height: 21px;
+  line-height: 21px;
+  text-align: center;
+  color: #232326;
+  font-size: 12px;
+  -webkit-appearance: none;
+}

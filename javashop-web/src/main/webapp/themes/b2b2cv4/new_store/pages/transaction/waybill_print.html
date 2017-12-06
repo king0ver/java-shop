@@ -1,0 +1,60 @@
+
+<form id="editform" method="post" class="layui-form">
+
+	<input type = "hidden" id = "ordersn" value = "${sn!''}">	
+	<input type = "hidden" id = "logi_id" value = "${logi_id!''}">	
+	<input type = "hidden" id = "LogisticCode" value = "">	
+	<div  id="printIframe"></div>
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+		 <a href="javascript: void(0);" class="btn btn-info" style = "margin-left:350px;" sn = "${sn}" id = "butten_btn">打印</a>
+		</div>
+  	</div>	
+</form>	
+<script type="text/javascript">
+$(function(){
+	$("#bill_bean").val();
+	 var _this = $(this); 
+     var logi_id = $("#logi_id").val();
+     var ordersn =$("#ordersn").val();
+	　$.ajax({
+       url: ctx+'/shop/waybill/waybill-api/waybill-json.do',
+       data:{"ordersn":ordersn,"logi_id":logi_id},
+       type: 'POST',
+       success: function(data){
+       	$("#printIframe").html(data.html);
+       	$("#LogisticCode").val(data.code);
+             },
+       error: function(){
+           $.message.error('出现错误，请重试！');
+       		}
+   		});
+	}); 
+
+//打印
+$("#butten_btn").click(function(){
+	var LogisticCode = $("#LogisticCode").val();
+	var logi_id = $("#logi_id").val();
+	var head_str = "<html><head><title></title></head><body>"; //先生成头部
+    var foot_str = "</body></html>"; //生成尾部
+    var new_str = document.getElementById('printIframe').innerHTML; //获取指定打印区域
+    document.body.innerHTML = head_str + new_str + foot_str; //构建新网页
+    window.print(); //打印刚才新建的网页
+    var _this = $(this), sn = _this.attr('sn');
+    returns(sn,LogisticCode,logi_id);
+    return false;
+	});
+function returns(sn,LogisticCode,logi_id){
+	PopPpWindow({
+	    href     : './order_detail_min.html?ordersn=' + sn+'&LogisticCode='+LogisticCode+'&logi_id='+logi_id,
+	    name     : '订单详情',
+	    param    : 'height=700, width=1230, top=200, left=200, toolbar=no, menubar=no, scrollbars=yes, resizable=yes, location=no, status=no',
+	    callBack : function(){
+	        $.confirm('您的浏览器已阻止新窗口弹出,本次将在本窗口打开。', function(){
+	            location.href = './order_detail.html?ordersn=' + sn+'&LogisticCode='+LogisticCode+'&logi_id='+logi_id;
+	        })
+	    }
+	});
+}
+
+</script>

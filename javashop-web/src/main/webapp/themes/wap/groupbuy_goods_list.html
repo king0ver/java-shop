@@ -1,0 +1,57 @@
+ <!-- 团购列表 -->
+<#assign groupBuyListTag=newTag("groupBuyListTag")> 
+<#assign gbPage=groupBuyListTag()>
+<!-- 团购活动列表 -->
+<div class="group_list">
+	<ul>
+		<#if gbPage??>
+		<#list gbPage.page.result as gb>
+			<li class="c1">
+				<a href="${ctx}/groupbuy_detail.html?goodsid=${gb.goods_id}&act_id=${gb.act_id}">
+					<div class="group_itempic">
+						<@image border="0" src="${gb.img_url!''}"  alt="${gb.gb_name!''}" />
+					</div>
+					<div class="item_prices"> 
+						<div class="item_title"><@substring	title="${gb.gb_name}" length="40" dot="..." /></div>
+						<div class="dock"><span class="limit-num">${gb.price/gb.original_price*10}&nbsp;折</span> <del class="orig-price">¥${gb.original_price}</del></div>
+						<span class="price"><i>¥</i>${gb.price}</span>
+						<i class="my_group">
+						<#if gb.goods_num==0>
+								已售罄
+							<#else>
+								我要团
+							</#if></i>
+					</div>
+				</a>
+			</li>
+		</#list>
+		</#if>
+	</ul>
+</div>
+ <!--分页
+<div class="tc mt20 mb20">
+	<div class="page"> 
+		<ul>
+			<li><span>首页</span></li>
+			<li><span>上一页</span></li>
+			<li><span class="currentpage">1</span>
+			</li><li><span>下一页</span></li>
+			<li><span>末页</span></li>
+		</ul> 
+	</div>
+</div>
+-->
+<form >
+	<input type="hidden" name="catid" value="${gbPage.catid}"/>
+	<input type="hidden" name="minprice" value="${gbPage.minprice}"/>
+	<input type="hidden" name="maxprice" value="${gbPage.maxprice}"/>
+	<input type="hidden" name="sort_key" value="${gbPage.sort_key}"/>
+	<input type="hidden" name="sort_type" value="${gbPage.sort_type}"/>
+	<input type="hidden" name="area_id" value="${gbPage.area_id}"/>
+</form>
+<script>
+	$(function(){
+		var groupheight = $(".group_itempic").height();
+		$(".group_itempic img").css("height",groupheight+"px");
+	})
+</script>

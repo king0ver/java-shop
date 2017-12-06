@@ -1,0 +1,237 @@
+<#assign  title="会员中心" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign member = memberLoginCheckTag() />
+<#if member.member_id != 0>
+<#-- 获取会员收藏列表标签 -->
+<#assign collectTag = newTag("collectTag") />
+<#-- 调用会员收藏列表标签 -->
+<#assign collect = collectTag()!'' />
+<#assign memberOrderList = newTag("buyerOrderListTag")>
+<!-- 调用会员订单列表标签 -->
+<#assign orderPage = memberOrderList()>
+<!-- 获得会员订单列表 -->
+<#assign orderList = orderPage.orderList.result>
+<!-- 获取订单状态标签 -->
+<#assign orderStautsTag = newTag("orderStautsTag")>
+<!-- 调用订单状态标签 -->
+<#assign orderState = orderStautsTag()>
+<link rel="stylesheet" href="${ctx}${themes_path}/css/member.css">
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/member.js"></script>
+
+    <div class="member">
+        <div class="head-box">
+            <!--<a href="javascript:;" class="member-setting">设置</a>-->
+            <#if member.face?exists && member.face != ''>
+                <div class="head-bg" style="background: url('<@imgurl pic='${member.face}'/>') no-repeat center; background-size: cover;"></div>
+            <#else/>
+                <div class="head-bg" style="background: url('${ctx}${themes_path}/images/member-bg.png') no-repeat center; background-size: cover;"></div>
+            </#if>
+
+            <div class="head-items">
+                <div class="head-img tap" data-href="${ctx}/member/my-info.html">
+                    <#if member.face?exists && member.face != ''>
+                        <div class="img-head" style="background: url('<@imgurl pic='${member.face}'/>') no-repeat center; background-size: cover;"></div>
+                    <#else/>
+                        <div class="img-head" style="background: url('${ctx}${themes_path}/images/default_face.jpg') no-repeat center; background-size: cover;"></div>
+                    </#if>
+                </div>
+                <div class="head-user-name">${member.uname!''}</div>
+                <div class="head-user-lvname">${member.lvname!''}</div>
+                <div class="items">
+                    <div class="item my-collect-goods tap" data-href="${ctx}/member/my-collect.html?type=goods">
+                        <#assign collectTag = newTag("collectTag") />
+                        <#assign collect = collectTag()!'' />
+                        <#if collect.result?exists>
+                            <#assign collectSize = collect.result?size />
+                        </#if>
+                        <span>
+                            <p>${collectSize!'0'}</p>
+                            <p>收藏的商品</p>
+                        </span>
+                    </div>
+                    <div class="item my-collect-store tap" data-href="${ctx}/member/my-collect.html?type=store">
+                        <#assign storeCollectTag = newTag("storeCollectTag") />
+                        <#assign storeCollect = storeCollectTag()!'' />
+                        <#if storeCollect.storelist.result?exists >
+                            <#assign storeCollectSize = storeCollect.storelist.result?size />
+                        </#if>
+                        <p>${storeCollectSize!'0'}</p>
+                        <p>收藏的店铺</p>
+                    </div>
+                    <#-- 获取会员等待评论订单条数-->
+                    <#assign memberCommentOrderListTag = newTag("memberCommentOrderListTag") />
+                    <#assign memberCommentOrderList = memberCommentOrderListTag() />
+                    <div class="item wait-comment-goods tap" data-href="${ctx}/member/order-list.html?status=wait_comment">
+                        <#assign totalCount = memberCommentOrderList.totalCount!0 />
+                        <#if totalCount gt 99>
+                            <#assign totalCount = '99+'/>
+                        </#if>
+                        <p>${totalCount}</p>
+                        <p>待评论</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-nav">
+            <ul class="member-nav-items">
+                <li class="wait-pay tap" data-href="${ctx}/member/order-list.html?status=wait_pay">
+                    <i></i>
+                    <p>待付款</p>
+                </li>
+
+                <li class="wait-ship tap" data-href="${ctx}/member/order-list.html?status=wait_ship">
+                    <i></i>
+                    <p>待发货</p>
+                </li>
+
+                <li class="wait-receipt tap" data-href="${ctx}/member/order-list.html?status=wait_rog">
+                    <i></i>
+                    <p>待收货</p>
+                </li>
+
+                <li class="aftermarket tap" data-href="${ctx}/member/return-list.html">
+                    <i></i>
+                    <p>退款/售后</p>
+                </li>
+            </ul>
+            <div class="eui-item-vh icon tap" data-href="${ctx}/member/order-list.html">
+                <i class="eui-item-vh-icon all-order-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">全部订单</div>
+                    <div class="sub-eui-item">查看全部订单</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+        </div>
+        <div class="items-box">
+            <!--我的优惠券-->
+            <div class="eui-item-vh icon tap" data-href="${ctx}/member/my-bonus.html">
+                <i class="eui-item-vh-icon my-bonus-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">我的优惠券</div>
+                    <div class="sub-eui-item">查看优惠券</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--我的积分-->
+            <!--<div class="eui-item-vh icon hr-top tap" data-href="${ctx}/member/my-point.html">
+                <hr>
+                <i class="eui-item-vh-icon my-point-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">我的积分</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>-->
+
+            <!--我的评论-->
+            <div class="eui-item-vh icon hr-top tap" data-href="${ctx}/member/my-comment.html">
+                <hr>
+                <i class="eui-item-vh-icon my-comment-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">我的评论</div>
+                    <div class="sub-eui-item">查看评论</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--我的咨询-->
+            <!--<div class="eui-item-vh icon hr-top tap" data-href="${ctx}/member/my-ask.html">
+                <hr>
+                <i class="eui-item-vh-icon my-ask-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">我的咨询</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>-->
+        </div>
+        <div class="items-box">
+            <div class="eui-item-vh icon tap" data-href="${ctx}/member/my-info.html">
+                <i class="eui-item-vh-icon user-info-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">个人资料</div>
+                    <div class="sub-eui-item">查看修改个人资料</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--收货地址-->
+            <div class="eui-item-vh icon hr-top tap" data-href="${ctx}/member/address-list.html">
+                <hr>
+                <i class="eui-item-vh-icon shipping-address-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">收货地址</div>
+                    <div class="sub-eui-item">查看修改收货地址</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--修改密码-->
+            <div class="eui-item-vh icon hr-top tap" data-href="${ctx}/member/security.html">
+                <hr>
+                <i class="eui-item-vh-icon account-security-icon"></i>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">账户安全</div>
+                    <div class="sub-eui-item">修改密码</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+        </div>
+        <div class="login-out">
+            <button type="button" class="login-out-btn">退出账号</button>
+        </div>
+    </div>
+
+    <!-- 设置 -->
+    <div class="setting">
+        <div class="setting-navigator">
+            <div class="setting-navigator-left">
+                <div class="item dark"></div>
+            </div>
+            <div class="setting-navigator-middle">会员设置</div>
+            <div class="setting-navigator-right"></div>
+        </div>
+        <div class="setting-box">
+            <!--个人资料-->
+            <div class="eui-item-vh tap" data-href="${ctx}/member/my-info.html">
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">个人资料</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--收货地址-->
+            <div class="eui-item-vh hr-top-no-icon tap" data-href="${ctx}/member/address-list.html">
+                <hr>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">收货地址</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--修改密码-->
+            <div class="eui-item-vh hr-top-no-icon tap" data-href="${ctx}/member/security.html">
+                <hr>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">修改密码</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>
+
+            <!--账号绑定-->
+            <!--<div class="eui-item-vh hr-top-no-icon tap" data-href="${ctx}/member/my-buons.html">
+                <hr>
+                <div class="inner-eui-item-vh">
+                    <div class="title-eui-item">账号绑定</div>
+                </div>
+                <i class="eui-item-vh-point"></i>
+            </div>-->
+        </div>
+        <div class="login-out">
+            <button type="button" class="login-out-btn">退出账号</button>
+        </div>
+    </div>
+</#if>
+</body>
+</html>

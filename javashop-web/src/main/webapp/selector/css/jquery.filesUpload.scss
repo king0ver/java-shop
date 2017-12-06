@@ -1,0 +1,63 @@
+/**
+ * Created by Andste on 2017/6/30.
+ * version 1.0.0
+ * 按钮样式来源于http://element.eleme.io/#/zh-CN/component/button
+ */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.webuploader-pick {
+    display: inline-block;
+    position: relative;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    color: #fff;
+    background-color: #20a0ff;
+    border-color: #20a0ff;
+    padding: 7px 25px 7px 9px;
+    font-size: 12px;
+    border-radius: 4px;
+    &:hover {
+        background: #4db3ff;
+        border-color: #4db3ff;
+        color: #fff;
+    }
+
+    .el-icon-upload {
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        margin-top: -7px;
+        width: 14px;
+        height: 14px;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABdUlEQVRYR+2W0U3DQBBEZyqADqAE0gGpAKgAUgGiA6iAdADpgFRA6CB0QAfQwaAxZytOHGfPJgpIXsnyR/ZuZt/enkMcOHhgfQwGBgL/l4CkMwC3APz243jxQ3IWna5OBCQ9A7huEVkCmJD0uzWyDUhylRe7NgbwBWBE8qMtN2RA0jkAV3MD4DEgXqYsSI47G5A0TX0u93BVxxkGnHpF0tQaYyuBBvFM3Sp9RtLk4gYkucrPropr695IuoUxA5IuU59Pf8mA22YC700HstYCSU58yhCepNzoGo/vHUmbKqIykE76a444SW+ITONLkqMmA9H59lpfMoV4GZkmHkjerxPwhXESILAh3sFERWG1BeojnmuCZKG9aiBK4OfwpA1WhCMFVDU2GVi/9VqB9DQwJ+lxrxHw5WMKR4FW9CUwJrmoGUjj5O+6f9hpogeB2iHe+Baka9gjYkRbp6KDgTmAaVn5xj0Qwb6PnND/gX0IDwQGAn+GwDenXIohlK4ZDwAAAABJRU5ErkJggg==") no-repeat center;
+        background-size: 100%;
+    }
+
+    .el-icon--right {
+        margin-left: 5px;
+    }
+}
+
+.webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px,1px,1px,1px);
+    opacity: 0;
+}
+.__image_review__ {
+    display: block;
+    width: 200px;
+    height: 200px;
+}

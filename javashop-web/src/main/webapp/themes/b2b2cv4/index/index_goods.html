@@ -1,0 +1,25 @@
+<#assign goodsListTag = newTag("goodsListTag") />
+<#assign goodsList = goodsListTag("'tagid':'1','goodsnum':'20'") />
+<#if goodsList?size gt 0>
+    <div class="goods-channel clearfix" data-lift="goods">
+        <div class="ftit" style="cursor:default"><h3>还没逛够</h3></div>
+        <ul>
+            <#list goodsList as goods>
+                <#if goods_index lt 20>
+                    <li class="opacity_img">
+                        <a href="${ctx}/goods-${goods.goods_id}.html">
+                            <div class="p-img">
+                                <img class="lazy" src="${file_path}/images/img-loading.gif" data-original='<@imgurl pic="${goods.small!''}"/>'>
+                            </div>
+                            <div class="p-name" title="${goods.name!''}">${goods.name!''}</div>
+                            <div class="p-price">
+                                <div class="shop-price"><em>¥</em>${goods.price?string("0.00")}</div>
+                                <div class="original-price"></div>
+                            </div>
+                        </a>
+                    </li>
+                </#if>
+            </#list>
+        </ul>
+    </div>
+</#if>

@@ -1,0 +1,72 @@
+<#include '/admin/sonheader.html' >
+<style>
+  .layui-form-checkbox{
+    float:left;
+  }
+</style>
+<div  class="main">    
+    <!--表单区域  -->
+   	<form id="addMessageForm" class="layui-form layui-form-pane validate" style="padding-top: 10px;">
+   		<input type="hidden" name="type" value="${type}"/>
+		<div class="layui-form-item">
+    		<label class="layui-form-label">模板编号:</label>
+    		<div class="layui-input-inline">
+      			<input type="text"  name="tpl_code"  maxlength="50" lay-verify="required" value="" autocomplete="off" class="layui-input"  />
+    		</div>
+  		</div>
+  		
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">模板名称：</label>
+    		<div class="layui-input-inline">
+      			<input type="text"  name="tpl_name"  maxlength="50" value=""  required="required" autocomplete="off" class="layui-input"  />
+    		</div>
+  		</div>
+  		
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">模板内容：</label>
+    		<div class="layui-input-inline">
+    			<textarea name="content" placeholder="请输入内容" class="layui-textarea w300"></textarea>
+    		</div>
+  		</div>
+  		
+  		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;"> 
+  			<a class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="editMessage">保存</a>
+  			<a class="layui-layer-btn1">取消</a>
+  		</div>
+   </form>
+</div>
+<script type="text/javascript">
+	var index = parent.layer.getFrameIndex(window.name);
+
+	layui.use(['form', 'layedit', 'laydate'], function(){
+	    var form = layui.form()
+	        ,layer = layui.layer
+	        ,layedit = layui.layedit
+	        ,laydate = layui.laydate;
+	    
+	    $(".layui-layer-btn1").click(function(){
+	    	parent.layer.close(index);
+	    });
+	    //监听提交
+	    form.on('submit(editMessage)', function(data){
+	    	var options = {
+	   			url:"save-add.do",
+	   			type:"post",
+	   			dataType:"json",
+	   			success:function(data){
+	   				if(data.result==1){
+	   					parent.$.Loading.success(data.message);
+	   					parent.layer.close(index); //再执行关闭        
+	   					parent.table.ajax.url("list-json.do?type=${type}").load();
+	   				}else{
+                        parent.$.error(data.message);
+					}
+	   			}
+	   		};
+	   		$("#addMessageForm").ajaxSubmit(options);
+	       return false;
+	    });
+	    
+	});
+
+</script>

@@ -1,0 +1,31 @@
+<#-- 创建选择器标签 -->
+<#assign searchSelectorTag = newTag("searchSelectorTag") />
+<#assign goodsSelector = searchSelectorTag() />
+
+<#-- 创建商品搜索标签 -->
+<#assign goodsSearchTag = newTag("goodsSearchTag") />
+<#assign webpage = goodsSearchTag('{"pageSize":16}') />
+
+<#-- 各种选中的选择器 -->
+<#assign selected_prop = goodsSelector.selected_prop />
+<#assign selected_cat = goodsSelector.selected_cat />
+<#assign selected_brand = goodsSelector.selected_brand />
+<#assign selected_price = goodsSelector.selected_price![] />
+
+<#-- 各种未选中的选择器 -->
+<#assign propMap= goodsSelector.prop />
+<#assign catList= goodsSelector.cat />
+<#assign brantrist= goodsSelector.brand />
+<#assign sortList= goodsSelector.sort![] />
+<#assign priceList= goodsSelector.price![] />
+
+<#include 'common/header.html' />
+<#include 'common/reception_header.html'/>
+<link rel="stylesheet" href="${file_path}/css/goods-list.css">
+<script type="text/javascript" src="${file_path}/js/goods-list.js"></script>
+<div class="goods-list">
+    <#include '/goods/goods-list_bread.html' />
+    <#include '/goods/goods-list_select-condition.html' />
+   <#include '/goods/goods-list_content.html' />
+</div>
+<#include 'common/footer.html'/>

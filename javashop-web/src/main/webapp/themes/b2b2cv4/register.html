@@ -1,0 +1,273 @@
+<#assign  title="注册" />
+<#include '/common/header.html' />
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/login.css" />
+<script src="${ctx}${themes_path}/js/jquery.poshytip.min.js" ></script>
+<div class="index_logo">
+	<a href="${ctx}/index.html"><@image src="${logo}" class="pngFix" style="width:240px;height:60px;" /></a>
+		<div class="reg_login">
+			我已经注册过账号，立即<a href="${ctx}/store/login.html" class="go_register">登录</a>或是<a href="${ctx}/find-passwordByEmail.html" class="findpassword">忘记密码？</a>
+		</div>
+</div>
+<div class="reg">
+	<div class="shop-register-layout">
+		<div class="reg_right">
+		  <div class="shop_left">
+			<h1>用户注册</h1>
+			<input type="hidden" id="forward" value="${forward!''}"/>
+				<form action="register.html" method="post" id="register_form" class="validate">
+					<div class="regis_same">
+						<dl>
+		          			<dt>用户名<font color="#FF0000">*</font></dt>
+		          			<dd>
+		            			<input type="text" id="username" name="username" class="text tip" title="4-20个字，可由中英文数字及‘-’组成，注册后用户名不能更改" placeholder="请输入用户名" fun="checkUserName" maxlength="20" /><span style="color:#f00;display:none;" id="uname-tishi-error">用户名重复</span><span style="color:#85DA51;display:none;" id="uname-tishi-success">用户名可用</span>
+		          			</dd>
+		        		</dl>
+		        		<dl>
+		          			<dt>注册邮箱<font color="#FF0000">*</font></dt>
+		          			<dd>
+		            			<input style="width: 160px;" type="text" id="reg_email" name="email" class="text tip" title="邮箱将用于登录和取回密码，请正确输入" fun="checkEmail" placeholder="请输入正确的邮箱" maxlength="30" />
+		            				<span style="color:#f00;display:none;" id="email-tishi-error" >邮箱重复</span><span style="color:#85DA51;display:none;" id="email-tishi-success">邮箱可用</span>
+		            			
+		          			</dd>
+		          			<p class="for-phone">或<a href="${ctx}/member/register/fill_mobile.html?forward=${forward!''}">手机注册</a></p>
+		        		</dl>
+						<dl>
+		          			<dt>密码<font color="#FF0000">*</font></dt>
+		          			<dd>
+		            			<input style="width:160px;" type="password" id="password" name="password" class="text tip" title="6-16位字符，可由英文、数字组成" placeholder="请输入6-16位密码" fun="isPasswd" maxlength="30" />
+		          			</dd>
+		        		</dl>
+		        		<dl>
+		          			<dt>确认密码<font color="#FF0000">*</font></dt>
+		          			<dd>
+		            			<input style="width: 160px;" type="password" id="reg_passwd_r" name="passwd_re" class="text tip" title="请再次输入您的密码" placeholder="请再次输入您的密码" fun="checkpwd"  maxlength="30" />
+		          			</dd>
+		        		</dl>
+		        		<dl>
+		        			<dt>验证码<font color="#FF0000">*</font></dt>
+		        			<dd id="verifyCodebox">
+		        				<input type="text" id="iptlogin" name="validcode" isrequired="true" class="regis_small inputstyle _x_ipt" placeholder="请输入验证码" size="8" autocomplete="off" maxlength="4"/>
+			        			<img id="LoginimgVerifyCode" src="${ctx}/validcode.do?vtype=memberreg" alt="会员登录验证码" />
+			        			<a href="javascript:;">看不清楚？换个图片</a>
+		        			</dd>
+		        		</dl>
+		        		<dl class="shop-clause-div">
+		        			<dd>
+		        				<input type="checkbox" checked="checked" value="agree" fun="checkLicense" name="license" id="license" class="satisfied" />
+		        				阅读并同意
+		        			    <a href="javascript:void(0);" class="protocol" title="阅读并同意" style="color: red;">服务协议</a>
+		        			</dd>
+		        		</dl>
+		        		<div>
+		        			<input type="button" class="regis_ent m_register" value="注册新用户" style="background:#f42424; width: 270px;margin:15px 65px;"/>
+		        		</div>
+					</div>
+				</form>
+			</div>
+			<div class="shop_right">
+				<div class="shop-right-list">
+					<h1>注册之后您可以</h1>
+					<ul>
+						<li><i class="reg1"></i><span>购买商品支付订单</span></li>
+						<li><i class="reg2"></i><span>申请开店销售商品</span></li>
+						<li><i class="reg3"></i><span>空间好友推送分享</span></li>
+						<li><i class="reg4"></i><span>收藏商品关注店铺</span></li>
+						<li><i class="reg5"></i><span>商品咨询服务评价</span></li>
+						<li><i class="reg6"></i><span>安全交易诚信无忧</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--正文结束-->
+
+<script type="text/javascript">
+$(function(){
+	$('.tip').poshytip({
+		className: 'tip-yellowsimple',
+		showOn: 'focus',
+		alignTo: 'target',
+		alignX: 'center',
+		alignY: 'top',
+		offsetX: 0,
+		offsetY: 5,
+		allowTipHover: false
+	});
+	//更换验证码
+ 	$("#verifyCodebox a").click(function(){
+		$("#verifyCodebox img").attr("src","${ctx}/validcode.do?vtype=memberreg&r="+new Date().getTime());
+	});
+ 	$("#verifyCodebox img").click(function(){
+		$("#verifyCodebox img").attr("src","${ctx}/validcode.do?vtype=memberreg&r="+new Date().getTime());
+	});
+ 	
+ 	var options = {
+			url : "${ctx}/api/shop/member/email-regist.do" ,
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				var forward=$("#forward").val();
+ 				if(result.result==1){
+ 					if(forward=="checkout.html"){
+ 						location.href ="${ctx}/cart.html";
+ 					}else{
+ 						location.href="${ctx}/index.html";
+ 					}
+	 			}else{
+	 				$.alert(result.message);
+	 				$.Loading.hide();
+		 		} 
+ 				$("#verifyCodebox img").attr("src","${ctx}/validcode.do?vtype=memberreg&r="+new Date().getTime());
+			},
+			error : function(e) {
+				$.Loading.show("出现错误 ，请重试");
+				$.Loading.hide();
+			}
+	};
+	//点击注册 	
+	$(".m_register").click(function(){
+		if(!$("#register_form").checkall()){
+			return false;
+		}
+		if("false"!=$(this).attr("validate")){
+			$.Loading.show("正在提交您的信息，请稍候...");
+			$('#register_form').ajaxSubmit(options);	
+		}
+	})
+});
+ 
+//检测用户协议
+function checkLicense(){
+	if($("#license").is(':checked')){
+		return true;
+	}else{
+		return "请阅读用户协议并同意！";
+	}
+}
+
+
+//点击弹出对话框
+$(".protocol").on('click', function(){
+	$.ajax({
+		url:ctx + "/member/register/protocol.html",
+		dataType:"html",
+		async:false,
+		cache:false,
+		success:function(html){
+			var options = {
+				title    : '用户注册协议',
+				html     : html,
+				top      : 100,
+				btn      : false,
+				backdrop : false,
+				width    : '800',
+			//	height   : '500',
+				showCall : function(){
+					$(".protocol-btn").on('click', function(){
+						//如果同意没有被勾选，点击同意以后，自动勾选
+						//if(!$("#license").is(':checked')){
+							//$("#license").attr("checked","checked");
+						//}
+						$('#dialogModal').modal('hide');  //关闭弹出层
+					})
+				},
+			}
+			$.dialogModal(options);
+			
+		},
+		error:function(){
+			$.message.error("糟糕，出错了:(");
+		}
+	});
+	//调用弹出对话框相关参数
+})
+
+
+	$("#username").blur(function(){
+		var name = $.trim($(this).val());
+		var checkname=/^[\u4E00-\u9FA5\uf900-\ufa2d\w\-]{4,20}$/;
+		if(!checkname.test(name)){
+			$("#uname-tishi-success").hide();
+			$("#uname-tishi-error").html("用户名不符合规范");
+			$("#uname-tishi-error").show();
+			return;	
+		}
+		
+		var options = {
+				url : "${ctx}/api/shop/member/check-username.do" ,
+				type : "POST",
+				data : {"username" : name},
+				dataType : 'json',
+				success : function(result) {
+					if(result.result == 1) {
+						$("#uname-tishi-success").show();
+						$("#uname-tishi-error").hide();
+					} else {
+						$("#uname-tishi-success").hide();
+						$("#uname-tishi-error").html("用户名已被使用");
+						$("#uname-tishi-error").show();
+					}
+				},
+				error : function(e) {
+					$.Loading.show("出现错误 ，请重试");
+				}
+		};
+		$.ajax(options);
+		
+	});
+	$("#reg_email").blur(function(){
+		var email = $.trim($(this).val());
+		var checkemail=/^([a-z0-9+_]|\-|\.|\-)+@([\w|\-]+\.)+[a-z]{2,4}$/i;
+		if(!checkemail.test(email)){
+			$("#email-tishi-success").hide();
+			$("#email-tishi-error").html("邮箱不符合规范");
+			$("#email-tishi-error").show();
+			return;	
+		}
+		
+		var options = {
+				url : "${ctx}/api/shop/member/check-email.do" ,
+				type : "POST",
+				data : {"email" : email},
+				dataType : 'json',
+				success : function(result) {
+					if(result.result == 1) {
+						$("#email-tishi-success").show();
+						$("#email-tishi-error").hide();
+					} else {
+						$("#email-tishi-success").hide();
+						$("#email-tishi-error").html("邮箱已被使用");
+						$("#email-tishi-error").show();
+					}
+				},
+				error : function(e) {
+					$.Loading.show("出现错误 ，请重试");
+				}
+		};
+		$.ajax(options);
+		
+	});
+
+
+function isPasswd(s){  
+	var patrn=/^(\w){6,16}$/;  
+	if (!patrn.exec(s)) return "密码格式不正确！"  
+	return true  
+}
+
+function checkpwd(){
+	if( $("#reg_passwd_r").val()==$("#password").val() ){
+		return true;
+	}
+	else{ 
+		return "密码不一致";
+	}
+}
+
+
+</script>
+<#include '/common/footer.html' />

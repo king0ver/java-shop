@@ -1,0 +1,37 @@
+<#include '/admin/header.html'>
+	<style>
+		#exform {
+			border: 1px solid #ddd;
+			width: 40%;
+			margin: 2rem;
+			padding: 1rem;
+			background: #f8f8f8;
+		}
+
+		#exform .seeting_input input {
+			margin: 1rem 0.4rem 1rem 0;
+		}
+
+		#exform .button {
+			cursor: pointer;
+			width: 50px;
+		}
+	</style>
+
+	<div class="main">
+		<form method="post" name="theForm" id="exform" action="${ctx}/core/admin/data-export/do-export.do">
+			<div style="display: block;" class="seeting_input">
+				请选择要导出的类型：
+				<br>
+				<#if a=='0'>
+					<input type="radio" name="type" value="0" checked="checked" />b2c
+					<br>
+					<#else>
+						<input type="radio" name="type" value="1" checked="checked" />b2b2c
+				</#if>
+			</div>
+			<input type="submit" name="submit" class="button" value="导出">
+		</form>
+	</div>
+
+	<#include '/admin/footer.html'>

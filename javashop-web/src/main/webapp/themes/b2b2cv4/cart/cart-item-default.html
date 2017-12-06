@@ -1,0 +1,38 @@
+<!--没有活动的情况-->
+<#list store.goodslist as item >
+    <ul class="ul-item-cart" data-cart_id="${item.id}" data-product_id="${item.product_id}" data-price="${item.price}" data-weight="${item.weight}" data-exchange="<#if item.others.exchange_point??>true<#else>false</#if>">
+        <li class="li-item-cart">
+            <div class="item-product clearfix">
+                <a class="check check-item <#if item.is_check?? && item.is_check==1>checked</#if>" href="javascript:;"><i class="material-icons">&#xE876;</i></a>
+                <a class="pic-item-product" href="${ctx}/goods-${item.goods_id}.html" target="_blank">
+                    <@image src="${item.image_default!''}" />
+                </a>
+                <a class="name-item-product item-title" href="${ctx}/goods-${item.goods_id}.html" target="_blank" title="${item.name}"><@substring title="${item.name}" length="80"  dot="..." /></a>
+                <div class="price-item-product">
+                    <p>${item.price?string("0.00")}</p>
+                </div>
+                <div class="num-item-product">
+                    <div class="num-action clearfix">
+                        <a class="oper minus <#if (item.num < 2) >unable</#if>" href="javascript:;">−</a>
+                        <input class="input product-num <#if item.is_check?? && item.is_check==1>checked</#if>" name="num" type="number" value="${item.num!1}" title="数量">
+                        <a class="oper add" href="javascript:;">+</a>
+                    </div>
+                </div>
+                <div class="amount-item-product">
+                    <div class="money-item" title="${item.subtotal?string('0.00')}">${item.subtotal?string('0.00')}</div>
+                    <#assign _weight = item.weight * item.num />
+                    <#if (_weight > 999) >
+                        <#assign _weistr = (_weight/1000)?string("0.00") + 'kg' />
+                    <#else/>
+                        <#assign _weistr = _weight + 'g' />
+                    </#if>
+                    <div class="weight-item" title="${_weight}g">${ _weistr }</div>
+                </div>
+                <div class="action-item-product">
+                    <!--<a class="btn-icon collect-item" href="javascript:;" title="收藏"><i class="material-icons">&#xE83A;</i></a>-->
+                    <a class="btn-icon delete-item" href="javascript:;" title="删除"><i class="material-icons">&#xE872;</i></a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</#list>

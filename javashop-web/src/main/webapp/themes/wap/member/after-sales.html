@@ -1,0 +1,45 @@
+<#assign title="申请售后" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member??>
+    <link rel="stylesheet" href="${ctx}${themes_path}/css/member-order.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/js/page/after-sales.js"></script>
+    <#assign orderDetailTag = newTag("buyerOrderDetailTag") />
+    <#assign refundWayTag = newTag("refundWayTag") />
+    <#assign refundWayTag = refundWayTag() />
+    <#assign orderDetailFlow = orderDetailTag() />
+    <#assign orderDetail = orderDetailFlow.orderDetail />
+
+    <div class="after-sales">
+        <div class="after-sales-nav">
+            <span class="nav-item nav-goods active" data-type="goods">
+                <a href="javascript:;">退款申请</a>
+            </span>
+            <#if orderDetail.order_status == 'ROG' || orderDetail.order_status == 'COMPLETE'>
+                <span class="nav-item nav-store" data-type="store">
+                    <a href="javascript:;">退货申请</a>
+                </span>
+            </#if>
+            <i class="nav-hr"></i>
+        </div>
+
+        <div class="after-sales-content">
+       <input type="hidden" value="${refundWayTag}" id="refundWay">
+            <div class="content-item refund show">
+                <!--退款-->
+                <#include './after-sales-refund.html' />
+            </div>
+            <div class="content-item returns">
+                <!--退货-->
+                <#include './after-sales-returns.html' />
+            </div>
+        </div>
+    </div>
+    <div class="eui-save-button">
+        <button type="button" id="submit-btn">提交申请</button>
+    </div>
+</#if>
+<style type="text/css">body {background-color: #f3f3f3;}</style>
+</body>
+</html>

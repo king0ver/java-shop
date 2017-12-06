@@ -1,0 +1,78 @@
+<div class="goods-part promotion">
+    <div class="promotion-content">
+        <div class="title-promotion">促销</div>
+        <div class="content-promotion">
+            <#list promotionList as promotionVo>
+                <#if promotionVo.promotion_type == 'full_discount'>
+                    <!--满减满赠-->
+                    <#assign fullDiscountVo = promotionVo.fullDiscountVo/>
+                    <#if fullDiscountVo.is_full_minus == 1>
+                        <!--满减-->
+                        <div class="item-promotion">
+                            <i class="icon-promotion"><span>满减</span></i>
+                            <span class="detail-promotion">满${fullDiscountVo.full_money} 减${fullDiscountVo.minus_value}元</span>
+                        </div>
+                    </#if>
+                    <#if fullDiscountVo.is_send_bonus == 1>
+                        <!--赠送优惠券-->
+                        <div class="item-promotion inline">
+                            <i class="icon-promotion"><span>返券</span></i>
+                        </div>
+                    </#if>
+                    <#if fullDiscountVo.is_send_gift == 1>
+                        <!--送赠品-->
+                        <div class="item-promotion inline">
+                            <i class="icon-promotion"><span>赠品</span></i>
+                        </div>
+                    </#if>
+                    <#if fullDiscountVo.is_send_point == 1>
+                        <!--送积分-->
+                        <div class="item-promotion inline">
+                            <i class="icon-promotion"><span>积分</span></i>
+                        </div>
+                    </#if>
+                    <#if fullDiscountVo.is_free_ship == 1>
+                        <!--免邮-->
+                        <div class="item-promotion inline">
+                            <i class="icon-promotion"><span>免邮</span></i>
+                        </div>
+                    </#if>
+                    <#if fullDiscountVo.is_discount == 1>
+                        <!--打折-->
+                        <div class="item-promotion inline">
+                            <i class="icon-promotion"><span>打折</span></i>
+                        </div>
+                    </#if>
+                </#if>
+                <#if promotionVo.promotion_type == 'minus'>
+                    <!--单品立减-->
+                    <#assign minusVo = promotionVo.minusVo/>
+                    <div class="item-promotion">
+                        <i class="icon-promotion"><span>立减</span></i>
+                        <span class="detail-promotion">单件商品立减${minusVo.minus_price}元</span>
+                    </div>
+                </#if>
+                <#if promotionVo.promotion_type == 'half_price'>
+                    <!--第二件半价-->
+                    <#assign halfPriceVo = promotionVo.halfPriceVo/>
+                    <div class="item-promotion">
+                        <i class="icon-promotion"><span>第二件半价</span></i>
+                        <span class="detail-promotion">第二件半价优惠</span>
+                    </div>
+                </#if>
+            </#list>
+        </div>
+        <script type="text/javascript">
+            $(function () {
+            	if($('.content-promotion').find('.item-promotion').length === 0){
+					$('.goods-part.promotion').remove();
+                }
+			})
+        </script>
+        <#if promotionList?size gt 50>
+				<span class="promotion-left">
+				<em class="icon-arrow"></em>
+			</span>
+        </#if>
+    </div>
+</div>

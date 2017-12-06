@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>${site.title!'' }</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="shortcut icon" href=" ../favicon.ico" />
+
+	<link type="image/x-icon" href="${site.icofile!''}" rel="bookmark" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/css/login.css" />
+	<script type="text/javascript" src="${ctx}/statics/e_tools/js/library/jquery.min-2.1.4.js"></script>
+	<script>
+		var ctx = "${ctx}";
+	</script>
+</head>
+
+<body>
+	<div class="hidden">
+		<!-- 预加载图片 -->
+		<script type="text/javascript">
+			var images = new Array()
+
+			function preload() {
+				for (i = 0; i < preload.arguments.length; i++) {
+					images[i] = new Image()
+					images[i].src = preload.arguments[i]
+				}
+			}
+			preload(
+				"${ctx}/adminthemes/version3/images/admin-bg-4.jpg",
+				"${ctx}/adminthemes/version3/images/admin-bg-5.jpg",
+				"${ctx}/adminthemes/version3/images/admin-bg-6.jpg",
+				"${ctx}/adminthemes/version3/images/admin-bg-7.jpg"
+			)
+		</script>
+	</div>
+	<div id="container">
+		<span class='preloadImg'></span>
+		<h1>管理中心</h1>
+		<form>
+			<input class="input" type="text" name="username" placeholder="用户名">
+			<p class="usernameInfo info">用户名不能为空!</p>
+			<input class="input" type="password" name="password" placeholder="密码">
+			<p class="passwordInfo info">密码不能为空!</p>
+			<div class='validate'>
+				<input class="input" type="text" name="vadilate" placeholder="验证码">
+				<img src='#' id="validateCode">
+			</div>
+			<p class="validateInfo info">验证码不能为空!</p>
+			<a href="#" class="loginButton">登录</a>
+		</form>
+	</div>
+	<div class='vedio'>
+		<div class='fixedBg'></div>
+	</div>
+	<div class="cover"></div>
+
+	<script src='${ctx}/adminthemes/version3/js/login.js'></script>
+</body>
+
+</html>

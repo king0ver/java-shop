@@ -1,0 +1,53 @@
+<#assign halfPriceConflictTag = newTag("halfPriceConflictTag") />
+<#assign halfPriceConflictTag= halfPriceConflictTag() />
+<style type="text/css">
+    .goods-table {
+        background-color: #ffffff;
+    }
+    .goods-table th,
+    .goods-table td {
+        text-align: center;
+        font-size: 12px;
+        vertical-align: middle;
+    }
+    .page ul li{
+         float: left;
+    margin-right: 4px;
+    }
+</style>
+<table class="table table-bordered table-responsive goods-table" style="font-size: 12px; ">
+	    <thead>
+	    <tr>
+	        <th>图片</th>
+	        <th>名称</th>
+	        <th>活动名称</th>
+	    </tr>
+	    </thead>   
+	        <tbody class='goods'>
+		        <#list halfPriceConflictTag.goodsList as goods>
+				     <tr class="tr_${goods.goods_id}">
+				          <td>
+				               <input type="hidden" value="${goods.goods_id}" name="" class="goodsid"/>
+				               <#if goods.thumbnail?exists && goods.thumbnail != ''>
+				                     <@image src="${goods.thumbnail!''}" height="45" width="45" />
+				               <#else>
+				                     暂无图片
+				               </#if>
+				          </td>
+				          <td>
+				               <a target="_blank" href="${ctx}/goods-${goods.goods_id}.html" style="color:#005ea6;line-height: 20px;">
+				                      ${goods.name}
+				                </a>
+				         </td>
+				         <td>${goods.title}</td>				             
+				   </tr>
+			   </#list>
+	        </tbody>
+	        
+	</table>
+	<div class="app-paging-tools">
+                <div class="demo"></div>
+                <div class="paging">
+                    <@pager pageno="${halfPriceConflictTag.page!'1'}" pagesize="${halfPriceConflictTag.pageSize}" totalcount="${halfPriceConflictTag.totalCount}" />
+                </div>
+    </div>

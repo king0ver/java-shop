@@ -1,0 +1,49 @@
+<#assign title="购物清单" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<#if member??>
+    <#assign cartSelectGoodsListTag = newTag("cartSelectGoodsListTag") />
+    <#assign cartList = cartSelectGoodsListTag() />
+    <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/checkout.css"/>
+    <div class="checkout-cart-list">
+        <#list cartList as store >
+            <#list store.productList as product >
+                <div class="list-item">
+                    <div class="container-item">
+                        <div class="img-container-item">
+                            <div class="box-img">
+                                <img src="${product.goods_image!''}">
+                            </div>
+                        </div>
+                        <div class="title-container-item">
+                            <div class="name-container-item">${product.name!''}</div>
+                            <div class="detail-container-item">
+                                <div class="price-box">
+                                    <span class="price-box-span"><em>￥</em><span class="price"></span><em>${product.purchase_price}</em></span>
+                                </div>
+                                <span class="sam-num">x${product.num}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gift-item">
+                        <div></div>
+                    </div>
+                </div>
+            </#list>
+        </#list>
+    </div>
+    <style type="text/css">
+        body {
+            background-color: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            var module = new Module();
+            module.navigator.init('购物清单');
+        });
+    </script>
+</#if>
+</body>
+</html>

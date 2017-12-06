@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <#assign title = "店铺统计 - 店铺概况"/>
+	<#include '/new_store/common/header.html' />
+
+	<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/statistics/statistics.css">
+	<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/new/js/easy-ui/themes/gray/easyui.css"/>    
+	<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/new/js/easy-ui/themes/icon.css"/>
+	<link rel="stylesheet" type="text/css"href="${ctx}/adminthemes/version3/datatables/dataTables.bootstrap.css" />
+    <link rel="stylesheet" type="text/css"href="${ctx}/adminthemes/version3/datatables/jquery.dataTables.min.css" />
+    
+	<script type="text/javascript"src="${ctx}/adminthemes/version3/datatables/jquery.dataTables.min.js "></script>
+    <script type="text/javascript"src="${ctx}/adminthemes/version3/datatables/dataTables.bootstrap.js "></script>
+	<script type="text/javascript" src="${ctx}/adminthemes/new/js/easy-ui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${ctx}/adminthemes/new/js/easy-ui/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+<#--获得会员信息-->
+<#assign checkB2b2cMemberTag = newTag("checkB2b2cMemberTag")>
+<#assign storeMember = checkB2b2cMemberTag()>
+	
+<#assign mainPageName = 'main_statistics' />
+<#assign lowerPageName = 'lower_collect_statistics' />
+
+<#include '/new_store/common/sidebar.html' />
+
+<style>
+	.datagrid-wrap .datagrid-pager .pagination-num{width:30px;float:left;height:auto;margin:0px;}
+</style>
+<div class="app-nav">
+    <ul class="list-nav">
+        <li class="active"><a href="javascript: void(0);"  onclick="location.reload(); ">收藏统计</a></li>
+    </ul>
+</div>
+
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+   <!-- 内部页面区↓ -->
+	<div class="inner-app-wappler">
+		<!-- 具体内容区↓ -->
+		<div class="sales-wappler">
+			<!-- 搜索条件区↓ -->
+			<!-- 无搜索条件 -->
+			<!-- 搜索条件区↑ -->
+			<!-- 最近30天概况数据展示区↓ -->
+			<div>
+				<table style="width:100%">
+					<tr>
+						<td  style="line-height: 50px">本页面有关收藏统计TOP50,由高到底</td>
+					</tr>
+				</table>
+			</div>
+			<div style="height: 10px; background-color: #f2f2f2"></div>
+			
+			<!-- 统计图区↓ -->
+			<div style="height: 10px; background-color: #f2f2f2"></div>
+			<div id="main" style="height: 400px;"></div>
+			<!-- 统计图区↑ -->
+			
+			<!-- 统计表 -->
+			<div id="tableDiv" class="sales-table">
+				<table  data-options="url:'${ctx}/api/store-profile/get-collect-json.do?storeId=${storeMember.store_id}',pageList: [10,20,50],pageSize:10,fitColumns:'true'"
+					pagination="true" width="width" id="colect_data" sortName="goods_id" sortOrder="desc">
+					<thead>
+						<tr>
+							<th>商品名称</th>
+							<th>商品价格</th>
+							<th>收藏量</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			
+		</div>
+		<!-- 具体内容区↑ -->
+	</div>
+	<!-- 内部页面区 -->
+</div>
+<!--主页面区↑-->
+
+</body>
+
+<script type="text/javascript">
+var store_id=${storeMember.store_id};
+var ctx="${ctx}";
+var myChart = echarts.init(document.getElementById('main'));
+//格式化商品名称
+function formatName(value,row,index){
+	var val = "<a target='_blank' title='"+value+"' href='${ctx}/goods-"+row.goods_id+".html' >"+value+"</a>";
+	return val;
+}
+
+
+</script>
+
+<script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/statistics/store-collect.js"></script>
+
+</html>
+
+<script>
+$(function(){
+	
+	 table = $('#colect_data').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "autoWidth": true,
+	     "initComplete": function(settings, json) {
+	    	 $(".dataTables_paginate").on("click", "a", function() {
+	    		 if($('#branddata_processing')[0].style.display=="block"){
+					  $(".dataTables_paginate li").addClass("disabled");
+				  }  
+	         });   
+		  }, 
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/api/store-profile/get-collect-json.do?storeId=${storeMember.store_id}',
+	    },
+	    columns: [ //定义列
+	        {data: null,"render": function(data, type, row) {
+	        	return  formatName(data.goods_name,row,type);
+	       	}},
+	        {data: "price"},
+	        {data: "y"}	     
+	     ]
+	});   
+});
+</script>

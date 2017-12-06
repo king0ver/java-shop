@@ -1,0 +1,16 @@
+ <div class="index-nav-content">
+    <div class="content-nav-content">
+       <!-- 增加底部内容 -->
+       <div class="item nav-content">
+         <a class='nav-content-href' data-href="${ctx}/member.html">登录</a>
+          <a class='nav-content-href' data-href="${ctx}/register.html">注册</a>
+          <a class='nav-content-href' data-href="${ctx}/member.html">设置</a>
+       	  <a>返回顶部</a>
+       </div>
+    </div>
+</div> 
+<script>
+    $(function () {
+        $('.index-nav-content').on('tap', '.nav-content-href', function () {location.href = $(this).attr('data-href')});
+    })
+</script>     

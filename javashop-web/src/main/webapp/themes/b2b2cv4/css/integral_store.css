@@ -1,0 +1,97 @@
+div.index-body .category-nav {
+    height: 80px;
+    width: 100%;
+    line-height: 80px;
+    background: #eceaea;
+}
+
+div.index-body .category-nav ul {
+    width: 1200px;
+    height: 80px;
+    line-height: 80px;
+    margin: 0 auto;
+}
+
+div.index-body .category-nav ul li.this {
+    color: #e8001a;
+}
+
+div.index-body .category-nav li {
+    display: inline-block;
+    font-size: 16px;
+    height: 80px;
+    margin-top: -5px;
+}
+
+div.index-body .category-nav li:hover {
+    cursor: pointer;
+}
+
+div.index-body .category-nav li span:not(.first) {
+    font-size: 30px;
+    position: relative;
+    top: 5px;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+}
+
+div.index-body .category-body ul {
+    width: 1200px;
+    margin: 3rem auto;
+}
+
+div.index-body .category-body ul li {
+    width: 230px;
+    height: 320px;
+    margin: 0 5px 10px 0;
+    float: left;
+    border: 1px solid #ddd;
+}
+
+div.index-body .category-body ul li > a {
+    width: 200px;
+    height: 200px;
+    margin: 5%;
+    display: inline-block;
+}
+
+div.index-body .category-body ul li a img {
+    width: 100%;
+    height: 100%;
+}
+
+div.index-body .category-body ul li > div {
+    margin: 5%;
+    width: 90%;
+}
+
+div.index-body .category-body ul li > div p.integral {
+    font-size: 20px;
+    color: #e8001a;
+}
+
+div.index-body .category-body ul li > div p.integral span:last-child {
+    font-size: 12px;
+    text-decoration: line-through;
+    color: grey;
+    float: right;
+    margin-right: 1rem;
+}
+
+div.index-body .category-body ul li > div p.name {
+    font-size: 18px;
+    margin: 1rem 0;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 提示语样式 */
+.alert.alert-info {
+    width: 50%;
+    margin: auto;
+    font-size: 16px;
+    text-align: center;
+}

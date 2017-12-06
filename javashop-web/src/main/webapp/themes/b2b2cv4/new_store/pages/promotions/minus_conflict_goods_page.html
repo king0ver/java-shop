@@ -1,0 +1,51 @@
+<#assign minusConflictGoodsTag = newTag("minusConflictGoodsTag") />
+<#assign minusConflictGoods = minusConflictGoodsTag() />
+<style type="text/css">
+.goods-table {
+	background-color: #ffffff;
+}
+
+.goods-table th, .goods-table td {
+	text-align: center;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.page ul li {
+	float: left;
+	margin-right: 4px;
+}
+</style>
+<table class="table table-bordered table-responsive goods-table"
+	style="font-size: 12px;">
+	<thead>
+		<tr>
+			<th>商品图片</th>
+			<th>商品名称</th>
+			<th>开始时间</th>
+			<th>结束时间</th>
+			<th>活动名称</th>
+		</tr>
+	</thead>
+	<tbody>
+		<#list minusConflictGoods.goodsList as goods>
+		<tr>
+			<td><#if goods.thumbnail?exists && goods.thumbnail != ''>
+				<@image src="${goods.thumbnail!''}" height="30" width="30" />
+				<#else> 暂无图片 </#if></td>
+			<td>${goods.name}</td>
+			<td>${goods.start_time_str}</td>
+			<td>${goods.end_time_str}</td>
+			<td>${goods.title}</td>
+		</tr>
+		</#list>
+	</tbody>
+</table>
+<div class="app-paging-tools">
+	<div class="demo"></div>
+	<div class="paging"><@pager
+		pageno="${minusConflictGoods.pageNo!'1'}"
+		pagesize="${minusConflictGoods.pageSize}"
+		totalcount="${minusConflictGoods.totalCount}" /></div>
+</div>
+

@@ -1,0 +1,61 @@
+<div class="pro-list clearfix pro-activity">
+    <#if promotionshow>
+        <div class="pro-title">促销信息</div>
+    </#if>
+    <div class="pro-content">
+        <div class="parent_tips_prom">
+            <div class="prom-item" data-code="18">
+                <#assign promotion_type=promotionVo.promotion_type />
+                <#if promotion_type=='full_discount'>
+                
+                    <#assign fullDiscountVo=promotionVo.fullDiscountVo />
+                    <#if fullDiscountVo.is_send_bonus==1 || fullDiscountVo.is_send_gift==1 || fullDiscountVo.is_send_point==1 || fullDiscountVo.is_free_ship==1>
+                        <em class="hl_red_bg">满赠</em>
+                        <em class="hl_red">满${fullDiscountVo.full_money}元</em>
+                    </#if>
+                    <#if fullDiscountVo.is_send_bonus==1>
+                        <#--赠送优惠券-->
+                            <#assign storeBonusType=promotionVo.storeBonusType /> ，送价值${storeBonusType.type_money}的优惠券
+                    </#if>
+                    <#if fullDiscountVo.is_send_gift==1>
+                        <#--赠送礼物-->
+                            <#assign fullDiscountGift=promotionVo.fullDiscountGift /> ，送价值${fullDiscountGift.gift_price}元的${fullDiscountGift.gift_name}
+                    </#if>
+                    <#if fullDiscountVo.is_send_point==1>
+                        <#--送积分-->
+                            ，送${fullDiscountVo.point_value}积分
+                    </#if>
+                    <#if fullDiscountVo.is_free_ship==1>
+                        <#--免邮-->
+                            <em class="hl_red">，免运费</em>
+                    </#if>
+                    
+                    <#if fullDiscountVo.is_full_minus==1>
+                        <#--减现金-->
+                            <em class="hl_red_bg">满减</em>
+                            <em class="hl_red">满${fullDiscountVo.full_money}元，立减现金${fullDiscountVo.minus_value}元</em>
+                    </#if>
+                    <a href="${ctx}/store_themes/${store_id}/store-activity.html?activity_id=${promotionVo.activity_id!''}" target="blank">详情>></a>&nbsp;
+                    <#elseif promotion_type=='minus' />
+                    <#assign minusVo=promotionVo.minusVo />
+                    <em class="hl_red_bg">立减</em>
+                    <em class="hl_red">下单立减${minusVo.minus_price}元</em>
+                    <#elseif promotion_type=='half_price' />
+                    <em class="hl_red_bg ">第二件半价</em>
+                </#if>
+            </div>
+            <div class="tips_prom" style="width: 295px;">
+                <p>${promotionVo.title!''}</p>
+            </div>
+            
+        </div>
+    </div>
+    <style>
+        .pro-content em.hl_red_bg,.hover-section-one em.hl_red_bg {
+            padding: 2px 3px;
+            color: #df3033;
+            border: 1px solid #df3033;
+            margin-right: 2px;
+        }
+    </style>
+</div>

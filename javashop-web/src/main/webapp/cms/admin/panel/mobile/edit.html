@@ -1,0 +1,64 @@
+<#include '/admin/header.html' >
+  <div  class="admin-main">
+  <input type="hidden" id="panel_id" value="${panel_id!''}">
+  <!--表单区域  -->
+	<form id="panelForm" class="layui-form form" action="" style="padding-top:10px;">
+  		<div class="layui-form-item">
+		<label class="layui-form-label">模版名：</label>
+		<div class="layui-input-block">
+			<input type="text" name="tpl_name" id="tpl_name" verify="required" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+  		<div class="layui-form-item">
+		<label class="layui-form-label">模版内容：</label>
+		<div class="layui-input-block">
+     	 	<textarea name="tpl_content" id="tpl_content" style="height: 300px" required lay-verify="required" placeholder="请输入" class="layui-textarea"></textarea>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button class="btn" submit="" filter="save" >立即提交</button>
+		    </div>
+	 </div>
+  	</form>
+  	</div>
+  	<script>
+  	//初始数据
+  	layui.use(['form'], function(){
+  			//var tpl_id=$.getUrlParam('tpl_id')
+  		     var form = layui.form()
+  		/* $(function(){ */ 
+  		setTimeout(function(){
+  			var tpl_id=$("#panel_id").val(); 
+  	  	$.ajax({
+			url:"${ctx}/cms/admin/panel-tpl/"+tpl_id+".do",
+			success:function(result){
+				$("#tpl_name").val(result.tpl_name);
+				$("#tpl_content").html(result.tpl_content);
+				form.render();
+    			}
+			});
+		},500);
+  		
+  			form.on('submit', function(data){
+  				var tpl_id=$("#panel_id").val(); 
+  	  			 var options = {
+  				  			url : "${ctx}/cms/admin/panel-tpl/"+tpl_id+".do",
+  				  			method : "post",
+  				  			data:{tpl_type:"main",client_type:"mobile"},
+  				  			success : function(data) {
+  				  			$.Loading.success("修改成功");
+  				  			/* closeCurrent();	 */
+  				  			
+  				  			},error:function(e){
+                         $.error(e.responseJSON.error_message);
+                     }
+  				  		};
+  				  		$("#panelForm").ajaxSubmit(options); 	 	
+  				
+  			    return false;
+  			});
+  		/* }); */
+  	})
+  	</script>
+  	<#include '/admin/footer.html' >

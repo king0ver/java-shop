@@ -1,0 +1,27 @@
+<ul class="f-r-main" style="display: <#if childs_index == 0 >block<#else/>none</#if>;">
+    <#assign floorGoodsList = floorGoodsListTag("'goods_ids':'${(childs.goods_ids_json)!''}'") />
+    <#if floorGoodsList??&& floorGoodsList?size gt 0 >
+        <#list floorGoodsList as goods>
+            <#if goods_index lt 6>
+                <li class="p-list" data-sn="${goods.sn}">
+                    <div class="item-goods opacity_img">
+                        <#if isAdmin == 'yes'><button type="button"  class="floor-btn b_item">编辑</button></#if>
+                        <div class="p-img">
+                            <a href="${ctx}/goods-${goods.goods_id}.html" target="_blank">
+                                <img class="lazy" src="${ctx}${themes_path}/images/img-loading.gif"
+                                     data-original='<@imgurl pic="${goods.thumbnail!''}"/>'>
+                            </a>
+                        </div>
+                        <div class="p-name">
+                            <a href="${ctx}/goods-${goods.goods_id}.html" title="${goods.name}">${goods.name}</a>
+                        </div>
+                        <div class="p-price">
+                            <span class="shop-price"><em>¥</em>${goods.price?string("0.00")}</span>
+                            <span class="original-price"><em>¥</em>${goods.mktprice?string("0.00")}</span>
+                        </div>
+                    </div>
+                </li>
+            </#if>
+        </#list>
+    </#if>
+</ul>

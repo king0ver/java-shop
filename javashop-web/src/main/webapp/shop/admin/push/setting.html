@@ -1,0 +1,103 @@
+<#include '/admin/header.html' > 
+<style>
+#settingForm{min-height:240px;}
+table tr{
+	display:block;
+    margin:8px 0;
+}
+
+.layui-tab-item{
+	height: 200px;
+}
+</style>
+<div class="admin-main">
+<form method="post" name="settingForm" id="settingForm">
+	<div class="layui-tab">
+		<ul class="layui-tab-title ">
+			<li tabid="qq" class="layui-this">Android推送配置</li>
+			<li tabid="wechat">Ios推送配置</li>
+		</ul>
+		<div class="layui-tab-content" style="height: 150px;">
+			<div class="layui-tab-item layui-show" >
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th width="130">Android Key：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="android_push_key" autocomplete="off"
+								value="${setting.android_push_key!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="130">Android Secret：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="android_push_secret" autocomplete="off"
+								value="${setting.android_push_secret!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="130">Android Activity：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="android_goods_activity" autocomplete="off"
+								value="${setting.android_goods_activity!''}" class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="layui-tab-item">
+				<table class="form-table">
+					<tbody>
+						<tr>
+							<th width="100">Ios Key：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="ios_push_key" autocomplete="off"
+								value="${setting.ios_push_key!''}" class="layui-input"></td>
+						</tr>
+						<tr>
+							<th width="100">Ios Secret：</th>
+							<td align="left"><input type="text" style="width: 400px;"
+								name="ios_push_secret" autocomplete="off"
+								value="${setting.ios_push_secret!''}" class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</form>
+<div class="layui-layer-btn layui-layer-btn-" style="margin-right: 800px;"> 
+	<a class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="connectSave" style="width: 30px;">确认</a>
+</div>
+</div>
+<script type="text/javascript">
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+    
+    //监听提交
+    form.on('submit(connectSave)', function(data){
+    	var options = {
+    			url: "${ctx}/shop/admin/push-setting/save.do",
+    			type: "get",
+    			dataType: "json",
+    			success:function(result){
+    				if(result.result==1){
+    					$.Loading.success(result.message);
+    				}else{
+    					$.Loading.error(result.message);
+    				}
+    			},
+    			error : function(e) {
+					$.Loading.error("出现错误 ，请重试");
+				}
+    	};
+   		$("#settingForm").ajaxSubmit(options);
+       return false;
+    });
+});
+
+
+</script>
+
+<#include '/admin/footer.html' >

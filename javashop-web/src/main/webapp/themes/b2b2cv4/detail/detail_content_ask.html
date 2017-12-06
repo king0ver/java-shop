@@ -1,0 +1,67 @@
+<#assign commentListTag = newTag("commentListTag") />
+<#assign askPage = commentListTag("{'goods_id':${goods_id},'type':2,'grade':0}") />
+<div class="detail-comment-cont">
+    <div class="detail-comment-score">
+        <div class="point_out">
+            <p style="cursor:default">因厂家更改商品包装、场地、附配件等不做提前通知，且每位咨询者购买、提问时间等不同。为此，客服回复的咨询只针对当前当天咨询问题，给您带来的不便还请谅解，谢谢！</p>
+            <a href="javascript:;" id="iWantAsk">我要咨询</a>
+        </div>
+    </div>
+    <div class="detail-comment-list">
+        <#if askPage.result?size gt 0 >
+            <#list askPage.result as ask>
+                <dl>
+                    <dt>
+                    <p>
+                        <#if ask.member_id != 0 && ask.face != "">
+                            <@image src="${ask.face}" class="comment-img"/>
+                            <#else/>
+                            <img src="${ctx}${themes_path}/images/icon-no-face.jpg" class="comment-img">
+                        </#if>
+                    </p>
+                    <p class="name">
+                        <#if ask.member_id != 0>
+                            <#assign _name = ask.uname />
+                            <#assign _length = _name?length />
+                            <#assign uname = _name?substring(0, 1) + "***" + _name?substring(_length-1, _length) />
+                            ${uname}
+                            <#else/>
+                            匿名
+                        </#if>
+                    </p>
+                    </dt>
+                    <dd>
+                        <div class="detail-comment-detail">
+                            <div class="d_pf clearfix">
+                                <!--<div class="fl star_x"><span class="star4"><em style="width:100%;"></em></span></div>-->
+                                <div class="fr">
+                                    <!--<span class="detail-comment-client">来自IOS客户端
+                                        <em>
+                                            <img src="" style="width: 80px; height: 85px;">
+                                            <br>扫描二维码下载
+                                        </em>
+                                    </span>
+                                    <i>|</i>-->
+                                    <@dateformat time="${ask.dateline?c}" pattern="yyyy-MM-dd HH:mm"/>
+                                </div>
+                            </div>
+                            <div class="d_cont">${ask.content!''}</div>
+                            <#if ask.replystatus == 1>
+                                <div class="d_cont" style="padding: 10px; background-color: #ffffff">
+                                    <p style="color: #da4f49">掌柜回复：</p>
+                                    <p>${ask.reply}</p>
+                                </div>
+                            </#if>
+                        </div>
+                    </dd>
+                </dl>
+            </#list>
+            <#else/>
+            <p style="line-height: 50px; width: 100%; cursor:default;text-align: center">暂无咨询。。。</p>
+        </#if>
+
+        <div class="comment-page" style="cursor:default">
+            <@ajaxpager pageno="${page!'1'}" pagesize="${askPage.pageSize}" totalcount="${askPage.totalCount}" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,170 @@
+<div class="content-ckt-inventory">
+    <#assign cartSelectGoodsListTag = newTag("cartSelectGoodsListTag") />
+    <#assign cartList = cartSelectGoodsListTag() />
+    <#assign is_Self = "false"/>
+    <#if cartList?exists && cartList?size gt 0>
+        <#list cartList as cart >
+            <#if is_Self == "false" && cart.seller_id == 1>
+                <#assign is_Self = "true" />
+            </#if>
+            <div class="item-ckt-inventory" id="store_${cart.seller_id}" storeid="${cart.seller_id}">
+                <div class="left-item-inventory">
+                    <div class="express-inventory">
+                        <div class="title-item-inventory" style="cursor:default">配送方式</div>
+                        <div class="content-item-inventory express">
+                            <div class="ckt-checkbox express selected" type_id="1" title="${(cart.shipping_type_name)!'默认快递'}&nbsp;（${cart.price.freight_price}&nbsp;元）">
+                                <span>${(cart.shipping_type_name)!'默认快递'}&nbsp;（${cart.price.freight_price}&nbsp;元）</span>
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div class="hr-inventory"></div>
+                    <div class="discount-inventory">
+                        <div class="title-item-inventory" style="cursor:default">优惠折扣</div>
+                        <div class="content-item-inventory">
+                            <#assign myStoreBonusByAccountTag = newTag("myStoreBonusByAccountTag") />
+                            <#assign result = myStoreBonusByAccountTag("{'store_id':${cart.seller_id!0},'storeprice':${cart.price.total_price?string('0.00')}}")!'' />
+                            <#assign bonusId = 0 />
+                            <#if result.storeBonus.bonusList?size gt 0 >
+                                <#list result.storeBonus.bonusList as s>
+                                    <#list cart.couponList as coupon>
+                                        <#if coupon.coupon_id == s.bonus_id>
+                                            <#assign bonusId = coupon.coupon_id/>
+                                        </#if>
+                                    </#list>
+                                    <div class="item-discount-inventory<#if bonusId == s.bonus_id> selected</#if>" bonusid="${s.bonus_id!0}" price="${s.type_money}">
+                                        <div class="lace-item-discount">
+                                            <div class="lace-discount">
+                                                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                                            </div>
+                                        </div>
+                                        <div class="select-discount">
+                                            <span class="bg-select-discount"></span>
+                                            <i class="icomoon icon-select-discount"></i>
+                                        </div>
+                                        <div class="money-item-discount">￥${s.type_money}</div>
+                                        <div class="detail-item-discount">
+                                            <p class="first">满&nbsp;<span style="color: red;">￥${s.min_goods_amount}</span>&nbsp使用</p>
+                                            <p>有效期至：<@dateformat time="${s.use_end_date}"pattern="yyyy-MM-dd"/></p>
+                                        </div>
+                                    </div>
+                                </#list>
+                                <#else/>
+                                <p class="no-item-discount-inventory" style="cursor:default">您在该店铺还没有领到优惠劵，去&nbsp;
+                                    <a target="_blank" href="${ctx}/store_themes/${(cart.seller_id)!0}/index.html?store_id=${(store.store_id)!0}&menu=store" style="color: #005ea7;">店铺</a>&nbsp;看看吧！
+                                </p>
+                            </#if>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-item-inventory">
+                    <div class="gooods-inventory" style="cursor:default">
+                        <div class="title-item-inventory">
+                            <div class="store-name" style="cursor:default">店铺名称：
+                                <a target="_blank" href="${ctx}/store_themes/${(cart.seller_id)!0}/index.html?store_id=${(cart.seller_id)!0}&menu=store" style="color: #005ea7;">${cart.seller_name}</a>
+                            </div>
+                            <div class="store-total" style="cursor:default">
+                                <div class="discount-store-total">优惠折扣： <span>${cart.price.discount_price?string("currency")}</span>
+                                </div>
+                                <div class="total-store-total" style="cursor:default">店铺合计（含运费）： <span>${cart.price.total_price?string("currency")}<#if (cart.price.exchange_point)?? && (cart.price.exchange_point) gt 0  >+${(cart.price.exchange_point)!''}分</#if></span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="storeid" value="${cart.seller_id}">
+                        </div>
+                        <div class="content-item-inventory goods">
+                            <table class="table-gooods-inventory">
+                                <#list cart.productList as product >
+                                    <tr>
+                                        <td class="img-gooods-inventory">
+                                            <a target="_blank"
+                                               href="${ctx}/goods.html?goodsid=${product.goods_id}">
+                                                <#if product.goods_image??>
+                                                    <@image src="${product.goods_image!''}" />
+                                                    <#else/>
+                                                    <@image src="${ctx}/statics/images/no_picture.jpg"/>
+                                                </#if>
+                                            </a>
+                                            <!-- 此处应该是促销list [item.activity_id?exists && item.activity_id != 0] -->
+                                            <#if 1 == 0>
+                                                <a target="_blank" href="${ctx}/store_themes/${(cart.seller_id)!0}/store-activity.html?menu=store&activity_id=${item.activity_id}" class="tag-goods-inventory">促销商品</a>
+                                            </#if>
+                                        </td>
+                                        <td class="name-gooods-inventory">
+                                            <a target="_blank" href="${ctx}/goods.html?goodsid=${product.goods_id}">${product.name}
+                                            <#if product.specList?exists>
+                                                <span>
+                                                    <#list product.specList as spec>
+                                                        <strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>
+                                                    </#list>
+                                                </span>
+                                            </#if>
+                                        </a>
+                                        </td>
+                                        <td class="price-gooods-inventory">
+                                            ${product.purchase_price?string("currency")}
+                                            <#if (product.exchange_point)??>+(product.exchange_point)分</#if>
+                                        </td>
+                                        <td class="num-gooods-inventory">x${product.num}</td>
+                                        <td class="subtotal-gooods-inventory">
+                                            ${product.subtotal?string("currency")}
+                                            <#if (product.exchange_point)??>+${(product.exchange_point)?number*product.num}分</#if>
+                                        </td>
+                                    </tr>
+                                </#list>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <div class="bottom-item-inventory">
+                    <!-- 注释 [store.activity_id??] -->
+                    <#if 1 == 0>
+                        <div class="item-bottom-item-inventory">
+                            <span class="tag-item-bottom-inventory">
+                                <a target="_blank" href="${ctx}/store_themes/${(store.store_id)!0}/store-activity.html?menu=store&activity_id=${store.activity_id}">促销活动进行中</a>
+                            </span>
+                            <span class="price-item-bottom-inventory">${store.storeprice.actDiscount?string("currency")}</span>
+                        </div>
+                    </#if>
+                    <!-- 注释 [store.storeprice.gift_id != 0] -->
+                    <#if 1 == 0>
+                        <#assign activityGiftTag = newTag("activityGiftTag") />
+                        <#assign gift = activityGiftTag("{'gift_id':'${store.storeprice.gift_id}'}") />
+                        <#if gift.actual_store gt 0>
+                            <div class="item-bottom-item-inventory">
+                                <input type="hidden" name="gift_id" value="${gift.gift_id}"/>
+                                <span class="tag-item-bottom-inventory">
+                                    <a href="javascript: void(0);">赠送</a>
+                                </span>
+                                <span class="name-item-bottom-inventory">${gift.gift_name}</span>
+                                <span style="margin-left: 20px;" class="price-item-bottom-inventory">价值：${gift.gift_price?string("currency")}</span>
+                                <span style="margin-left: 20px;">数量：×1</span>
+                            </div>
+                        </#if>
+                    </#if>
+                    <!-- 注释 [store.storeprice.bonus_id != 0]-->
+                    <#if 1== 0>
+                        <#assign storeBonusDetailTag = newTag("storeBonusDetailTag") />
+                        <#assign bonus = storeBonusDetailTag("{'bonusid':${store.storeprice.bonus_id}}") />
+                        <#if bonus.create_num gt 0>
+                            <#if (bonus.received_num != bonus.create_num) >
+                                <div class="item-bottom-item-inventory">
+                                    <input type="hidden" name="bonus_id" value="${bonus.type_id}"/>
+                                    <span class="tag-item-bottom-inventory">
+                                        <a href="javascript: void(0);">赠送</a>
+                                    </span>
+                                    <span class="name-item-bottom-inventory">${bonus.type_name}</span>
+                                    <span style="margin-left: 20px;"
+                                          class="price-item-bottom-inventory">价值：${bonus.type_money?string("currency")}</span>
+                                    <span style="margin-left: 20px;">数量：×1</span>
+                                </div>
+                            </#if>
+                        </#if>
+                    </#if>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </#list>
+    </#if>
+</div>

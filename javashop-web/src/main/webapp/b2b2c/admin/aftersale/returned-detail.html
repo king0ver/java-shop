@@ -1,0 +1,179 @@
+<#include '/admin/header.html' >
+<style>
+	.form-item{
+		width: 40%;
+		display: inline-block;	
+	}
+	.layui-form-label{
+	    padding: 6px 0;
+		width: 100px;
+		text-align: center;
+	}
+	.layui-input-inline input{
+		height: 30px;
+	}
+	
+	table.layui-table tbody tr td:first-child{
+		word-break: keep-all;
+	}
+
+</style>
+
+	<table class="layui-table" style="width: 100%; border:1px solid #ccc"  cellpadding="0" cellspacing="0">
+		<tbody>
+			<tr>
+				<th class="title" colspan="4">退款单</th>
+			</tr>
+			<tr>
+				<td>退款单号：</td>
+				<td name = "sn"></td>
+				<td>创建时间：</td>
+				<td id = "create_time"></td>
+			</tr>
+			<tr>
+				<td>退款原因:</td>
+				<td name = "refund_reason"> </td>
+				<td>申请退款金额：</td>
+				<td name = "refund_price"> </td>
+			</tr>
+			<tr>
+				<td>退款方式:</td>
+				<td id = "refund_way"></td>
+				<td>退款状态:</td>
+				<td id = "refund_status"></td>
+			</tr>
+			<tr>
+				<td>客服备注：</td>
+				<td name="seller_remark" colspan="3"></td>
+			</tr>
+			 <tr name="refund_point" style = "display:none">
+				<td>	退还积分:</td>
+				<td><input type="text"  name="refund_point" id = "refund_point" class="input_text easyui-numberbox"  precision="2"/></td>
+			</tr>
+			<tr name="payinfo" style = "display:none">
+				<td>退款账户：</td>
+				<td name = "return_account"></td>
+				
+			</tr>
+			<tr name = "bankinfo" style = "display:none">
+				<td>银行名称:</td>
+				<td name = "bank_name"></td>
+				<td>开户行：</td>
+				<td name="bank_deposit_name" ></td>
+			</tr>
+			<tr name = "bankinfo" style = "display:none">
+				<td>银行户名:</td>
+				<td name = "bank_account_name"></td>
+				<td>银行账号：</td>
+				<td name="bank_account_number"></td>
+			</tr>
+			<tr>
+				<td>审核</td>
+				<td colspan="3">
+					金额：
+					<input type="text"  name="refund_money" class="input_text easyui-numberbox"  precision="2"/>
+					<a class='layui-btn layui-btn-small' name="refundpass" onclick="" style = "display:none">退款</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+<script type="text/javascript">
+	var sn = "${sn}";
+	$(function(){
+		$.ajax({
+			url : "${ctx}/after-sale/admin/refund/" + sn+".do",
+			dataType:'json',
+			success : function(result) {
+				
+				var refund = result.refund;
+				for(var i in refund){
+					$("td[name="+i+"]").text(refund[i]);
+				}
+				$("#create_time").text($.dateFormat(refund["create_time"],"yyyy-MM-dd"));
+				//客服备注
+				$("td[name=seller_remark]").text(refund["customer_remark"]);
+				
+				if(refund["refund_point"]!="0"){
+					//退还积分
+					$("input[name=refund_point]").val(refund["refund_point"]);
+					$("tr[name=refund_point]").show();
+				}
+				var refund_way_text = "";
+				if(refund["refund_way"]=="original"){
+					refund_way_text = "原路退回   -- ";
+				}
+				
+				if(refund["account_type"]=="alipayDirectPlugin"){
+					if(refund_way_text==""){
+						$("tr[name=payinfo]").show();
+					}
+					refund_way_text += "支付宝";
+				}else if(refund["account_type"]=="weixinPayPlugin"){
+					if(refund_way_text==""){
+						$("tr[name=payinfo]").show();
+					}
+					refund_way_text += "微信";
+				}else{
+					$("tr[name=bankinfo]").show();
+					refund_way_text += "银行转账";
+				}
+				$("#refund_way").text(refund_way_text);
+				
+				//退款状态
+				$("#refund_status").text(refund["refund_status_text"]);
+				$("input[name=refund_money]").val(refund["refund_price"]);
+				if(refund["operateAllowable"]["allowAdminApproval"]){
+					$("a[name=refundpass]").show();
+					if(refund["refund_status"]=="refundfail"||refund["refund_way"]!="original"){
+						$("a[name=refundpass]").text("退款完成");
+					}
+					$("a[name=refundpass]").on("click",function(){
+						//退款金额不能大于支付金额
+						var refund_money=$("input[name=refund_money]").val();
+						var refund_price=refund["refund_price"];
+						if(refund_money > refund_price){
+							alert("退款金额不能大于申请金额");
+							return false;
+						}
+						$.confirm("确认退款吗？",{
+							ok:function(){
+								$.loading.show();
+								$("a[name=refundpass]").hide();
+								$.ajax({
+									url : "${ctx}/after-sale/admin/refund/approval/" + sn+".do?refund_price="+$("input[name=refund_money]").val()+"&refund_point="+$("input[name=refund_point]").val(),
+									method : "post",
+									success : function(data){
+										$.loading.close();
+										if(data.is_success){
+											alert("退款申请成功，请关注退款状态");
+											window.location.reload();
+										}else{
+											alert("退款申请失败"+data.error_code);
+											$("a[name=refundpass]").show();
+										}
+									},
+									error : function(){
+										$.loading.close();
+										$("a[name=refundpass]").show();
+									}
+								});
+							},
+							cancel:function(){
+								
+							}
+						});
+					});
+				}else{
+					$("input[name=refund_money]").attr("disabled",true);
+				}
+			},
+		});
+	})
+	
+	
+		
+	
+</script>
+
+
+<!--#include file="/common/footer.html" -->

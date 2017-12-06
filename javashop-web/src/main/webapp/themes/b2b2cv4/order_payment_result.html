@@ -1,0 +1,48 @@
+<#assign orderDetail = paymentResult.orderDetail>
+<dl>
+	<dt>订单编号：</dt>
+	<dd>${orderDetail.sn!''}</dd>
+</dl>
+<dl>
+	<dt>收货信息：</dt>
+	<dd>
+		<p>${orderDetail.ship_name!''}&nbsp;&nbsp;${orderDetail.ship_mobile!''}</p>
+		<p>
+			${orderDetail.shipping_area!''}-${orderDetail.ship_addr!''}
+			<#if orderDetail.ship_zip??>(${orderDetail.ship_zip!''})</#if></p>
+	</dd>
+</dl>
+<dl>
+	<dt>商品名称：</dt>
+	<dd>
+		<#list orderDetail.productList as item>
+		<p>
+			<a target="_blank" href="${ctx}/goods-${item.goods_id}.html">${item.name}</a>
+		</p>
+		</#list>
+	</dd>
+</dl>
+<dl>
+	<dt>配送时间：</dt>
+	<dd>${orderDetail.receive_time!'无'}</dd>
+</dl>
+<#if orderDetail.need_receipt??&&orderDetail.need_receipt=='yes'>
+	<dl>
+		<dt>发票抬头：</dt>
+		<dd>${orderDetail.receipt_title!'无'}</dd>
+	</dl>
+	<dl>	
+		<dt>发票内容：</dt>
+		<dd>${orderDetail.receipt_content!'无'}</dd>
+	</dl>
+	
+		<dl>	
+			<dt>发票税号：</dt>
+			<dd>${orderDetail.duty_invoice!'无'}</dd>
+		</dl>
+<#else>
+	<dl>
+		<dt>发票信息：</dt>
+		<dd>无</dd>
+	</dl>
+</#if>

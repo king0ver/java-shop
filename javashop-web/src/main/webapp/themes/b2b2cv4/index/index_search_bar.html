@@ -1,0 +1,29 @@
+<div class="search-bar">
+    <div class="inner-search-bar">
+        <div class="categorys site-mast">
+            <#include '/common/nav_cats.html'/>
+        </div>
+        <div class="mall-search">
+            <#include '/common/header_search.html' />
+        </div>
+        <div class="suspend-login">
+            <#if member??>
+                <a href="${ctx}/member/member.html">${member.name!member.uname}</a>
+            <#else/>
+                <a href="${ctx}/store/login.html">登录</a>
+                |
+                <a href="${ctx}/member/register/fill_mobile.html">注册</a>
+            </#if>
+        </div>
+        <div class="header-cart">
+            <div class="header-cart-con header-cart-cm">
+                <a href="/b2b2c/cart.html">
+                    <a href="${ctx}/cart.html">
+                        <i class="icon-carts"></i>
+                        <em class="count cart_num cart-num"></em>
+                    </a>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

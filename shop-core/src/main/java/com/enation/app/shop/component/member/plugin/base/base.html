@@ -1,0 +1,343 @@
+<#assign regionSelectDirective="com.enation.app.base.tag.regions.RegionSelectDirective"?new()>
+<#assign dateformat="com.enation.framework.directive.DateformateDirective"?new()>
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.addressSelect-1.0.js"></script>
+
+<style>
+  td input{
+	  height:25px;
+	  border:1px solid #ccc;
+	  border-radius: 3px;
+	  padding-left:2px;
+  }
+ .layui-table tbody tr th{
+	   background:#F7F7F7;
+	   color:#777;
+	   width:135px;
+	   font-size:12px!important;
+	   text-align:right;
+  }
+  .layui-table thead tr th{
+	  	background:#CCCCCC;
+	  	color:#fff;
+  }
+  .layui-table{
+        box-shadow: 2px 2px 2px rgba(204,204,204,0.25);
+        margin-top:20px;
+  }
+  
+</style>
+
+<div class="main">
+	<div class="detail" style="margin-left: 10px;">
+		<input class="layui-input" name="shop_id" type="hidden"  value="${storeDetail.shop_id}" >
+		<input class="layui-input" name="shop_disable" type="hidden"  value="${store.shop_disable}" >
+		<input class="layui-input" name="member_id" type="hidden"  value="${store.member_id}" >
+	  <p style="font-size:20px;">店铺详细信息</p>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="6">基本信息</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				   <th>公司名称：</th>
+				   <td colspan="5">
+				   		<input class="layui-input" name="company_name" type="text"  value="${storeDetail.company_name}" >
+				   </td>
+				</tr>
+				<tr>
+					<th>公司地址：</th>
+					<td colspan="5">
+						<input class="layui-input" name="" type="text"  value="${storeDetail.compant_address}" >
+					</td>
+				</tr>
+				<tr>
+					<th>公司电话：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.compant_phone}" >
+					</td>
+					<th>员工总数：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.employee_num}" >
+					</td>
+					<th>注册资金：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.employee_num}" >
+					</td>
+					
+				</tr>
+				<tr>
+					<th>联系人姓名：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.link_name}" >
+					</td>
+					<th>联系人电话：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.link_phone}" >
+					</td>
+					<th>电子邮箱：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.compant_email}" >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="6">营业执照信息</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				   <th>法定代表人姓名：</th>
+				   <td colspan="">
+				   		<input class="layui-input" name="" type="text"  value="${storeDetail.legal_name}" >
+				   </td>
+				    <th>身份证号：</th>
+				   <td colspan="">
+				   		<input class="layui-input" name="" type="text"  value="${storeDetail.legal_id}" >
+				   </td>
+				</tr>
+				<tr>
+					<th>营业执照号：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.license_num}" >
+					</td>
+					<th>法定经营范围：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.scope}" >
+					</td>
+				</tr>
+				<tr>
+					<th>营业执照所在地：</th>
+					<td>
+						 <dl >
+							 <dd id="selectAddress">
+				         	     <script type="text/javascript">
+								$(function() {
+									$('#selectAddress').addressSelect({
+										'names':{
+											province:'license_province',
+											province_id:'license_province_id',
+											city:'license_city',
+											city_id:'license_city_id',
+											region:'license_region',
+											region_id:'license_region_id',
+											town:'license_town',
+											town_id:'license_town_id'
+										},
+										deData:[   
+										           ${storeDetail.license_province_id!''},
+					                               ${storeDetail.license_city_id!''},
+					                               ${storeDetail.license_region_id!''},
+					                               ${storeDetail.license_town_id!''}
+									     ]
+									});
+								})
+							
+					             </script>
+			                 </dd> 
+			              </dl>
+					</td>
+					<th>营业执照详细地址：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.license_add}" >
+					</td>
+				</tr>
+				<tr>
+					<th>成立日期：</th>
+					<td>
+						<input class="layui-input" name="" type="text"  value="${storeDetail.establish_date}" >
+					</td>
+					<th>营业执照有效期：</th>
+					<td>
+						${storeDetail.licence_start}--${storeDetail.licence_end}
+					</td>
+				</tr>
+				<tr>
+					<th style="height:40px;">法人身份证电子版：</th>
+					<td  colspan="4" style="height:40px;">
+						<img alt="" src="${storeDetail.legal_img}">
+						<input class="layui-input" name="legal_img" type="hidden"  value="${storeDetail.legal_img}" >
+					</td>
+				</tr>
+				<tr >
+					<th rowspan="2" style="height:40px;">营业执照电子版：</th>
+					<td colspan="4" style="height:40px;">
+						<img alt="" src="${storeDetail.licence_img}">
+						<input class="layui-input" name="licence_img" type="hidden"  value="${storeDetail.licence_img}" >
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+		
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="2">组织机构代码证：</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>组织机构代码：</th>
+					<td>
+						<input class="layui-input" name="organization_code" type="text"  value="${storeDetail.organization_code}" >
+					</td>
+				</tr>
+				<tr>
+					<th>组织机构代码证电子版：</th>
+					<td>
+						<img alt="" src="${storeDetail.code_img}">
+						<input class="layui-input" name="code_img" type="hidden"  value="${storeDetail.code_img}" >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+			<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="2">一般纳税人证明：</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>一般纳税人证明：</th>
+					<td>
+					<img alt="" src="${storeDetail.taxes_img}">
+					<input class="layui-input" name="taxes_img" type="hidden"  value="${storeDetail.taxes_img}" >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="2">开户行银行许可证：</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>银行开户名：</th>
+					<td>
+						<input class="layui-input" name="bank_account_name" type="text"  value="${storeDetail.bank_account_name}" >
+					</td>
+				</tr>
+				<tr>
+					<th>公司银行账号：</th>
+					<td>
+						<input class="layui-input" name="bank_number" type="text"  value="${storeDetail.bank_number}" >
+					</td>
+				</tr>
+				<tr>
+					<th>开户银行支行名称：</th>
+					<td>
+						<input class="layui-input" name="bank_name" type="text"  value="${storeDetail.bank_name}" >
+					</td>
+				</tr>
+				<tr>
+					<th>开户银行所在地：</th>
+					<td>
+						<dl >
+							 <dd id="selectAddress_on">
+				         	     <script type="text/javascript">
+									$(function() {
+										$('#selectAddress_on').addressSelect({
+											'names':{
+												province:'bank_province',
+												province_id:'bank_province_id',
+												city:'bank_city',
+												city_id:'bank_city_id',
+												region:'bank_region',
+												region_id:'bank_region_id',
+												town:'bank_town',
+												town_id:'bank_town_id'
+											},
+											deData:[   
+												${storeDetail.bank_province_id!''},
+												${storeDetail.bank_city_id!''},
+												${storeDetail.bank_region_id!''},
+												${storeDetail.bank_town_id!''}
+										     ]
+										});
+									})
+					             </script>
+			                 </dd> 
+			              </dl>
+					</td>
+				</tr>
+				<tr>
+					<th>开户银行许可证电子版：</th>
+					<td>
+						<img alt="" src="${storeDetail.bank_img}">
+						<input class="layui-input" name="bank_img" type="hidden"  value="${storeDetail.bank_img}" >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="2">税务登记证：</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>税务登记证号：</th>
+					<td>
+						<input class="layui-input" name="taxes_certificate_num" type="text"  value="${storeDetail.taxes_certificate_num}" >
+					</td>
+				</tr>
+				<tr>
+					<th>纳税人识别号：</th>
+					<td>
+						<input class="layui-input" name="taxes_distinguish_num" type="text"  value="${storeDetail.taxes_distinguish_num}" >
+					</td>
+				</tr>
+				<tr>
+					<th>税务登记证电子版：</th>
+					<td>
+						<img alt="" src="${storeDetail.taxes_certificate_img}">
+						<input class="layui-input" name="taxes_certificate_img" type="hidden"  value="${storeDetail.taxes_certificate_img}" >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="2">店铺信息：</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>店铺名称：</th>
+					<td>
+						<input class="layui-input" name="shop_name" type="text"  value="${store.shop_name}" >
+					</td>
+				</tr>
+				<tr>
+					<th>经营类目：</th>
+					<td>
+						<input class="layui-input" name="goods_management_category" type="text"  value="${storeDetail.goods_management_category}" >
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<#if store.shop_disable=='apply'>
+				<td>是否通过店铺审核</td>
+				<td>
+					<input style="height: 12px;" type="radio" value="1" checked="checked" name="pass"  lay-ignore />是
+					<input style="height: 12px;" type="radio" value="0" name="pass" lay-ignore />否
+				</td>
+		</#if>
+	</div>
+</div>
+

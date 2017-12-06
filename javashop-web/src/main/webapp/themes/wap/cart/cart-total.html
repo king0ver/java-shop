@@ -1,0 +1,10 @@
+<#-- 创建订单价格标签 -->
+<#assign orderPiceTag= newTag("storeOrderSelectPriceTag") />
+<#-- 通过订单价标签获取订单价格 -->
+<#assign orderPrice = orderPiceTag() >
+
+<strong class="top-total-bar">合计:￥${orderPrice.orderPrice?string("0.00")}</strong>
+<div class="bottom-total-bar">
+    <span>总额:￥${orderPrice.goodsPrice?string("0.00")}</span>
+    <!--<span>优惠:-￥${orderPrice.discountPrice!'0'}.00</span>-->
+</div>

@@ -1,0 +1,60 @@
+<div class="product-box" style="box-shadow: rgb(204, 204, 204) 0 2px 5px;">
+    <div style="position: relative; height:44px;">
+        <div class="product_control">
+            <div class="product_control_btn">
+                排序方式：
+                <#list sortList as selector>
+                    <a href="${selector.url!''}" class="${selector.value}<#if selector.isSelected> on</#if>">${selector.name}<i></i></a>
+                </#list>
+            </div>
+            <div class="product-control-price">
+                <div class="p-c-b">
+                    <span>
+                        <input type="text" class="custom-pro" maxlength="5">
+                    </span>
+                    <i></i>
+                    <span>
+                        <input type="text" class="custom-pro" maxlength="5">
+                    </span>
+                    <a href="javascript:;" class="empty-pro">清空</a>
+                    <a href="javascript:;" class="enter-pro">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-list clearfix">
+        <#if webpage.result?size gt 0>
+            <#list webpage.result as goods>
+                <dl class="item-product">
+                    <div class="show_tips">
+                        <dt>
+                            <a href="${ctx}/goods-${goods.goods_id}.html" target="_blank" title="${goods.name!''}">
+                                <img class="lazy" src="${file_path}/images/img-loading.gif" data-original='<@imgurl pic="${goods.small!''}"/>' alt="${goods.name!''}" style="width: 240px; height: 240px; display: inline;">
+                            </a>
+                        </dt>
+                        <dd class="dl_size clearfix" style="display: none;"></dd>
+                        <dd class="dl_name">
+                            <a href="${ctx}/goods-${goods.goods_id}.html" target="_blank" title="${goods.name!''}">${goods.name!''}
+                                <span class="subtitle"></span>
+                            </a>
+                        </dd>
+                        <dd class="dl_price clearfix">
+                            <span><i>￥</i>${goods.price?number?string('0.00')}</span><del></del>
+                        </dd>
+                        <dd class="add_cart">
+                            <a href="${ctx}/goods-${goods.goods_id}.html" target="_blank">查看详情</a>
+                            <span class="deal-cnt">仅剩${goods.quantity!'0'}件</span>
+                        </dd>
+                        <!--<span class="loveHeart"><i>收藏</i></span>
+                        <span class="tipState" style="display:none;">已加入购物车</span>-->
+                    </div>
+                </dl>
+            </#list>
+            <br/>
+            <@pager pageno="${webpage.currentPageNo!'1'}" pagesize="${webpage.pageSize}" totalcount="${webpage.totalCount}" />
+        <#else/>
+            <p style="width: 100%; text-align: center">暂无数据...</p>
+        </#if>
+    </div>
+</div>

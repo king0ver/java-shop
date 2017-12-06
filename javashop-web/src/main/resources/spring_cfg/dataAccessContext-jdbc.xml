@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd" default-autowire="byName" default-lazy-init="false">
+        	
+     <context:component-scan base-package="com.enation" />
+        	
+	<!-- 属性文件读入 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1" />   
+   	    <property name="ignoreUnresolvablePlaceholders" value="true" />   
+		<property name="locations">
+			<list>
+				<value>/config/jdbc.properties</value>
+				<value>/config/redis.properties</value>
+				<value>/config/amqp.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- redis配置文件 -->
+    <bean id="redisConnectionConfig" class="com.enation.eop.sdk.config.redis.configure.RedisConnectionConfig" > 
+    	 <property name="appId" value="${redis.appId}" />  
+    	 <property name="type" value="${redis.type}" /> 
+    	 <property name="host" value="${redis.host}" /> 
+    	 <property name="port" value="${redis.port}" /> 
+    	 <property name="password" value="${redis.password}" />
+		 <property name="maxIdle" value="${redis.maxIdle}" />
+	 	 <property name="maxTotal" value="${redis.maxTotal}" />
+		 <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+    </bean>
+
+
+	<!-- AMQP配置文件 -->
+	<bean id="amqpProperties" class="com.enation.eop.sdk.config.amqp.AmqpProperties">
+		<property name="host" value="${amqp.host}" />
+		<property name="port" value="${amqp.port}" />
+		<property name="username" value="${amqp.username}" />
+		<property name="password" value="${amqp.password}" />
+	</bean>           
+	
+	<!-- 数据源定义,使用Apache DBCP 连接池
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		<property name="initialSize" value="5" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="1000" />
+	</bean>
+	 -->
+	 
+   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">      
+    <property name="driverClass" value="${jdbc.driverClassName}" />      
+    <property name="jdbcUrl" value="${jdbc.url}" />      
+    <property name="user" value="${jdbc.username}" />      
+    <property name="password" value="${jdbc.password}" />    
+    <property name="minPoolSize" value="50" />  
+    <property name="maxPoolSize" value="400" />  
+    <property name="maxIdleTime" value="1800" />  
+    <property name="acquireIncrement" value="2" />  
+    <property name="maxStatements" value="0" />  
+    <property name="initialPoolSize" value="50" />  
+    <property name="idleConnectionTestPeriod" value="60" />  
+    <property name="acquireRetryAttempts" value="30" />  
+    <property name="breakAfterAcquireFailure" value="true" />  
+    <property name="testConnectionOnCheckout" value="true" />  
+   </bean>  
+
+	<bean id = "transactionManager" 
+         class = "org.springframework.jdbc.datasource.DataSourceTransactionManager" > 
+         <property name = "dataSource" > 
+             <ref bean = "dataSource" /> 
+         </property > 
+     </bean >
+	<bean class="com.enation.framework.component.ComponentLoader"></bean>	
+
+		
+	<!-- 支持 @Transactional 标记 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>  
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>

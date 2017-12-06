@@ -1,0 +1,248 @@
+<#include '/admin/header.html' > 
+<style type="text/css">
+	.table_search button{
+		margin-top: 0px!important;
+	}
+	.table_search{
+		width:700px;
+	}
+	
+
+</style>
+<div  class="admin-main">
+   <div>
+        <!--提示区域  -->
+        <div class="page_explain">
+           
+        </div>
+        <!--按钮操作  -->
+        <div class="table_control">
+        <input type="hidden" id="catid" value="">
+            <div class="table_opera">
+                <button type="button" id="catid" class="layui-btn layui-btn-primary " title="添加" onclick="newTab('新增店铺','${ctx}/shop/admin/member/member-list-store.do')"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+               
+            </div>
+          
+            <!--搜索区域  -->
+            <div class="table_search" >
+            		<input type="text" name="keyword" class="keyword" placeholder="请在这里输入店铺名称" id="searchbtn">
+		        <div id="templist" style="display: none">
+		            <form class="layui-form">
+		                <div class="form-group">
+						    <label for="contain">店铺名称：</label>
+						    <input class="form-control" type="text" id="shop_name" />
+						  </div> 
+						  <div class="form-group">
+						    <label for="contain">会员名称：</label>
+						    <input class="form-control" type="text"  id="member_name" name="member_name"/>
+						  </div> 
+						    <div class="form-group" style="display: inline-block;">
+							    <label for="filter">店铺状态：</label>
+							    <select id="shop_disable" name="searchField">
+									<option value="all">---所有---</option> 
+									<option value="open" selected="selected">开启中</option>
+									<option value="closed">关闭中</option>
+									<option value="apply">审核中</option>
+									<option value="refused">审核未通过</option>
+								</select>
+						  </div>
+						  <div class="form-group">
+						    <label for="contain">注册时间：</label>
+						    <input class="form-control" type="text"  placeholder="开始日" id="start_time"/>
+						  </div> 
+						    <div class="form-group">
+						     <input class="form-control" type="text"  placeholder="截止日" id="end_time" />
+						  </div> 
+		            </form>
+		        </div>
+            </div>
+           
+        </div>
+    </div>
+    
+   <!--表格区域  -->
+   <form id="storeform">
+    <table id="storedata" class="layui-table site-table table-hover">
+        <thead>
+          <tr> 
+          	<th>id</th>    
+            <th>店铺名称</th>
+            <th>会员名称</th>
+            <th>创建时间</th>
+            <th>店铺状态</th>
+            <th >操作</th>
+          </tr>
+        </thead>
+
+    </table>
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<script>
+var index = parent.layer.getFrameIndex(window.name);
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+    
+	
+});
+
+var table;
+$(function(){
+	//搜索栏
+    var cent = $("#templist").html();
+    $("#searchbtn").searchBox({
+        content: cent,
+        keywordSearch: function () {
+        var keyword = $("input[name=keyword]").val();
+		var param = "keyword="+keyword+"&stype="+0;
+		var url = table.ajax.url("${ctx}/b2b2c/admin/shop/shop-list-json.do?"+param);
+		url.load();
+        },
+        formSearch: function () {
+           var start_time = $("#start_time").val();
+			var end_time = $('#end_time').val();
+			var member_name = $("#member_name").val();
+			var shop_name = $("#shop_name").val();
+			var shop_disable = $("#shop_disable").val();
+			var param = "start_time="+start_time+"&end_time="+end_time+"&shop_name="+shop_name+"&member_name="+member_name+"&shop_disable="+shop_disable;
+			var url = table.ajax.url(ctx+"/b2b2c/admin/shop/shop-list-json.do?"+param);
+			url.load();
+        }
+    });
+	
+    
+	table = $('#storedata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/b2b2c/admin/shop/shop-list-json.do',
+	    },
+	    columns: [ //定义列
+	        {data: null,"render": function(obj) {
+	        	return '<input type="hidden" name="shop_id" value="'+obj.shop_id+'" ><span>'+obj.shop_id+'</span>';		
+	    	}},      
+	        {data: null,"render": function(obj) {
+ 	        	return obj.shop_name;		
+ 	       	}},
+	        {data: null,"render": function(obj) {
+	        	return obj.member_name;	
+	        	
+	       	}},
+	       	{data: function(obj) {
+		        	if(obj.shop_createtime==null){
+		        		return " ";
+		        	}else{
+		        		return  getFormatDateByLong(obj.shop_createtime, "yyyy-MM-dd");
+		        	}
+	       	}},
+	       	{data: null,"render": function(obj) {
+	       		if(obj.shop_disable=="refused")
+	       			return "未通过审核";
+	       		if(obj.shop_disable=="apply")
+	       			return "待审核";
+	       		if(obj.shop_disable=="open")
+	       			return "已审核"; 
+	       		if(obj.shop_disable=="closed")
+	       			return "已关闭";
+	       	}},
+	       	{data: null,"render": function(obj) {
+	       		var val="";
+	       		if(obj.shop_disable=='open'){
+	       			val= "<a class = 'layui-btn layui-btn-small layui-btn-danger' href='javascript:void;'  onclick = 'if(confirm(\"是否关闭店铺？\")){dis("+obj.shop_id+")}'>关闭</a>" ;
+	       		}else if(obj.shop_disable=='closed'){
+	       			val= "<a class = 'layui-btn layui-btn-small ' href='javascript:void;'  onclick = 'if(confirm(\"是否还原店铺？\")){revert("+obj.shop_id+")}'>开启</a>" ;
+	       		}
+	       		if(obj.shop_disable != 'refused'){
+	       			val += "     <a class='layui-btn layui-btn-small layui-btn-normal' onclick=newTab('"+obj.shop_name+"-查看店铺详细','${ctx}/b2b2c/admin/shop/edit.do?shopId="+obj.shop_id+"')>修改</a>";  
+	       		}
+	       		return val;
+	       	}}
+	     ]
+	});
+	
+	//layui日期控件配置
+	layui.use('laydate', function(){
+		  var laydate = layui.laydate;
+		  
+		  var start = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      end.min = datas; //开始日选好后，重置结束日的最小日期
+		      end.start = datas //将结束日的初始值设定为开始日
+		    }
+		  };
+		  
+		  var end = {
+		    min: '2014-01-01 23:59:59',
+		    max: '2099-06-16 23:59:59',
+		    istoday: false,
+		    choose: function(datas){
+		      start.max = datas; //结束日选好后，重置开始日的最大日期
+		    }
+		  };
+		  
+		  document.getElementById('start_time').onclick = function(){
+		    start.elem = this;
+		    laydate(start);
+		  }
+		  document.getElementById('end_time').onclick = function(){
+		    end.elem = this
+		    laydate(end);
+		  }
+		  
+		});
+	
+});
+	
+
+
+function dis(shopId){
+	$("#storeform").ajaxSubmit({
+		url:"${ctx}/b2b2c/admin/shop/dis-shop.do?shopId="+shopId,
+		dataType:"json",
+		success:function(data){
+			if(data.result==1){
+				alert(data.message);
+				location.reload();
+			}
+			else{
+				alert(data.message);
+			}
+		}
+	});
+}
+function revert(shopId){
+	$("#storeform").ajaxSubmit({
+		url:"${ctx}/b2b2c/admin/shop/use-shop.do?shopId="+shopId,
+		dataType:"json",
+		success:function(data){
+			if(data.result==1){
+				alert(data.message);
+				location.reload();
+			}
+			else{
+				alert(data.message);
+			}
+		}
+	});
+}
+
+
+</script>
+
+<#include '/admin/footer.html' >

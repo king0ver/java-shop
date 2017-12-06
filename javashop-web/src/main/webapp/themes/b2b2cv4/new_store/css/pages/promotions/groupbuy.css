@@ -1,0 +1,84 @@
+.group-buy {
+
+}
+
+/* 筛选工具栏样式
+ ============================================================================ */
+.filter-tools {
+    height: 50px;
+    background-color: #fafafa;
+    padding: 15px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+.filter-box {
+    float: left;
+    margin-left: 20px;
+    height: 50px;
+}
+
+.filter-tools .filter-name {
+    height: 50px;
+}
+
+.filter-tools .filter-name input {
+    width: 120px;
+    font-size: 12px;
+}
+
+.filter-tools .filter-seach .btn {
+    width: 59px;
+    line-height: 15px;
+    margin-top: 10px;
+}
+
+.filter-tools span {
+    display: block;
+    float: left;
+    font-size: 12px;
+    text-align: right;
+    line-height: 50px;
+}
+
+.filter-tools input {
+    float: left;
+    height: 15px;
+    width: 100px;
+    margin-top: 10px;
+}
+
+.filter-tools .filter-time input {
+    cursor: pointer;
+    background-color: #ffffff;
+}
+
+
+.groupbuy-state {
+    width: 100px;
+    height: 27px;
+    margin-top: 10px;
+    float:left;
+}
+
+
+.table-groupbuy {
+    font-size: 12px;
+}
+
+.table-groupbuy thead tr th,
+.table-groupbuy tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-groupbuy thead tr th {
+    border-bottom: none;
+    background-color: #f2f2f2;
+}
+
+.table-groupbuy-img {
+    width: 60px;
+    height: 60px;
+}

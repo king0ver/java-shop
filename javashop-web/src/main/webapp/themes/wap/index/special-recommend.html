@@ -1,0 +1,32 @@
+<#-- 特别推荐 -->
+<#assign goodsListTag = newTag("goodsListTag") />
+<#-- 调用商品列表标签，并传递商品列表所在catid及循环次数 -->
+<#assign recoList = goodsListTag("'tagid':'1','goodsnum':'20'") />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/index-recommend.css">
+<div class="index-special-recommend">
+    <div class="title-special-recommend">
+        <span class="title-recommend-box"><span class="img-recommend-box"></span>为您推荐</span>
+    </div>
+    <div class="content-special-recommend">
+        <ul class="lits-special-recommend">
+            <#if (recoList?size > 0)>
+                <#list recoList as goods>
+                    <li class="item tap" data-href="${ctx}/goods-${goods.goods_id}.html">
+                        <div class="recommend-box">
+                            <@image src="${goods.thumbnail!''}" alt="${goods.goods_name!''}" />
+                            <span class="name-recommend">${goods.goods_name!''}</span>
+                            <span class="tools-recommend">
+                                <#assign _price  = goods.price?string("0.00") />
+                                <#assign _length = _price?length />
+                                ¥<span class="price">${_price?substring(0, _length-3)}</span><span>${_price?substring(_length-3, _length)}</span>
+                                <span class="buy">立即购买</span>
+                            </span>
+                        </div>
+                    </li>
+                </#list>
+            <#else/>
+                <li>没有数据。。。</li>
+            </#if>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- 搜索 -->
+	<div class="search">
+		<input type="text" placeholder="请输入产品关键字，如品牌、型号等" value= "${keyword!''}" class="search_waord hunt" id="keyword"/>
+		<input type="button" value="" class="search_button" id="searchBtn"/>
+	</div>
+	
+	<script type="text/javascript">
+function search(){
+	var keyword = $.trim( $("#keyword").val());
+	if(keyword.indexOf('\\')!=-1){
+		alert("请输入正确的关键词");
+		return false;
+	}
+	if(keyword==''){
+		alert("请输入关键字");
+	}else{
+		keyword = keyword.replace(/\//g,"-xie-")
+		var url =  "goods_list.html?keyword="+keyword;
+		location.href="${ctx}/"+url;
+	}
+}
+
+ $(function(){	
+	$("#searchBtn").click(function(){
+		search();
+	});
+}); 
+</script>

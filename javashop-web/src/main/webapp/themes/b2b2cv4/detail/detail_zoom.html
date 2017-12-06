@@ -1,0 +1,59 @@
+<#-- 商品相册 -->
+<#assign goodsGalleryTag = newTag("goodsGalleryTag") />
+<#assign galleryList = goodsGalleryTag("{'goods_id':${goods.goods_id}}")!'' />
+
+<link type="text/css" rel="stylesheet" href="${file_path}/js/magiczoom/magiczoom.css"/>
+<script type="text/javascript" src="${file_path}/js/magiczoom/magiczoom.min.js"></script>
+<div class="info_left">
+    <dl class="clearfix">
+        <dd class="swiper-container-zoom">
+            <div class="move_box swiper-wrapper">
+                <#list galleryList as gallery>
+                    <a data-zoom-id="motorbike" href="<@imgurl pic="${gallery.big!''}"/>" class="swiper-slide img-select<#if gallery_index==0> on</#if>">
+                        <img src="<@imgurl pic="${gallery.big!''}"/>" style="width: 80px; height: 80px;">
+                        <i></i>
+                    </a>
+                </#list>
+            </div>
+            <#if galleryList?size gt 5 >
+                <div class="swiper-btn swiper-btn-prev"><i class="material-icons">&#xE316;</i></div>
+                <div class="swiper-btn swiper-btn-next"><i class="material-icons">&#xE313;</i></div>
+            </#if>
+        </dd>
+        <dt>
+            <#list galleryList as gallery>
+                <#if gallery_index == 0>
+                    <a href="<@imgurl pic="${gallery.big!''}"/>" class="MagicZoom" id="motorbike" data-options="zoomWidth:400px; zoomHeight:400px; selectorTrigger: hover; transitionEffect: false">
+                        <img src="<@imgurl pic="${gallery.big!''}"/>">
+                    </a>
+                </#if>
+            </#list>
+        </dt>
+    </dl>
+    <#assign goodsSnsShareTag = newTag("goodsSnsShareTag") />
+    <#assign sns = goodsSnsShareTag() />
+    <div class="share_box clearfix">
+        <div class="share_text fl" style="width: 100%; padding-top: 20px;">
+            <div id="ckepop">
+                <span class="jiathis_txt" style="cursor:default">分享到：</span>
+                <a class="jiathis_button_qzone"></a>
+                <a class="jiathis_button_tsina"></a>
+                <a class="jiathis_button_renren"></a>
+                <a class="jiathis_button_kaixin001"></a>
+                <a class="jiathis_button_tqq"></a>
+                <a class="jiathis_button_tsohu"></a>
+                <a class="jiathis_button_t163"></a>
+                <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+                <a href="javascript:collect_goods(${goods.goods_id});" style="margin-left: 5px;">收藏商品</a>
+            </div>
+            <script type="text/javascript">
+                var jiathis_config = {
+                    url:"${sns.url}",
+                    title:"${sns.title}",
+                    pic:"${sns.img}"
+                }
+            </script>
+            <script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+        </div>
+    </div>
+</div>

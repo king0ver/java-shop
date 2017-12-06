@@ -1,0 +1,168 @@
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#-- 退货申请标签 -->
+<#assign storeRefundDetailTag=newTag("storeRefundDetailTag")>
+<#assign storeRefundDetail=storeRefundDetailTag("{'id': ${id} }")>
+<#-- 退货申请 -->
+<#assign sellBack=storeRefundDetail.detail.refund>
+<#-- 退货订单 -->
+<#assign orderinfo=storeRefundDetail.orderInfo>
+<#-- 退货商品列表 -->
+<#assign goodsList=storeRefundDetail.detail.goodsList>
+<link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/return_auth.css">
+<script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/transaction/return_auth.js"></script>
+<div class="return-auth">
+    <div class="return_detail">
+        <div class="return-info" style="border-right: 1px solid #d8d8d8">
+            <h1>订单信息</h1>
+            <div class="return_info-list">
+                <input type="hidden" value="${sellBack.id}" name="id"/>
+                <input type="hidden" value="${sellBack.refuse_type}" id="i_type"/>
+                <ul>
+                    <li style="margin-top: 15px;"><span>退<span class="i-type"></span>单号：</span><span>${sellBack.sn }</span></li>
+                    <li><span>关联订单：</span><span>${orderinfo.sn }</span></li>
+                    <li><span>支付金额：</span><span>${orderinfo.paymoney?string("currency")}</span></li>
+                    <li><span>申请退款金额：</span><span>${sellBack.refund_price?string("currency")}</span></li>
+                    <li><span>退<span class="i-type"></span>人　：</span><span>${orderinfo.ship_name }</span></li>
+                    <li>
+                        <span>退<span class="i-type"></span>状态：</span>
+                        <span>
+                            <#if sellBack.refund_status=="apply">
+                                待审核
+                                <#elseif sellBack.refund_status=="pass">
+                                审核通过
+                                <#elseif sellBack.refund_status=="refuse">
+                                审核拒绝
+                                <#elseif sellBack.refund_status=="all_stock_in">
+                                全部入库
+                                <#elseif sellBack.refund_status=="part_stock_in">
+                                部分入库
+                                 <#elseif sellBack.refund_status=="cancel">
+                                取消退货
+                                 <#elseif sellBack.refund_status=="refunding">
+                                退款中
+                                 <#elseif sellBack.refund_status=="refundfail">
+                                退款失败
+                                 <#elseif sellBack.refund_status=="completed">
+                                已完成
+                            </#if>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="return-oper">
+            <form id="theForm">
+                <input type="hidden" name="sn" value="${sellBack.sn}"/>
+                <table>
+                    <tr>
+                        <td class="return-table-title">申请时间：</td>
+                        <td><@dateformat time="${sellBack.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></td>
+                    </tr>
+                    <#if sellBack.alltotal_pay??>
+	                    <tr>
+	                        <td class="return-table-title">退款金额：</td>
+	                        <td>${sellBack.refund_price}</td>
+	                    </tr>
+                    </#if>
+                    <tr style="line-height: 20px; ">
+                        <td class="return-table-title">退<span class="i-type"></span>原因：</td>
+                        <td>
+                        	<@substring title="${sellBack.refund_reason!''}" length=78 dot="..."/>
+                        </td>
+                    </tr>
+                    <tr>
+                   		<td class="return-table-title">详细描述：</td>
+                   		<td>
+                   			<#if (sellBack.customer_remark?length > 39)>
+                               <a href="javascript: void(0);" class="show-remark" data-container="body" data-trigger="focus" data-toggle="popover" data-placement="bottom" data-content="${sellBack.remark}">查看全部</a>
+                               <script type="text/javascript">
+                                   $('.show-remark').popover();
+                               </script>
+                           <#else>
+                           	${sellBack.customer_remark}
+                           </#if>
+                   		</td>
+                    </tr>
+                     <tr>
+                        <td class="return-table-title">退款金额：</td>
+                        <td><input type="text" id="refund_price"  name="refund_price" /></td>
+                    </tr>
+                    <tr>
+                        <td class="return-table-title">审核备注：</td>
+                        <td><textarea type="text" class="form-control" name="remark" maxlength="120" style="height: 50px;">${sellBack.seller_remark!''}</textarea></td>
+                    </tr>
+                     <#if sellBack.refund_status=="apply">
+	                    <tr style="line-height: 55px; ">
+	                        <td class="return-table-title">审核：</td>
+	                        <td class="check-oper" style="vertical-align: middle; ">
+	                            <a href="javascript: void(0);" class="btn btn-success check-btn" status="true">通过</a>
+	                            <a href="javascript: void(0);" class="btn btn-info check-btn" status="false" style="margin-left: 10px;">不通过</a>
+	                            <input id="agree" type="hidden" name="agree" value="true" />
+	                        </td>
+	                    </tr>
+                    </#if>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div class="return-table">
+        <table class="table table-bordered table-responsive">
+            <thead>
+            <tr style="background-color: #f2f2f2">
+                <th style="min-width: 85px; ">商品图片</th>
+                <th>商品名称</th>
+                <th>单价</th>
+                <th>购买数量</th>
+                <th>退货数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list goodsList as item>
+                <tr>
+                    <td style="width:85px">
+                        <a target="_blank" href="${ctx}/goods-${item.goods_id}.html">
+                            <span style="display: block; height: 50px;" class="cart-product-img">
+                                <img src="${item.goods_image!''}"  style="cursor: pointer;" />
+                            </span>
+                        </a>
+                    </td>
+                    <td style="width:300px;">
+                        <a target="_blank" href="${ctx}/goods-${item.goods_id}.html">
+                            ${item.goods_name}
+                            <#if item.other?? >
+                                ${item.other}
+                            </#if>
+                        </a>
+                    </td>
+                    <td><span>${item.price?string.currency}</span></td>
+                    <td>
+                        <span>${item.ship_num}</span>
+                    </td>
+                    <td>
+                        <span>${item.return_num}</span>
+                    </td>
+                </tr>
+            </#list>
+            <#if sellBack.gift_id?exists && sellBack.gift_id != 0>
+				<#--创建“订单赠品”标签-->
+				<#assign orderGiftDetailTag = newTag("orderGiftDetailTag")>
+				<#--调用“订单赠品”标签，并传递参数-->
+				<#assign gift = orderGiftDetailTag("{'order_id':${sellBack.orderid},'gift_id':${sellBack.gift_id}}")>
+				<tr>
+					<td style="width:85px">
+						<span style="display: block; height: 50px;" class="cart-product-img">
+							<img src="${gift.gift_img!''}" width="35"/>
+						</span>
+					</td>
+					<td style="width:300px;">
+						<p>${gift.gift_name}<span style="color: red; ">（赠品）</span></p>
+					</td>
+					<td><span>${gift.gift_price?string.currency}</span></td>
+					<td><span>1</span></td>
+					<td><span>1</span></td>
+				</tr>
+			</#if>
+            </tbody>
+        </table>
+    </div>
+</div>

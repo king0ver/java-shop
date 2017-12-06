@@ -1,0 +1,75 @@
+<!--创建“订单详细”标签-->
+<#assign orderDetailTag = newTag("sellerOrderDetailTag") />
+<!--调用“订单详细”标签，并传递参数-->
+<#assign orderDetailFlow = orderDetailTag() />
+<#assign orderDetail = orderDetailFlow.orderDetail />
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.addressSelect-1.0.js"></script>
+<style type="text/css">
+	.store_edit_order input[type=text] {
+		height: 15px;
+		width: 150px;
+	}
+	.store_edit_order table tr th {
+		vertical-align: middle;
+	}
+</style>
+<div class="store_edit_order">
+	<form id="orderInfo" class="validate">
+	<input type="hidden" name="orderId" value="${orderDetail.order_id}">
+	<table class="table table-bordered table-responsive">
+		<tr>
+			<th>收货人：</th>
+			<td><input type="text" class="form-control" name="ship_name" id="ship_name" value="${orderDetail.ship_name!''}" /></td>
+		</tr>
+		<#if orderDetail.ship_mobile?exists && orderDetail.ship_mobile != ''>
+			<tr>
+				<th>手机：</th>
+				<td>
+					<input type="text" class="form-control" name="ship_mobile" id="ship_mobile" value="${orderDetail.ship_mobile!''}" />
+				</td>
+			</tr>
+		</#if> 
+		<#if orderDetail.ship_tel?exists && orderDetail.ship_tel != ''>
+			<tr>
+				<th>联系电话：</th>
+				<td>
+					<input type="text" class="form-control" name="ship_tel" value="${orderDetail.ship_tel!''}" />
+				</td>
+			</tr>
+		</#if>
+		<tr>
+			<th>配送地区：</th>
+			<td id="address">
+
+			</td>
+			<script type="text/javascript">
+                $(function () {
+                    $('#address').addressSelect({
+                        deData: [${orderDetail.ship_provinceid}, ${orderDetail.ship_cityid}, ${orderDetail.ship_regionid}, ${orderDetail.ship_townid!-1}]
+                    });
+                })
+			</script>
+		</tr>
+		<tr>
+			<th>详细地址：</th>
+			<td><input type="text" class="form-control" name="ship_addr" isrequired="true" value="${orderDetail.ship_addr!''}" /> </td>
+		</tr>
+		<tr>
+			<th>送货时间：</th>
+			<td>
+				<select	name="receive_time" class="inputstyle">
+					<option value="任意时间" <#if orderDetail.receive_time=="任意时间" >selected="selected"</#if>>任意时间</option>
+					<option value="仅工作日" <#if orderDetail.receive_time=="仅工作日" >selected="selected"</#if>>仅工作日</option>
+					<option value="仅休息日" <#if orderDetail.receive_time=="仅休息日" >selected="selected"</#if>>仅休息日</option>
+				</select>&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<th>订单备注:</th>
+			<td>
+				<textarea name="remark" placeholder="限500字" class="form-control" style="resize: none; width: 80%;" maxlength="500">${orderDetail.remark!''}</textarea>
+			</td>
+		</tr>
+	</table>
+	</form>
+</div>

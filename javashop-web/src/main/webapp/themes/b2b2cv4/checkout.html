@@ -1,0 +1,77 @@
+<#assign memberIsLoginTag = newTag("memberIsLoginTag") />
+<#assign isLogin = memberIsLoginTag() />
+<#if isLogin>
+<#-- 创建购物车标签，首先判定是否有选择商品过来结算！BEGIN -->
+<#assign cartSelectGoodsListTag= newTag("cartSelectGoodsListTag")>
+<#-- 通过购物车标签获取购物项列表 -->
+<#assign itemList = cartSelectGoodsListTag()>
+
+<#if itemList? size == 0>
+	<#include 'common/header.html'/>
+  	<div style="height:300px;margin:20px auto;text-align:center;">
+  		<p>您还没有选择要下单的商品，请返回<a href="${ctx}/cart.html">购物车</a></p>
+  	</div>
+	<#include 'common/footer.html'/>
+  <#stop>
+</#if>
+<#-- 首先判定是否有选择商品过来结算！ END -->
+<#assign title="核对订单信息" />
+<#assign memberIsLoginTag=newTag("memberLoginCheckTag")>
+<#assign isLogin=memberIsLoginTag("'login_url':'/store/login.html'")>
+<#include '/common/header.html'/>
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/checkout.css"/>
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/cart.css"/>
+<!-- 购物流程 -->
+<div class="flow_path">
+	<div class="cart_logo">
+		<a href="${ctx}/index.html"><@image src="${logo}" class="pngFix" style="width:240px;height:60px;" /></a>
+	</div>
+	<div class="flow_pathlist">
+		<ul>
+			<li class="">
+				<i class="process1"></i>
+				<span></span>
+				<p style="cursor:default">我的购物车</p>
+				<strong></strong>
+			</li>
+			<li class="selected">
+				<i class="process2"></i>
+				<span></span>
+				<p style="cursor:default">填写核对信息单</p>
+				<strong></strong>
+			</li>
+			<li class="">
+				<i class="process3"></i>
+				<span></span>
+				<p style="cursor:default">成功提交订单</p>
+				<strong></strong>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="main">
+
+	<!--上不填写信息单、购买流程结束-->
+	<#include '/checkout/checkout.html'/>
+</div>
+<script>
+	$(function(){
+		var addressred = $(".address .selected").attr("style");
+		if(addressred==="display: none;"){
+			$(".address").addClass("relborder");
+		}
+	})
+</script>
+
+<#include 'cart/cart-message.html'>
+<#include 'common/footer.html'/>
+<#else/>
+	<#include 'common/header.html'/>
+	<script type="text/javascript">
+		layer.alert('您还未登录！',{icon: 0},function(index){
+			
+			layer.close(index);
+			location.href = '${ctx}/store/login.html?forward=${ctx}/checkout.html';
+		});
+	</script>
+</#if>

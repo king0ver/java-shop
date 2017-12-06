@@ -1,0 +1,85 @@
+<#include '/admin/header.html'>
+	<style>
+		.input .layui-input {
+			width: 400px;
+		}
+	</style>
+	<div class="admin-main">
+		<form id="editForm" method="post" class="layui-form">
+			<div class="input">
+				<div style="display: block;" class="store_detail">
+					<div class="layui-tab layui-tab-card contentTab1">
+						<ul class="layui-tab-title tab">
+							<#list pluginTabs as tab>
+								<li tabid="${tab.order}" <#if tab.order==1> class="layui-this"</#if> >${tab.tabTitle}</li>
+							</#list>
+						</ul>
+					</div>
+					<div class="shadowBoxWhite wf100 whiteBox">
+						<div class="text">
+							<div class="tab-page">
+								<#list pluginTabs as tab>
+									<div tabid="${tab.order}" <#if tab.order!=1> style="display:none"</#if> class="tab-panel">${tab.tabHtml}</div>
+								</#list>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="width: 100%;text-align: center;">
+					<a class="layui-btn layui-btn-normal" type="submit" lay-submit="" lay-filter="site_menu" id="sub">确定</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<script type="text/javascript">
+		$(function () {
+			$(".store_detail .layui-tab>ul>li").click(function () {
+				var tabid = $(this).attr("tabid");
+				$(".store_detail .layui-tab>ul>li").removeClass("contentTabS");
+				$(this).addClass("contentTabS");
+				$(".tab-page .tab-panel").hide();
+				$(".tab-panel[tabid=" + tabid + "]").show();
+			});
+
+			layui.use(['form', 'layedit', 'laydate'], function () {
+				var form = layui.form(),
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+
+				//监听提交
+				form.on('submit(site_menu)', function (data) {
+
+					/* if(!isPositiveInteger($(".commission").val())){
+						$.Loading.error("请输入正整数");
+						return false;
+					} */
+
+					var options = {
+						url: "${ctx}/b2b2c/admin/store/save-edit.do",
+						type: "POST",
+						dataType: 'json',
+						success: function (data) {
+							if (data.result == 1) {
+								$.Loading.success(data.message);
+								newTab('审核店铺', '${ctx}/b2b2c/admin/store/store-list.do?disabied=0');
+							}
+							if (data.result == 0) {
+								$.Loading.error(data.message);
+							}
+						},
+						error: function (e) {
+							parent.$.Loading.error("出现错误 ，请重试");
+							$.Loading.error(result.message);
+						}
+					};
+					$("#editForm").ajaxSubmit(options);
+
+					return false;
+				});
+
+			});
+		});
+	</script>
+
+	<#include '/admin/footer.html'>

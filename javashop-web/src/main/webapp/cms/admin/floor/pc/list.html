@@ -1,0 +1,112 @@
+<#include '/admin/header.html' >
+<div class="admin-main">
+			<div class="table_control">
+            	<div class="table_opera">
+                	<button type="button" id="add_floor_button" title="添加" class="layui-btn layui-btn-primary "><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+            		<button type="button" class="layui-btn layui-btn-primary " title="刷新" onclick="refresh();"><i class="layui-icon">&#x1002;</i></button>
+            	</div>
+        	</div>
+
+<form id="panelForm">
+    <table id="paneldata" class="layui-table site-table table-hover">
+        <thead>
+            <tr>
+                <th>楼层名称</th>
+                <th>排序</th>
+                <th>显示</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+    </table>
+</form>
+</div>
+<script>
+    var table;
+    $(function() {
+    	table = $('#paneldata').DataTable({
+			"language": {
+				"url":ctx + "/zh_CN.txt"
+		    },
+		    "processing": true,
+		    "serverSide": true,
+		    "ordering": false,
+		    "searching": false,
+		    "lengthChange": false,
+		    ajax:{
+		    	dataType:"json",
+		    	url : "${ctx}/cms/admin/floor.do?client_type=pc",
+		    },
+            columns: [ //定义列
+                    {data: "name"}, 
+                    {data: "sort"},
+                    {data: function(obj) {
+                        if (obj.is_display == 1) {
+                            return "是";
+                        } else {
+                            return "否";
+                        }
+                    }
+                }, {
+                    data: function(data) {
+                        return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick='edit(" + data.id + ")'\" >修改</a>" +
+                            "&nbsp" +
+                            "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=newTab('"+data.name+"-楼层设计','${ctx}/cms/admin/floor/pc/design-page.do?id=" + data.id + "\') \" >设计</a>" +
+                            "&nbsp" +                                             
+                            "<a class='layui-btn layui-btn-small layui-btn-danger' onclick='del(" +
+                            data.id + ")'>删除</a>";
+                    }
+                }]
+    	});
+    	//添加
+    	$("#add_floor_button").click(function(){
+    		layer.open({
+                title: "添加楼层",
+                content: "${ctx}/cms/admin/floor/pc/add-page.do",
+                area: ['500px', '400px'],
+                maxmin :true,//右上角可否放大缩小
+                offset: '60px',
+                type:2,//弹框的类型
+                shade: [0.3, '#000'],//黑色背景
+                shadeClose:false,//黑色背景是否可以点击关闭
+    	        });
+    		}); 
+    });
+
+    //删除
+    function del(id) {
+		if(!confirm("确认删除此楼层吗？")){
+			return;
+		}
+		var options = {
+				url:"${ctx}/cms/admin/floor/"+id+".do",
+				type : "delete",
+				success:function(data){
+						$.Loading.success("删除成功");
+						table.ajax.url("${ctx}/cms/admin/floor.do?client_type=pc").load();
+				},error:function(e){
+                    $.error(e.responseJSON.error_message);
+				}
+		};
+		$("#panelForm").ajaxSubmit(options);
+	}
+    
+    //修改
+    function edit(id) {
+        layer.open({
+            title: "修改楼层",
+            content:"${ctx}/cms/admin/floor/pc/edit-page.do?id="+id,
+            area: ['500px', '500px'],
+            maxmin :true,//右上角可否放大缩小
+            offset: '60px',
+            type:2,//弹框的类型
+            shade: [0.3, '#000'],//黑色背景
+            shadeClose:false,//黑色背景是否可以点击关闭
+            scrollbar: false//是否允许浏览器出现滚动条
+        });
+    }
+  //刷新
+	function refresh (){
+		table.ajax.url("${ctx}/cms/admin/floor.do?client_type=pc").load();
+	}
+</script>
+<#include '/admin/footer.html' >

@@ -1,0 +1,27 @@
+<#-- 热销商品 -->
+<#assign goodsListTag = newTag("goodsListTag") />
+<#-- 调用商品列表标签，并传递商品列表所在catid及循环次数 -->
+<#assign hotList = goodsListTag("'tagid':'1','goodsnum':'10'") />
+<div class="index-selling-goods">
+    <div class="title-tag-goods">
+        <div class="icon-tag-goods reco">
+            <i></i>
+        </div>
+        <div class="name-tag-goods reco">热销商品</div>
+    </div>
+    <div class="content-selling-goods">
+        <ul class="swiper-wrapper">
+            <#if (hotList?size > 0)>
+                <#list hotList as goods>
+                    <li class="item swiper-slide" data-href="${ctx}/goods-${goods.goods_id}.html">
+                        <@image src="${goods.thumbnail!''}" alt="${goods.name!''}" />
+                        <span class="price">￥${goods.price?string("0.00")}</span>
+                        <i class="icon"></i>
+                    </li>
+                </#list>
+            <#else/>
+                <li>没有数据。。。</li>
+            </#if>
+        </ul>
+    </div>
+</div>

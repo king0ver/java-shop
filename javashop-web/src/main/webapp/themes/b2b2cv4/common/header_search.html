@@ -1,0 +1,64 @@
+<#assign dataSearchTag = newTag("dataSearchTag") />
+<#assign dataListTag = newTag("dataListTag") />
+<div class="header-search">
+    <div class="form">
+        <div class="search-form" id="searchForm">
+            <#if keyword??>
+                <input class="search-text" autocomplete="off" type="text" value="${keyword}" placeholder="客官，您要搜点儿什么呢？">
+                <#else />
+                <input class="search-text" autocomplete="off" type="text"  id="namekeyword" placeholder="客官，要搜点儿什么？">
+            </#if>
+            <button type="button" class="search-button button-goods">搜商品</button>
+            <button type="button" class="search-button button-store">搜店铺</button>
+        </div>
+        <ul class="keyword">
+            <#assign hotKeyWordSearchTag = newTag("hotKeyWordSearchTag") />
+            <#assign hotKeyWordSearch = hotKeyWordSearchTag("{'catid':1}")  />
+            <#list hotKeyWordSearch as hotKeys>
+                <li><a href="${ctx}/goods_list.html?keyword=${hotKeys.hot_searchword!''}" target="_blank">${hotKeys.hot_searchword!''}</a></li>
+            </#list>
+        </ul>
+        <div class="autocomplete-box" style="display: none;">
+            <div class="autocomplete-list">
+                <ul id="autocomplete-list_id">
+                    <input type="hidden" value="1" name="selectKeyOne" id="keyOne">
+                    <li style="height:1px; overflow:hidden; border-bottom:1px #eee solid; margin-top:-1px;"></li>
+                    <li title="哈哈哈哈哈隔哈哈哈哈">
+                        <div class="left-span">&nbsp;哈哈哈哈哈<font style="font-weight:normal;color:#ec5151;">隔</font>哈哈哈哈哈</div>&nbsp;
+                        <b></b>
+                        <div class="autocomplete-span">约1个商品</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var searchForm = $('.search-form');
+        var _placeholder = '';
+        searchForm.on('focus blur keyup', '.search-text', function (event) {
+            var $this = $(this);
+            event.type === 'focusin' && ( function () { _placeholder = $this.attr('placeholder'); $this.attr('placeholder', '') })();
+            event.type === 'focusout' && ( $this.attr('placeholder', _placeholder) );
+            event.type === 'keyup' && event.which === 13 && (function () {
+                goSearch($this);
+            })()
+        });
+        searchForm.on('click', '.search-button', function () { goSearch($(this)) });
+
+        function goSearch(_this) {
+            var $this = _this.is('.search-text') ? _this : _this.siblings('.search-text');
+            var _val = $this.val(), _isStore = _this.is('.button-store');
+            if(/[`~!@#\$%\^\&\*\(\)_\+<>\?:"\{\},\.\\\/;'\[\]]/im.test(_val)){ $.message.error('不能包含特殊字符！'); return }
+            var url = _isStore ? '/store_list.html?searchType=default' : '/goods_list.html';
+            url += _val && (_isStore ? '&keyword=' + _val : '?keyword=' + _val);
+            location.href = ctx + url;
+        }
+    });
+    
+	var url_ = "${ctx}/goods-search/shop/goods-words.do";
+	 $("#namekeyword").bigAutocomplete({url:url_, callback:function(data){
+		 location.href="${ctx}/goods_list.html?keyword="+data.words;
+    }}); 
+</script>

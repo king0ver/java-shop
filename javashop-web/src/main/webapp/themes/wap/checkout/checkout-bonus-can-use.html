@@ -1,0 +1,49 @@
+
+<div class="can-use-bonus">
+    <#if canUseStoreList.totalNum gt 0>
+        <#list canUseStoreList.totalStoreBonus as canUseStore>
+            <#if canUseStore.bonusList?size gt 0>
+                <div class="store-item">
+                    <div class="title-store-item">${canUseStore.store_name!''}</div>
+                    <div class="content-store-item">
+                        <#list canUseStore.bonusList as canUseBonus >
+                        	<#assign is_used = canUseBonus.is_used!0 />
+                            <div class="bonus-item <#if is_used = 1> checked</#if>" store_id="${canUseStore.store_id!''}" bonus_id="${canUseBonus.bonus_id!''}">
+                                <div class="top-bg-bonus-item"></div>
+                                <div class="content-bonus-item">
+                                    <div class="check-bonus-item">
+                                        <i class="check-box-bonus-item"></i>
+                                    </div>
+                                    <div class="money-bonus-item" style="width:88%;">
+                                        <div class="use-money">
+                                            <span class="symbol-yuan">￥</span>
+                                            <span class="bonus-money">${canUseBonus.type_money?string('0.00')}</span>
+                                        </div>
+                                         <div class="limit-money">
+                                            ${canUseBonus.type_name!''}
+                                        </div>
+                                        <div class="limit-money">
+                                            满${canUseBonus.min_goods_amount?string("0.00")}可用
+                                        </div>
+                                        <div class="limit-money">
+                                           使用期限：<@dateformat time="${canUseBonus.use_start_date?c}" pattern="yyyy-MM-dd"/> - <@dateformat time="${canUseBonus.use_end_date?c}" pattern="yyyy-MM-dd"/>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="other-bonus-item">
+                                        <div class="name-bonus">
+                                            ${canUseBonus.type_name!''}    
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </#if>
+        </#list>
+        <#else/>
+        <div class="eui-nodata">
+            <img src="${ctx}/statics/e_tools/images/beifang/beifang-no_data.png">
+        </div>
+    </#if>
+</div>

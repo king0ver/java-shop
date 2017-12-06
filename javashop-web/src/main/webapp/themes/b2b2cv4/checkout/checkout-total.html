@@ -1,0 +1,39 @@
+<#-- 创建结算订单金额标签 -->
+<#assign tradePriceTag = newTag("tradePriceTag") />
+<#assign tradePrice = tradePriceTag() />
+
+<#assign checkCmptIsOnTag = newTag("checkCmptIsOnTag") /> 
+<#assign creditIsOn=checkCmptIsOnTag("{'componentName':'余额支付组件'}") />
+<div class="details-ckt-total">
+	<ul class="ul-details-ckt-total">
+		<li style="cursor:default">
+			<span class="title-details-ckt-total">商品总金额：</span>
+			<em class="price-details-ckt-total">${tradePrice.goods_price?string("currency")}<#if (tradePrice.exchange_point)?? && tradePrice.exchange_point!=0>+${(tradePrice.exchange_point)!''}分</#if></em>
+			<div class="clear-details-ckt-total"></div>
+		</li>
+		<li class="li_discount_price" style="cursor:default">
+			<span class="title-details-ckt-total">优惠金额：</span>
+			<em class="price-details-ckt-total">-${tradePrice.discount_price?string("currency")}</em>
+			<div class="clear-details-ckt-total"></div>
+		</li>
+		<#if creditIsOn=="ON" >
+			<li class="li_credit_price" style="cursor:default">
+			<span class="title-details-ckt-total">余额支付金额：</span>
+			<em class="price-details-ckt-total">-${((tradePrice.credit_pay)!0)?string("currency")}</em>
+			<div class="clear-details-ckt-total"></div>
+		</li>
+		</#if>
+		<li style="cursor:default">
+			<span class="title-details-ckt-total">运费总计：</span>
+			<em class="price-details-ckt-total">${tradePrice.freight_price?string("currency")}</em>
+			<div class="clear-details-ckt-total"></div>
+		</li>
+	</ul>
+</div>
+<div class="summary-ckt-total">
+	<div class="amounts-payable-ckt" style="cursor:default">
+		<span class="title-details-ckt-total amounts">应付金额：</span>
+		<em class="price-details-ckt-total amounts">${tradePrice.total_price?string("currency")}<#if (tradePrice.exchange_point)?? && (tradePrice.exchange_point)!=0>+${(tradePrice.exchange_point)!''}分</#if></em>
+		<div class="clear-details-ckt-total"></div>
+	</div>
+</div>

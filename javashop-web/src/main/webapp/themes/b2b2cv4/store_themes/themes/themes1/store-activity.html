@@ -1,0 +1,239 @@
+
+<#include '/common/header.html' />
+
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/store_themes/themes/themes1/css1.css" />
+<script src="${ctx}${themes_path}/js/store_slider.js" type="text/javascript"></script>
+
+<#-- 创建店铺信息标签 -->
+<#assign myShopDetailTag= newTag("myShopDetailTag")>
+<#assign shop = myShopDetailTag("{'type':0}")!''>
+
+<#-- 创建店铺导航标签 --> 
+<#assign storeNavigationTag= newTag("storeNavigationTag") > 
+<#assign storeNavigation= storeNavigationTag("{'store_id':${shop.shop_id!0}}")!''>
+
+<#-- 获取促销活动信息 -->
+<#assign promotionByActivityIdTag = newTag("promotionByActivityIdTag")>
+<#assign act = promotionByActivityIdTag("{'shop_id':${shop.shop_id!0},'activity_id':${activity_id}}")!'' >
+
+<!-- 标题、导航 -->
+<#include 'title.html' />
+
+<#assign storeSlideListTag= newTag("storeSlideListTag") > 
+<#assign storeSlideList=storeSlideListTag("{'storeid':${shop.shop_id!0}}")!''>
+<div class="max-adv">
+	<div id="index-adv" class="flexslider">
+		<ul class="slides">
+			 <#list storeSlideList as adv>
+				<li rel= "<@link url="${adv.silde_url!''}"/>">
+					<@image src="${adv.img!''}" style="display:none;"/>
+				</li>
+			 </#list>  
+		</ul>
+	</div>
+</div>
+
+<div class="activity-outside">
+	<#if act??>
+	<#assign activity = act.activity />
+				<a name="activity${activity.fd_id}" id="activity${activity.fd_id}"></a>
+				<div class="activity-same">
+					<h3>活动名称：</h3>
+					<h4>${activity.title!''}</h4>
+				</div>
+				<div class="activity-same">
+					<h3>活动日期：</h3>
+					<h4>${activity.start_time_str!''}<span>至</span>${activity.end_time_str!''}</h4>
+				</div>
+				<div class="activity-same">
+					<h3>优惠内容：</h3>
+						<div class="activity-box">
+								<p class="threshold">单笔订单购满： <span>${activity.full_money?string("currency")}</span></p>
+									<p>即可享受：
+										<#if activity.is_full_minus == 1>
+											【<span>减现金：${activity.minus_value?string("currency")}</span>】
+										</#if>
+										<#if activity.is_free_ship == 1>
+											【<span>免邮费</span>】
+										</#if>
+										<#if activity.is_send_point == 1>
+											【<span>送积分：${activity.point_value!0}积分</span>】
+										</#if>
+										<#if activity.is_send_bonus == 1>
+											【<span>
+												送优惠券（<#if act.bonus.received_num lt act.bonus.create_num>剩余${act.bonus.create_num-act.bonus.received_num}张<#else>已赠完</#if>）</span>】
+										</#if>
+										<#if activity.is_send_gift == 1>
+											【<span>送赠品（<#if act.gift.enable_store gt 0>剩余${act.gift.enable_store}份<#else>已赠完</#if>）</span>】
+										</#if>
+										<#if activity.is_discount == 1>
+											【<span>折扣：${activity.discount_value!0}折</span>】
+										</#if>
+									</p>
+						</div>
+				</div>
+				<div class="activity-same">
+					<h3>活动说明：</h3>
+					<div class="activity-word">
+						${activity.description!''}
+					</div>
+				</div>
+	<#else>
+		<p class="no-activity">哎呀...店铺还有活动呢，请您收藏我，留意查看是否有活动</p>
+	</#if>
+</div>
+
+<#include 'float.html' /> 
+
+
+<script type="text/javascript">
+
+//给li加载背景图片
+$(".slides li").each(function(){
+	var imgSrc = $(this).find("img").attr("src");
+	$(this).css("background-image","url("+imgSrc+")");
+})
+
+//点击跳转广告链接
+$(".slides li").click(function(){
+	var advUrl = $(this).attr("rel");
+	location.href = advUrl;
+})
+
+//计算广告高度
+function advheight (){
+	var advBoxHeight = $(window).height()*0.565;
+	$(".slides").css("height",advBoxHeight+"px");
+}
+$(function(){
+	$('#index-adv').flexslider({
+		animation: "slide",
+		direction:"horizontal",
+		easing:"swing"
+	});
+	
+	$(".flexslider").mouseover(function(){
+		$(".max-adv .flexslider .flex-direction-nav li a").show(300);
+	})
+		
+	$(".flexslider").mouseleave(function(){
+		$(".max-adv .flexslider .flex-direction-nav li a").hide();
+	})
+//	advheight();
+});
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		//搜索		
+		$('input[nctype="search_in_store"]').click(function() {
+			$('#search_act').val('show_store');
+			$('#formSearch').submit();
+		});
+		$('input[nctype="search_in_shop"]').click(function() {
+			location.href="${ctx}/goods_list.html?keyword="+$("#keyword").val()+"&search=goods";
+		});
+		
+		
+		//导航
+		$(".store-classify").mouseover(function(){
+			$(this).find("h1").addClass("selected");
+			$(".s-c-listbox").show();
+		})
+		
+		$(".store-classify").mouseleave(function(){
+			$(this).find("h1").removeClass("selected");
+			$(".s-c-listbox").hide();
+		})
+		
+		$(".s-c-list").mouseover(function(){
+			$(this).addClass("hover");
+			$(this).find("ul").show();
+		})
+		$(".s-c-list").mouseleave(function(){
+			$(this).removeClass("hover");
+			$(this).find("ul").hide();
+		})
+		
+		$(".s-cat-list ").mouseover(function(){
+			$(this).addClass("childhover");
+		})
+		$(".s-cat-list ").mouseleave(function(){
+			$(this).removeClass("childhover");
+		})
+		
+		//热卖鼠标悬停
+		$(".new-list").hover(
+		        function() {
+		            $(this).find(".new-list-intro").animate({"bottom": "0px"}, 300, "swing");
+		        },function() {
+		            $(this).find(".new-list-intro").stop(true,false).animate({"bottom": "-60px"}, 400, "swing");
+		        }
+		    );
+		
+		//鼠标移入logo
+		$(".store-logo img").mouseover(function(){
+			$(this).removeClass("no-slected");
+			$(this).addClass("selected");
+		})
+		$(".store-logo img"). mouseleave(function(){
+			$(this).removeClass("selected");
+			$(this).addClass("no-slected");
+		})
+		
+		//优惠券鼠标移入
+		$(".store-bonus").mouseover(function(){
+			$(this).css({"border":"1px solid #ff0000"});
+		})
+		$(".store-bonus").mouseleave(function(){
+			$(this).css({"border":"1px dashed #dedede"});
+		})
+		
+		
+		//领取购物券
+		$(".store-bonus").click(function(){
+			var bonusId = $(this).attr("rel");
+			$.ajax({
+				url : "${ctx}/api/b2b2c/bonus/receive-bonus.do?store_id=${shop.shop_id!0}&type_id="+bonusId,
+				cache : false,
+				dataType: "json",
+				success : function(data) {
+					if (data.result == 1) {
+						$.alert("领取成功");
+						window.location.href;
+					}
+					if (data.result == 0) {
+						$.message.error(data.message);
+					}
+					if(member==null||member==''){
+						window.location.href;
+					}
+					
+				},
+				error : function() {
+					$.message.error("出现错误,请重试！");
+				}
+			});
+ 		})
+ 		
+ 		//收藏本店
+ 		$(".store-collect").click(function(){
+ 			var storeId = $(this).attr("rel");
+ 			$.ajax({ 
+ 				url:ctx+'/api/b2b2c/store-collect/add-collect.do?store_id='+storeId,
+ 				dataType:'json',
+ 				success:function(result){
+ 					if(result.result == "1"){
+ 						$.alert(result.message);
+ 						location.reload();
+ 					}else{
+ 						$.alert(result.message);
+ 					}
+ 				} 
+ 			});
+ 		})
+ 		
+	});
+</script>
+<#include 'float.html' /> 
+<#include '/common/footer.html' /> 

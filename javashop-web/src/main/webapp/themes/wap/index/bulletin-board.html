@@ -1,0 +1,18 @@
+<#assign dataSearchTag=newTag("dataSearchTag") />
+<#-- 调用CMS数据搜索标签，并传递所在模型ID参数-->
+<#assign webPage = dataSearchTag('{"modelid":2,"catid":26}') />
+<div class="index-bulletin-board">
+    <#if (webPage.result?size > 0) >
+        <ul class="swiper-wrapper">
+        <#list webPage.result as articlea>
+            <#if articlea_index lt 5>
+                 <li class="item swiper-slide" data-href="${ctx}/help-26-${articlea.id}.html" data-title="${articlea.title!''}">
+                     <@substring title="${articlea.title!''}" length="25" dot="..." />
+                 </li>
+            </#if>
+        </#list>
+        </ul>
+    <#else/>
+        <ul><li>还没有公告╮(╯_╰)╭</li></ul>
+    </#if>
+</div>

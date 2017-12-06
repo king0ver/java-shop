@@ -1,0 +1,36 @@
+<!-- 创建店铺信息标签 -->
+<#assign myShopDetailTag= newTag("myShopDetailTag")>
+<!-- 调用查询店铺信息标签 -->
+<#assign shop = myShopDetailTag("{'type':0}")!''>
+<!-- 创建店铺导航标签 --> 
+<#assign storeNavigationTag= newTag("storeNavigationTag") > 
+<!-- 查询店铺导航列表 --> 
+<#assign storeNavigation= storeNavigationTag("{'store_id':${shop.shop_id!0}}")!''>
+<!-- 获取店铺当前进行的促销活动信息 -->
+<#-- <#assign checkStoreCurrActTag = newTag("checkStoreCurrActTag")> --> 
+<#-- <#assign currentAct = checkStoreCurrActTag("{'store_id':${shop.shop_id!0}}")!'' > --> 
+<!-- 店铺banner -->
+<#assign storeSlideListTag= newTag("storeSlideListTag") > 
+<#assign storeSlideList=storeSlideListTag("{'storeid':${shop.shop_id!0}}")!''>
+
+
+<#assign storeSearchGoodsListTag=newTag("storeSearchGoodsListTag")>
+<#assign goodsList=storeSearchGoodsListTag("{'storeid':${shop.shop_id!0},'keyword':'${keyword!''}','start_price':'${start_price!''}','end_price':'${end_price!''}','stc_id':${stc_id!0},'key':${key!0},'order':'${order!''}','num':16}")>
+<#list goodsList.storegoods.result as gl>
+				<li>
+ 					<div class="goods-list-left">
+ 						<a href="${ctx}/goods-${gl.goods_id}.html">
+ 							<@image src="${gl.thumbnail!''}"  alt="${gl.name!''}" class="mistake"/>
+ 						</a>
+ 					</div>
+ 					<div class="goods-list-right">
+ 						<h3>
+	 						<a href="${ctx}/goods-${gl.goods_id}.html">
+	 							<@substring	title="${gl.name!''}" length="30" dot="..." />
+	 						</a>
+ 						</h3>
+ 						<p>￥${gl.price!0.00}</p>
+ 					</div>
+	 			</li>
+			</#list>
+		</ul>

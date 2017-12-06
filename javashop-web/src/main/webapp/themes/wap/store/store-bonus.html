@@ -1,0 +1,33 @@
+<#assign storeBonusListTag = newTag("storeBonusListTag") />
+<#assign storeBonusList = storeBonusListTag("{'store_id':${store_id}}")!'' />
+<#if storeBonusList.totalCount != 0 >
+    <link rel="stylesheet" href="${ctx}${themes_path}/css/store-bonus.css">
+    <script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/iscroll/iscroll.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/page/store-bonus.js"></script>
+    <div class="store-bonus">
+        <div class="title-store-bonus">
+            <span>领券</span>
+            <span>共${storeBonusList.totalCount}张</span>
+        </div>
+        <div class="content-store-bonus" id="store-bonus-box">
+            <div class="bonus-items">
+                <#list storeBonusList.bonusList.result as bonus>
+                    <div class="eui-bonus-small blue bonus-item" data-id="${bonus.type_id!'0'}">
+                        <div class="eui-bonus-small-main">
+                            <div class="eui-bonus-small-num">
+                                <span class="eui-bonus-small-rmb">￥</span><span class="eui-bonus-small-number">${bonus.type_money}</span>
+                            </div>
+                            <div class="eui-bonus-small-limit">满${bonus.min_goods_amount}可用</div>
+                        </div>
+                        <div class="eui-bonus-small-line"></div>
+                        <div class="eui-bonus-small-receive">
+                            <div class="top">领</div>
+                            <div class="bottom">取</div>
+                        </div>
+                        <em class="eui-bonus-small-icon"></em>
+                    </div>
+                </#list>
+            </div>
+        </div>
+    </div>
+</#if>

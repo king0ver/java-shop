@@ -1,0 +1,74 @@
+<#-- 商品参数 -->
+<#assign goodsParametersTag = newTag("goodsParametersTag") />
+<#assign goodsParamList = goodsParametersTag("'goodsid':${goods_id}")!'' />
+<style>
+.product-detail-div .t-info{
+	overflow: visible;
+}
+	
+.group-inner .control-group{
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 10px;
+    background: #f6f6f6;
+    width: 190px;
+    margin-bottom:20px;
+	margin-right:4px;
+}
+
+.group-inner .control-group p{
+	width: 100%;
+	font-family: monospace;
+    font-weight: 100;
+	color:#333;
+	text-align: left;
+	position: relative;
+}
+
+.product-detail-div .group-inner{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.product-detail-div .group-inner p.control-label{
+	width:200px;
+	overflow:hidden; 
+	text-overflow:ellipsis; 
+	white-space:nowrap;
+}
+</style>
+<div class="product-detail-div clearfix">
+    <div class="t-info"></div>
+        <#if goodsParamList?exists && goodsParamList?size!=0>
+    		<#list goodsParamList as group>
+        <div class="t-info">
+				<div class="moudle_details">
+            		<div class="moudle_top">
+               			 <span class="sp_cs" style="cursor:pointer">${group.group_name!''}</span>
+            		</div>
+        		</div>
+       			<div class="info-group-cont vbox">
+					<div class="group-inner">
+						<#if group.params?exists && group.params?size!=0 >
+						<#list group.params as param>
+						<div class="control-group params" >
+								<p class="control-label" style="cursor:pointer" data-value='${param.param_value!''}' type="button" class="btn btn-default"  data-container="body" data-toggle="popover" data-placement="bottom" data-content="Vivamus
+								sagittis lacus vel augue laoreet rutrum faucibus.">${param.param_name!''}：
+									<#if param.param_type==1>
+										${param.param_value!''}
+										<#else>
+										<#list param.optionAr as option >
+										<#if (param.param_value!"") == option>${option}</#if>
+										</#list>
+										</#if>
+								</p>
+						</div>
+						</#list>
+						</#if>
+					</div>
+				</div>
+		 	</div>
+       	 </#list>
+   	 </#if>
+    <div class="info_intro">${goods.intro!''}</div>
+</div>

@@ -1,0 +1,166 @@
+<#assign title="发表评价" />
+<#include '/common/header.html' />
+<script src="${ctx}${themes_path}/js/Order.js" type="text/javascript"></script>
+<link rel="stylesheet" href="${ctx}${themes_path}/css/goods-comment.css">
+<div class="evaluation">
+    <div class="evaluation-ul">
+        <div class="evaluation-li">
+            <div class="eval-nav">
+                <div class="eval-img">
+                    <a href="">
+                        <img src="//img10.360buyimg.com/n2/jfs/t3727/322/1420035795/174728/e40a2ff/58259dcand6f4550f.jpg" alt="">
+                    </a>
+                </div>
+                <div class="comment">
+                    <span class="praise">
+                       <img src="${ctx}${themes_path}/images/flower.png" alt="">
+                       <span>好评</span>
+                    </span>
+                    <span class="average">
+                            <img src="${ctx}${themes_path}/images/flower-low.png" alt="">
+                            <span>中评</span>
+                    </span>
+                    <span class="bad-review">
+                            <img src="${ctx}${themes_path}/images/flower-low.png" alt="">
+                            <span>差评</span>
+                    </span>
+                </div>
+            </div>
+            <div class="eval-cont">
+                <textarea placeholder="宝贝满足您的期待吗？说说它的优点和美中不足的地方吧！" maxlength="140"></textarea>
+            </div>
+        </div>
+
+        <div class="evaluation-li">
+            <div class="eval-nav">
+                <div class="eval-img">
+                    <a href="">
+                        <img src="//img10.360buyimg.com/n2/jfs/t3727/322/1420035795/174728/e40a2ff/58259dcand6f4550f.jpg" alt="">
+                    </a>
+                </div>
+                <div class="comment">
+                    <span class="praise">
+                        <img src="${ctx}${themes_path}/images/flower-h.png" alt="">
+                        <span>好评</span>
+                    </span>
+                    <span class="average">
+                        <img src="${ctx}${themes_path}/images/flo-e.png" alt="">
+                        <span>中评</span>
+                    </span>
+                    <span class="bad-review">
+                        <img src="${ctx}${themes_path}/images/flower-low.png" alt="">
+                        <span>差评</span>
+                    </span>
+                </div>
+            </div>
+            <div class="eval-cont">
+                <textarea placeholder="宝贝满足您的期待吗？说说它的优点和美中不足的地方吧！" maxlength="140"></textarea>
+            </div>
+        </div>
+    </div>
+    <!-- 店铺评分 -->
+    <div class="store-rating">
+        <div class="store-nav">
+            <img src="${ctx}${themes_path}/images/shop.png" alt="">
+            <span>店铺评分</span>
+        </div>
+        <div class="rating-star">
+            <div class="logistics-star">
+                <div class="text">
+                    <span>描述相符</span>
+                </div>
+                <div class="star">
+                    <ul>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/red-star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <div class="grade">
+                    <span>非常差</span>
+                </div>
+            </div>
+            <div class="logistics-star">
+                <div class="text">
+                    <span>物流服务</span>
+                </div>
+                <div class="star">
+                    <ul>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/red-star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/red-star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <div class="grade">
+                    <span>一般</span>
+                </div>
+            </div>
+            <div class="logistics-star">
+                <div class="text">
+                    <span>服务态度</span>
+                </div>
+                <div class="star">
+                    <ul>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/red-star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/red-star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/red-star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                        <li>
+                            <img src="${ctx}${themes_path}/images/star.png" alt="">
+                        </li>
+                    </ul>
+                </div>
+                <div class="grade">
+                    <span>好</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 发表评价按钮 -->
+    <div class="posted">
+        <button type="button">发表评价</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var module = new Module();
+        module.navigator.init('发表评价');
+    });
+</script>
+</body>
+
+</html>

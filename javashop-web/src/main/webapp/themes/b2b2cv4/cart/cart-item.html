@@ -1,0 +1,39 @@
+<#assign cartTag = newTag("cartTotalListTag") />
+<#assign cartList = cartTag() />
+<#if cartList?exists && cartList?size gt 0>
+    <#list cartList as cartVo >
+        <div class="item-cart">
+            <div class="store-item-cart" data-store_id="${cartVo.seller_id}">
+                <span class="checkbox"><a href="javascript:;" class="check check-store<#if cartVo.checked == 1> checked</#if>"><i class="material-icons">&#xE876;</i></a></span>
+                <a class="label" href="${ctx}/store_themes/${(cartVo.seller_id)!0}/index.html" target="_blank">${cartVo.seller_name!''}</a>
+                <#if (cartVo.price.is_free_freight??) && (cartVo.price.is_free_freight == 1)>
+                    <span class="free-ship"><i class="material-icons">&#xE86C;</i>已免邮</span>
+                </#if>
+            </div>
+            <div class="list-item-cart">
+                <#include '/cart/cart-item-list.html' />
+            </div>
+
+            <div class="amount-item-cart" style="cursor:default">
+                <#assign cartPrice = cartVo.price />
+                <div class="amount">商品总价：
+                    <em>¥ </em><span class="price-store">${cartPrice.total_price?string("0.00")}</span>
+                </div>
+                <#if cartPrice.discount_price != 0>
+                    <div class="discount">促销优惠：
+                        <em>¥ </em><span>${cartPrice.discount_price?string("0.00")}</span>
+                    </div>
+                </#if>
+                <#assign __weight = cartVo.weight />
+                <#if (__weight > 999) >
+                    <#assign _weistr = (__weight/1000)?string("0.00") + 'kg' />
+                    <#else/>
+                    <#assign _weistr = __weight + 'g' />
+                </#if>
+                <div>重量：<span class="weight-store" title="${__weight}g">${_weistr}</span></div>
+            </div>
+        </div>
+    </#list>
+<#else/>
+<#include '/cart/cart-empty.html' />
+</#if>

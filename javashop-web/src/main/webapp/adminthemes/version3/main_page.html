@@ -1,0 +1,334 @@
+<#include '/admin/header.html'>
+
+	<link type="image/x-icon" href="${site.icofile!''}" rel="bookmark" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/css/main_page.css" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/css/animate.min.css" />
+	<script type="text/javascript" src="${ctx}/adminthemes/version3/js/short-msg.js"></script>
+	<style type="text/css">
+		.layui-layer-dialog .layui-layer-content {
+			line-height: 9px;
+		}
+
+		.layui-side {
+			z-index: 1!important;
+		}
+
+		.tools-other i {
+			display: block;
+			float: left;
+		}
+
+		.tools-other li {
+			width: 134px;
+			margin-left: -74px;
+			height: 2px;
+			margin-top: 86px;
+		}
+
+		.layui-nav {
+			padding: 0px!important;
+		}
+
+		.icon-up {
+			width: 170px;
+			top: -84px;
+			left: -100px;
+		}
+
+		.left-sroll {
+			margin-left: 78px;
+		}
+
+		.layui-nav-bar {
+			display: none;
+		}
+
+		#side > ul a.active{
+			background: #f8f8f8;
+		}
+
+	</style>
+	<script>
+
+	</script>
+
+	<!-- 顶部 
+<div class="main-blank-top">
+</div>
+-->
+
+	<!-- 内容 -->
+	<div class="layui-layout layui-layout-admin beg-layout-container">
+		<div class="main-left">
+			<!-- 左侧搜索 -->
+			<div class="main-left-search">
+				<img src="${staticserver}/images/logo2.png" style="width: 100%;">
+			</div>
+			<div class="layui-side beg-layout-side-left left-menu" id="menu">
+				<ul class="layui-nav layui-nav-tree " lay-filter="" id="top-nav">
+					<#assign count=1>
+						<#list menuList as menu>
+							<#if menu.hasChildren>
+								<li class="layui-nav-item" id="${menu.id}" style="line-height: 4px;">
+									<a href="javascript:void(0)">
+										<!-- <i class="iconfont">&#xe65c;</i> -->
+										<cite class="marg-left menu_content">${menu.title!''}</cite>
+									</a>
+								</li>
+							</#if>
+							<#assign count=count+1>
+						</#list>
+				</ul>
+			</div>
+			<!-- 登录用户头像 -->
+			<div class="main-left-user">
+				<div class="user-border"></div>
+				<img class="person-admin-img" src="${ctx}/adminthemes/version3/images/0.jpg" />
+			</div>
+		</div>
+		<div class="user-tools user-tools-uclass">
+			<ul class='user-tools-uclass'>
+				<li class='user-tools-uclass modify-password'>
+					<i class="iconfont user-tools-uclass">&#xe6eb;</i>
+					<b class='user-tools-uclass'>修改密码</b>
+				</li>
+				<li class='user-tools-uclass'>
+					<a class='user-tools-uclass' href="${ctx}/index.html" target="_blank">
+					<i class="iconfont user-tools-uclass">&#xe6bf;</i> 
+					<b class='user-tools-uclass'>浏览网站</b>
+				</a>
+				</li class='user-tools-uclass'>
+				<li class="last user-tools-uclass">
+					<a class='user-tools-uclass' href="javascript:void(0)" id="logout_btn">
+					<i class="iconfont user-tools-uclass" >&#xe6eb;</i> 
+					<b class='user-tools-uclass'>注销</b>
+				</a>
+				</li>
+			</ul>
+		</div>
+		<!-- 右侧 -->
+		<div class="layui-tab layui-tab-brief layout-nav-card left-nav" lay-filter="layout-tab" style="position:absolute;top:0px;">
+			<div class="tab-background"></div>
+			<div class="main-logo">
+				<p class="iconfont" style="cursor: pointer;">&#xe709;</p>
+				<div class="message-list">
+					<div class="message-ul-li">
+						<span>站内消息通知</span>
+						<div class="up-img"></div>
+					</div>
+					<div class="message-list-box">
+						<ul>
+						</ul>
+					</div>
+				</div>
+				<!-- <img  src="${ctx}/adminthemes/version3/images/demo.jpg" /> -->
+			</div>
+			<ul class="layui-tab-title" style="border-bottom: 0;">
+				<li class="layui-this">
+					<a href="javascript:;">
+						<b>首页</b>
+						<span></span>
+					</a>
+				</li>
+			</ul>
+			<div class="more-operation">
+				<h5>更多操作</h5>
+				<ul>
+					<li class="closeCurrent">
+						<span>关闭当前页面</span>
+					</li>
+					<li class="closeOther">
+						<span>关闭其他页面</span>
+					</li>
+					<li class="closeAll">
+						<span>关闭全部页面</span>
+					</li>
+				</ul>
+			</div>
+
+			<!--二级三级菜单栏-->
+			<div class="layui-side beg-layout-side" id="side" lay-filter="side">
+				<ul class="layui-nav layui-nav-tree navbar_background">
+					<#assign count=1>
+						<#list menuList as menu>
+							<#if menu.hasChildren>
+								<#list menu.children as child>
+									<#if child.hasChildren>
+										<li class="layui-nav-item layui-nav-itemed last-menu" style="display:none;" id="${child.pid}">
+											<h2><i class="iconfont">&#xe661;</i>${child.title}</h2>
+											<dl class="layui-nav-child" rel="show">
+												<#list child.children as son>
+													<dd>
+														<a href="javascript:;" data-url="${ctx}${son.url}">
+												 	<cite>${son.title}</cite>
+												 </a>
+													</dd>
+												</#list>
+											</dl>
+										</li>
+									</#if>
+								</#list>
+							</#if>
+							<#assign count=count+1>
+						</#list>
+				</ul>
+			</div>
+			<div class="layui-tab-content shadow" style="margin-right: 70px;overflow-y:scroll;padding: 0px;">
+				<div class="layui-tab-item layui-show">
+					<iframe id="FrameID" name="frames" src="../core/admin/index/show.do" style="height: 475px;"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		$(function () {
+			$(window.top.document.body).css('position','relative');
+
+			$('.more-operation').mouseover(function () {
+				$(this).find('ul').show();
+			}).mouseout(function () {
+				$(this).find('ul').hide();
+			});
+
+			$('.more-operation h5').mouseover(function () {
+				$(this).next().show();
+			}).mouseout(function () {
+				$(this).next().hide();
+			});
+
+			//刷新当前页面
+			$(".refresh").click(function () {
+				refreshCurrent();
+			})
+			//关闭当前页面
+			$(".closeCurrent").click(function () {
+				closeCurrent();
+			})
+			//关闭其他页面
+			$(".closeOther").click(function () {
+				closeOther();
+			})
+			//关闭其他页面
+			$(".closeAll").click(function () {
+				closeAll();
+			})
+
+			$("#FrameID").height($(window).height() - parseInt(75));
+
+			//左侧底部头像鼠标移入移除滑动效果
+			$(".main-left-user").hover(
+				function () {
+					$(".user-tools").animate({ "left": "70px" }, 300, "swing");
+				}, function (event) {
+					// 兼容firefox
+					var e = window.event || event;
+					var target = e.toElement || e.relatedTarget;
+					if ($(target).hasClass('main-left')) {
+						$(".user-tools").stop(true, false).animate({ "left": "-30px" }, 300, "swing");
+					}
+				}
+			);
+
+			$(".user-tools").mouseout(function (event) {
+				// 兼容firefox
+				var e = window.event || event;
+				var target = e.toElement || e.relatedTarget;
+				if (!$(target).hasClass('user-tools-uclass')) {
+					$(".user-tools").stop(true, false).animate({ "left": "-30px" }, 300, "swing");
+				};
+			});
+
+			$(".user-tools .modify-password").click(function () {
+				//修改管理员密码
+				layer.open({
+					title: "修改密码",//标题
+					maxmin: true,//右上角可否放大缩小
+					type: 2,
+					content: ctx + '/core/admin/userAdmin/pass-edit.do',
+					area: ['500px', '500px'],
+					scrollbar: false//是否允许浏览器出现滚动
+				});
+
+				$('.modify-container button').click(function () {
+
+					$('.modify-container').remove();
+				})
+			})
+			// $('body').append($(dialogHTML));
+
+			//消息中心，鼠标移入移除
+
+
+			$(".main-logo").hover(
+				function () {
+					$(".message-list").animate({ "top": "60px" }, 300, "swing");
+				}, function () {
+					$(".message-list").stop(true, false).animate({ "top": "-300px" }, 300, "swing");
+				}
+			);
+
+
+			$(".last-menu h2").click(function () {
+				var isClose = $(this).next("dl").attr("rel");
+				if (isClose == "show") {
+					$(this).find("i").addClass("up");
+					$(this).next("dl").attr("rel", "close");
+					$(this).next("dl").slideUp();
+					$(this).find('i').css('transform', 'none');
+				} else {
+					$(this).find("i").removeClass("up");
+					$(this).next("dl").attr("rel", "show");
+					$(this).next("dl").slideDown();
+					$(this).find('i').css('transform', 'rotate(180deg)');
+				}
+			})
+
+			//获得tab标签总长度
+			$(".layui-nav-child").click(function () {
+				var tabWidth = parseInt($(document).width()) - parseInt(290);     //tab标签宽度
+
+				var liWidth = parseInt(0);                                      //tab标签下li总宽度
+				$(".layui-tab-title li").each(function () {
+					liWidth += parseInt(this.offsetWidth);
+				})
+				//判断当tab标签里的li总宽度大于ul应展示宽度，可以进行左右滑动
+				if (liWidth > tabWidth) {
+					//向左滚动
+					var liNum = $('.layui-tab-title li').length;
+					var n = 0;
+					$('.right-sroll').click(function () {
+						if ($('.layui-tab-title').offset().left <= 220) {
+							$('.layui-tab-title').css("left", 220);
+							return;
+						}
+
+						if (!$('.layui-tab-title li').is(':animated')) {
+							$('.layui-tab-title').animate({ left: '+=120px' }, 100);
+						}
+					});
+
+					//向右滚动
+					$('.left-sroll').click(function () {
+						if (!$('.layui-tab-title').is(':animated') || n < 10) {
+							$('.layui-tab-title').animate({ left: '-=120px' }, 100);
+							n++;
+						}
+					})
+				}
+			})
+			var interval = setInterval(function () { ShortMsg.init() }, 1000 * 60)
+			$('body').css('overflow', 'hidden')
+		})
+
+		layui.use('element', function () {
+			var element = layui.element();
+		});
+	</script>
+
+	<script type="text/javascript" src="${ctx}/adminthemes/version3/js/main_page.js"></script>
+	<script type="text/javascript" src="${ctx}/adminthemes/version3/js/short-msg.js"></script>
+
+	<#include '/admin/footer.html'>

@@ -1,0 +1,119 @@
+<#include '/admin/sonheader.html' >
+<style>
+  .layui-input{
+    width: 70%;
+  }
+</style>
+<div class="main">
+    <!--表单区域  -->
+    <form id="editForm" class="form layui-form" style="padding-top:10px;">
+    <input type="hidden" name="id" id="id" value="${id}" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">楼层名称：</label>
+            <div class="layui-input-block">
+                <input type="text"  name="name" id="name" maxlength="30" placeholder="楼层名称最多可填写30个字符" lay-verify="name" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序：</label>
+            <div class="layui-input-block">
+                <input type="text"  name="sort" id="sort" maxlength="3" placeholder="排序最大三位数" lay-verify="number" required  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型：</label>
+            <div class="layui-input-block" style="width: 150px;">
+                <select name="tpl_id" id="type" lay-verify="type">
+				<option value=""></option>
+	      	</select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">显示：</label>
+            <div class="layui-input-block">
+                <input name="is_display" value="1" id="switch" lay-skin="switch" lay-text="显示|关闭" type="checkbox">
+            </div>
+        </div>
+        <div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;"> 
+  			<a class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="editFloor">保存</a>
+  			<a class="layui-layer-btn1">取消</a>
+  		</div>
+    </form>
+</div>
+
+<script>
+var index = parent.layer.getFrameIndex(window.name);
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+
+    //自定义验证规则
+    form.verify({
+    	name: function(value){
+        if($.trim(value)==""){
+          return '楼层名称不能为空';
+        }
+      },
+      type :function(value){
+    	  if($.trim(value)==""){
+    		  return "类型不能为空"
+    	  }
+      }
+    });
+    
+    $(".layui-layer-btn1").click(function(){
+    	parent.layer.close(index);
+    });
+    //初始数据
+    //把所有下拉选展示
+   /*  setTimeout(function(){ */
+			var id=$("#id").val(); 
+			$.ajax({
+				url: '${ctx}/cms/admin/panel-tpl/main.do?client_type=pc',
+				async: false,
+        		success: function(result) {
+           		 for (var i in result) {
+               		 var _option = "<option value = '" + result[i].tpl_id + "'>" + result[i].tpl_name + "</option>";
+               		 $("#type").append(_option);
+          		  }
+           			 layui.form().render();
+       			 }
+			})
+			//把所有该数据的信息显示在弹出层
+	  	$.ajax({
+			url:"${ctx}/cms/admin/floor/"+id+".do",
+			success:function(result){
+				$("#name").val(result.name);
+				$("#sort").val(result.sort);
+				$(".form  #type>option[value=" + result.tpl_id + "]").attr("selected", "selected");
+				if (result.is_display == 1){
+					$("#switch").attr("checked", "checked");
+					}
+				layui.form().render();
+			}
+		});
+	/* },200); */
+    //监听提交
+    form.on('submit(editFloor)', function(data){
+    	var options = {
+   			url:"${ctx}/cms/admin/floor/"+$("#id").val()+".do",
+   			type:"post",
+   			data:{client_type:"pc"},
+   			async: false,
+   			success:function(data){
+   					$.Loading.success("修改成功");
+   					parent.layer.close(index); //再执行关闭
+   					parent.table.ajax.url("${ctx}/cms/admin/floor.do?client_type=pc").load();
+   			},error:function(e){
+                alert(e.responseJSON.error_message);
+            }
+   		};
+   		$("#editForm").ajaxSubmit(options);
+       return false;
+    });
+});
+</script>

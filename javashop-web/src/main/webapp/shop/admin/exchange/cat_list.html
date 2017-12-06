@@ -1,0 +1,154 @@
+<#include '/admin/header.html' />
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/plugins/select2/css/select2.min.css"/>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.goodsCategoryList.js"></script>
+<style>
+.__GCD__content .__GCD__input input{
+    height:30px;
+    line-height:30px;
+    padding:4px 10px;
+}
+#addForm > div.layui-form-item.discode{
+    display: none;
+}
+</style>
+<div class="admin-main" id="__cat_box__" style="margin-top: 30px;">
+    <script type="text/javascript">
+        var _goodsCatEdit;
+        $(function () {
+            var ctx = '${ctx}';
+            _goodsCatEdit = $('#__cat_box__').goodsCatsEdit({
+                api     : '/shop/admin/exchange-cat/@id/children.do',
+                canEdit : true,
+                addCat  : function (cat) {
+                    addCat(cat);
+                },
+                itemBtns: [
+                    {text: '编辑', onClick: function (cat) {
+                        editCat(cat);
+                    }},
+                    {text: '删除', textStyle: 'color: red', onClick: function (cat) {
+                        deleteCat(cat);
+                    }}
+                ]
+            }).init();
+
+            //  添加分类
+            function addCat(cat) {
+                $.ajax({
+                    url: ctx + '/shop/admin/exchange-cat/add-cat.do',
+                    success: function (html) {
+                        layer.open({
+                            type: 1,
+                            title: '添加分类',
+                            area: ['600px', '400px'],
+                            content: html,
+                            btn: ['确定', '取消'],
+                            success: function (layero, index) {
+                                cat.leave === 1 && (function () {
+                                    var parent_dom = layero.find("input[name='parent_id']");
+                                    parent_dom.val(0);
+                                    parent_dom[0].readOnly = true;
+                                })();
+
+                                cat.leave !== 1 && (function () {
+                                    layero.find('#cat_parent').replaceWith('<select name="parent_id" id="cat_parent" class="layui-input" style="width: 235px;"></select>');
+                                    layero.find('#cat_parent').html('<option value="'+ cat.parent_data['data']['id'] +'">'+ cat.parent_data['data']['text'] +'</option>');
+                                    layero.find('#cat_parent').select2({ data: cat.parent_data.datas });
+                                })();
+
+                                layero.find('#goods_type').replaceWith('<select name="type_id" id="goods_type" class="layui-input" style="width: 235px;"></select>');
+                            },
+                            yes: function (index, layero) {
+                                var _name = layero.find('#name').val(), _sort = layero.find('#sort').val();
+                                if(!_name || !_sort || isNaN(_sort)){
+                                    layer.msg('表单填写有误，请核对！', { icon: 2 });
+                                }else {
+                                    layero.find('#addForm').ajaxSubmit({
+                                        url: ctx + '/shop/admin/exchange-cat/save-add-cat.do',
+                                        type: 'POST',
+                                        success: function () {
+                                                layer.msg('保存成功！', { icon: 1 });
+                                                _goodsCatEdit.refreshData();
+                                                layer.close(index);
+                                        },error: function () {
+                                            layer.msg('出现错误，请重试！', { icon: 5 });
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                    }
+                });
+            }
+
+            //  编辑分类
+            function editCat(cat) {
+                $.ajax({
+                    url: ctx + '/shop/admin/exchange-cat/edit-cat.do',
+                    data: { cat_id: cat.id },
+                    success: function (html) {
+                        layer.open({
+                            type: 1,
+                            title: '编辑分类',
+                            area: ['600px', '400px'],
+                            content: html,
+                            btn: ['确定', '取消'],
+                            success: function (layero, index) {
+                                cat.leave !== 1 && (function () {
+                                    layero.find('#cat_parent').replaceWith('<select name="parent_id" id="cat_parent" class="layui-input" style="width: 235px;"></select>');
+                                    layero.find('#cat_parent').html('<option value="'+ cat.parent_data['data']['id'] +'">'+ cat.parent_data['data']['text'] +'</option>');
+                                    layero.find('#cat_parent').select2({ data: cat.parent_data['datas'] });
+                                })();
+
+                            },
+                            yes: function (index, layero) {
+                                var _name = layero.find('#name').val(), _sort = layero.find('#sort').val();
+                                if(!_name || !_sort || isNaN(_sort)){
+                                    layer.msg('表单填写有误，请核对！', { icon: 2 });
+                                }else {
+                                    layero.find('#editForm').ajaxSubmit({
+                                        url: ctx + '/shop/admin/exchange-cat/save-edit-cat.do',
+                                        type: 'POST',
+                                        success: function () {
+                                                layer.msg('保存成功！', { icon: 1 });
+                                                _goodsCatEdit.refreshData();
+                                                layer.close(index);
+                                        },error: function () {
+                                            layer.msg('出现错误，请重试！', { icon: 5 });
+                                        }
+                                    });
+                                }
+                            },
+                            btn2: function(index, layero){
+
+                            }
+                        })
+                    }
+                });
+            }
+
+            //  删除分类
+            function deleteCat(cat) {
+                layer.confirm('确定要删除这个分类吗？', {icon: 3, title:'提示'}, function (index) {
+                    layer.close(index);
+                    var __load = layer.load(2);
+                    $.ajax({
+                    	 url: ctx + '/shop/admin/exchange-cat/delete-cat/'+cat.id+'.do',
+                        type: 'delete',
+                        success: function () {
+                            layer.close(__load);
+                                layer.msg('删除成功！', { icon: 1 });
+                                _goodsCatEdit.refreshData();
+                        },
+                        error: function (e) {
+                            layer.close(__load);
+                            layer.msg(e.responseJSON.error_message, { icon: 2 });
+                        }
+                    })
+                });
+            }
+        })
+    </script>
+</div>
+<#include '/admin/footer.html' />

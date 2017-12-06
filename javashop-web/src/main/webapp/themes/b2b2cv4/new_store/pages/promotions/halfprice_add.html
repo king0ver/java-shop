@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '促销活动管理' />
+    <#include '/new_store/common/header.html' />
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.autoFloat.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" charset="utf-8" src="${ctx}/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="${ctx}/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="${ctx}/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/promotions/promotions_add_edit.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/promotions/second_half_promotions_add_edit.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_promotions' />
+<#assign lowerPageName = 'lower_half_price' />
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav">
+        <li><a href="./halfprice_list.html">第二件半价列表</a></li>
+        <li class="active"><a href="javascript: void(0);" onclick="location.reload(); ">新增第二件半价活动</a></li>
+    </ul>
+</div>
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+        <form id="promotions_form" class="validate">
+            <div class="goods-info-group">
+                <div class="goods-info-group-inner">
+                    <div class="info-group-title vbox">
+                        <div class="group-inner">活动信息</div>
+                    </div>
+                    <div class="info-group-cont vbox">
+                        <div class="group-inner">
+                            <div class="control-group">
+                                <label class="control-label">活动名称：</label>
+                                <div class="controls">
+                                    <input type="text" class=" form-control" name="title" isrequired="true" maxlength="60" placeholder="不超过60个字符" style="width: 383px;"/>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">生效时间：</label>
+                                <div class="controls promotions-time">
+                                    <input type="text" class="form-control" name="start_time_str" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d'})" readonly/>
+                                    <span>&nbsp;-&nbsp;</span>
+                                    <input type="text" class="form-control" name="end_time_str" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d'})" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label" style="display: block; float: none; margin-top: 10px; ">活动描述：</label>
+                                <div class="controls" style="margin-left: 95px; ">
+                                    <script id="editor" name="description" type="text/plain" style="height:200px;width: 99%;" isrequired="true"></script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="goods-info-group">
+                <div class="goods-info-group-inner">
+                    <div class="info-group-title vbox">
+                        <div class="group-inner">优惠设置</div>
+                    </div>
+                    <div class="info-group-cont vbox">
+                        <div class="group-inner">                    
+                            <div class="control-group promotions-style">
+                                <label class="control-label" title="优惠方式可多选">优惠方式：</label>
+                                <div class="controls" style="float: left; ">
+                                    <p class="discount-promotions-style">                                     
+                                        <span class="first-span discount">第二件半价</span>                                                                     
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="goods-info-group" id="join_box">
+                <div class="goods-info-group-inner">
+                    <div class="info-group-title vbox">
+                        <div class="group-inner">活动商品</div>
+                    </div>
+                    <div class="info-group-cont vbox">
+                        <div class="group-inner">
+                            <div class="control-group">
+                                <label class="control-label">活动商品：</label>
+                                	  <div class="controls promotions-join">
+	                                    <p>
+	                                        <input class="radio-status" type="radio" value="1" name="range_type" tag="all" id="all_goods" checked="checked">
+	                                        <span>全部商品参与</span>
+	                                    </p>
+	                                    <p>
+	                                        <input class="radio-status" type="radio" value="2" name="range_type" tag="part" id="part_goods">
+	                                        <span>部分商品参与</span>
+	                                    </p>
+	                                    <div class="promotions-goods-box" style="display: none;" id = "test">
+                                   	</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom" id="auto-float-button" style="background-color: #ffffff; height: 50px; line-height: 50px; ">
+			 <button type="button"  href="javascript: void(0);" class="btn btn-success activity-add" title="保存促销活动" id="form_submit" style="margin-left: 50%;">保存设置</button> 
+				
+        	</div>
+        </form>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+
+$(function(){
+	
+	//提交表单操作
+	$("#form_submit").click(function(){
+		
+		//验证促销活动名称不能为空
+		if ($.trim($("input[name='title']").val()) == "") {
+			$.message.error("请填写活动名称！");
+			return false;
+		}
+		
+		var startTime = $("input[name='start_time_str']").val();
+		var endTime = $("input[name='end_time_str']").val();
+		//验证活动时间不能为空
+		if (startTime == "" || endTime == "") {
+			$.message.error("请填写活动生效时间！");
+			return false;
+		}
+		//验证促销活动的开始时间是否大于结束时间
+		if (startTime > endTime) {
+			$.message.error("开始时间不能大于结束时间！");
+			return false;
+		}
+		
+		//如果促销活动选择的是部分商品参加活动，那已选商品页的商品就不能为空
+		if ($("#part_goods").is(":checked")) {
+			var len = $(".goods-table tbody tr").length;
+			if (len == 0) {
+				$.message.error("请选择要参与活动的商品！");
+				return false;
+			}
+		}
+		
+		var active  = $("form").serializeJson();
+		var goodsList  =[];
+		$(".goods-table tbody tr").each(function(index,val){
+			var promotionGoodsVo={};
+			promotionGoodsVo.goods_id = $(this).attr("data-goods-id");
+			promotionGoodsVo.product_id = $(this).attr("data-goods-id");
+			promotionGoodsVo.thumbnail = $(this).children().find(".goods-thumbnail").attr("src");
+			promotionGoodsVo.name = $(this).children().find(".goods-name").text();
+			goodsList.push(promotionGoodsVo);
+		});
+		active["goodsList"] = goodsList;
+		
+		if(!$(this).prop("disabled")){
+			$(this).attr({"disabled":"disabled"});
+		}
+		
+	 $.ajax({
+			url 	       : "${ctx}/api/shop/promotion/half-add.do?ajax=yes",
+			data       : JSON.stringify(active),
+			method     : "post",
+			contentType: "application/json",
+			success : function(data) {	
+				if(data.result==1){
+					$.message.success(data.message, function(){
+                        location.href = "halfprice_list.html";
+                    });
+				}else if(data.result==0 && data.message==null){
+					
+					if($("#form_submit").prop("disabled")){
+						$("#form_submit").removeAttr("disabled");
+					}
+					
+					var _this = $(this), url = './conflict_halfprice.html', title = '活动商品与其他活动存在冲突';
+					   $.ajax({
+			                url: url,
+			                type: 'GET',			              
+			                success: function(html){
+			                    $.dialogModal({
+			                        title: title,
+			                        html : html, 
+			                        btn : false,
+			                    });
+			                },
+			                error: function(){
+			                    $.message.error('出现错误，请重试！');
+			                }
+			            });
+				}else{
+					$.message.error(data.message);
+					if($("#form_submit").prop("disabled")){
+						$("#form_submit").removeAttr("disabled");
+					}
+				}
+			},
+			error : function(e) {
+				$.message.error("出现错误 ，请重试");
+			}
+		}) 
+	})
+	//保存设置按钮自动悬浮
+	$("#auto-float-button").autoFloat();
+})
+
+</script>
+<style>
+.tabmenu {
+    background-color: #fff;
+    display: block;
+    height: 38px;
+    position: relative;
+    width: 100%;
+    z-index: 99;
+}
+.tabmenu .tab {
+    border-bottom: 2px solid #27a9e3;
+    height: 36px;
+    margin-top: 20px;
+}
+.tabmenu ul li {
+    float: left;
+    margin-right: 3px;
+}
+.tabmenu ul .active a {
+    background-color: #27a9e3;
+    color: #fff;
+    cursor: default;
+    display: inline-block;
+    font: 18px/36px "microsoft yahei";
+    height: 36px;
+    padding: 0 20px;
+}
+.tabmenu ul .normal a {
+    background-color: #aaa;
+    color: #fff;
+    display: inline-block;
+    font: lighter 14px/33px "microsoft yahei";
+    height: 33px;
+    padding: 0 10px;
+}
+.no_blank {
+    background: rgba(0, 0, 0, 0) url("../images/htgth.png") no-repeat scroll left -2px;
+    color: #27a9e3;
+    font: 14px/32px "microsoft yahei";
+    height: 40px;
+    letter-spacing: normal;
+    margin: 100px auto;
+    padding-left: 50px;
+    vertical-align: middle;
+    width: 200px;
+    word-spacing: normal;
+}
+</style>
+</html>

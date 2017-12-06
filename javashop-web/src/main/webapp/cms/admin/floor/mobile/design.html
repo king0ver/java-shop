@@ -1,0 +1,188 @@
+<#include '/admin/header.html'>
+	<link rel="stylesheet" href="${ctx}/cms/admin/css/mobile-floor-design.css?v=1.7" />
+	<link rel="stylesheet" href="${ctx}/cms/admin/css/vendor/swiper/swiper-3.4.2.min.css" />
+	<script src="${ctx}/cms/admin/js/jquery.javashop.js"></script>
+	<script src="${ctx}/cms/admin/js/swiper/swiper-3.4.2.min.js"></script>
+	<script type="text/javascript" src="${ctx}/cms/admin/js/mobile-floor-design.js?v=4.8"></script>
+
+	<div class='mobile-buttons'>
+		<button class="save-mobile layui-btn layui-btn-normal" type="button" >发布首页</button>
+	</div>
+	<div class='mobile-floor-design-container'>
+		<div class='floor-modules'>
+			<p class='module-title'>选择添加模块</p>
+			<div class='modules-container'>
+				<div class='module left mod-focus-adv'>
+					<div class='module-img'></div>
+					<span>焦点广告图模块</span>
+				</div>
+				<div class='module right mod-five-col'>
+					<div class='module-img'></div>
+					<span>五列单行小图模块</span>
+				</div>
+				<div class='module left mod-single-sheet'>
+					<div class='module-img'></div>
+					<span>单列单张大图模块</span>
+				</div>
+				<div class='module right mod-leftone-righttwo'>
+					<div class='module-img'></div>
+					<span>左一右二图片模块</span>
+				</div>
+				<div class='module left mod-lefttwo-rightone'>
+					<div class='module-img'></div>
+					<span>左二右一图片模块</span>
+				</div>
+				<!-- <div class='module right mod-double-row'>
+					<div class='module-img'></div>
+					<span>双列多行图片模块</span>
+				</div> -->
+				<div class='module right mod-three-col'>
+					<div class='module-img'></div>
+					<span>三列单行图片模块</span>
+				</div>
+				<div class='module left mod-columns-single-line'>
+					<div class='module-img'></div>
+					<span>四列单行图片模块</span>
+				</div>
+				<div class='module right mod-headings'>
+					<div class='module-img'></div>
+					<span>标题或间隔性模块</span>
+				</div>
+				<!-- <div class='module left mod-double-row-multiline'>
+					<div class='module-img'></div>
+					<span>双列多行商品模块</span>
+				</div> -->
+				<!-- <div class='module right mod-scrolling-text'>
+					<div class='module-img'></div>
+					<span>滚动文字模块</span>
+				</div> -->
+				<div class='module left four-column-one-row-small-image-module'>
+					<div class='module-img'></div>
+					<span>四列单行小图模块</span>
+				</div>
+				<div class='module right mod-leftone-landscape'>
+					<div class='module-img'></div>
+					<span>左一右二竖排模块</span>
+				</div>
+				<div class='module left two-manual-selection-module'>
+					<div class='module-img'></div>
+					<span>手动选择商品模块</span>
+				</div>
+				<div class='module right text-selector-module'>
+					<div class='module-img'></div>
+					<span>文本模块</span>
+				</div>
+			</div>
+		</div>
+		<div class='floor-view'>
+			<div class="floor-design">
+				<div class="header">
+					<h2 class="title">
+						<span>楼层名称</span>
+					</h2>
+				</div>
+				<div class="floor">
+					<div class="floor-top-bar"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		(function () {
+			var floorId = "";
+			// Warning: 因为这种实现,就限制了模块名称不能随意地更改.
+			var moduleToClass = { // 维护了一个模块(面板)名--class名 的对象.用来在循环绑定goods-id时有迹可寻.
+				"单列单张大图模块": ".mod-single-sheet",
+				"左一右二图片模块": ".mod-leftone-righttwo",
+				"左二右一图片模块": ".mod-lefttwo-rightone",
+				"三列单行图片模块": ".mod-three-col",
+				"五列单行小图模块": ".mod-five-col",
+				"焦点广告图模块": ".mod-focus-adv",
+				"四列单行图片模块": ".mod-columns-single-line",
+				"标题或间隔性模块": ".mod-headings",
+				"四列单行小图模块": ".four-column-one-row-small-image-module",
+				"左一右二竖排模板": ".mod-leftone-landscape",
+				"手动选择商品模块": ".two-manual-selection-module",
+				"文本模块": ".text-selector-module"
+			}
+
+			var setSwiper = function () {
+				if (document.getElementsByClassName('test-swiper-pagination').length != 0) {
+					//clearInterval(timeMachine);
+					var swiperInFloor = new Swiper('.floor-swiper-container', {
+						pagination: '.test-swiper-pagination',
+						// paginationType: 'custom',
+						paginationClickable: true,
+						spaceBetween: 30,
+						autoplay: 2500,
+					});
+				}
+				$(".floor-swiper-container").addClass("floor-swiper-replace");
+				$(".floor-swiper-container").removeClass("floor-swiper-container")
+			}
+			setSwiper();
+
+			// 获取楼层id
+			$.ajax({
+				url: ctx + "/cms/admin/floor/mobile/design.do",
+				dataType: "json",
+				async: false,
+				success: function (response) {
+					floorId = response.id;
+				}
+			})
+
+			$(function () {
+				$.ajax({
+					url: ctx + "/cms/admin/panel-tpl/mobile.do",
+					dataType: "json",
+					async: false,
+					success: function (response) {
+						response.forEach(function (ele) {
+							insertTplId(ele);
+						})
+					}
+				})
+
+				var design = new FloorDesign($(".floor"), {
+					floorid: floorId
+				});
+				$(".mobile-buttons .save-mobile").click(function () {
+					design.save();
+				});
+
+				$(".mobile-floor-design-container .modules-container .module").click(function () {
+					design.addPanel($(this).attr("data-tpl-id"));
+				});
+			});
+
+			// 把数据中的面板id插入到对应的div属性中.
+			var moduleContainer = $(".mobile-floor-design-container .modules-container");
+			var insertTplId = function (item) {
+				$(moduleContainer.find(moduleToClass[$.trim(item.tpl_name)])).attr("data-tpl-id", item.tpl_id);
+			}
+
+			// 用定时器检测轮播图的所需HTMl元素是否被渲染到页面中,然后才绑定轮播图JS.
+			var timeMachine = setInterval(function () {
+				setSwiper();
+				setAssistantHover();
+			}, 1000)
+
+			// 悬浮哪个楼层,哪个楼层的辅助图片显示
+			var setAssistantHover = function () {
+				if ($('.mobile-floor-design-container .floor .panel').length > 0) {
+					$('.mobile-floor-design-container .floor .panel').each(function () {
+						$(this).mouseover(function () {
+							$(this).children('.panel-handle').show();
+						}).mouseout(function () {
+							$(this).children('.panel-handle').hide();
+						})
+					})
+				}
+			};
+
+		})()
+	</script>
+
+	<#include '/admin/footer.html'>

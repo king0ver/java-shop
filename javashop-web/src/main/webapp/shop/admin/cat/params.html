@@ -1,0 +1,735 @@
+<#include '/admin/header.html' />
+
+<style>
+    .demo-params {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 30px;
+        min-height: 100px;
+        margin: 0 auto;
+    }
+
+    .demo-params .add-new-params-html {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        z-index: 10;
+        min-width: 30px;
+        height: 30px;
+        background: #475669;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .demo-params .add-new-params-div {
+        display: flex;
+        background: #324057;
+        align-items: center;
+        justify-content: space-around;
+        min-width: 330px;
+        height: 40px;
+        position: absolute;
+        top: -5px;
+        left: 50px;
+        padding: 2px 5px;
+        color: #F9FAFC;
+    }
+
+    .demo-params .add-new-params-div input {
+        height: 25px;
+        padding: 1px 3px;
+    }
+
+    .demo-params .add-new-params-div button {
+        padding: 1px 2px;
+    }
+
+    .demo-params .add-new-params-html .add-new-params-button {
+        display: inline-block;
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        margin-top: -5px;
+        margin-left: -1px;
+    }
+
+    .demo-params .params-div-model {
+        display: none;
+    }
+
+    .demo-params .add-new-params-div {
+        display: none;
+    }
+
+    .demo-params .param-array {
+        margin: 10px;
+        padding: 10px;
+        background: #f4f4f4;
+        position: relative;
+        overflow: hidden;
+        min-width: 300px;
+        max-width: 500px;
+    }
+
+    .demo-params .param-array .param-head {
+        background: #E5E9F2;
+        padding: 2px 8px;
+        display: flex;
+        height: 30px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .demo-params .param-array .param-head>span {
+        display: flex;
+        align-items: center;
+        min-width: 40%;
+        max-width: 60%;
+    }
+
+    .demo-params .param-array .param-head .param-name {
+        margin-left: 4px;
+    }
+
+    .demo-params .param-array .param-head .input input {
+        width: 40%;
+    }
+
+    .demo-params .param-array .param-head>p {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .demo-params>.param-array .param-item {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        margin-top: 3px;
+        padding: 3px 8px;
+    }
+
+    .demo-params .param-array .param-new-item {
+        border: 1px dashed #ddd;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        background: white;
+        margin-top: 3px;
+    }
+
+    .demo-params .param-head .input {
+        display: none;
+    }
+
+    .demo-params .param-array .result .layui-icon.edit {
+        display: none;
+    }
+</style>
+<input type="hidden" value="${id}" id="id">
+<div class="demo-params">
+    <div class="add-new-params-html">
+        <span class="add-new-params-button">+</span>
+        <div class="add-new-params-div">
+            <span>参数组名</span>
+            <input>
+            <button type="button"  class="save">保存</button>
+            <button type="button"  class="cancel">取消</button>
+        </div>
+    </div>
+    <div class="params-div-model">
+        <!-- 这块div只做新增参数组HTML的模板使用,即:新增一个参数组时,就clone下这块的div(解决了动态添加的HTML,不会重新绑定对应事件的问题) -->
+        <div class="param-array">
+            <div class="param-head">
+                <span>参数组:
+                    <span class="param-name"></span>
+                </span>
+                <div class="result">
+                    <i class="layui-icon edit">&#xe642;</i>
+                    <i class="layui-icon delete">&#x1006;</i>
+                    <i class="layui-icon up sort">&#xe619;</i>
+                    <i class="layui-icon down sort">&#xe61a;</i>
+                </div>
+                <div class="input">
+                    <input>
+                    <button type="button"  class="save">保存</button>
+                    <button type="button"  class="cancel">取消</button>
+                </div>
+            </div>
+            <div class="param-items">
+                <div class="param-new-item">
+                    增加参数
+                </div>
+            </div>
+        </div>
+        <!-- 单个参数的div模板 -->
+        <div class="param-item-div">
+            <div class="param-item">
+                <div class="item-left">
+                    <span class="name"></span>
+                    <span class="type"></span>
+                    <span class="check"></span>
+                </div>
+                <div class="buttons">
+                    <i class="layui-icon edit">&#xe642;</i>
+                    <i class="layui-icon delete">&#x1006;</i>
+                    <i class="layui-icon up sort">&#xe619;</i>
+                    <i class="layui-icon down sort">&#xe61a;</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var id = $("#id").val();
+
+    $(function () {
+        // 动态设置排序图标
+        // 如果只有一个参数组,则不显示参数组的排序图标
+        // 只有一个参数,同样不显示此参数的排序图标
+        var setSortableIcons = function () {
+            $('.demo-params > .param-array').each(function () {
+                // 参数组图标
+                if ($(this).closest('.demo-params').children('.param-array').length === 1) {
+                    $(this).find('.param-head .result .sort').hide();
+                } else {
+                    $(this).find('.param-head .result .sort').show();
+                }
+
+                // 参数图标
+                $(this).find('.param-items .param-item').each(function () {
+                    if ($(this).closest('.param-items').find('.param-item').length === 1) {
+                        $(this).find('.buttons .sort').hide();
+                    } else {
+                        $(this).find('.buttons .sort').show();
+                    }
+                });
+            })
+        }
+
+
+
+        // ---------------- 封装出来的公用函数 -----------------
+
+        // 返回: 克隆好的 参数组HTML(不带中间的单个参数部分的HTMl)
+        var cloneParamArray = function (name, group_id) {
+            var cloneElement = $(".demo-params .params-div-model .param-array").clone(true);
+            // 填入参数组名
+            cloneElement.find(".param-head .param-name").text(name);
+            // 设置data-group-id 为 group_id 和 sort
+            cloneElement.attr("data-group-id", group_id);
+            return cloneElement;
+        };
+
+        // 返回: 克隆好的 参数组里的单个参数的HTML
+        var cloneAloneParam = function (param_id, param_name, param_type, options, required, is_index) {
+            var itemCloned = $(".demo-params .params-div-model .param-item-div >div").clone(true);
+
+            // 先把必要的数据存到data-XX 里
+            itemCloned.attr("data-id", param_id);
+            itemCloned.attr("data-type", param_type);
+            itemCloned.attr("data-options", options);
+            itemCloned.attr("data-required", required);
+            itemCloned.attr("data-is-index", is_index);
+            // is_index 没有API
+
+            // 再初始化文本
+            itemCloned.find(".name").text(param_name);
+            itemCloned.find(".type").text(param_type == 1 ? "输入项" : "选择项");
+            itemCloned.find(".type").attr("data-options", options);
+            itemCloned.find(".check").text(required == 1 ? "必填" : "");
+            var currentText = itemCloned.find(".check").text();
+            itemCloned.find(".check").text(currentText + " " + is_index == 1 ? "可索引" : "");
+
+            return itemCloned;
+        };
+
+
+        // ---------------- 初始化 -----------------
+
+        var initParams = function () {
+            $.get("${ctx}/goods-info/admin/category/" + id + "/param.do", function (response) {
+                var paramArray = null;
+                var aloneParam = null;
+                response.forEach(function (ele) {
+                    paramArray = cloneParamArray(ele.group_name, ele.group_id, 0);
+                    if (ele.params) {
+                        ele.params.reverse().forEach(function (item) {
+                            aloneParam = cloneAloneParam(item.param_id, item.param_name, item.param_type, item["options"], item.required, item.is_index);
+                            paramArray.find(".param-items").prepend(aloneParam);
+                        });
+                    }
+                    $(".demo-params").append(paramArray);
+                });
+                setSortableIcons();
+            });
+        }
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            initParams();
+        });
+
+        // ---------------- 参数组本身 --------------
+
+        // 点击新增参数组
+        $(".add-new-params-button").click(function () {
+            $(".add-new-params-div").css("display", "flex");
+            // 重置输入框为空
+            $(".add-new-params-div").find("input").val("");
+        });
+        $(".add-new-params-button").mouseover(function () {
+            $(this).css("cursor", "pointer");
+        });
+        $(".add-new-params-button").mouseout(function () {
+            $(this).css("cursor", "default");
+        });
+
+
+        // 新增参数组的 保存,取消按钮的 hover效果(手型)
+        $(".add-new-params-div").find('button').each(function () {
+            $(this).mouseover(function () {
+                $(this).css("cursor", "pointer");
+            })
+            $(this).mouseout(function () {
+                $(this).css("cursor", "default");
+            })
+        })
+
+        // 新增参数组名-保存
+        $(".add-new-params-div .save").click(function () {
+            var paramsName = $(".add-new-params-div input").val();
+            if (!paramsName) {
+                layer.msg("名称不能为空 !", {
+                    icon: 5,
+                    time: 2000,
+                })
+                return;
+            }
+            $.post('${ctx}/goods/admin/params/group.do', {
+                category_id: id,
+                group_name: paramsName,
+            }, function (response) {
+                $(".add-new-params-div").css("display", "none");
+                $(".demo-params").append(cloneParamArray(paramsName, response.group_id));
+                layer.msg("新增参数组成功 !", {
+                    icon: 1,
+                    time: 2000
+                });
+                setSortableIcons();
+            }
+            );
+        });
+
+        // 新增参数组-取消
+        $(".add-new-params-div .cancel").click(function () {
+            $(".add-new-params-div").css("display", "none");
+        });
+
+        //左上角 新增参数组 按钮的over/out特效
+        $(".demo-params .add-new-params-html").mouseover(function () {
+            $(this).css("background", "#C0CCDA");
+            $(this).find(".add-new-params-button").css("color", "#475669");
+        });
+
+        $(".demo-params .add-new-params-html").mouseout(function () {
+            $(this).css("background", "#475669");
+            $(this).find(".add-new-params-button").css("color", "white");
+        });
+
+
+        // 参数组-编辑
+        $(".demo-params .param-array .param-head .edit").click(function () {
+            // 用当前的数组名,初始化input
+            var currentName = $(this).parent().prev().find(".param-name").text();
+            $(this).parent().next().find("input").val(currentName);
+
+            $(this).parent().next().css("display", "block");
+            $(this).parent().css("display", "none");
+            $(this).parent().prev().find(".param-name").css("display", "none");
+        })
+
+        // 参数组头部 输入框 取消按钮 
+        $(".demo-params .param-head .input .cancel").click(function () {
+            $(this).parent().prev().css("display", "block");
+            $(this).parent().css("display", "none");
+            $(this).parent().prev().prev().find(".param-name").css("display", "block");
+        })
+
+        // 参数组头部 输入框 保存
+        $(".demo-params .param-head .input .save").click(function () {
+            var _this = this;
+            var input = $(this).prev().val();
+            if (!input) {
+                layer.msg("名称不能为空 !", {
+                    icon: 5,
+                    time: 2000,
+                })
+            } else {
+                var group_id = $(_this).parent().parent().parent().attr("data-group-id");
+                $.post('${ctx}/goods/admin/params/group/' + group_id + ".do", {
+                    category_id: id,
+                    group_name: input,
+                },
+                    function () {
+                        layer.msg("重命名成功 !", {
+                            icon: 1,
+                            time: 2000
+                        });
+                        $(_this).parent().parent().find(".param-name").text(input);
+                        $(_this).parent().prev().css("display", "block");
+                        $(_this).parent().css("display", "none");
+                        $(_this).parent().prev().prev().find(".param-name").css("display", "block");
+                    }
+                );
+            }
+        })
+
+        // 删除 参数组
+        $(".demo-params .param-array .param-head .delete").click(function () {
+            var _this = this;
+            var group_id = $(_this).parent().parent().parent().attr("data-group-id");
+
+            if (!confirm("确认删除此参数组吗？")) {
+                return;
+            }
+            $.ajax({
+                type: "DELETE",
+                url: "${ctx}/goods/admin/params/group/" + group_id + ".do",
+                success: function () {
+                    $(_this).parent().parent().parent().remove();
+                    layer.msg("删除参数组成功 !", {
+                        icon: 1,
+                        time: 2000
+                    });
+                    setSortableIcons();
+                },
+            })
+        });
+
+        // 上移 参数组
+        $(".demo-params .param-array .param-head .up").click(function () {
+            var theItem = $(this).parent().parent().parent();
+            var group_id = theItem.attr("data-group-id");
+            var targetElement = theItem.prev();
+            if (targetElement.hasClass('param-array')) {
+                $.post("${ctx}/goods/admin/params/group/" + group_id + "/sort.do", {
+                    group_id: group_id,
+                    sort_type: "up",
+                },
+                    function () {
+                        theItem.insertBefore(targetElement);
+                    }
+                )
+            }
+        });
+
+        // 下移 参数组
+        $(".demo-params .param-array .param-head .down").click(function () {
+            var theItem = $(this).parent().parent().parent();
+            var group_id = theItem.attr("data-group-id");
+            var targetElement = theItem.next();
+            if (targetElement.hasClass('param-array')) {
+                $.post("${ctx}/goods/admin/params/group/" + group_id + "/sort.do", {
+                    group_id: group_id,
+                    sort_type: "down",
+                },
+                    function () {
+                        theItem.insertAfter(targetElement);
+                    }
+                )
+            }
+        });
+
+        // 参数组里的 icon 的over/out效果(鼠标换成小手)
+        $(".demo-params i").each(function () {
+            $(this).mouseover(function () {
+                $(this).css("cursor", "pointer");
+            });
+            $(this).mouseout(function () {
+                $(this).css("cursor", "default");
+            })
+        });
+
+
+        // ---------------- 参数组中的各个项 --------------
+
+        // 编辑 各个参数
+        $(".demo-params .params-div-model .param-item-div .edit").click(function () {
+            var theItem = $(this).parent().parent();
+            var html = "";
+            $.ajax({
+                url: "${ctx}/goods/admin/params/edit-page.do",
+                success: function (data) {
+                    html = data;
+                    var index = layer.getFrameIndex(window.name);
+                    layer.open({
+                        type: 1,
+                        title: "修改参数",
+                        content: html,
+                        area: ['500px', '500px'],
+                        btn: ["保存"],
+                        success: function (layero, index) {
+                            // 初始化表单数据.
+                            var group_id = theItem.parent().parent().attr("data-group-id");
+                            var name = theItem.find(".name").text();
+                            var id = theItem.attr("data-id");
+                            var type = theItem.attr("data-type");
+                            var options = theItem.attr("data-options");
+                            var required = theItem.attr("data-required");
+                            var is_index = theItem.attr("data-is-index");
+
+                            // 开始初始化
+                            layero.attr("data-id", id);
+                            layero.attr("data-group-id", group_id);
+                            layero.find("input[name='param-name']").val(name);
+                            // 2017-7-25-陈小博
+                            // 因为LayUI会动态改变HTMl的问题, 下拉框和复选框的初始化,只能通过插入HTMl,然后再让LayUI处理的方式.
+                            var optionHTML = '<option value=""></option>'; +
+                                '<option value="选择项" name="type[required]" selected >选择项</option>';
+
+                            if (type == 1) {
+                                optionHTML += '<option value="输入项" selected>输入项</option>';
+                                optionHTML += '<option value="选择项" >选择项</option>';
+                            } else {
+                                optionHTML += '<option value="输入项" >输入项</option>';
+                                optionHTML += '<option value="选择项" selected>选择项</option>';
+                                layero.find("textarea").val(options.replace(/,/g, "\n"));
+                            }
+                            layero.find(".form select[name='type']").append(optionHTML);
+                            var checkHTML = '';
+                            if (required == 1) {
+                                checkHTML += '<input type="checkbox" name="required" title="必填" value="必填" checked>';
+                            } else {
+                                checkHTML += '<input type="checkbox" name="required" title="必填" value="必填">';
+                            }
+                            if (is_index == 1) {
+                                checkHTML += '<input type="checkbox" name="is_index" title="可索引" value="可索引" checked>';
+                            } else {
+                                checkHTML += '<input type="checkbox" name="is_index" title="可索引" value="可索引">';
+                            }
+                            layero.find(".check").append(checkHTML);
+                            layui.form().render();
+
+                        },
+                        yes: function (index, layero) {
+                            var param_name = layero.find('#param_name').val(), type = layero.find('#type').val();
+                            if (!param_name || !type) {
+                                layer.msg('表单填写有误，请核对！', { icon: 2 });
+                            } else {
+                                var formArray = $(".demo-param-dialog .layui-form").serializeArray();
+                                // 把用户输入的项转换成object
+                                var formObj = {};
+                                formArray.forEach(function (ele) {
+                                    if (ele.value) {
+                                        formObj[ele.name] = (ele.value);
+                                    }
+                                });
+                                // 尝试捕获几个容易出错的问题
+                                if (formObj.type == "选择项" && !formObj["value-chosen"]) {
+                                    layer.msg("类型为选择项时，可选值不能为空!", {
+                                        icon: 5,
+                                        time: 2000,
+                                    })
+                                } else {
+                                    // 获取几个id值
+                                    var param_id = Number($(".layui-layer").attr("data-id"));
+                                    var group_id = Number($(".layui-layer").attr("data-group-id"));
+                                    $.post('${ctx}/goods/admin/params/' + param_id + ".do", {
+                                        param_id: param_id,
+                                        param_name: formObj["param-name"],
+                                        param_type: formObj.type == "输入项" ? 1 : 2,
+                                        options: formObj.type == "选择项" ? formObj["value-chosen"].replace(/\n/g, ",") : null,
+                                        category_id: id,
+                                        group_id: group_id,
+                                        is_index: formObj.is_index == "可索引" ? 1 : 0,
+                                        required: formObj.required ? 1 : 0,
+                                    },
+                                        function (response) {
+                                            layer.msg("编辑参数成功 !", {
+                                                icon: 1,
+                                                time: 2000
+                                            });
+                                            // 把用户输入的值,也存在本地一份,留着用户编辑时,从这里读取.
+                                            theItem.attr("data-type", response.param_type);
+                                            theItem.attr("data-options", response["options"]);
+                                            theItem.attr("data-required", response.required);
+                                            theItem.attr("data-is-index", response.is_index);
+
+                                            // 把用户输入的数据,填充到HTML中.
+                                            theItem.find(".name").text(formObj["param-name"]);
+                                            theItem.find(".type").text(formObj["type"]);
+                                            // 因为可能之前存在有值, 所以上三目运算,用户没有选required的话,就把之前的可能存在的值初始化了,防止影响到后面的.
+                                            theItem.find(".check").text(formObj["required"] ? formObj["required"] : "");
+                                            var currentText = theItem.find(".check").text();
+                                            theItem.find(".check").text(currentText + " " + formObj["is_index"] ? formObj["is_index"] : "");
+                                            layer.close(index);
+                                        }
+                                    );
+                                }
+                            }
+
+
+                        }
+                    })
+                }
+            })
+        });
+
+        // 删除参数
+        $(".demo-params .params-div-model .param-item-div .delete").click(function () {
+            var theItem = $(this).parent().parent();
+            if (!confirm("确认删除此参数吗？")) {
+                return;
+            } $.ajax({
+                url: "${ctx}/goods/admin/params/" + theItem.attr("data-id") + ".do",
+                type: "DELETE",
+                success: function () {
+                    theItem.remove();
+                    layer.msg("删除参数成功 !", {
+                        icon: 1,
+                        time: 2000
+                    });
+                    setSortableIcons();
+                }
+            })
+        });
+
+        // 新增单个参数
+        $(".demo-params .param-array .param-items .param-new-item").click(function () {
+            var _this = this;
+            var group_id = $(this).parent().parent().attr("data-group-id");
+            var html = "";
+            $.ajax({
+                url: "${ctx}/goods/admin/params/add-page.do?",
+                success: function (data) {
+                    html = data;
+                    var index = layer.getFrameIndex(window.name);
+                    layer.open({
+                        title: "新增参数",
+                        type: 1,
+                        content: html,
+                        area: ['500px', '500px'],
+                        btn: ["保存"],
+                        success: function (layero, index) {
+                            layui.form().render();
+                        },
+                        yes: function (index, layero) {
+                            var name = layero.find('#name').val(), type = layero.find('#type').val();
+                            if (!name || !type) {
+                                layer.msg('表单填写有误，请核对！', { icon: 2 });
+                            } else {
+                                var formArray = $(".demo-param-dialog .layui-form").serializeArray();
+
+                                var itemCloned = $(".demo-params .params-div-model .param-item-div >div").clone(true);
+                                // 将表单转换成一个JS对象
+                                var formObj = {};
+                                formArray.forEach(function (ele) {
+                                    if (ele.value) {
+                                        formObj[ele.name] = ele.value;
+                                    }
+                                })
+                                // 尝试捕获几个容易出错的问题
+                                if (formObj.type == "选择项" && !formObj["value-chosen"]) {
+                                    layer.msg("类型为选择项时，可选值不能为空!", {
+                                        icon: 5,
+                                        time: 2000,
+                                    })
+                                } else {
+                                    $.post("${ctx}/goods/admin/params.do", {
+                                        param_name: formObj["param-name"],
+                                        param_type: formObj.type == "输入项" ? 1 : 2,
+                                        options: formObj.type == "选择项" ? formObj["value-chosen"].replace(/\n/g, ",") : null,
+                                        category_id: id,
+                                        group_id: group_id,
+                                        is_index: formObj.is_index == "可索引" ? 1 : 0,
+                                        required: formObj.required ? 1 : 0,
+                                    },
+                                        function (response) {
+                                            layer.msg("新增参数成功 !", {
+                                                icon: 1,
+                                                time: 2000
+                                            });
+                                            // 把同样的数据,存储到 itemCloned 中;
+                                            itemCloned.attr("data-id", response.param_id);
+                                            itemCloned.attr("data-type", response.param_type);
+                                            itemCloned.attr("data-options", response["options"]);
+                                            itemCloned.attr("data-required", response.required);
+                                            itemCloned.attr("data-is-index", response.is_index);
+
+                                            // 填充表单
+                                            itemCloned.find(".name").text(formObj["param-name"]);
+                                            itemCloned.find(".type").text(formObj["type"]);
+                                            itemCloned.find(".check").text(formObj["required"] ? formObj["required"] : "");
+                                            var currentText = itemCloned.find(".check").text();
+                                            // 三目运算. 确保不会把undefined赋上去.
+                                            itemCloned.find(".check").text(currentText + " " + formObj["is_index"] ? formObj["is_index"] : "");
+
+                                            // 插入到对应位置
+                                            $(_this).before(itemCloned);
+                                            setSortableIcons();
+                                            layer.close(index);
+                                        }
+                                    );
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // 上移 单个数组
+        $(".demo-params .params-div-model .param-item-div .up").click(function () {
+            var theItem = $(this).parent().parent();
+            var param_id = theItem.attr("data-id");
+            var targetElement = theItem.prev();
+            if (targetElement.hasClass('param-item')) {
+                $.post("${ctx}/goods/admin/params/" + param_id + "/sort.do", {
+                    category_id: id,
+                    group_id: theItem.parent().parent().attr("data-group-id"),
+                    param_id: param_id,
+                    sort_type: "up",
+                },
+                    function () {
+                        theItem.insertBefore(targetElement);
+                    }
+                )
+            }
+        });
+
+        // 下移 单个数组
+        $(".demo-params .params-div-model .param-item-div .down").click(function () {
+            var theItem = $(this).parent().parent();
+            var param_id = theItem.attr("data-id");
+            var targetElement = theItem.next();
+            if (targetElement.hasClass('param-item')) {
+                $.post(
+                    "${ctx}/goods/admin/params/" + param_id + "/sort.do", {
+                        category_id: id,
+                        group_id: theItem.parent().parent().attr("data-group-id"),
+                        param_id: param_id,
+                        sort_type: "down",
+                    },
+                    function () {
+                        theItem.insertAfter(targetElement);
+                    }
+                )
+            }
+        });
+
+        // 新增参数 的hover效果换成小手
+        $(".demo-params .param-items .param-new-item").mouseover(function () {
+            $(this).css("cursor", "pointer");
+            $(this).mouseout(function () {
+                $(this).css("cursor", "default");
+            });
+        });
+
+    });
+</script>
+<#include '/admin/footer.html' />

@@ -1,0 +1,93 @@
+<#assign  title="商城首页" />
+<#include '/common/header.html'/>
+<!-- 团购活动 -->
+<#assign groupBuyActTag=newTag("groupBuyActTag")>
+<#assign groupBuyAct=groupBuyActTag("{'act_id':${act_id} }")>
+
+<!-- 团购标签 -->
+<#assign groupBuyTag=newTag("groupBuyTag")>
+<#assign groupBuy=groupBuyTag("{'goodsid':${goodsid} }")>
+
+<!--获取商品店铺信息 -->
+<#assign myShopDetailTag=newTag("myShopDetailTag")>
+<#assign shop=myShopDetailTag("{'store_id':${groupBuy.store_id},'type':1 }")>
+<!-- 获取商品列表标签 -->
+<#assign goodsListTag = newTag("goodsListTag")>
+<#assign goodsList=goodsListTag("'tagid':'${groupBuyAct.act_tag_id}','goodsnum':'5'")>
+<!-- 团购时间 -->
+<#assign groupBuyActSurplusTag=newTag("groupBuyActSurplusTag")>
+<#assign groupBuyActSurplus=groupBuyActSurplusTag("{'end_time':${groupBuyAct.end_time} }")>
+<!-- 头部 -->
+	<div class="header">
+		<p>
+			Javashop示例商城
+		</p>
+	</div>
+<#include 'common/adv.html'/>
+<#include 'common/search.html'/>
+<#include 'common/quick.html'/>
+<div class="groupbuy_detail">
+		<div class="groupbuy_intro">
+			<div class="groupbuy_img">
+				<@image border="0" src="${groupBuy.img_url!''}"  />
+			</div>
+			<div class="groupbuy_title">
+				<h1>${groupBuy.gb_name}</h1>
+				<p><del>${groupBuy.goods.price}</del>${groupBuy.price/groupBuy.goods.price*10}折</p>
+				<strong><em>￥</em>${groupBuy.price}</strong>
+			</div>
+			<#if groupBuyAct.act_status==1>
+			<#if groupBuy.goods_num==0>
+								<a href="">已售罄</a>
+	          					<#else>
+	          					<a href="${ctx}/goods.html?goodsid=${groupBuy.goods_id}" class="addcart" id="addcart">我要团</a>
+	          				</#if>
+	          				</#if>
+		</div>
+	<div class="time_over">
+		  <!-- 倒计时 距离本期结束 -->
+			            	<i class="icon-alarm">距离活动结束</i>：
+			              	<span id="d1"></span><strong>天</strong>
+					      	<span id="h1"></span><strong>小时</strong>
+					      	<span id="m1"></span><strong>分</strong>
+					      	<span id="s1"></span><strong>秒</strong>
+			              
+			              <script type="text/javascript">
+			                        tms[tms.length] = "${groupBuyActSurplus.cha}";
+			                        day[day.length] = "d1";
+			                        hour[hour.length] = "h1";
+			                        minute[minute.length] = "m1";
+			                        second[second.length] = "s1";
+			             </script> 
+	</div>
+</div>
+<div class="groupbuy_store">
+	<p>${shop.shop_name}</p>
+	<span>进入店铺</span>
+</div>
+<div class="groupbuy_goodsintro">
+	<div class="g_introtitle">
+		<ul>
+			<li class="g_introtitle">商品详情</li>
+			<li class="g_othertitle">购买记录</li>
+		</ul>
+	</div>
+		<div class="g_intro" style="display:none">
+			${groupBuy.remark!''}
+		</div>
+		<div class="g_other">
+				<#assign recordListTag = newTag("recordListTag")>
+				<!--调取"成交记录"标签，并传递参数,获取Page对象-->
+				<#assign recordList = recordListTag("{'goods_id':${groupBuy.goods_id},'pageSize':20}")>
+				<ul>
+					<#list recordList.result as record>
+						<li>
+							<span class="frist">${record.uname}</span>  
+							<span class="middle">x${record.goods_num!'0'}</span> 
+							<span class="last"><@dateformat time="${record.rog_time?c}" pattern="yyyy-MM-dd HH:mm"/></span>
+						</li>
+					</#list>
+				</ul>
+		</div>
+</div>
+<#include 'common/footer.html'/>

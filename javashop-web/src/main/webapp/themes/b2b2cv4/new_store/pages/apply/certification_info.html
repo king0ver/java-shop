@@ -1,0 +1,558 @@
+<#include '../../store_header.html' />
+<!-- 调用地区标签 -->
+<#assign regionSelect = "com.enation.app.base.tag.regions.RegionSelectDirective"?new()>
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/uploadify.css" />
+<script type="text/javascript" src="${ctx}${themes_path}/js/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="${staticserver}/e_tools/js/jquery.addressSelect-1.0.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+	.step2.current{
+	    background-position: -135px -130px;
+	    width: 93px;
+	}
+	.step3.current{
+	    background-position: -135px -130px;
+	    width: 93px;
+	}
+	.left_sidebar .content .agreement .hideer{
+		    background-position: -280px 0;
+	}
+	.layui-input:hover, .layui-textarea:hover{
+		border-color: none!important;
+	}
+	.app-address-title{
+		height: 28px;
+		line-height: 28px;
+		border-radius: 3px;
+	}
+	.previous2{
+	    width: 40px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #DCDCDC;
+   }
+</style>
+<#-- 获取店铺信息  判断店铺状态-->
+	<#assign applyShopTag=newTag("applyShopTag")/>
+	<#assign shop=applyShopTag('{"step":"step2"}')>
+<div class="store_main">
+  <form id="next2" class="validat">
+	<div class="open_store" id="certification_info" >
+		<div class="bread_crumb">
+			<span class="icon_home"></span>
+			<span>
+				<a href="${ctx}/index.html">首页</a>
+			</span>
+			<span class="arrow">></span>
+			<span>商家入驻申请</span>
+		</div>
+		<!--左侧-->
+		<div class="left_sidebar">
+			<div class="title">
+				<h2>商家入驻申请</h2>
+			</div>
+			<div class="content">
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						入驻协议
+					</dt>
+				</dl>
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						基本信息
+					</dt>
+				</dl>
+				<dl class="certification agreement" style="cursor: pointer;">
+					<dt> 
+					  <i class="hideer">  </i>	
+						认证信息
+					</dt>
+					<dd style="display: block;">
+						<ul>
+							<li>
+								<i></i>
+								<a href="#business">营业执照信息</a>
+							</li>
+							<li>
+								<i></i>
+								<a href="#organization">组织机构代码证</a>
+							</li>
+							<li>
+								<i></i>
+								<a href="#prove">一般纳税人证明</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl class="financial">
+					<dt style="cursor: pointer;"> 
+					  <i class="hideer">  </i>	
+						财务资质信息
+					</dt>
+					<dd style="display: none;">
+						<ul>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a >开户行银行许可证</a>
+							</li>
+							<li style="cursor: pointer;">
+								<i></i>
+								<a >税务登记证</a>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt> 
+					  <i class="hideer">  </i>	
+						店铺信息
+					</dt>
+				</dl>
+			</div>
+		</div>
+		<!--右侧信息-->
+		<div class="right-layout">
+			<div class="joinin-step">
+				<ul>
+					<li class="step1 current"><span>入驻协议</span></li>
+					<li class="step2 current"><span>基本信息</span></li>
+					<li class="step3 current"><span>认证信息</span></li>
+					<li class="step4"><span>财务资质信息</span></li>
+					<li class="step5"><span>店铺信息</span></li>
+				</ul>
+			</div>
+			<div class="joinin-content">
+				<div class="apply_agreement">
+					<div class="basic-information">
+							<h3 id="business">营业执照信息</h3>
+					</div>
+					<div class="basic-data">
+						<div id="form_saveMember">
+						     <table border="0" cellspacing="0" cellpadding="0">
+						     	<tr>
+						     		<th><span>法定代表人姓名</span>:</th>
+						     		<td>
+						     			<input type="text" name="legal_name" <#if (shop.legal_name??)>value="${shop.legal_name}"</#if>  class="legal_name" isrequired="true" style="width: 55%;"  placeholder="请输入法定代表人姓名" maxlength="10" >
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>身份证号</span>：</th>
+						     		<td>
+						     			 <input type="text" name="legal_id" <#if (shop.legal_id??)>value="${shop.legal_id}"</#if>  class="legal_id" isrequired="true" style="width: 52%;"  placeholder="请输入身份证号" maxlength="18">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>法人身份证电子版</span>：</th>
+						     		<td>
+						     			<span class="upload-btn legal_img_btn">上传</span>
+						     			<p>允许上传的格式（jpg、png、jpeg）和大小（1mb)以内</p>
+						     			<#if (shop.legal_img?? && shop.legal_img!="")>
+						     				 <img class="temp-preview-image" src="${shop.legal_img}" height="200" width="200">
+						     			</#if>
+  										 <input type="hidden"  name="legal_img" class="legal_img" maxlength="100" autocomplete="off" <#if (shop??&&shop.legal_img??)>value="${shop.legal_img}"</#if>>
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>营业执照号</span>：</th>
+						     		<td>
+						     			<input type="text" name="license_num" <#if (shop.license_num??)>value="${shop.license_num}"</#if>  class="license_num"  isrequired="true" style="width: 60%;"  placeholder="请输入营业执照号" maxlength="20">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>营业执照所在地</span>：</th>
+						     		<td id="selectAddress" style="cursor: pointer;">
+					     				<script type="text/javascript" colspan="3" class="choseAddr ">
+											$(function() {
+												<#if (shop.license_province_id??&&shop.license_province_id!=0)>
+													$('#selectAddress').addressSelect({
+														deData: [${shop.license_province_id},${shop.license_city_id!''},${shop.license_region_id!''},${shop.license_town_id!''}],
+														names : {
+								                            province: 'license_province',
+								                            city    : 'license_city',
+								                            region  : 'license_region',
+								                            town    : 'license_town'
+								                        }
+													});
+												<#else>
+													$('#selectAddress').addressSelect({
+														 names : {
+									                            province: 'license_province',
+									                            city    : 'license_city',
+									                            region  : 'license_region',
+									                            town    : 'license_town'
+									                        }
+													});
+												</#if>
+											})
+										</script> 
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>营业执照详细地址</span>：</th>
+						     		<td>
+
+						     			<input type="text" name="license_add" <#if (shop.license_add??)>value="${shop.license_add}"</#if>  class="license_add"  isrequired="true" style="width: 60%;"  placeholder="请输入营业执照详细地址" maxlength="50">
+
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>成立日期</span>：</th>
+						     		<td>
+						     				<input class="Wdate form-control establishdate" type="text" name="establishdate" id="establishdate" isrequired="true" onClick="WdatePicker()" readonly style="background-color: #ffffff; cursor: pointer;height: 20px;width: 82px;"
+											<#if (shop.establish_date?? && shop.establish_date!=0)> value="<@dateformat time="${(shop.establish_date)?c}" pattern="yyyy-MM-dd"/>"</#if>>
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>营业执照有效期</span>：</th>
+						     		<td>
+						     			<input class="Wdate form-control licencestart" type="text" name="licencestart"  isrequired="true" onClick="WdatePicker()" readonly placeholder="开始时间"  style="background-color: #ffffff; cursor: pointer;height: 20px;width: 82px;" 
+
+											<#if (shop.licence_start?? && shop.licence_start!=0)> value="<@dateformat time="${(shop.licence_start)?c}" pattern="yyyy-MM-dd"/>"</#if>> 
+						     		     
+
+						     			<input class="Wdate form-control licenceend" type="text" name="licenceend"  isrequired="true" onClick="WdatePicker()" readonly placeholder="结束时间"  style="background-color: #ffffff; cursor: pointer;height: 20px;width: 82px;margin-left: 10px;"
+
+											<#if (shop.licence_end?? && shop.licence_end!=0)> value="<@dateformat time="${(shop.licence_end)?c}" pattern="yyyy-MM-dd"/>"</#if>>
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>法定经营范围</span>：</th>
+						     		<td>
+						     			<input type="text" name="scope" <#if (shop.scope??)>value="${shop.scope}"</#if>  class="scope" isrequired="true" style="width: 60%;"  placeholder="请输入法定经营范围" maxlength="50">
+						     		</td>
+						     	</tr>
+						     	<tr>
+						     		<th><span>营业执照电子版</span>：</th>
+						     		<td>
+						     			 <span class="upload-btn  licence_img_btn">上传</span>
+						     			 <div>允许上传的格式（jpg、png、jpeg）和大小（1mb)以内</div>
+						     			 <#if (shop.licence_img?? && shop.licence_img!="")>
+						     				 <img class="temp-preview-image" src="${shop.licence_img}" height="200" width="200">
+						     			 </#if>
+  										 <input type="hidden" name="licence_img" class="licence_img"  maxlength="100" autocomplete="off" <#if (shop??&&shop.licence_img??)>value="${shop.licence_img}"</#if>>
+						     		</td>
+						     	</tr>
+						     	   <tr style="margin-left: -77px;">
+						     	   	 <td>
+									   <h3 id="organization">组织机构代码证</h3>
+									 </td>  
+								   </tr>
+								 	<tr>
+							     		<th><span>组织机构代码</span>：</th>
+							     		<td>
+							     			<input type="text" name="organization_code" <#if (shop.organization_code??)>value="${shop.organization_code}"</#if>   style="width: 60%;"  placeholder="请输入组织机构代码" maxlength="20">
+							     		</td>
+						     		</tr>
+							  		<tr>
+							     		<th><span>组织机构代码证电子版</span>：</th>
+							     		<td>
+							     			<span class="upload-btn  code_img_btn">上传</span>
+							     			<div>允许上传的格式（jpg、png、jpeg）和大小（1mb)以内</div>
+							     			<#if (shop.code_img?? && shop.code_img !="")>
+							     				<img class="temp-preview-image" src="${shop.code_img}" height="200" width="200">
+							     			</#if>
+  										 	<input type="hidden"   name="code_img" class="code_img" maxlength="100" autocomplete="off" <#if (shop??&&shop.code_img??)>value="${shop.code_img}"</#if>>
+							     		</td>
+						     		</tr>
+						     		 <tr style="margin-left: -77px;">
+							     	   	 <td>
+										   <h3 id="prove">一般纳税人证明</h3>
+										 </td>  
+								   	</tr>
+								   	<tr class="aa">
+							     		<th><span>一般纳税人证明</span>：</th>
+							     		<td>
+							     			<span class="upload-btn taxes_img_btn">上传</span>
+							     			<div>允许上传的格式（jpg、png、jpeg）和大小（1mb)以内</div>
+							     			<#if (shop.taxes_img?? && shop.taxes_img!="")>
+							     				<img class="temp-preview-image" src="${shop.taxes_img}" height="200" width="200">
+							     			</#if>
+							     			
+  										 	<input type="hidden"  name="taxes_img" class="taxes_img" maxlength="100" autocomplete="off" <#if (shop.taxes_img??)>value="${shop.taxes_img}"</#if>>
+							     		</td>
+						     		</tr>
+								</div>
+						     </table>
+						    </div>
+					   </div>
+					<div class="bottom">
+						<a  class="btn previous2">上一步</a>
+						<a  class="btn next2">下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ </form>
+</div>
+<script type="text/javascript">
+	$(function(){
+		//		 点击认证信息让其子内容显示和隐藏
+		$(".certification dt").click(function(){
+			if($(".certification dd").css("display")=="none"){
+				$(".certification dd").css("display","block");
+				$(".certification .hideer").css("background-position","-280px 0px")
+			}else{
+				$(".certification dd").css("display","none");
+				$(".certification .hideer").css("background-position","")
+			}
+		})
+		//点击财务认证信息让其子内容显示和隐藏
+		$(".financial dt").click(function(){
+			if($(".financial dd").css("display")=="none"){
+				$(".financial dd").css("display","block");
+				$(".financial .hideer").css("background-position","-280px 0px")
+			}else{
+				$(".financial dd").css("display","none");
+				$(".financial .hideer").css("background-position","")
+			}
+		})
+		//	进行校验
+		var span ='<span class="error">请输入此字段 !</span>';
+		
+//		法定代表人姓名不能为空
+		$("#form_saveMember tr input[name=legal_name]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+//		省份证号不能为空
+			$("#form_saveMember tr input[name=legal_id]").blur(function(){
+			var idcard="<span class='error'>请输入正确的身份证号码！ </span>";	
+			if(!/^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/.test($(this).val())){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(idcard).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+//		法人身份电子版不能为空
+		$("#form_saveMember tr input[name=legal_img]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+
+//		营业执照有效期不能为空
+		$("#form_saveMember tr input[name=licencestart]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+		$("#form_saveMember tr input[name=licenceend]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+		$("#form_saveMember tr input[name=establishdate]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+		
+//		营业执照号不能为空
+			$("#form_saveMember tr input[name=license_num]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+//		营业执照详细地址
+			$("#form_saveMember tr input[name=license_add]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+//		法定经营范围不能为空
+			$("#form_saveMember tr input[name=scope]").blur(function(){
+			if($(this).val()==''){
+			$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+//		营业执照电子版不为空
+		$("#form_saveMember tr input[name=licence_img]").blur(function(){
+			if($(this).val()==''){
+				$(this).css("border","1px solid #e22");
+				$(this).parent().find('span').remove()
+				$(span).appendTo($(this).parent())
+				return;
+			}else{
+				$(this).css("border","");
+				$(this).parent().find('span').remove();
+			}
+		});
+		
+		//	认证信息跳转到财务资质信息页面
+		$(".next2").click(function(){
+		    if($(".legal_name").val()==''){
+		    		$(".legal_name").css("border","1px solid red");
+	       		 return false;
+	       }
+	       if($(".licence_img").val()==''){
+	    	  		 $(".licence_img").css("border","1px solid red");
+	    	  		$.Loading.message("请上传营业执照电子版");
+	       	 	return false;
+	       }
+	       if($(".scope").val()==''){
+	    	   		$(".scope").css("border","1px solid red");
+	        		return false;
+	       }
+	       if($(".license_add").val()==''){
+	    	   		$(".license_add").css("border","1px solid red");
+	       	 	return false;
+	       }
+	       if($(".establishdate").val()==''){
+	       	 	$(".establishdate").css("border","1px solid red");
+	      	 	return false;
+	     		 }
+	       if($(".licencestart").val()==''){
+       	 	$(".licencestart").css("border","1px solid red");
+      	 	return false;
+     		 }
+	        if($(".licenceend").val()==''){
+	        		$(".licenceend").css("border","1px solid red");
+	        		return false;
+	       }
+	       	if($(".license_num").val()==''){
+	    	   		$(".license_num").css("border","1px solid red");
+	        		return false;
+	       }
+	       if($(".setupdata").val()==''){
+	    	   		$(".setupdata").css("border","1px solid red");
+	       	 	return false;
+	       }
+	        if($(".legal_id").val()==''){
+	        		$(".legal_id").css("border","1px solid red");
+	       	 	return false;
+	       }
+	       if($(".legal_img").val()==''){
+	    	   		$(".legal_img").css("border","1px solid red");
+	    	   		$.Loading.message("请上传法人身份证电子版");
+	       	 	return false;
+	       }
+	       var options = {
+	    		   		url : "${ctx}/api/b2b2c/shop-api/step2.do",
+					type : "POST",
+					async: false,
+					dataType : "json",
+					success : function(result) {
+						if(result.result === 0){
+							$.alert(result.message);
+						}else{
+							window.location.href = "financial_info.html";
+						}
+						$(".next2").removeAttr("disabled");
+				 	},
+				 	error : function(e) {
+				 		$.alert("出现错误，请重试");
+					}
+				};
+			$('#next2').ajaxSubmit(options); 
+	    
+	})
+//点击上一步操作
+	$(".previous2").click(function(){
+		window.location.href = "basic_info.html";
+	})
+	// 法人身份证电子版 
+			var options={
+		             //文件上传成功后回调
+			    		success:function(data){
+			    			$("[name='legal_img']").val(data);
+			    	       },
+			    	    error:function(error){
+			    			console.log(error);
+			    		}	
+			 }
+			 $('.legal_img_btn').FilesUpload(options);
+			
+			//组织机构代码证电子版
+			var options={
+		             //文件上传成功后回调
+			    		success:function(data){
+			    			$("[name='code_img']").val(data);
+			    	       },
+			    	    error:function(error){
+			    			console.log(error);
+			    		}	
+			 }
+			 $('.code_img_btn').FilesUpload(options);
+			
+			//营业执照电子版
+	 		 options={
+		             //文件上传成功后回调
+			    		success:function(data){
+			    			$("[name='licence_img']").val(data);
+			    	       },
+			    	    error:function(error){
+			    			console.log(error);
+			    		}	
+			 }
+			 $('.licence_img_btn').FilesUpload(options);
+			
+	 		//一般纳税人证明
+	 		options={
+		             //文件上传成功后回调
+			    		success:function(data){
+			    			$("[name='taxes_img']").val(data);
+			    	       },
+			    	    error:function(error){
+			    			console.log(error);
+			    		}	
+			 }	
+	 		$('.taxes_img_btn').FilesUpload(options);
+})
+</script>

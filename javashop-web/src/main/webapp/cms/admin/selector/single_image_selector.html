@@ -1,0 +1,96 @@
+<button id="tagger" type="button" >点我打开~</button>
+<script type="text/javascript" src="./js/jquery.imagesUpload.js"></script>
+<div id="test" style="padding: 10px"></div>
+
+<script type="text/javascript">
+    $(function () {
+        var imagesUpload;
+        //  如果想从外部关闭插件 goodsSelector.close() 即可。
+        $('#tagger').on('click', function () {
+            imagesUpload = $.ImagesUpload({
+                //  由于不走$.ajax，所以需要手动指定。
+                host: JavashopProxy.gateway(),
+                //  可选文件类型，默认为 ['jpg', 'jpeg', 'png', 'bmp', 'gif']
+                fileTypes: ['jpg', 'jpeg', 'png'],
+                //  最大文件可传个数，默认10个。如果设置为1，回调中会返回一个object。
+                fileNumLimit: 20,
+                //  单个文件最大容量，单位：MB
+                fileSingleSizeLimit: 1,
+                //  最大上传线程，默认为1【建议设为1】
+                threads: 1,
+                //  自定义参数，如果设置value值，则默认值统为设置的value
+                //  label: 文字描述
+                //  type : hidden为隐藏输入框，不隐藏不传
+                //  name ：input的name属性
+                //  value：input默认值
+                customParams: [{
+                        label: '图片类型',
+                        name: 'op_type',
+                        value: 'link'
+                    },
+                    {
+                        label: '图片链接',
+                        name: 'op_value',
+                        value: ''
+                    }
+                ],
+                //  默认数据，根据上面自定义的name和value传入默认值
+                defaultData: [{
+                    img_url: 'http://192.168.1.194/1498645031dd428.jpg',
+                    customParams: [{
+                            name: 'op_type',
+                            value: 'link'
+                        },
+                        {
+                            name: 'op_value',
+                            value: 'http://www.javamall.com.cn/111.html'
+                        },
+                        {
+                            name: 'op_detail',
+                            value: '描述111'
+                        }
+                    ]
+                }, {
+                    img_url: 'http://192.168.1.194/1498645054abc5c.jpg',
+                    customParams: [{
+                            name: 'op_type',
+                            value: 'link'
+                        },
+                        {
+                            name: 'op_value',
+                            value: 'http://www.javamall.com.cn/222.html'
+                        },
+                        {
+                            name: 'op_detail',
+                            value: '描述222'
+                        }
+                    ]
+                }, {
+                    img_url: 'http://192.168.1.194/14987393139a666.jpg',
+                    customParams: [{
+                            name: 'op_type',
+                            value: 'link'
+                        },
+                        {
+                            name: 'op_value',
+                            value: 'http://www.javamall.com.cn/333.html'
+                        },
+                        {
+                            name: 'op_detail',
+                            value: '描述333'
+                        }
+                    ]
+                }],
+                //  处理错误信息，默认为弹框显示，错误信息为error.msg
+                handleError: function (error) {
+                    console.log(error);
+                },
+                //  确认回调，如果最大上传个数为1 返回单个object，否则为数组
+                confirm: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+        $('#tagger').click();
+    });
+</script>

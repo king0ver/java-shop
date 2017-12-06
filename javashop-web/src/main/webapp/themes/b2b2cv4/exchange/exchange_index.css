@@ -1,0 +1,22 @@
+.point_tit h3 {
+    border-left: 3px solid #f60;
+    color: #f60;
+    float: left;
+    height: 21px;
+    padding-left: 10px;
+}
+.point_tit a {
+    float: right;
+}
+a.exchange_btn {
+    background: #f60 none repeat scroll 0 0;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 10px;
+    text-align: center;
+}

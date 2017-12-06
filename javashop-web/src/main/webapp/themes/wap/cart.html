@@ -1,0 +1,168 @@
+<#assign  title="购物车" />
+<#include '/common/header.html' />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/cart.css">
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/hammer/hammer.min.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/hammer/jquery.hammer.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/cart.js"></script>
+
+<#assign cartTag = newTag("cartTotalListTag") />
+<#assign cartList = cartTag() />
+<div class="cart">
+    <#if cartList?exists && cartList?size gt 0>
+        <#list cartList as cartVo >
+            <div class="inner-cart">
+                <div class="inner-store-items">
+                    <div class="store-item">
+                        <div class="title-store-item">
+                            <div class="store-check">
+                                <i class="checked-item checkbox-store" data-id="${cartVo.seller_id!''}"></i>
+                            </div>
+                            <div class="store-name" data-id="${cartVo.seller_id!''}">${cartVo.seller_name!''}</div>
+                            <div class="store-other">
+                                <span class="receive-bonus"><a href="${ctx}/cart/cart-bonus.html?store_id=${cartVo.seller_id!''}"> &nbsp;领券</a></span>
+                            </div>
+                        </div>
+                        <div class="content-store-item">
+                            <#list cartVo.promotionList as groupPromotionVo >
+                                <#if groupPromotionVo.is_group ==1 >
+                                    <#if groupPromotionVo.promotion_type == 'full_discount'>
+                                        <#assign fullDiscountVo = groupPromotionVo.activity_detail />
+                                        <#assign subtotal = (groupPromotionVo.subtotal!0) />
+                                        <#assign spreadPrice = groupPromotionVo.spreadPrice />
+
+                                        <div class="activity-item-cart">
+                                            <#if fullDiscountVo.is_full_minus == 1>
+                                                <div class="info-activity<#if spreadPrice == 0 > satisfy</#if>">
+                                                    <span class="tag-info-activity">满减</span>
+                                                    <span class="title-info-activity">满${fullDiscountVo.full_money}元立减${fullDiscountVo.minus_value}元</span>
+                                                    <em class="cut-info-activity"></em>
+                                                    <span class="state-info-activity">
+                                                        <i class="icon-gou"></i>
+	                                                    已买满<em>${subtotal}</em>元，
+	                                                    <#if spreadPrice != 0>
+	                                                        还差<em>${spreadPrice}</em>元&nbsp;
+	                                                    <#else/>
+	                                                        优惠<em>${fullDiscountVo.minus_value}</em>元
+	                                                    </#if>
+	                                                </span>
+                                                </div>
+                                            </#if>
+                                            <#if fullDiscountVo.is_discount == 1 >
+                                                <div class="info-activity<#if spreadPrice == 0 > satisfy</#if>">
+                                                    <span class="tag-info-activity">满 折</span>
+                                                    <span class="tit-info-activity">满${fullDiscountVo.full_money}元打${fullDiscountVo.discount_value}折</span>
+                                                    <em class="cut-info-activity"></em>
+                                                    <span class="state-info-activity">
+	                                                    <#if spreadPrice == 0>
+	                                                        <i class="icon-gou"></i>
+	                                                    </#if>
+	                                                    已买满<em>${subtotal}</em>元，
+                                                        <#if spreadPrice != 0>
+                                                            还差<em>${spreadPrice}</em>元&nbsp;
+                                                        <#else/>
+                                                            打<em>${fullDiscountVo.discount_value}</em>折
+                                                        </#if>
+	                                                </span>
+                                                </div>
+                                            </#if>
+
+                                            <#assign isSend = fullDiscountVo.is_send_bonus + fullDiscountVo.is_send_gift + fullDiscountVo.is_send_point />
+                                            <#if isSend gt 0 >
+                                                <div class="info-activity <#if spreadPrice == 0 >satisfy</#if>">
+                                                    <span class="tag-info-activity">满 赠</span>
+                                                    <#if fullDiscountVo.is_send_bonus == 1>
+                                                        <#assign sendString = "优惠券" />
+                                                        <#assign sendDetail = "已赠送优惠券" />
+                                                    <#elseif fullDiscountVo.is_send_gift == 1 />
+                                                        <#assign sendString = "赠品" />
+                                                        <#assign sendDetail = "已赠送赠品" />
+                                                    <#elseif fullDiscountVo.is_send_point == 1 />
+                                                        <#assign sendString = "积分" />
+                                                        <#assign sendDetail = ("已赠送" + "<em>" + fullDiscountVo.point_value + "</em>" +"积分") />
+                                                    </#if>
+                                                    <span class="tit-info-activity">指定商品买满${fullDiscountVo.full_money}元赠${sendString}</span>
+                                                    <em class="cut-info-activity"></em>
+                                                    <span class="state-info-activity">
+                                                    <#if spreadPrice == 0>
+                                                        <i class="icon-gou"></i>
+                                                    </#if>
+	                                                已买满<em>${subtotal}</em>元，
+                                                    <#if spreadPrice != 0>
+                                                        还差<em>${spreadPrice}</em>元&nbsp;
+                                                    <#else/>
+                                                        ${sendDetail}
+                                                    </#if>
+                                                </div>
+                                            </#if>
+                                        </div>
+                                    </#if>
+                                </#if>
+                                <#list groupPromotionVo.productList as product >
+                                    <div class="goods-item" data-cart_id="${product.seller_id}" data-product_id="${product.product_id}" data-price="${product.purchase_price}" data-weight="${product.goods_weight}">
+                                        <div class="goods-check">
+                                            <span class="checked-item checkbox-goods <#if product.is_check?? && product.is_check==1>checked</#if>" data-product_id="${product.product_id}"></span>
+                                        </div>
+                                        <div class="goods-image">
+                                            <@image src="${product.goods_image!''}" />
+                                        </div>
+                                        <div class="goods-content">
+                                            <div class="goods-name">${product.name}</div>
+                                            <div class="goods-other"></div>
+                                            <div class="goods-tools">
+                                                <div class="goods-price">
+                                                    ￥<strong>${product.purchase_price?string.currency}</strong>
+                                                </div>
+                                                <div class="goods-update-num">
+                                                    <input type="hidden" class="max-num" value="200">
+                                                    <input type="hidden" class="this-num" value="1">
+                                                    <a class="goods-symbol symbol-less minus<#if (product.num < 2)> unable</#if>" href="javascript:;">-</a>
+                                                    <input type="tel" class="goods-num <#if product.is_check?? && product.is_check==1>checked</#if>"  size="4" value="${product.num!1}"
+                                                           name="num" maxlength="4" >
+                                                    <a class="goods-symbol symbol-add add" href="javascript:;">+</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="delete-box" data-id="${product.seller_id}">删除</div>
+                                    </div>
+                                    <#if product.single_list?exists && product.single_list?size gt 0>
+                                        <div class="activity-info">
+                                            <div class="activity-info-title">促销</div>
+                                            <div class="activity-info-body">
+                                                <div class="activity-info-content">
+                                                    <select class="promotion-select promotion-right-arrow">
+                                                        <#list product.single_list as cartPromotionGoodsVo>
+                                                            <option value="${cartPromotionGoodsVo.activity_id}" promotion-type="${cartPromotionGoodsVo.promotion_type}" skuid="${product.product_id}" sellerid="${cartVo.seller_id}"<#if cartPromotionGoodsVo.is_check==1>selected="selected"</#if>>${cartPromotionGoodsVo.title}</option>
+                                                        </#list>
+                                                    </select>
+                                                </div>
+                                                <span class="activity-info-action"> </span>
+                                            </div>
+                                        </div>
+                                    </#if>
+                                </#list>
+                            </#list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </#list>
+        <#else/>
+        <div class="no-goods-cart"></div>
+    </#if>
+    <div class="cart-total-bar">
+        <div class="goods-check-all">
+            <i id="goods-check-all"></i>
+            <span>全选</span>
+        </div>
+        <div class="total-bar">
+            <strong class="top-total-bar">合计: ￥<b id="orderTotal">0.00</b></strong>
+        </div>
+        <a href="javascript:;" class="go-bill checkout-btn">去结算</a>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+

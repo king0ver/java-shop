@@ -1,0 +1,444 @@
+<!--商品详细-->
+<#assign goodsDetailTag = newTag("buyerApplyRefundTag")>
+<#assign goodsDetail = goodsDetailTag()>
+<#assign goods = goodsDetail.product>
+<!--创建“获取退款方式”标签-->
+<#assign refundWayTag = newTag("refundWayTag")>
+<!--调用“获取退款方式”标签，并传递参数-->
+<#assign refundWayTag = refundWayTag()>
+<!--调用“订单详细”标签，并传递参数-->
+<#assign orderDetail = goodsDetail.order>
+<style>
+.order_detail .order_intro{
+	border-right: 0px solid #d8d8d8;
+}
+.order_detail .intro_staus{
+	border-left: 1px solid #d8d8d8;
+}
+.order_detail .form-control {
+	width: 150px;
+	height: 20px;
+	display: inline-block;
+}
+.order_detail .intro_staus li select{
+	border: 1px solid #dcddde;
+    color: #999;
+    display: inline-block;
+    font-size: 14px;
+    height: 33px;
+    width: 174px;
+    padding:0;
+    margin:0;
+}
+.pro-content {
+    line-height: 22px;
+    width: 310px;
+}
+.pro-content .count-num a.down {
+    background-position: right -69px;
+}
+.pro-content .count-num a {
+    display: block;
+    background: url(/javashop/themes/b2b2cv4/images/icons-goods.png) no-repeat;
+    width: 21px;
+    height: 22px;
+}
+.pro-content .count-num span {
+    border-top: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+    height: 19px;
+    padding-top: 1px;
+    background: #fff;
+    display: block;
+}
+
+.pro-content .count-num input {
+    border: 0 none;
+    display: block;
+    width: 34px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+}
+.fl {
+    float: left
+}
+.pro-content .count-num a.up {
+    background-position: right -47px;
+}
+.pro-content .count-num a {
+    display: block;
+    background: url(/javashop/themes/b2b2cv4/images/icons-goods.png) no-repeat;
+    width: 21px;
+    height: 22px;
+}
+</style>
+	<form id="returnGoodsForm"  >
+	<input type="hidden" name="order_sn" value="${orderDetail.sn}"/>
+	<div class="order_detail">
+		<div class="order_intro">
+			<h1>订单信息</h1>
+			<div class="detail_list">
+				<dl>
+					<dt>收货地址：</dt>
+					<dd>${orderDetail.shipping_area!''}-${orderDetail.ship_addr!''}-${orderDetail.ship_name!''}</dd>
+				</dl>
+				<dl class="online">
+					<dt>订单编号：</dt>
+					<dd>${orderDetail.sn}</dd>
+				</dl>
+				<dl>
+					<dt>付款方式：</dt>
+					<dd>${orderDetail.payment_name!''}</dd>
+				</dl>
+				<dl>
+					<dt>已付款金额：</dt>
+					<dd>${goods.subtotal!''}</dd>
+					<input type="hidden"  id="paypricereturn" value="${goods.subtotal!''}"/>
+				</dl>
+				<#if goods.point??>
+				<dl>
+					<dt>已付积分：</dt>
+					<dd>${goods.point!''}</dd>
+				</dl>
+				</#if>
+				<dl>
+					<dt>下单时间：</dt>
+					<dd><@dateformat time="${orderDetail.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="intro_staus">
+			<ul>
+				<input type = "hidden" value = "${refundWayTag}" id = "refundWay">
+				<input type="hidden" name = "paymenttype" value = "${orderDetail.payment_type}">
+					<#if refundWayTag == 1>
+						<li>
+							退款方式：原支付方式返回
+							<input type = "hidden" name="refund_way" id="return_original_way" value = "original">
+							<input type="hidden" name = "account_type" value = "${orderDetail.payment_plugin_id}">
+						</li>
+					<#else>	
+						<li>
+							退款方式：
+							<select name="account_type" class="form-control" id = "way">
+								<option value="0">-- 请选择退款方式 --</option>
+								<option value="alipayDirectPlugin">支付宝</option>
+								<option value="weixinPayPlugin">微信</option>
+								<option value="银行转账">银行转账</option>
+							</select>
+						</li>
+						
+						<li id="account2" style="display:none;">
+							退款账户: &nbsp;
+							<input class="form-control" name="return_account"  placeholder="微信/支付宝"></input>
+						</li>
+						<div id = "bank2" style="display:none;">
+							<li>银行名称：<input  class="form-control" name="bank_name"  placeholder="银行名称" ></input></li>
+							<li>开户银行：<input class="form-control" name="bank_deposit_name" placeholder="开户行" ></input></li>
+							<li>银行户名：<input class="form-control" name="bank_account_name" placeholder="银行户名"></input></li>
+							<li>银行账号：<input class="form-control" name="bank_account_number" placeholder="银行账号"></input></li>
+						</div>
+						<input type = "hidden" name="refund_way" value="offline">
+					</#if>
+				<li>
+					退货原因：
+					<select name="refund_reason" id="reason" class="form-control reason-word">
+							<option value="0">请选择退货原因</option>
+							<option value="商品质量有问题">商品质量有问题</option>
+							<option value="收到商品与描述不符">收到商品与描述不符</option>
+							<option value="不喜欢/不想要">不喜欢/不想要</option>
+							<option value="发票问题">发票问题</option>
+							<option value="空包裹">空包裹</option>
+							<option value="快递无记录">快递无记录</option>
+							<option value="快递一直没有收到">快递一直没有收到</option>
+							<option value="买错/不想要">买错/不想要</option>
+							<option value="未按照时间发货">未按照时间发货</option>
+							<option value="其他">其他</option>
+						</select>
+					
+				</li>
+				<li>
+					退款金额：
+					<input class="form-control" type="text" value="${goods.subtotal!''}" name="refund_price" placeholder="不能大于选中商品金额"  maxlength="10"  dataType="float" id="price" isrequired="true"/>
+				</li>
+				<#if goods.point??>
+				<li>
+					退还积分：
+					<input type="hidden" id="goods-max-point-forever-product" value="${goods.point}">
+					<input class="form-control"type="text" name="refund_point" id="goods-max-point-product" value="${goods.point}">
+				</li>
+				</#if>
+				<li>
+					<span >退货数量：</span>
+					<div class="pro-content" style="display:inline-block;position:relative;top:5px">
+	                    <div class="count-num">
+	                        <a href="javascript:;" class="oper-num down fl not-oper"></a>
+	                        <span class="num fl">
+	                            <input type="return_num" name="return_num" id="buyNumVal" value="${goods.num}">
+	                        </span>
+	                        <a href="javascript:;" class="oper-num up fl"></a>
+	                        <input type="hidden" id="stock" value="">
+	                    </div>
+	                     <span class="delivery last-pro-duct-num"> <span style="display:none;" class="numcount">${goods.num}</span></span>
+	                </div>
+				</li>
+				<li>
+					退货描述(125字以内)：<textarea class="form-control" textarea maxlength="125" name="customer_remark" style="resize:none;width:90%;height:80px"></textarea>
+				</li>
+				<li>
+					<button type="button"  id="returnBtn" class="btn btn-danger" >申请退货</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="detail_goodslist">
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th>商品图片</th>
+					<th>商品名称</th>
+					<th>单价</th>
+					<th>购买数量</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr class="return-goods-list goods">
+						<td style="display:none"> 
+							<input type="checkbox"  name="sku_id" class="goods_id-check" value="${goods.product_id}" price="${goods.purchase_price!0}" checked="checked" autocomplete="off"/>
+							<span style="display:none">
+							<input type="hidden" value="${goods.goods_id}" name="goods_id">
+							</span>
+						</td> 
+						<td style="width:50px">
+							<a target="_blank" href="${ctx}/goods-${goods.goods_id}.html">
+								<span style="display: block; height: 50px;" class="cart-product-img">
+									<@image src="${goods.goods_image!''}"  style="cursor: pointer; width: 50px; height: 50px;" />
+								</span>
+							</a>				
+						</td>
+						<td style="width:300px; padding: 0 10px;"><a target="_blank" href="${ctx}/goods-${goods.goods_id}.html">
+						<@substring title="${goods.name}" length=40 dot="..." />
+						<#if goods.specList?exists>
+							<span style="margin: ">
+							<#list goods.specList as spec>
+								<#if spec_index!=0></#if>(<strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>)
+							</#list>
+							</span>
+						</#if>
+						</a></td>
+						<td>${goods.purchase_price?string.currency}</td>
+						<td>
+							${goods.num}
+							<span style="display:none;" class="num">${goods.num}</span></span>
+						</td>
+						
+					</tr>
+				
+				<#assign orderGiftTag = newTag("orderGiftTag")>
+						<#assign giftDetail = orderGiftTag("{'ordersn':${orderDetail.sn},'status':'NOT_APPLY'}")>
+						<!-- 促销活动赠送的赠品信息 -->
+						<#if (giftDetail?size >0) >
+						<#list giftDetail as gift >
+							<tr class="return-goods-list">
+								<td>
+									<input type="hidden" name="gift_id" value="" disabled="disabled" checked="checked"/>
+									<@image height="50" width="50" src="${gift.gift_img}"  style="cursor: pointer;" />
+								</td>
+									<td style="color: #333;">${gift.gift_name}<span style="color: red; ">（赠品，必须退回）</span></td>
+									<td >${gift.gift_price?string.currency}</td>
+									<td >1</td>
+							</tr>
+						</#list>
+						</#if>
+			</tbody>
+		</table>
+	</div>
+	</form>
+
+<script type="text/javascript">
+$(function(){
+	var form = $('#returnGoodsForm');
+	$("input[name=return_num]").on('change', function(){
+		calRefundPrice();
+	})
+
+	form.find("#returnBtn").on('click', function(){
+		
+		//退款金额
+		var return_money=form.find("input[name='refund_price']").val();		
+		if(isNaN(return_money)){
+			alert("退款金额必须是浮点型数字，例如1.00");
+			$("#returnBtn").removeAttr("disabled");
+			return false;
+		} 
+		if( return_money == ""){
+			alert("退款金额不能为空");
+			$("#returnBtn").removeAttr("disabled");
+			return false;
+		}
+		if( Number(return_money) < "0"){
+			alert("退款金额不能为负数");
+			$("#returnBtn").removeAttr("disabled");
+			return false;
+		}
+		//用户确定退货的数量   ---------------------------   单个商品的实付金额
+		 var count = parseInt($("#buyNumVal").val()),  single_price= Number(${goods.subtotal}/${goods.num});
+		if( Number(return_money) > Number(single_price*count)){
+			alert("退款金额不能大于单个商品的实付金额");
+			$("#returnBtn").removeAttr("disabled");
+			return false;
+		}
+		
+		//选择退货商品和退货原因的验证
+		if(form.find("input[class='goods_id-check']:checked").length==0){
+			alert("请选择要退货的商品");
+			return false;
+		}
+		if(form.find("select[name='refund_reason']").val()==0){
+			alert("请选择退货原因");
+			return false;
+		}
+		
+		
+		//输入退款数量的验证
+		var error =0;
+		form.find("input[name='return_num']").each(function(i,v){
+			var $this = $(v);
+			var maxnum= $this.attr("maxnum");
+			var num = $this.val();
+			
+			if(num==""){
+				alert("请输入退货数量");
+				error=1;
+				return ;
+			}
+			if(num=="0"){
+				alert("退货数量不能为0");
+				error=1;
+				return ;
+			}
+			if(num < 0){
+				alert("退货数量不能为负数");
+				error=1;
+				return ;
+			}
+			if (!$.isNumber(num)){
+				alert("退货数量请输入数字");
+				error=1;
+				return ;
+			}
+			
+			if(parseInt(num)>parseInt(maxnum)){
+				alert("退货数量不能大于购物数量");
+				error=1;
+				return ;
+			}
+			
+		});
+		if(1==error){
+			return false;
+		}
+		 
+		
+		//退款账号验证
+		if($("#refundWay").val()!= 1){
+			if($("input#account").val() == ""){
+				alert("退款账号不能为空");
+				return false;
+			}
+			if($("#way").val() ==0){
+				alert("退款方式不能为空!");
+				return false;
+			}
+		}
+		
+		if($("#refundWay").val() == 1){
+			if( Number(return_money) == "0"){
+				alert("退款金额不能为零");
+				$("#returnBtn").removeAttr("disabled");
+				return false;
+			}
+		}
+		
+		form.find("#returnBtn").attr("disabled",true);
+		var options = {
+				url : "${ctx}/after-sale/mine/return-goods/apply.do",
+				type : "POST",
+				success : function(result) {
+					alert("申请成功");	
+					location.href="return_list.html"
+				},
+				error : function(e) {
+					 $.message.error(e.responseJSON.error_message);
+					 $("#returnBtn").removeAttr("disabled");
+				}
+			};
+			$('#returnGoodsForm').ajaxSubmit(options); 
+		
+	}); 
+	//切换退款方式
+	$("#way").change(function(){
+		if($(this).val()=="alipayDirectPlugin"||$(this).val()=="weixinPayPlugin"){
+			$("#account2").show();
+			$("#bank2").hide();
+		}else{
+			$("#bank2").show();
+			$("#account2").hide();
+		}
+	})
+	
+//  数量加减
+    var countNum = $('.count-num'), numEl = $('#buyNumVal');
+    var oldVal = 1, stock = 1;
+    countNum.on('click', '.oper-num', function () {
+        var $this = $(this), isAdd = $this.is('.up');
+        var curNum = parseInt(numEl.val());
+        stock = parseInt($(".numcount").text());
+        isAdd ? (function () {
+            curNum < stock ? numEl.val(curNum += 1) : $.message.error('超出购买数量！');
+            curNum >= stock && $this.addClass('not-oper');
+            $this.siblings('.oper-num').removeClass('not-oper');
+        })() : (function () {
+            curNum >= 2 && numEl.val(curNum -= 1);
+            curNum < 2 && $this.addClass('not-oper');
+            $this.siblings('.oper-num').removeClass('not-oper');
+        })();
+    });
+    numEl.on('focus', function () {
+        oldVal = parseInt($(this).val());
+    });
+
+    numEl.on('blur', function () {
+        var _val = $(this).val();
+        stock = parseInt($(".numcount").text());
+        if (!Base.regExp.integer.test(_val)) {
+            numEl.val(oldVal);
+            return;
+        }
+        if (_val > stock) {
+            numEl.val(stock);
+            $.message.error('超出购买数量！');
+        }
+    });
+  //失去焦点判断积分是否大于总积分
+	 var  numElPoint = $('#goods-max-point-product');
+	var oldValPoint = 1, stockPoint = 1;
+	numElPoint.on('blur', function () {
+       var _valPoint = $(this).val();
+		stockPoint = parseInt($("#goods-max-point-forever-product").val());
+       if (!Base.regExp.integer.test(_valPoint)) {
+    	   numElPoint.val(oldValPoint);
+           return;
+       }
+       if (_valPoint > stockPoint ) {
+    	   numElPoint.val(stockPoint);
+           $.message.error('超出最大退还积分！');
+       }
+   });
+})
+
+
+</script>
+<!-- 会员中心公用底部 -->
+</div>

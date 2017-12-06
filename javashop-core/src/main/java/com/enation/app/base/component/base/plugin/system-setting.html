@@ -1,0 +1,173 @@
+<style>
+
+ .layui-form-pane .layui-input-block{
+ 	margin-left:130px;
+ }
+ .layui-form-pane .layui-form-label{
+ width:130px
+ }
+
+</style>
+<input type="hidden" name="system.static_page_address" value="${system.static_page_address!''}" autocomplete="off" class="layui-input" />
+<div class="layui-form-item w500">
+	<label class="layui-form-label">主域名</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.primary_domain" value="${system.primary_domain!''}" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+<div class="layui-form-item w900">
+	<label class="layui-form-label">静态资源域名</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.static_server_domain" value="${system.static_server_domain!''}" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+
+<div class="layui-form-item w500">
+	<label class="layui-form-label">虚拟目录</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.context_path" value="${system.context_path!'' }" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+
+
+<div class="layui-form-item w500">
+	<label class="layui-form-label">wap站</label>
+	<div class="layui-input-block">
+		<input type="radio" name="system.wap_open"  class="wap-opation" value="1" title="开启" <#if system.wap_open?? && system.wap_open=="1">checked="checked"</#if> />
+		<input type="radio" name="system.wap_open"  class="wap-opation"  value="0" title="关闭" <#if (!system.wap_open??)|| system.wap_open=="0">checked="checked"</#if> />
+	</div>
+</div>
+
+<div class="layui-form-item w900">
+	<label class="layui-form-label">wap站域名</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.wap_domain" value="${system.wap_domain!'' }" autocomplete="off" class="layui-input" />
+	</div>
+	<div class="layui-form-mid layui-word-aux">通过此域名访问会解析下面wap模板目录的页面，使用手机访问本站点的其它域名会自动转向此域名</div>
+</div>
+
+
+<div class="layui-form-item w500">
+	<label class="layui-form-label">wap站模板目录</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.wap_folder" value="${system.wap_folder!'' }" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+
+
+
+<div class="layui-form-item w900">
+	<label class="layui-form-label">加密密钥</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.global_auth_key" value="${system.global_auth_key!'' }" autocomplete="off" class="layui-input" onkeyup="value=value.replace(/[\u4E00-\u9FA5]/g,'')" onblur="value=value.replace(/[\u4E00-\u9FA5]/g,'')" />
+	</div>
+	<div class="layui-form-mid layui-word-aux">更改密钥后，会使前的加密信息无法解密，从而导致之前生成的加密信息无法解密：如找回密码、邮件验证连接等。</div>
+</div>
+
+<div class="layui-form-item w500">
+	<label class="layui-form-label">后台分页数</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.backend_pagesize" value="${system.backend_pagesize!}" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+
+
+
+
+
+<div class="layui-form-item w500">
+	<label class="layui-form-label">默认图片</label>
+	<div class="layui-input-block" id="remove2">
+	    <span class="upload-btn upload-btn1">上传按钮</span>
+			<input type="hidden" id="upload_src" name="system.default_img_url" value="${system.default_img_url!''}" > 
+		<img class='temp-preview-image' src="${system.default_img_url!''}">
+	</div>
+</div>
+
+
+<div class="layui-form-item w900">
+	<label class="layui-form-label">手机短信支持</label>
+	<div class="layui-input-block">
+		<input type="radio" name="system.sms_reg_open"  value="1" title="开启" <#if system.sms_reg_open?? && system.sms_reg_open=="1">checked="checked"</#if> />
+		<input type="radio" name="system.sms_reg_open"  value="0" title="关闭" <#if (!system.sms_reg_open??) ||system.sms_reg_open=="0">checked="checked"</#if> />
+	</div>
+	<div class="layui-form-mid layui-word-aux">开启手机短信功能后，请在"设置->短信网关设置"菜单中设置相关的参数才能正常发送短信。</div>
+</div>
+
+
+<div class="layui-form-item w900">
+	<label class="layui-form-label">测试模式</label>
+	<div class="layui-input-block">
+		<input type="radio" name="system.test_mode"  value="1" title="开启" <#if system.test_mode?? && system.test_mode=="1">checked="checked"</#if> />
+		<input type="radio" name="system.test_mode"  value="0" title="关闭" <#if (!system.test_mode??) ||system.test_mode=="0">checked="checked"</#if> />
+	</div>
+	<div class="layui-form-mid layui-word-aux">开启测试模式后 ，图片验证码和短信验证码锁定为1111</div>
+</div>
+<div class="layui-form-item w900">
+	<label class="layui-form-label">是否开启集群</label>
+	<div class="layui-input-block">
+		<input type="radio" name="system.cluster"   value="1" title="开启" <#if system.cluster == "1">checked="checked"</#if> />
+		<input type="radio" name="system.cluster"   value="0" title="关闭" <#if system.cluster == "0">checked="checked"</#if>  />
+	</div>
+	<div class="layui-form-mid layui-word-aux">请确认购买并安装了集群组件再启用,否则会造成系统局部功能无法使用！</div>
+</div>
+
+<div class="layui-form-item w900">
+	<label class="layui-form-label">索引目录</label>
+	<div class="layui-input-block">
+		<input type="text" name="system.index_path" value="${system.index_path!'' }" autocomplete="off" class="layui-input" />
+	</div>
+</div>
+	
+<script>
+
+
+$(function(){
+	  //修改文件上传控件
+    var options={
+    		success:function(data){
+				$("#remove2 #upload_src").val(data);
+    		},error:function(error){
+    			console.log(error);
+    		}
+    		
+    }
+    $('#remove2 .upload-btn1').FilesUpload(options); 
+	
+
+	$(".check").click(function(){
+		var $this  = $(this);
+		var id =$this.attr("clz");
+		$.ajax({
+			url:'check-component/exist.do',
+			data:'id='+id,
+			dataType:"json",
+			success:function(json){
+				if(json.result==0){
+					alert("此组件不存在，请您购买安装后再启用。");
+					$this.removeAttr("checked");
+					$this.siblings("[value=0]").attr("checked","checked")
+				}
+			},
+			error:function(){
+				alert("出现意外错误");
+			}
+		});
+	});
+	 		
+	<#if system.wap_open?? && system.wap_open=="1">
+		$(".wap-setting").show();
+	<#else>
+		$(".wap-setting").hide();
+	</#if>
+	$(".wap-opation").click(function(){
+	 
+		if(this.value==1    ){
+			$(".wap-setting").show();
+		}else{
+			$(".wap-setting").hide();
+		}
+	});
+	
+});
+</script>

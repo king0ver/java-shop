@@ -1,0 +1,25 @@
+<div class="header_outside">
+    <header class="wrapper">
+        <div class="site_logo" id="index_logo">
+            <a href="${ctx}/index.html"><img src="${logo!''}" class="pngFix" style="width:240px;height:60px;" /></a>
+        </div>
+        <div class="search">
+            <#include '/common/header_search.html' />
+        </div>
+        <#include '/common/header_cart.html' />
+    </header>
+</div>
+<nav class="index_nav">
+	<div class="wrapper">
+        <!--分类菜单开始-->
+        <#include '/common/nav_cats.html'/>
+		<!--分类菜单结束-->
+
+        <!--首页导航开始-->
+		<#include '/common/nav_menu.html'/>
+        <!--首页导航结束-->
+	</div>
+</nav>
+
+
+

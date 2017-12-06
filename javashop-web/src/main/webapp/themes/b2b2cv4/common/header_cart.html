@@ -1,0 +1,22 @@
+<div class="header-cart" id="header-cart">
+    <div class="header-cart-con header-cart-cm">
+        <a href="${ctx}/cart.html">
+            <i class="icon-carts"></i>
+            <span>我的购物车</span>
+            <em class="count cart_num cart-num" id="cart-num"></em>
+        </a>
+    </div>
+    <div class="dorpdown-layer">
+        <div class="header-cart-content">
+            <div class="mc" id="cart-box">
+
+            </div>
+            <div class="mb" style="cursor:default">
+                <input name="cart_value" id="cart_value" value="12,13" type="hidden">
+                <div class="p-total">共<span class="cart-num"></span>件商品&nbsp;&nbsp;共计：<span class="cart-total"></span></div>
+                <a href="${ctx}/cart.html" class="btn-cart">去购物车</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="${file_path}/js/header-cart.js"></script>

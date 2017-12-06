@@ -1,0 +1,28 @@
+<!-- 页脚 -->
+<div class="foot_blank">
+</div>
+	<div class="foot">
+		<div class="foot_about">
+			<ul>
+				<li><a href="${ctx}/cart.html">购物车</a></li>
+				<li><a href="${ctx}/classify.html">产品分类</a></li>
+				<li><a href="${ctx}/member.html">会员中心</a></li>
+				<!-- <li class="last"><a href="#">联系我们</a></li> -->
+			</ul>
+			<a href="${ctx}/index.html">Javashop官方网站</a>
+		</div>
+		
+	</div>
+	<#include 'gotop.html'/>
+	<script>
+		$(function(){
+			//回到上一页
+			$(".go_back").click(function(){
+				self.location=document.referrer;
+			})
+		})
+	</script>
+	<!-- 遮罩弹出曾 -->	
+<#include 'show.html' />
+</body>
+</html>

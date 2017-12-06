@@ -1,0 +1,135 @@
+<#include '/admin/header.html' >
+<style>
+.layui-form-select {
+	width: 50%;
+}
+
+.layui-select-title input {
+	width: 100%;
+}
+
+.layui-form-pane .layui-form-label {
+	width: 200px;
+	margin-left: 20px;
+}
+
+.layui-form-pane .layui-input-block {
+	float: left;
+	margin: 0 0 0 10px;
+	width: 60%;
+}
+</style>
+<div class="admin-main">
+	<!--表单区域  -->
+	<form id="editpayCfgForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data"
+		style="padding-top: 10px; padding-bottom: 10px;">
+		<input type="hidden" name="id" value="${uploadPluginVo.id!''}">
+		<input type="hidden" name="up_bean_id" value="${uploadPluginVo.up_bean_id!''}">
+		<input type="hidden" name="up_open" value="${uploadPluginVo.up_open!''}">
+		<div class="layui-form-item" id="name">
+			<label class="layui-form-label">存储方案名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="up_name"
+					value="${uploadPluginVo.up_name}" maxlength="20" lay-verify=""
+					lay-verify="required" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<#list uploadPluginVo.configItems as item>
+		<#if item.type=='radio'>
+			<div class="layui-form-item config">
+				<label class="layui-form-label">${item.text!''}</label>
+				<input type = "hidden" id = "nginx" value = "${item.value!''}">
+				<div class="layui-input-block">
+					<input type="radio" name = "isnginx" configname="${item.name!''}"  lay-filter="upload-radio" value="1" title="启用">
+					<input type="radio" name = "isnginx" configname="${item.name!''}" lay-filter="upload-radio" value="0" title="禁用">
+				</div>
+			</div>
+		<#else>
+		<div class = "isnginx">
+			<div class="layui-form-item config">
+				<label class="layui-form-label">${item.text}</label>
+				<div class="layui-input-block">
+					<input type="text" configname="${item.name!''}" name=""
+						value="${item.value!''}" lay-verify=""
+						lay-verify="required" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+		</#if>
+		</#list>
+			<div class="layui-form-item" id="button">
+			<div class="layui-input-block padding-bottom" align=center>
+				<a class="layui-btn" href="javascript:void(0)" lay-submit=""
+					lay-filter="edit">立即提交</a>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function(){
+	var pluginId = $("input[name = 'up_bean_id']").val();
+	if(pluginId =="localPlugin"){
+		if($("#nginx").val() == ""){
+			noChecked();
+		}else{
+			$("#nginx").val()==1? checked() : noChecked()
+		}
+	}
+});
+
+
+function checked(){
+	$("input[type=radio]").attr("checked",'1');
+	$(".isnginx").show();
+}
+function noChecked(){
+	$("input[type=radio]").attr("checked",'0');	
+	$(".isnginx").hide(); 
+}
+
+var index = parent.layer.getFrameIndex(window.name);
+layui.use(['form', 'layedit', 'laydate'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+    
+    
+    form.on("radio(upload-radio)", function(data){
+		  	if(data.value==1){
+		  		$(".isnginx").show();
+		  	}else {
+		  		$(".isnginx").hide(); 
+			}
+	 });
+    //监听提交
+    form.on('submit(edit)', function(){
+				var active  = $("form").serializeJson(); 	
+			    	var configItems = [];
+			    	$(".config").each(function(){
+			    		var config = {};
+			    		config.text = $(this).find(".layui-form-label").text();
+			    		config.value =$(this).find(".layui-input-block input").val();
+			    		config.name = $(this).find(".layui-input-block input").attr("configname");
+			    		config.type = $(this).find(".layui-input-block input").attr("type");
+			    		configItems.push(config);
+			    	});
+			    	active.configItems = configItems;
+				$.ajax({
+					url : "${ctx}/shop-core/admin/uploader.do",
+					type : "POST",
+					contentType: "application/json",
+					data:JSON.stringify(active),
+					success : function(data) {
+						$.Loading.success("操作成功");
+						newTab("存储方案","${ctx}/shop/admin/paymethod/list.do");     
+					},
+					error : function(e) {
+						$.Loading.error(e.responseJSON.error_message);
+					}
+				});
+				return false;
+			});
+		});
+</script>
+<#include '/admin/footer.html' >

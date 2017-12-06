@@ -1,0 +1,44 @@
+<section class="layout">
+	<article class="store_goods_main_intro">
+				<div class="store_intro_top"></div>
+				<div class="store_intro">
+					<div class="content clearfix">
+						<h2 class="store_name">${shop.shop_name}</h2>
+						<dl class="store_shop_info">
+							<dt>
+									<@image src="${shop.shop_logo!''}" id="logo"/>
+							</dt>
+							<dd class="base">
+								<p>店铺名称：${shop.shop_name}</p>
+								<!-- 店铺名称 -->
+								<p>店铺等级：系统默认</p>
+								<!-- 店铺等级 -->
+								<p>
+									<span class="fl">认证信息：</span>
+									<!-- 认证信息 -->
+									
+										<img alt="身份已认证" title="身份已认证" src="${ctx}${themes_path}/images/cert_autonym.gif">
+									
+										<img alt="店铺已认证" title="店铺已认证" src="${ctx}${themes_path}/images/cert_material.gif">	
+									
+								</p>
+								<p>卖家信用：${shop.shop_credit!0}</p>
+								<p>注册时间：<@dateformat time="${shop.shop_createtime!'0'}" pattern="yyyy-MM-dd"/> </p>
+							</dd>
+						</dl>
+					</div>
+					<div class="store_phone">
+						<h2>联系方式</h2>
+						<p>所&nbsp;在&nbsp;地：${shop.shop_province}&nbsp;${shop.shop_city}&nbsp;${shop.shop_region}</p>
+						<p>详细地址：${shop.shop_add}</p>
+						<p>联系电话：${shop.link_phone}</p>
+					</div>
+					<div class="user_contont">
+						<h2>商家介绍</h2>
+						<div class="user_contont_intro">
+							${shop.shop_desc!''}
+						</div>
+					</div>
+				</div>
+	</article>
+</section>

@@ -1,0 +1,91 @@
+<#if goods_id??&& goods_id?number!=0>
+	<#assign storeExchangeSettingTag=newTag("storeExchangeSettingTag") >
+	<#assign setting=storeExchangeSettingTag("{'goods_id':'${goods_id!''}'}")! >
+	<#assign maxRepertoryTag=newTag("maxRepertoryTag") >
+	<#assign maxcount=maxRepertoryTag("{'goods_id':'${goods_id!''}'}") >
+</#if>
+
+<h1>商品参数</h1>
+<div class="addgoods" style="border-bottom:0px none">
+<div class="form-table goods_attribute">
+<input type="hidden" name="setting_id" value="${(setting.setting_id)!'0'}" />
+		<#if setting?has_content&&setting.enable_exchange==1 >
+			<input type="hidden" id="exchange_stat" name="exchange_stat" value="1">
+		<#else>
+			<input type="hidden" id="exchange_stat" name="exchange_stat" value="0">
+		</#if>
+		<dl>
+			<dt style="font-weight: normal;">
+				
+				<input type="checkbox" name="enable_exchange" id="enable_exchange" <#if setting?has_content &&setting.enable_exchange==1>checked="checked" value="1" </#if> >
+				 积分兑换</dt>
+		</dl>
+		<dl class="exchange_setting">
+			<dt style="font-weight: normal;" class="exchange_setting">  兑换积分
+				<dd style="text-align: left;"> <input type="text" name="exchange_money" class="input_text" style="width:30px" value="${(setting.exchange_money)!'0'}" /> 元+
+				<input type="text" name="exchange_point" class="input_text" style="width:30px" value="${(setting.exchange_point)!'0'}" /> 积分 可兑换此商品
+				</dd>
+			</dt>
+		</dl>
+		<dl class="exchange_setting">
+			<dt style="font-weight: normal;" class="exchange_setting"  > 可兑换库存:
+				<dd style="text-align: left;">
+				<input type="text" name="exchange_max_count" class="input_text" style="width:30px" value="${(setting.exchange_max_count)!'1'}"/> 最大可兑换库存,不能超过商品库存${maxcount!'0'}
+				</dd>
+			</dt>
+		</dl>
+		<dl class="exchange_setting">
+			<dt style="font-weight: normal;"class="exchange_setting" > 积分商品分类:
+				<dd style="text-align: left;" > 
+				<select name="exchange_cat_id"> 
+						<#list storeGoodsCatList as cat> 
+							<#if cat.store_cat_pid==0>
+								<option value="${cat.store_cat_id!0}"
+									<#if setting??>
+										<#if setting.cat_id?? && setting.cat_id==cat.store_cat_id>
+											selected="selected"
+										</#if>
+									</#if>
+									${cat.store_cat_name!''}
+								</option> 
+							</#if> 
+							<#list storeGoodsCatList as childCat> 
+								<#if childCat.store_cat_pid==cat.store_cat_id>
+									<option value="${childCat.store_cat_id}"
+										<#if setting.cat_id==childCat.store_cat_id>
+											selected="selected"
+										</#if> >
+										&nbsp;&nbsp;&nbsp;&nbsp;${childCat.store_cat_name!''}
+									</option>
+								</#if> 
+							</#list> 
+						</#list>
+					</select>
+				</dd>
+			</dt>
+		</dl>
+		
+</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		var exchange_stat=$("#exchange_stat").val();
+		if(exchange_stat==0){
+			$(".exchange_setting").hide();
+		}
+		
+		//选中checkbox
+		$("#enable_exchange").click(function() {
+			if (this.checked) {
+				$(".exchange_setting").show();
+				$("#exchange_stat").val("1");
+				$("#enable_exchange").val("1");
+			} else {
+				$(".exchange_setting").hide();
+				$("#exchange_stat").val("0");
+				$("#enable_exchange").val("0");
+			}
+		});
+	})
+
+</script>

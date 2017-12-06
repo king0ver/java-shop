@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '新增模板' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/logistics.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/transaction/logistics.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.poshytip.min.js"></script>
+    <script type="text/javascript" src="${ctx}/selector/js/jquery.areaSelector.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_transaction' />
+<#assign lowerPageName = 'lower_transaction_logistics' />
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav">
+        <li><a href="./logistics.html">快递模板</a></li>
+        <li class="active"><a href="javascript: void(0);" onclick="location.reload(); ">新增模板</a></li>
+        <li><a href="./logistics_company.html">物流公司</a></li>
+    </ul>
+</div>
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+        <div class="logistics-add">
+            <!-- 新增物流模版 -->
+            <div class="new_transport">
+                <form id="add_shiptpl" class="validate" >
+                    <div class="postage_head">
+                        <ul>
+                            <li class="form_elem">
+                                <label class="label_like">模板名称：</label>
+							<span>
+								<input id="name" maxlength="20" class="text" width="100px" type="text" name="name"  dataType="string" isrequired="true" autocomplete="off" >
+							</span>
+                            </li> 
+                            <li class="form_elem">
+                                <label class="label_like">首重：</label>
+							<span>
+								<input id="first_company" maxlength="8" class="text" width="100px" type="text" name="first_company"  dataType="string" isrequired="true" autocomplete="off" >
+							</span>
+                            </li> 
+                            <li class="form_elem">
+                                <label class="label_like">运费：</label>
+							<span>
+								<input id="first_price" maxlength="8" class="text" width="100px" type="text" name="first_price"  dataType="string" isrequired="true" autocomplete="off" >
+							</span>
+                            </li> 
+                            <li class="form_elem">
+                                <label class="label_like">续重：</label>
+							<span>
+								<input id="continued_company" maxlength="8" class="text" width="100px" type="text" name="continued_company"  dataType="string" isrequired="true" autocomplete="off" >
+							</span>
+                            </li> 
+                            <li class="form_elem">
+                                <label class="label_like">续重运费：</label>
+							<span>
+								<input id="continued_price" maxlength="8" class="text" width="100px" type="text" name="continued_price"  dataType="string" isrequired="true" autocomplete="off" >
+							</span>
+                            </li> 
+                            <li class="form_elem">
+                                <label class="label_like">模版类型：</label>
+							<span>
+								<select name="type">
+									<option value="1">重量算运费</option>
+									<option value="2">计件算运费</option>
+								</select>
+							</span>
+                            </li>
+                            <li class="form_elem">
+                                <label class="label_like">选择配送地区：</label>
+							<span>
+							 <a href="javascript: void(0);" class="btn btn-info" id="selector" >选择地区</a>
+                  			</span>
+                  			<input type="hidden" name="area" id="area">
+                            </li> 
+                        </ul>
+                    </div> 
+                    
+                    
+                    <div class="transaction_submit" style="margin-left: 115px; ">
+                        <a href="javascript: void(0);" class="btn btn-info" id="submit_tpl" style="margin-top: 20px; ">保存模板</a>
+                    </div>
+                </form>
+            </div>
+ 
+        </div>
+    </div>
+</div> 
+<script>
+/* 检查是否是数字和小数 */
+function check(value){ 
+		if(isNaN(value)){
+			return true;
+		}else{
+			return false;
+		} 
+}
+
+    document.onkeydown = function () {
+        if (window.event && window.event.keyCode == 13) {
+            window.event.returnValue = false;
+        };
+    };
+    $(function() {  
+    	var defaultData = [];
+        $("#selector").click(function(){
+			$.areaSelector({
+				confirm : function(data) {
+					defaultData = data;
+					$("#area").val(JSON.stringify(data));
+				},
+				defaultData : defaultData
+			})
+		})
+
+		$("#submit_tpl").click(function() {
+			var $this = $(this);
+			var opt = {
+				onShowError : function(el, msg) {
+					el.poshytip({
+						content : msg,
+						className : 'tip-yellowsimple',
+						showOn : 'focus',
+						alignTo : 'target',
+						alignX : 'center',
+						alignY : 'top',
+						offsetX : 0,
+						offsetY : 5,
+						allowTipHover : false
+					});
+				},
+				showNote : function(el, msg) {
+					el.poshytip({
+						content : msg,
+						className : 'tip-yellowsimple',
+						showOn : 'focus',
+						alignTo : 'target',
+						alignX : 'center',
+						alignY : 'top',
+						offsetX : 0,
+						offsetY : 5,
+						allowTipHover : false
+					});
+				}
+			};
+
+			if ($("#name").val() == "") {
+				$.message.error("无效名称");
+				return;
+			}
+			;
+			if (check($("#first_company").val())) {
+				$.message.error("首重参数错误");
+				return;
+			}
+			;
+			if (check($("#first_price").val())) {
+				$.message.error("首重运费参数错误");
+				return;
+			}
+			;
+			if (check($("#continued_company").val())) {
+				$.message.error("续重参数错误");
+				return;
+			}
+			;
+			if (check($("#continued_price").val())) {
+				$.message.error("续重运费参数错误");
+				return;
+			}
+			;
+			var options = {
+				url : ctx + '/shop/seller/ship-template.do',
+				type : "POST",
+				dataType : 'json',
+				success : function(result) {
+					if (result.result == 1) {
+						$.message.success('添加成功！');
+						setTimeout(function() {
+							location.href = './logistics.html';
+						}, 1000);
+					} else {
+						$.message.error(result.message);
+					}
+					;
+				},
+				error : function() {
+					$.message.error("出现错误 ，请重试");
+				}
+			};
+			$("#add_shiptpl").ajaxSubmit(options);
+		});
+
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<#include '/admin/header.html' >
+  <div  class="admin-main"> 
+  <!--表单区域  -->
+	<form id="addForm" class="layui-form form" style="padding: 10px;">
+  		<div class="layui-form-item">
+		<label class="layui-form-label">模版名：</label>
+		<div class="layui-input-block">
+			<input type="text" name="tpl_name"  maxlength="12" placeholder="模版名称最多可填写12个字符" verify="required" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+  		<div class="layui-form-item">
+		<label class="layui-form-label">模版内容：</label>
+		<div class="layui-input-block">
+     	 	<textarea name="tpl_content" required lay-verify="required" placeholder="请输入" style="height: 300px" class="layui-textarea"></textarea>
+		</div>
+	</div>
+  		<div class="flayui-orm-item">
+		    <div class="layui-input-block">
+		      <button class="btn" submit=""  filter="save">立即提交</button>
+		    </div>
+	 </div>
+  	</form>
+  	</div>
+  	<script>
+  //保存
+  $(function(){ 
+	  layui.use(['form'], function(){
+		    var form = layui.form()
+			form.on('submit', function(data){
+				var options = {
+		  				method : "post",
+		  				data:{tpl_type:"main",client_type:"mobile"},
+						url : '${ctx}/cms/admin/panel-tpl.do',
+						success : function(result) {
+							$.Loading.success("添加成功");
+							//closeCurrent();
+							newTab("查看面板详细","${ctx}/cms/admin/panel/mobile/edit_page.do?tpl_id="+result.tpl_id);
+							//CloseTabByTitle("面板添加");
+						},error:function(e){
+                        $.error(e.responseJSON.error_message);
+                    }
+		  		};
+		  			$("#addForm").ajaxSubmit(options);	 	
+			    return false;
+			});
+		});
+  })
+  	</script>
+  	<#include '/admin/footer.html' >

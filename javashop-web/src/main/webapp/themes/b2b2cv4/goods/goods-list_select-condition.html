@@ -1,0 +1,94 @@
+<div class="select-condition" style="box-shadow: rgb(204, 204, 204) 0px 2px 5px;">
+    <#assign selectedSize = selected_prop?size + selected_brand?size + selected_price?size />
+    <#if selectedSize gt 0>
+        <dl><dt>已选择:</dt>
+            <dd>
+                <div class="select-ed">
+                    <#if selected_prop?size gt 0>
+                        <#list selected_prop as selector>
+                            <a href="javascript:;" data-href="${selector.url!''}" class="item-selected on" title="${selector.name}">${selector.name}<i></i></a>
+                        </#list>
+                    </#if>
+                    <#if selected_brand?size gt 0>
+                        <#list selected_brand as selector>
+                            <a href="javascript:;" data-href="${selector.url!''}" class="item-selected on" title="${selector.name}">${selector.name}<i></i></a>
+                        </#list>
+                    </#if>
+                    <#if selected_price?size gt 0>
+                        <#list selected_price as selector>
+                            <a href="javascript:;" data-href="${selector.url!''}" class="item-selected on" title="${selector.name}">${selector.name}<i></i></a>
+                        </#list>
+                    </#if>
+                </div>
+            </dd>
+        </dl>
+    </#if>
+    <#if brantrist?exists && brantrist?size gt 0>
+        <dl class="brand_dl logo_brand_dl">
+            <dt>品牌:</dt>
+            <dd>
+                <div class="small-list brand-list">
+                    <ul class="show-logo">
+                        <#list brantrist as selector>
+                            <li class="">
+                                <a href="${selector.url!''}" title="${selector.name}">
+                                    <img class="lazy" src="${file_path}/images/img-loading.gif"
+                                         data-original='<@imgurl pic="${selector.value!''}"/>' alt="${selector.name}"
+                                    style="display: block;">${selector.name}
+                                </a>
+                            </li>
+                        </#list>
+                    </ul>
+                </div>
+            </dd>
+            <#if brantrist?size gt 18>
+                <a href="javascript:;" class="choice brand-choice"><i></i>更多</a>
+                <!--<a href="javascript:;" class="brandmore">多选<i></i></a>-->
+            </#if>
+        </dl>
+    </#if>
+    <#if priceList?exists && priceList?size gt 0>
+        <dl>
+            <dt>价格:</dt>
+            <dd>
+                <div class="small-list">
+                    <#list priceList as selector>
+                        <a href="${selector.url!''}">${selector.name}</a>
+                    </#list>
+                </div>
+            </dd>
+        </dl>
+    </#if>
+    <#if catList?exists && catList?size gt 0>
+        <dl>
+            <dt>分类:</dt>
+            <dd>
+                <div class="small-list">
+                    <#list catList as selector>
+                        <a href="${selector.url!''}">${selector.name}</a>
+                    </#list>
+                </div>
+            </dd>
+        </dl>
+    </#if>
+    <#if propMap?keys?exists && propMap?keys?size gt 0>
+        <#list propMap?keys as propname>
+            <dl class="other-filter">
+                <dt>${propname}:</dt>
+                <dd>
+                    <div class="small-list">
+                        <#list propMap[propname] as selector>
+                            <a href="${selector.url!''}">${selector.name}</a>
+                        </#list>
+                    </div>
+                </dd>
+            </dl>
+        </#list>
+    </#if>
+</div>
+<#if propMap?keys?exists && propMap?keys?size gt 0>
+    <div class="control">
+        <a href="javascript:;" class="open" style="box-shadow: rgb(204, 204, 204) 0px 2px 5px; display: inline-block;">更多选项<i></i></a>
+        <a href="javascript:;" class="put" style="box-shadow: rgb(204, 204, 204) 0px 2px 5px; display: none;">收起<i></i></a>
+    </div>
+</#if>

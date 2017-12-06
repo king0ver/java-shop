@@ -1,0 +1,26 @@
+<#assign title="订单" />
+<#include '/common/header.html' />
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag() />
+<#if member?? >
+    <script type="text/javascript" src="${ctx}${themes_path}/js/Order.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/page/order-list.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/css/order-list.css">
+
+    <div id="order-list">
+        <div class="order-filter">
+            <ul class="inner-order-filter">
+                <li data-active="all"><span>全部</span></li>
+                <li data-active="wait_pay"><span>待付款</span></li>
+                <li data-active="wait_ship"><span>待发货</span></li>
+                <li data-active="wait_rog"><span>待收货</span></li>
+                <li data-active="wait_comment"><span>待评论</span></li>
+            </ul>
+        </div>
+        <div id="order-wapper">
+            <ul class="order-list"></ul>
+        </div>
+    </div>
+</#if>
+</body>
+</html>

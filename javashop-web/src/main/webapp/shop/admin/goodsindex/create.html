@@ -1,0 +1,192 @@
+<#include '/admin/header.html' >
+<style>
+<!--
+#progress-wrap{
+  padding:20px;
+  float:left;
+ }
+-->
+#createform{
+	padding:18px;
+}
+.buttonArea{
+	height:60px;
+	    margin-top: 10px;
+}
+.layui-btn{
+	height:34px;
+	line-height:34px;
+}
+.layui-progress-big{
+	width:31%;
+}
+</style>
+
+<script ype="text/javascript" src="${ctx}/adminthemes/new/js/jquery.timers-1.2.js"></script>
+
+<div class="admin-main">
+	<form id="createform" class="layui-form">
+		<div class=" " id="progress-wrap">
+		 	正在检测是否有任务进行中...
+		</div>
+		 <div class="buttonArea">
+			<a class="layui-btn" href="javascript:void(0)" id="createBtn">生成</a>
+		</div>
+		<div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
+	 		 <div class="layui-progress-bar" lay-percent="0%"></div>
+		</div>
+	</form>
+</div>
+
+
+
+
+<script type="text/javascript">
+layui.use(['form','element'], function(){
+    var form = layui.form();
+    var element = layui.element();
+    
+    function create(){
+		$("#createform").ajaxSubmit({
+			url:'${ctx}/shop/admin/goods-index/create.do',
+			dataType:"json",
+			success:function(json){
+				if(json.result==1){
+					$("#createBtn").addClass("layui-btn-disabled");  //使按钮禁用
+					loadTask();
+				}else{
+					alert(json.message)
+				}
+			},
+			error:function(){
+				alert("error");
+			}
+		});
+	}
+	
+	function taskFinished(status){
+		if(status=='error'){
+			alert("生成出错");
+		}
+		if(status=='success'){
+			alert("生成成功");
+			
+		}
+		$("#createBtn").removeClass("layui-btn-disabled");    //使按钮可用
+	}
+	
+	function checkStatus(){
+		$.ajax({
+			url:'${ctx}/core/admin/progress/has-task.do?progressid=index_create',
+			dataType:"json",
+			success:function(json){
+				if(json.result==1){
+				 	if(json.data.hastask == 1){
+				 		loadTask();
+				 	}else{
+				 		$("#progress-wrap").text("暂无索引生成任务，请点击生成按钮生成所有商品的索引。");
+				 	}
+				 		bindCreateEvent();
+				 	
+				}else{
+					alert("json message error")
+				}
+			},
+			error:function(){
+				alert("error");
+			}
+		});
+	}
+	
+
+	function loadTask(){
+		var self = this;
+		var config = { url: "${ctx}/core/admin/progress/view-progress.do?progressid=index_create", onFinished: taskFinished }
+		var progress = new Progress(config);
+		progress.show();
+		 
+	}
+	
+	function bindCreateEvent(){
+		$("#createBtn").click(function(){
+			//判断linkbutton是否已禁用，如果禁用则跳过
+		 	var disabled=  $(this).hasClass("layui-btn-disabled");
+			if( !disabled ){
+			 	if(confirm("确认重新生成所有索引吗？")){
+			 		create();
+			 	}
+			}
+		});	
+	
+	}
+	
+	$(function(){
+		checkStatus();
+	});
+	
+	var setTime
+
+	var Progress = function (config) {
+		this.config = config || {};
+		this.url = config.url;
+
+		this.onFinished = config.onFinished;
+
+	};
+	Progress.fn = Progress.prototype = {
+			constructor: Progress,
+			show: function () {
+				var self = this;
+				$("#progress-wrap").html('<div class="pro" style="width:500px"></div><div class="taskmsg"/>');
+
+				/* $("#progress-wrap").everyTime(1000, 'progress',timeFunc); */
+				setTime = setInterval(function () {
+					self.refresh();
+				}, 1000)
+
+			},
+			refresh: function () {
+				var statusurl = this.url;
+				var onFinished = this.onFinished;
+				$.ajax({
+					url: statusurl,
+					dataType: "json",
+					success: function (data) {
+						if (data.data.sum_per == 100) {
+							clearInterval(setTime);
+						}
+						if (data.result == 1) {
+							var sum_per = data.data.sum_per;
+							$('#progress-wrap>div.taskmsg').text(data.data.text + "(" + sum_per + "%)");
+							element.progress('demo', sum_per + "%");
+							if (data.data.task_status == 1) {
+								$('#progress-wrap>div.taskmsg').text("任务已完成");
+								$("#progress-wrap").stopTime('progress');
+								if (typeof onFinished == 'function') {
+									onFinished('success');
+								}
+							}
+							if (data.data.task_status == 2) {
+								$('#progress-wrap>div.taskmsg').text("任务出错：" + data.data.text);
+								$("#progress-wrap").stopTime('progress');
+								if (typeof onFinished == 'function') {
+									onFinished('error');
+								}
+							}
+						} else {
+							$("#progress-wrap").stopTime('progress');
+							alert(data.message);
+						}
+					}, error: function () {
+						$("#progress-wrap").stopTime('progress');
+						if (typeof onFinished == 'function') {
+							onFinished('error');
+						}
+					}
+				});
+			}
+		};
+
+});
+</script>
+<#include '/admin/footer.html' >

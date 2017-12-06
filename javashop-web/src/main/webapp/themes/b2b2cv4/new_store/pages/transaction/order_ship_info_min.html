@@ -1,0 +1,135 @@
+<#assign storeLogiCompanyListTag=newTag("storeLogiCompanyListTag")>
+<#assign storeLogiCompanyList=storeLogiCompanyListTag()>
+
+<#assign sellerOrderDetailTag = newTag("sellerOrderDetailTag")>
+<#-- 调用“订单详细”标签，并传递参数 -->
+<#assign sellerOrderDetail = sellerOrderDetailTag()!''>
+<#assign orderDetail = sellerOrderDetail.orderDetail>
+        
+<div class="shipintro">
+<h3 style="height:30px;line-height:30px;">
+物流信息
+<a class="order-btn3 btn btn-info" id="add_ship_info"  href="./logistics_company_min.html?ordersn=${ordersn}"  style="float: right; " data-placement="right" data-original-title="完成添加后请按F5刷新本页面">添加物流信息</a>
+	<script type="text/javascript">
+		$('#add_ship_info').tooltip();
+	</script>
+</h3>
+<table class="table-style">
+   	<thead>
+		<tr>
+			<th class="w150">公司名称</th>
+        		<th class="w150">物流单号</th>
+        		<th class="w150">是否支持电子面单</th>
+        		<th class="w150">操作</th>
+      		</tr>
+    	</thead>
+    	<tbody>
+		<#list storeLogiCompanyList as logiCompany>
+			<#if logiCompany.logi_id?? && (logiCompany.logi_id!=0)>
+    				<tr>
+      				<td>${logiCompany.name}</td>
+      				<#if orderDetail.ship_no??>
+      				<td><input type="text" class="text" name="shipNo" logi_id="${logiCompany.id}" value=${orderDetail.ship_no} /></td>
+      				<#else>
+      				<td><input type="text" class="text" name="shipNo" logi_id="${logiCompany.id}" value = ""/>
+      				</td>
+      				</#if>
+      				<#if logiCompany.is_waybill == 1>
+      				<td><a href="javascript: void(0);" class = "way_btn"  style="font-size: 12px;" logi_id="${logiCompany.id!''}" sn = "${orderDetail.sn}">生成电子面单</a></td>
+      				<#else>
+      				<td>不支持电子面单</td>
+      				</#if>
+      				
+      				<td class="ship">
+						<!--<input type="button"  name="ship" value="确定" logi_name="${logiCompany.name}" logi_id="${logiCompany.id}" class="ship_info_button"/>-->
+						<a href="javascript: void(0);" class="btn btn-default save-btn" logi_name="${logiCompany.name!''}" logi_id="${logiCompany.id!''}" style="font-size: 12px;">发货</a>
+					</td>
+     			</tr>
+     		</#if>
+     	</#list>
+     	<!--  回传的logi_id -->
+     	<input type = "hidden" name = "return_shipNo" value = "${logi_id!''}"/>
+     	<input type = "hidden" name = "LogisticCode" value = "${LogisticCode!''}"/>
+    	</tbody>
+</table>
+</div>
+<script type="text/javascript">
+
+$(function(){
+	//回传电子面单单号
+	var logi_no = $("input[name='return_shipNo']").val();
+	var LogisticCode = $("input[name='LogisticCode']").val();
+	if(logi_no != ""){
+		var shipno = $("input[name = 'shipNo']");
+		shipno.each(function(){
+			if($(this).attr("logi_id") == logi_no){
+				$(this).val(LogisticCode);
+			}
+		});
+	}
+})
+	$('.ship .save-btn').unbind('click').on('click', function(){
+		var _this = $(this);
+		var logi_id = _this.attr("logi_id");
+		var logi_name = _this.attr("logi_name");
+		var shipNo = $("input[name='shipNo'][logi_id="+logi_id+"]").val();
+		var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+
+		if(shipNo==""){
+			$.message.error("请填写快递单号");
+			return false;
+		};
+		if(reg.test(shipNo)){
+			$.message.error("请填写正确的快递单号");
+			return false;
+		};
+		$.confirm('确定发货吗？', function(){
+			$.ajax({
+                url:ctx+"/order-opration/seller/order/delivery/${orderDetail.sn}.do",
+                data: {
+            	  	ship_no: shipNo,
+            	  	logi_id: logi_id,
+            	  	logi_name :logi_name
+              	},
+                method:"POST",
+                dataType:"json",
+                success:function (result) {
+                	$.message.success("发货成功", 'reload');
+                },
+                error:function () {
+                    console.error(" confirm error");
+                }
+            })
+		})
+	});
+	
+	  // 生成电子面单
+    (function(){
+        var btn = $('.way_btn');
+        btn.unbind('click').on('click', function(){
+        	var _this = $(this);
+    		var logi_id = _this.attr("logi_id");
+    		var sn = _this.attr("sn");
+            $.confirm('确定生成吗？', function(){
+            $.ajax({
+                url: './waybill_print.html',
+                data:{"logi_id":logi_id,"sn":sn},
+                type: 'GET',
+                success: function(html){
+                	 $.dialogModal({
+                         title: '电子面单',
+                         html : html,
+                         width: 450,
+                         btn  : false,
+                         backdrop: false
+                     });
+                },
+                error: function(){
+                    $.message.error('出现错误，请重试！');
+                }
+            });
+        });
+        })
+    })();
+	
+</script>

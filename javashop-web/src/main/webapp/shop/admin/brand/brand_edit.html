@@ -1,0 +1,122 @@
+<#include '/admin/sonheader.html'>
+	<style>
+		.layui-box .layui-upload-button form {
+			margin-bottom: 0px;
+		}
+
+		#brandEditForm .temp-preview-image {
+			width: 200px;
+			height: 200px;
+		}
+	</style>
+	<script type="text/javascript">
+		var ue = UE.getEditor('editor');
+	</script>
+	<div class="main">
+		<!--表单区域  -->
+		<form id="brandEditForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+			<div class="layui-form-item">
+				<label class="layui-form-label">品牌名称：</label>
+				<div class="layui-input-block">
+					<input type="text" id="name" name="name" maxlength="25" lay-verify="name" value="${brand.name!''}" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">品牌网址：</label>
+				<div class="layui-input-block">
+					<input type="text" id="url" name="url" maxlength="100" lay-verify="url" value="${brand.url!''}" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">品牌LOGO：</label>
+				<div class="layui-input-block" style="line-height:36px;">
+					<span class="upload-btn upload-btn1">上传按钮</span>
+					<img class="temp-preview-image" src="${brand.logo!''}">
+					<input type="hidden" id="upload_src" name="logo" maxlength="100" autocomplete="off" value="${brand.logo!''}">
+				</div>
+			</div>
+
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">详细信息：</label>
+				<div class="layui-input-block">
+					<script id="editor" name="brief" type="text/plain" style="height:200px;width: 99%;">${brand.brief!''}</script>
+				</div>
+			</div>
+
+			<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 98%;height: 50px; background:rgba(230,230,230,0.8)">
+				<a class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="editbrand">保存</a>
+				<a class="layui-layer-btn1">取消</a>
+			</div>
+			<input type="hidden" name="brand_id" value="${brand.brand_id}">
+		</form>
+	</div>
+	<script type="text/javascript">
+		$(function () {
+			var index = parent.layer.getFrameIndex(window.name);
+
+			layui.use(['form', 'layedit', 'laydate'], function () {
+				var form = layui.form(),
+					layer = layui.layer,
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+
+				form.render();
+
+
+				//自定义验证规则
+				form.verify({
+					url: function (value) {
+						if (value == "http://") {
+							return '请输入有效的url';
+						}
+					},
+					name: function (value) {
+						if ($.trim(value) == "") {
+							return '请输入品牌名称';
+						}
+					}
+				});
+
+				$(".layui-layer-btn1").click(function () {
+					parent.layer.close(index);
+				});
+
+				//修改文件上传控件
+				var options = {
+					// defaultData : ['${ctx}/core/upload.do'],
+					success: function (data) {
+						// 先移除初始化时手动添加的预览图,然后再让插件自动添加预览图
+						$("#brandEditForm .temp-preview-image").remove();
+						$("#upload_src").val(data);
+					},
+					error: function (error) {
+						console.log(error);
+					}
+
+				}
+				$('.upload-btn1').FilesUpload(options);
+
+				//监听提交
+				form.on('submit(editbrand)', function (data) {
+					var options = {
+						url: ctx + "/shop/admin/brand/save-edit.do?",
+						type: "post",
+						success: function (data) {
+							parent.$.Loading.success("修改成功");
+							parent.layer.close(index); //再执行关闭        
+							parent.table.ajax.url(ctx + "/shop/admin/brand/list-json.do").load();
+						}, error: function () {
+							parent.$.Loading.error("操作失败");
+						}
+					};
+					$("#brandEditForm").ajaxSubmit(options);
+					return false;
+				});
+			});
+
+
+		});
+	</script>

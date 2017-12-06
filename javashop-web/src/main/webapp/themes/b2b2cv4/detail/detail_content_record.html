@@ -1,0 +1,33 @@
+<div class="detail-comment-cont">
+    <#assign recordListTag = newTag("recordListTag") />
+    <#assign recordList = recordListTag("{'goods_id':${goods_id},'pageSize':20}") />
+    <table class="g_record t_goods">
+        <#if recordList.totalCount != 0 >
+            <tr>
+                <th class="w300" style="cursor:default">买家</th>
+                <th class="w200"  style="cursor:default">价格</th>
+                <th class="w200"  style="cursor:default">数量</th>
+                <th class="w300"  style="cursor:default">付款日期</th>
+            </tr>
+            <#list recordList.result as record>
+                <tr>
+                    <#assign _name = record.uname />
+                    <#assign _length = _name?length />
+                    <#assign uname = _name?substring(0, 1) + "***" + _name?substring(_length-1, _length) />
+                    <td>${uname}</td>
+                    <td class="goods_p">${record.price}</td>
+                    <td>${record.goods_num!'0'}</td>
+                    <td><@dateformat time="${record.rog_time?c}" pattern="yyyy-MM-dd HH:mm"/></td>
+                </tr>
+            </#list>
+            <#else>
+                <tr>
+                    <td style="width:100%;height:30px;line-height:30px;cursor:default">暂无购买记录。</td>
+                </tr>
+        </#if>
+    </table>
+    <div class="goods_page"  style="cursor:default">
+        <@ajaxpager pageno="${recordList.currentPageNo}" pagesize="${recordList.pageSize}"
+        totalcount="${recordList.totalCount}" />
+    </div>
+</div>

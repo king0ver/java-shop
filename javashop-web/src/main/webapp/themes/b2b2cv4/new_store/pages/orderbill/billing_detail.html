@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '本期结算' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/transaction/billing_detail.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/transaction/billing_detail.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_transaction' />
+<#assign lowerPageName = 'lower_transaction_billing' />
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav" onclick="location.reload(); ">
+        <li><a href="javascript: void(0);">本期结算</a></li>
+    </ul>
+</div>
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+        <#assign sellerBillDetailTag = newTag("sellerBillDetailTag")>
+        <#assign sellerBill = sellerBillDetailTag()>
+        <div class="bill-detail">
+            <div class="bill-alert">
+                <div>
+                    <h3 style="float:left">本期结算</h3>
+                    <#if sellerBill.status==1>
+                        <div style="float:right;">
+                            <span>本期结算无误，我要</span>
+                            <a class="btn btn-success" id="pass">确认</a>
+                        </div>
+                    <#elseif sellerBill.status==4>
+                       <div style="float:right;">
+                            <span>本期结算无误，我已</span>
+                            <a class="btn btn-success" id="pass">收到货款</a>
+                        </div>
+                    </#if>
+                    <div style="clear:both"></div>
+                </div>
+                <ul>
+                    <li>结算单号：${sellerBill.bill_sn}  <@dateformat time="${sellerBill.start_time?c}" pattern="yyyy-MM-dd "/>&nbsp;至&nbsp;<@dateformat time="${sellerBill.end_time?c}" pattern="yyyy-MM-dd "/>	</li>
+                    <li>出账时间：<@dateformat time="${sellerBill.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></li>
+                    <li>本期应收：${sellerBill.bill_price?string.currency} = ${sellerBill.price?string.currency} (订单金额) - ${sellerBill.commi_price?string.currency} (佣金金额) - ${sellerBill.returned_price?string.currency} (退单金额) + ${sellerBill.returned_commi_price?string.currency} (退还佣金)</li>
+                    <li>结算状态：
+                        <#if sellerBill.status==1>
+                             	已出账
+                        <#elseif sellerBill.status==0>
+                           	 未确认
+                        <#elseif sellerBill.status==2>
+                           	 已对账
+                        <#elseif sellerBill.status==3>
+                           	 已审核
+                        <#elseif sellerBill.status==4>
+                           	平台已付款
+                        <#else>
+                           	已完成
+                        </#if>
+                    </li>
+                </ul>
+            </div>
+            <div class="app-tab-tools">
+                <ul>
+                    <li id="order_all_list" class="active"><a href="javascript: void(0);" class="order-all-list" order_state="all">订单列表</a></li>
+                    <li id="order_return_list"><a href="javascript: void(0);" class="order-return-list" order_state="return">退款订单</a></li>
+                </ul>
+            </div>
+            <div class="bill-box" bill_id="${sellerBill.id}">
+
+            </div>
+        </div>
+    </div>
+</div>
+ <script>
+$("#pass").click(function(){
+	var _this = $(this);
+	$.confirm('确定结算无误，准备' + _this.html() + '吗？', function(){
+		$.ajax({
+	 		url:"${ctx}/order-bill/seller/bill/next.do?bill_id="+${sellerBill.id} ,
+	 		type: 'POST',
+	 		dataType:"json",
+	 		 success : function() {
+	 			 $.message.success("结算成功！");
+	 			 location.reload();
+	 		 },
+	 		 error : function() {
+	             $.message.error("结算失败！");
+	         }
+	 	})
+    } );
+ })
+ </script> 
+
+
+
+<!--主页面区↑-->
+
+<!--<div class="app-help">
+    <div class="head-help">
+        <span class="icomoon question-ico"></span>
+        <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+        <span class="icomoon close-ico" title="关闭">x</span>
+    </div>
+    <div class="body-help">
+        <p>帮</p>
+        <p>助</p>
+        <p>与</p>
+        <p>客</p>
+        <p>服</p>
+    </div>
+</div>
+<div class="open-help">
+    <span class="icomoon question-ico"></span>
+    <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+</div>-->
+
+</body>
+</html>

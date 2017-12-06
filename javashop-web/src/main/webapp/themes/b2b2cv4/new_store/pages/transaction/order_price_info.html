@@ -1,0 +1,8 @@
+<!--创建“订单详细”标签-->
+<#assign orderDetailTag = newTag("sellerOrderDetailTag")>
+<!--调用“订单详细”标签，并传递参数-->
+<#assign orderDetailFlow = orderDetailTag()>
+<#assign orderDetail = orderDetailFlow.orderDetail>
+<form id="orderPriceForm">
+	<input type="text" class="form-control"  name="order_price" value="${orderDetail.order_price}" maxlength="9" style="height: 15px; width: 50%; margin: 0 auto;"/>
+</form>

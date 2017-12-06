@@ -1,0 +1,113 @@
+<#include '../member_header.html' /> 
+<!-- 退货申请标签 -->
+<#assign refundDetailTag=newTag("refundDetailTag")>
+<#assign refund = refundDetailTag("'sn':'${sn!''}' }")>
+<#assign refundDetail= refund.refund>
+<#assign goods= refund.goods>
+<style>
+.order_detail .order_intro {width:100%;}
+</style>
+<div class="user_order">
+	<div class="order_detail">
+		<div class="order_intro">
+			<h1>订单信息</h1>
+			<div class="detail_list">
+				<dl>
+					<dt>订单编号：</dt>
+					<dd>${refundDetail.order_sn}</dd>
+				</dl>
+				<dl class="online">
+					<dt>申请时间：</dt>
+					<dd><@dateformat time="${refundDetail.create_time?c}" pattern="yyyy-MM-dd HH:mm"/></dd>
+				</dl>
+				<dl>
+					<dt>状态：</dt>
+					<dd>
+						<span>${refundDetail.refund_status_text}</span>
+					</dd>
+				</dl>
+				<dl>
+					<dt>申请售后原因：</dt>
+					<dd>${refundDetail.refund_reason!''}</dd>
+				</dl>
+				<dl>
+					<dt>申请售后详细描述：</dt>
+					<dd>${refundDetail.customer_remark!''}</dd>
+				</dl>
+				<dl>
+					<dt>退款方式：</dt>
+					<dd>
+						${refundDetail.account_type_text!''}
+					</dd>	
+				</dl>
+				<dl>
+					<dt>申请售后金额：</dt>
+					<dd>${refundDetail.refund_price!''}</dd>
+				</dl>
+				<#if refundDetail.refund_point gt 0> 
+				<dl>
+					<dt>申请售后积分：</dt>
+					<dd>${refundDetail.refund_point!''}</dd>
+				</dl>
+				</#if>
+				<#if refundDetail.seller_remark??> 
+					<dl>
+						<dt>客服回复：</dt>
+						<dd>${refundDetail.seller_remark!''}</dd>
+					</dl>
+				</#if>
+			</div>
+		</div>
+	</div>
+	<div class="detail_goodslist"> 
+			<table>
+				<tr>
+					<th>申请售后商品图片</th>
+					<th class="return-detail-title">申请售后商品</th>
+					<th>购买单价</th>
+					<th>购买数量</th>
+					<#if refundDetail.refuse_type=='return_goods'>
+					<th>退货数量</th>
+					</#if>
+				</tr>
+				<tr class="return-goods-list">
+					<td>
+						<a target="_blank" href="${ctx}/goods-${goods.goods_id}.html">
+							<@image height="50" src="${goods.goods_image!''}" style="cursor: pointer;" />
+						</a>
+					</td>
+					<td class="return-detail-intro">
+						<a href="${ctx}/goods-${goods.goods_id}.html">${goods.goods_name!''}<#if goods.spec??> ${goods.spec} </#if> </a>
+						 <#if goods.specList?exists>
+							<span style="margin: ">
+							<#list goods.specList as spec>
+								<#if spec_index!=0></#if>(<strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>)
+							</#list>
+							</span>
+						</#if>
+					</td>
+					<td>${goods.price?string.currency}</td>
+					<td>${goods.ship_num!0 }</td>
+					<#if refundDetail.refuse_type=='return_goods'>
+					<td>${goods.return_num!0}</td>
+					</#if>
+				</tr>
+				<!-- 促销活动赠送的赠品信息 -->
+				<#if goods.giftList?exists>
+				<#list goods.giftList as gift>
+					<tr class="return-goods-list">
+						<td>
+							<@image height="50" width="50" src="${gift.gift_img}"  style="cursor: pointer;" />
+						</td>
+							<td style="color: #333;">${gift.gift_name}<span style="color: red; ">（赠品）</span></td>
+							<td >${gift.gift_price?string.currency}</td>
+							<td>1</td>
+							<td>1</td>
+					</tr>
+				</#list>
+				</#if>
+			</table>
+	</div>
+</div>
+</div>
+<#include '../../common/footer.html'/>

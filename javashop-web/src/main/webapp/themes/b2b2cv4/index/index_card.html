@@ -1,0 +1,108 @@
+<div class="index-card-outcon">
+    <div class="index-card-con">
+        <div class="avatar">
+            <#if member??>
+                <a href="${ctx}/member/member.html">
+                    <#if member.face?exists && member.face != ''>
+                        <@image src="${member.face!''}"/>
+                    <#else/>
+                        <img src="${file_path!''}/images/default_face.jpg">
+                    </#if>
+                </a>
+            <#else/>
+                <a href="${ctx}/store/login.html"><img src="${file_path!''}/images/default_face.jpg"></a>
+            </#if>
+        </div>
+        <div class="login-info" style="cursor:default">
+            <#if member??>
+                <span style="cursor:default">Hi，${member.name!member.uname}!</span>
+                <a href="${ctx}/member/member.html" class="login-button login-success">进入个人中心</a>
+            <#else/>
+                <span>Hi，欢迎来到${site.sitename}!</span>
+                <a href="${ctx}/store/login.html" class="login-button">请登录</a>
+                <a href="${ctx}/store/login.html" class="register_button" target="_blank">我要开店</a>
+            </#if>
+        </div>
+        <div class="index-card-item">
+            <div class="title">
+                <a href="javascript:;" class="tab_head_item on">商城公告</a>
+                <a href="javascript:;" class="tab_head_item">联系方式</a>
+            </div>
+            <div class="content">
+                <ul style="display: block;">
+                    <#assign dataSearchTag=newTag("dataSearchTag") />
+                    <#assign webPage = dataSearchTag('{"modelid":2,"catid":26}') />
+                    <#list webPage.result as articlea>
+                        <#if articlea_index lt 3>
+                            <li><a href="help-26-${articlea.id}.html" target="_blank" title="${articlea.title!''}"><@substring title="${articlea.title!''}" length="30" dot="..." /></a></li>
+                        </#if>
+                    </#list>
+                </ul>
+                <ul style="display: none;">
+                    <#assign webPage = dataSearchTag('{"modelid":3,"catid":28}') />
+                    <#if webPage.result?size gt 0>
+                        <#list webPage.result as articlea>
+                            <#if articlea_index lt 3>
+                                <li><span>${articlea.name!''}：</span><span>${articlea.context!''}</span></li>
+                            </#if>
+                        </#list>
+                    <#else/>
+                        <p style="width: 100%; text-align: center;cursor:default">暂无数据...</p>
+                    </#if>
+                </ul>
+            </div>
+        </div>
+        <div class="index-card-item">
+            <div class="title" style="cursor:default">快捷入口</div>
+            <div class="quick-content">
+                <div class="item item_1">
+                    <a href="${ctx}/member/point.html" target="_blank">
+                        <i class="icon icon-point"></i>
+                        <span>我的积分</span>
+                    </a>
+                </div>
+                <div class="item item_2">
+                    <a href="${ctx}/member/comments.html" target="_blank">
+                        <i class="icon icon-score"></i>
+                        <span>我的评价</span>
+                    </a>
+                </div>
+                <div class="item item_3">
+                    <a href="${ctx}/member/order.html" target="_blank">
+                        <i class="icon icon-order"></i>
+                        <span>我的订单</span>
+                    </a>
+                </div>
+                <div class="item item_4">
+                    <a href="${ctx}/member/favorite.html" target="_blank">
+                        <i class="icon icon-like"></i>
+                        <span>我的收藏</span>
+                    </a>
+                </div>
+                <div class="item item_5">
+                    <a href="${ctx}/member/security_center.html" target="_blank">
+                        <i class="icon icon-security"></i>
+                        <span>账号安全</span>
+                    </a>
+                </div>
+                <div class="item item_6">
+                    <a href="${ctx}/new_store/pages/main_outline.html" target="_blank">
+                        <i class="icon icon-shop"></i>
+                        <span>商家入驻</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var cartItem = $('.index-card-item');
+        cartItem.find('.tab_head_item').on('mouseenter mouseleave', function () {
+            var $this = $(this);
+            $this.addClass('on').siblings().removeClass('on');
+            cartItem.find('ul').eq($this.index()).css('display', 'block').siblings().css('display', 'none');
+        })
+    })
+</script>

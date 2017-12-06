@@ -1,0 +1,26 @@
+<div class="details-right fr">
+    <div class="s-left-banner" style="display: none;"></div>
+    <div class="s-left-list details-nav" id="details-nav">
+        <ul>
+            <li class="link-suit selected"><a href="javascript:;">商品详情</a></li>
+            <li class="link-suit"><a href="javascript:;">商品评论</a></li>
+            <li class="link-suit"><a href="javascript:;">商品咨询</a></li>
+            <li class="link-suit"><a href="javascript:;">销售记录</a></li>
+            <li>
+                <a href="javascript:;" class="to_cart addToCart" title="加入购物车" style="display: block;"></a>
+                <a href="javascript:;" class="to_cart_end">售罄</a>
+            </li>
+        </ul>
+    </div>
+    <div id="pl-details-nav" style="height: 36px; display: none"></div>
+    <div class="s-left-box">
+        <div class="s-content details-param" style="display: block">
+            <#include '/detail/detail_content_param.html' />
+        </div>
+        <div class="s-content details-comment"><#-- 通过ajax load进来 --></div>
+        <div class="s-content details-ask"><#-- 通过ajax load进来 --></div>
+        <div class="s-content details-record">
+            <#include '/detail/detail_content_record.html' />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<#assign title="申请售后服务" />
+<#include '/common/header.html' />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/after-sales.css">
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/_after-sales.js"></script>
+<div class="aftermarket">
+    <div class="provide">
+        <span>本次售后服务由</span>
+        <span class="name">苏州乐园dsfsfds</span>
+        <span>为您提供</span>
+    </div>
+    <div class="after-detail">
+        <div class="after-img">
+            <a href="#">
+                <img src="http://javashop-statics.oss-cn-beijing.aliyuncs.com/demo/2FA07EED46144151B7BBEF8A76839293.jpg_300x300" alt="">
+            </a>
+        </div>
+        <div class="after-text">
+            <a href="#"> 
+                <span class="goods-name">
+                    戴尔DELL INS15-7567湛黑版15.6英寸笔记本,超薄，超轻，易携带，外观大气。超轻，易携带，外观大气。
+                </span>
+            </a>
+            <span>价格：<a>￥1728.22</a></span>
+            <span>数量：<a>21</a></span>
+        </div>
+    </div>
+    <form>
+        <div class="service-type">
+            <div class="service">
+                <p>服务类型</p>
+            </div>
+            <div class="type">
+                <a class="refund active" type="1">退款</a>
+                <a class="return" type="2">退货</a>
+            </div>
+            <div class="application">
+                <span class="reason">申请原因</span>
+                <div class="select">
+                    <span class="">请选择</span>
+                    <a href="#">•••</a>
+                </div>
+            </div>
+        </div>
+        <!-- 申请数量 -->
+        <div class="applica-quantity">
+            <p>申请数量</p>
+            <div class="num">
+                <a class="less">-</a>
+                <input type="text" value="1">
+                <a class="add">+</a>
+            </div>
+        </div>
+
+        <!-- 退款方式 -->
+        <div class="refund-method">
+            <div class="refund-box">
+                <span>退款方式</span>
+                <select name="method">
+               <option value="0">请选择退款方式</option>
+               <option value="0">支付宝</option>
+               <option value="0">微信</option>
+               <option value="bank-transfer">银行转账</option>
+           </select>
+            </div>
+            <div class="box-show">
+                <div class="refund-box">
+                    <span>退款开户行:</span>
+                    <input type="text">
+                </div>
+                <div class="refund-box">
+                    <span>退款卡号:</span>
+                    <input type="text">
+                </div>
+                <div class="refund-box horder">
+                    <span>开户人:</span>
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+
+        <!-- 问题描述 -->
+        <div class="problem">
+            <p>问题描述</p>
+            <div class="description">
+                <textarea placeholder="请您在此描述问题" maxlength="500"></textarea>
+                <span>
+                    <a>0</a>
+                    <a>/</a>
+                    <a>500</a>
+                </span>
+            </div>
+        </div>
+
+        <div class="submit-applica">
+            <button type="button">提交申请</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        var module = new Module();
+        module.navigator.init('申请售后服务');
+    });
+</script>
+</body>
+
+</html>

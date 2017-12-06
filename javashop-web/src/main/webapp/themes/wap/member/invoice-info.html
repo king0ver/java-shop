@@ -1,0 +1,44 @@
+<#assign title="发票详情" />
+<#include '/common/header.html' />
+<#assign buyerOrderDetailTag = newTag("buyerOrderDetailTag") />
+<#assign buyerOrderDetail = buyerOrderDetailTag()!'' />
+<#assign orderDetail = buyerOrderDetail.orderDetail />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/order-detail.css">
+<div class="invoice-details">
+    <p>发票信息</p>
+    <div class="invoice-content">
+        <table border="0">
+            <tbody>
+                <tr>
+                    <td>发票抬头：</td>
+                    <td>${orderDetail.receipt_title}</td>
+                </tr>
+                <tr>
+                    <td>抬头类型：</td>
+                    <td><#if orderDetail.receipt_type == 'COMPANY'>单位<#else/>个人</#if></td>
+                </tr>
+                <#if orderDetail.receipt_type == 'COMPANY'>
+                    <tr>
+                        <td>纳税人识别号：</td>
+                        <td>${orderDetail.duty_invoice}</td>
+                    </tr>
+                </#if>
+
+                <tr>
+                    <td>发票内容：</td>
+                    <td>${orderDetail.receipt_content}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var module = new Module();
+        module.navigator.init('发票详情');
+    });
+</script>
+</body>
+
+</html>

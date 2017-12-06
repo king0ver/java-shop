@@ -1,0 +1,333 @@
+<#assign title="商品详情" />
+<#include '/common/header.html' />
+<#include '/common/object-to-json.html' />
+<#assign goodsBaseDataTag = newTag("goodsBaseDataTag") />
+<#assign goods = goodsBaseDataTag("'goodsid':${goodsid!0}") />
+<!-- 获取商品状态【不存在-1、下架1、草稿2】 -->
+<#assign goods_off = goods.goods_off!''/>
+<#if goods_off != -1>
+	<#assign goods_id = goods.goods_id />
+	<#assign store_id = goods.seller_id />
+	<#assign storeInfoTag = newTag("myShopDetailTag") />
+	<#assign storeInfo = storeInfoTag("{'store_id':${store_id},'type':1 }") />
+</#if>
+<!-- 商品上架状态 -->
+<#if goods_off == 1 || goods_off == -1 || storeInfo.shop_disable != 'open'>
+	<#include '/common/header.html' />
+	<#if goods_off == -1>
+		<#include '/404.html' />
+		<#else/>
+		<#include '/goods/goods-off.html' />
+	</#if>
+	<#include '/common/footer.html' />
+	<#stop/>
+</#if>
+
+<script>console.log(${otj(goods)})</script>
+<link rel="stylesheet" href="${ctx}${themes_path}/css/goods.css">
+<script type="text/javascript" src="${ctx}${themes_path}/js/goods.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/spec.js"></script>
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/iscroll/iscroll.js"></script>
+<link rel="stylesheet" href="${ctx}/statics/e_tools/mobile/library/swiper/swiper-3.4.2.min.css">
+<script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/swiper/swiper-3.4.2.min.js"></script>
+
+<input type="hidden" id="goodsId" value="${goods_id}">
+<!--头部-->
+<div id="goods-header">
+	<div class="left-back"></div>
+	<ul class="header-title">
+		<li data-active="goods-layout"><p class="active">商品</p></li>
+		<li data-active="detail-layout"><p>详情</p></li>
+		<li data-active="comment-layout"><p>评价</p></li>
+	</ul>
+</div>
+<!--商品-->
+<div class="layout goods-layout" id="goods-layout">
+	<#assign goodsGalleryTag = newTag("goodsGalleryTag") />
+	<#assign galleryList = goodsGalleryTag("{'goods_id':${goods.goods_id}}")!'' />
+	<div id="gallery-goods" class="gallery-goods">
+		<div class="swiper-wrapper">
+			<#list galleryList as gallery>
+				<@image class="swiper-slide" src="${gallery.big}" alt="${goods.goods_name!''}"/>
+			</#list>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+
+	<!-- 商品参与的活动 -->
+	<#assign promotionListByGoodsIdTag = newTag("promotionListByGoodsIdTag") />
+	<#assign promotionList = promotionListByGoodsIdTag("{'goods_id':${goods.goods_id}}") />
+	<#assign hasGroupbuy = false/>
+	<#list promotionList as promotionVo>
+		<#if promotionVo.promotion_type == 'exchange'>
+			<!--积分换购-->
+			<#assign exchange = promotionVo.exchange/>
+			<div class="exchange-goods">
+				<div class="exchange-goods-left">
+					<div class="val-exchange-goods">
+						<#if exchange.exchange_money gt 0>
+							<em>${exchange.exchange_money?string.currency} + </em>
+						</#if>
+						<span>${exchange.exchange_point!0}积分</span>
+					</div>
+					<div class="icon-exchange-goods">
+						<em>积分换购</em>
+						<span>${goods.price?string.currency}</span>
+					</div>
+					<span style="clear: both"></span>
+				</div>
+				<div class="exchange-goods-right">
+					<div class="top-exchange-goods-right">
+						<#assign s_quantity = goods.quantity - goods.enable_quantity />
+						<#assign s_bfb = (s_quantity / goods.quantity) * 100 />
+						<span>已售${s_quantity}件</span>
+						<span>${s_bfb}%</span>
+					</div>
+					<div class="bottom-exchange-goods-right">
+						<style type="text/css">
+							@keyframes mymove
+							{
+								from {width: 0;}
+								to {width: ${s_bfb}%;}
+							}
+						</style>
+						<div class="_progress"><span style="width: ${s_bfb}%; animation: mymove ease-out 3s"></span></div>
+					</div>
+				</div>
+			</div>
+		</#if>
+		<#if promotionVo.promotion_type == 'groupbuy'>
+			<#assign hasGroupbuy = true/>
+		</#if>
+	</#list>
+
+	<!--商品基本信息-->
+	<div class="goods-part basic-info">
+		<div class="prod-title">
+			<a href="javascript:;" class="love-goods"></a>
+			<a>
+				<span class="name-goods">
+					<i></i>
+					<span class="name">${goods.goods_name!''}</span>
+				</span>
+			</a>
+		</div>
+		<#if hasGroupbuy == false>
+			<div class="price-goods">
+				<span class="price price-spec">${goods.price?string.currency}</span>
+			</div>
+		</#if>
+		<#list promotionList as promotionVo>
+			<#if promotionVo.promotion_type == 'groupbuy'>
+				<#assign groupBuyTag = newTag("storeGroupBuyTag") />
+				<#assign groupBuy = groupBuyTag("{'goodsid':${promotionVo.goods_id},'act_id':${promotionVo.activity_id} }") />
+				<#assign groupBuyActSurplusTag = newTag("groupBuyActSurplusTag") />
+				<#assign groupBuyActSurplus = groupBuyActSurplusTag("{'end_time':${promotionVo.end_time} }") />
+				<input type="hidden" id="groupbuyEndTime" value="${groupBuyActSurplus.cha}"/>
+				<div class="price-goods">
+					<span style="font-size: 14px">团购价:</span>
+					<span class="price price-spec">${groupBuy.price?string.currency}</span>
+					<span class="original-price-title">原价:</span>
+					<span class="original-price">${groupBuy.original_price?string.currency}</span>
+				</div>
+				<div class="groupbuy-section" id="">
+					团购剩余时间:
+					<span id="d1">0</span><strong>天</strong> <span id="h1">0</span><strong>小时</strong>
+					<span id="m1">0</span><strong>分</strong> <span id="s1">0</span><strong>秒</strong>
+					<strong>售出</strong><span class='howmany'>${groupBuy.buy_num+groupBuy.visual_num}</span><strong>件</strong>
+				</div>
+			</#if>
+		</#list>
+	</div>
+
+	<!--店铺优惠券-->
+	<div class="store-bonus-box">
+		<#include '/store/store-bonus.html' />
+	</div>
+
+	<!--促销活动-->
+	<#include '/goods/goods-promotion.html' />
+
+	<!--规格-->
+	<#include '/goods/goods-spec.html' />
+
+	<!--店铺展示-->
+	<div class="goods-part">
+		<div class="shop-part">
+			<a href="${ctx}/store_themes/${store_id}/index.html?menu=store&store_id=${store_id}" class="shop-href">
+				<div class="shop-show">
+					<div class="shop-icon"><@image src="${storeInfo.shop_logo!''}" /></div>
+					<span class="shop-name">${storeInfo.shop_name!''}</span>
+				</div>
+				<div class="shop-tab">
+				<span class="tab">
+					<div class="num">${storeInfo.shop_collect!0}</div>
+					<div class="text">关注人数</div>
+					<div class="vertical-line"></div>
+				</span>
+					<span class="tab">
+					<div class="num">${storeInfo.goods_num!0}</div>
+					<div class="text">全部商品</div>
+					<div class="vertical-line"></div>
+				</span>
+					<span class="tab">
+						<#assign score = ((storeInfo.shop_desccredit + storeInfo.shop_servicecredit + storeInfo.shop_deliverycredit) / 3) />
+					<div class="num">${score}</div>
+					<div class="text">店铺评分</div>
+				</span>
+				</div>
+			</a>
+			<div class="shop-footer">
+				<div class="shop-goods">
+					<a href="${ctx}/store/store-goodslist.html?show_c=4&store_id=${store_id}" class="shop-btn">
+						<i class="icon-shop all-goods"></i>
+						<span class="icon-text">全部商品</span>
+					</a>
+				</div>
+				<div class="shop-go">
+					<a href="${ctx}/store_themes/${store_id}/index.html?menu=store&store_id=${store_id}" class="shop-btn">
+						<i class="icon-shop go-shop"></i>
+						<span class="icon-text">进入店铺</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--热门评论-->
+	<div class="goods-part hot-comment">
+		<div class="info">
+			<span class="info-msg">评价(<em>16.7万</em>)</span>
+			<span class="info-text">好评 <em style="color: #f15353;">99%</em> </span>
+		</div>
+		<div class="prod-comment">
+			<div class="item-prod-comment">
+				<div class="comment-item-info">
+					<span class="author-comment-item">C***7</span>
+					<span class="product-item-star">
+						<span class="real-star stars-width5"></span>
+					</span>
+				</div>
+				<div class="comment-item-content">
+					<span class="content">
+						收到全新的手机，应该是原封的。并没有太仔细的去看什么缝隙。开机11.02版本，从iPhone5转iPhone8的确有点不习惯，第一个就是无法按下的home键，用了两天依然觉得不好用还是原来的home比较好。也难怪苹果只在7和8上用了，估计以后也不会用了。第二，比iPhone5重了很多，沉甸甸的。第三，圆弧边远不如iPhone5直角边拿的稳。其他就都是优点了，速度快，屏幕不仅更大而且更细腻，但还是不太习惯ture tone屏幕（开着就感觉是偏黄），拍照水准又上了一个档次。无线充电还没有试过，但是车载磁贴手机支架貌似不能用了，磁贴贴上起影响充电。充电器就是标准的5W头，不知道苹果如何实现快速充电的，问苹果客服，和个傻子一样，一问三不知，都不知道8支持快充，估计是临时工。
+总结:拿到iPhone8完全没新鲜感，虽然5已经有点卡了，但要不是越来越多的APP开始抛弃5，我至少让5再战一年。如果让我重新选择，我会选择换成iPhone  SE 黑色32G。
+另外，备注一下我一直是双机，iOS加安卓，安卓一年换一个也不买好的就千元机，只求大屏幕。现在用的三星C7 Pro，感觉比iPhone好用功能多。
+					</span>
+				</div>
+				<div class="comment-img-container">
+					<ul class="img-container">
+						<li class="comment-img-item" style="width: 79px; height: 79px;">
+							<img src="//img30.360buyimg.com/shaidan/s310x310_jfs/t11104/343/968201787/61344/6696b0c0/59fc8457Nf32df570.jpg" style="width: 79px; margin-top: -13.2802px; opacity: 1;">
+						</li>
+						<li class="comment-img-item" style="width: 79px; height: 79px;">
+							<img src="//img30.360buyimg.com/shaidan/s310x310_jfs/t7915/141/3716207663/137859/1aeabfe0/59fc845dNc36d2c0a.jpg" style="width: 79px; margin-top: -13.2802px; opacity: 1;">
+						</li>
+						<li class="comment-img-item" style="width: 79px; height: 79px;">
+							<img src="//img30.360buyimg.com/shaidan/s310x310_jfs/t7975/43/3443707932/90487/23bfe882/59fc845aN31fb3948.jpg" style="width: 79px; margin-top: -13.2802px; opacity: 1;">
+						</li>
+						<li class="comment-img-item" style="width: 79px; height: 79px;">
+							<img src="//img30.360buyimg.com/shaidan/s310x310_jfs/t7366/44/4007244741/160654/3fc0b9c7/59fc845fN4c1d9f74.jpg" style="width: 79px; margin-top: -13.2802px; opacity: 1;">
+						</li>
+						<li class="comment-img-item" style="width: 79px; height: 79px;">
+							<img src="//img30.360buyimg.com/shaidan/s310x310_jfs/t7975/43/3443707932/90487/23bfe882/59fc845aN31fb3948.jpg" style="width: 79px; margin-top: -13.2802px; opacity: 1;">
+						</li>
+					</ul>
+				</div>
+				<div class="comment-item-date">2017-10-31</div>
+			</div>
+			<div class="see-all-comment">
+				<div class="see-all-comment-btn">查看全部评论</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--详情-->
+<div class="layout detail-layout" id="detail-layout">
+	<div class="detail-filter">
+		<div class="item-filter active">
+			<span>商品介绍</span>
+		</div>
+		<div class="item-filter">
+			<span>规格参数</span>
+		</div>
+		<span class="clr"></span>
+	</div>
+	<div class="detail-content">
+		<div class="intro-detail">
+			${goods.intro!'<p style="width: 100%; text-align: center; line-height: 50px">暂无商品介绍</p>'}
+		</div>
+		<#assign goodsParametersTag = newTag("goodsParametersTag") />
+		<#assign goodsParameters = goodsParametersTag("'goodsid':${goods.goods_id!''}")!'' />
+		<div class="param-detail">
+			<#if goodsParameters?? && goodsParameters?size gt 0>
+				<table class="table-border" width="100%">
+					<tbody>
+					<#list goodsParameters as paramsGroup>
+						<tr>
+							<td colspan="2"><strong>${paramsGroup.group_name!''}</strong></td>
+						</tr>
+						<#list paramsGroup.params as param>
+							<tr>
+								<td>${param.param_name!''}</td>
+								<td>${param.param_value!''}</td>
+							</tr>
+						</#list>
+					</#list>
+					</tbody>
+				</table>
+			</#if>
+		</div>
+	</div>
+</div>
+<!--评价-->
+<div class="layout comment-layout" id="comment-layout">
+	<div class="comment-filter">
+		<div class="item-filter active" data-grade="0">
+			<p>全部评价</p>
+			<p>10574</p>
+		</div>
+		<div class="item-filter" data-grade="3">
+			<p>好评</p>
+			<p>1111</p>
+		</div>
+		<div class="item-filter" data-grade="2">
+			<p>中评</p>
+			<p>232</p>
+		</div>
+		<div class="item-filter" data-grade="1">
+			<p>差评</p>
+			<p>123</p>
+		</div>
+		<span style="clear: both"></span>
+	</div>
+	<ul class="comment-content"></ul>
+</div>
+<!--底栏-->
+<div class="goods-footer-bar">
+	<div class="concern-cart">
+		<!--关注-->
+		<a class="concern-cart-love<#if goods.is_collect == 1> active</#if>">
+			<em class="icon-love"></em>
+			<span class="focus-info"><#if goods.is_collect == 1>已关注<#else/>关注</#if></span>
+		</a>
+		<!--进店-->
+		<a href="${ctx}/store_themes/${store_id}/index.html?menu=store&store_id=${store_id}" class="concern-cart-shop">
+			<em class="icon-shop"></em>
+			<span class="focus-info">进店</span>
+		</a>
+		<!--购物车-->
+		<a href="${ctx}/cart.html" class="concern-cart-car">
+			<em class="icon-cart">
+				<i class="cart-numers" id="cart-num"></i>
+			</em>
+			<span class="focus-info">购物车</span>
+		</a>
+	</div>
+	<div class="action-list">
+		<a class="action-btn add-cart" id="add-cart-btn">加入购物车</a>
+		<a class="action-btn direct-order" id="direct-order-btn">立即购买</a>
+	</div>
+</div>
+</body>
+</html>

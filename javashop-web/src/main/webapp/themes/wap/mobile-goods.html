@@ -1,0 +1,26 @@
+<#assign  title="商品详情" />
+<#-- 创建商品基本信息标签 -->
+<#assign goodsBaseDataTag= newTag("goodsBaseDataTag") >
+<#-- 调用标签获取商品基本信息 -->
+<#assign goods= goodsBaseDataTag()>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<style>
+*{margin:0;padding:0;}
+
+*{margin: 0} 
+
+img{width: 100%}
+
+.g_photo{ display: table; }
+
+.g_photo img{ -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+
+</style>
+<body style="background-color: #FFFFFF;">
+<div class="goods">
+    <div class="g_photo">
+        ${goods.intro!''}
+    </div>
+</div>
+</body>
+</html>

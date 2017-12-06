@@ -1,0 +1,128 @@
+<#assign  title="商城首页" />
+<#include '/common/header.html'/>
+<#-- 创建店铺信息标签 -->
+<#assign checkUrlTag= newTag("checkUrlTag") />
+<#-- 调用查询店铺信息标签 -->
+<#assign checkUrl = checkUrlTag("{'show_c':${show_c!0},'store_id':${store_id!0}}")!'' />
+<#-- 创建店铺信息标签 -->
+<#assign myShopDetailTag= newTag("myShopDetailTag") />
+<#-- 调用查询店铺信息标签 -->
+<#assign shop = myShopDetailTag("{'type':0,'store_id':${store_id!0}}")!'' />
+
+<#-- 创建店铺导航标签 -->
+<#assign storeNavigationTag= newTag("storeNavigationTag") />
+<#-- 查询店铺导航列表 -->
+<#assign storeNavigation= storeNavigationTag("{'store_id':${store_id!0}}")!'' />
+<#assign storeSearchGoodsListTag=newTag("storeSearchGoodsListTag") />
+<#assign goodsList=storeSearchGoodsListTag("{'storeid':${store_id!0},'keyword':'${keyword!''}','start_price':'${start_price!''}','end_price':'${end_price!''}','stc_id':${stc_id!0},'key':${key!0},'order':'${order!''}','num':10}") />
+<div class="store">
+	<div class="storebanner">
+		<#if shop.shop_banner?? && shop.shop_banner!=''>
+			<@image alt="" src="${shop.shop_banner!''}" width="1000" height="325" />
+		<#else>
+			<img src="${ctx}${themes_path}/images/home_def.jpg" id="img_store_banner" >
+		</#if>
+	</div>
+	<div class="store_intro">
+		<div class="store_logo">
+			<@image src="${shop.shop_logo!''}"  class="pngfix" />
+			<p>${shop.shop_name}的店铺</p>
+		</div>
+	<!-- 	<span class="collect_store">收藏店铺</span> -->
+	</div>
+</div>
+<div class="all_goodslist">
+	<h1><em></em><span>商品列表</span><em class="long"></em></h1>
+	<form name="search_form" method="get" id="search_form">
+		<input type="hidden" value="show_store" name="act"> 
+		<input type="hidden" value="goods_all" name="op"> 
+		<input type="hidden" value="2" name="id"> 
+		<input type="hidden" value="${key!0}" name="key"> 
+		<input type="hidden" value="${order!'desc'}" name="order">
+		<div class="alllist_classify">
+			<ul class="ncs_array">
+				<li class="" rel="5">
+					<a onclick="set_form(5)" href="javascript:void(0)" >人气</a>
+				</li>
+				<li class="" rel="4">
+					<a onclick="set_form(4)" href="javascript:void(0)"  >收藏</a>
+				</li>
+				<li class="" rel="3">
+					<a onclick="set_form(3)" href="javascript:void(0)" >销量</a>
+				</li>
+				<li class="" rel="2">
+					<a onclick="set_form(2)" href="javascript:void(0)"  >价格</a>
+				</li>
+				<li class="selected" rel="1">
+					<a onclick="set_form(1)" href="javascript:void(0)"  >新品</a>
+				</li>
+			</ul>
+		</div>
+	</form>
+	<div class="alllist goodslist">
+		<ul class="list">
+			<#list goodsList.storegoods.result as gl>
+			<li class="goods_list" rel='${gl.goods_id}'>
+					<a href="${ctx}/goods-${gl.goods_id}.html">
+						<@image src="${gl.thumbnail!''}"/>
+						<a target="_blank" href="${ctx}/goods-${gl.goods_id}.html" style="height:25px;"><@substring title="${gl.goods_name}" length="15" dot="..." /></a>
+						<span>¥${gl.price!0.00}</span>
+					</a>
+				</li>
+
+			</#list>
+		</ul>
+	</div>
+	<div class="pagination">
+		 <@pager pageno="${goodsList.page!'1'}" pagesize="${goodsList.pageSize}" totalcount="${goodsList.totalCount}" />
+	</div>
+</div>
+
+<script>
+function set_form(set){
+	if($('input[name="key"]').val() == set){
+		if($('input[name="order"]').val() == 'asc'){
+			$('input[name="order"]').val('desc');
+		}else{
+			$('input[name="order"]').val('asc');
+		}
+	}else{
+		$('input[name="order"]').val('desc');
+	}
+	$('input[name="key"]').val(set);
+	
+	location.replace(ctx + "/store/store-goodslist.html?show_c=4&store_id=${store_id!0}&keyword=${keyword!''}&start_price=${start_price!''}&end_price=${end_price!''}&key="+set+"&order="+$('input[name="order"]').val())
+}
+
+function getUrlParam(strname) {  
+    var hrefstr, pos, parastr, para, tempstr;  
+    hrefstr = window.location.href;  
+    pos = hrefstr.indexOf("?");  
+    parastr = hrefstr.substring(pos + 1);  
+    para = parastr.split("&");  
+    tempstr = "";  
+    for (i = 0; i < para.length; i++) {  
+        tempstr = para[i];  
+        pos = tempstr.indexOf("=");  
+        if (tempstr.substring(0, pos) == strname) {  
+            return tempstr.substring(pos + 1).replace("#", "");  
+        }  
+    }  
+    return null;  
+}  
+
+$(function(){
+    var module = new Module();
+    module.navigator.init('店铺商品')
+	var keyset = getUrlParam("key"); 
+	$(".ncs_array li").each(function(){
+		var liset = $(this).attr("rel");
+		if(keyset==liset){
+			$(".ncs_array li").removeClass("selected");
+			$(this).addClass("selected");
+		}
+	})
+})
+</script>
+</body>
+</html>

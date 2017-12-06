@@ -1,0 +1,133 @@
+<#include '/common/header.html' />
+<#include '/common/reception_header.html'/>
+<link rel="stylesheet" type="text/css" href="${ctx}/themes/b2b2cv4/groupbuy/css/home_group.css" />
+<!-- 团购分类 -->
+<#assign groupBuyCatListTag=newTag("groupBuyCatListTag")>
+<#assign groupBuyCatList=groupBuyCatListTag()>
+<!-- 团购活动 -->
+<#assign groupBuyActTag=newTag("groupBuyActTag")>
+<#assign groupBuyAct=groupBuyActTag()>
+<#if groupBuyAct!="">
+	<!-- 团购时间 -->
+	<#assign groupBuyActSurplusTag=newTag("groupBuyActSurplusTag")>
+	<#assign groupBuyActSurplus=groupBuyActSurplusTag("{'end_time':${groupBuyAct.end_time} }")>
+</#if>
+<div class="group_title">
+  <div id="headRelative" class="group_title_wrapper">
+    <ul class="group_menu" id="sort_type">
+    		<li class="selected">
+				<a onclick="set_groupbuy_class('0')" href="javascript:void(0)" type="0">全部</a>
+		</li>
+		<#list groupBuyCatList as groupBuyCat>
+			<li>
+				<a onclick="set_groupbuy_class('${groupBuyCat.catid}')" type="${groupBuyCat.catid}" href="javascript:void(0)">${groupBuyCat.cat_name}</a>
+			</li>
+		</#list>
+    </ul>
+  </div>
+</div>
+<div class="goodslist_nav" >
+</div>
+<div class="group_center">
+	
+	<!-- 团购列表 -->
+	<div id="groupbuyGoods">
+	</div>
+	<input type="hidden" name="catid" value=""/>
+	<input type="hidden" name="minprice" value=""/>
+	<input type="hidden" name="maxprice" value=""/>
+	<input type="hidden" name="sort_key" value=""/>
+	<input type="hidden" name="sort_type" value=""/>
+	<input type="hidden" name="area_id" value=""/>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	loadPage(1);
+});
+//鼠标触及更替li样式
+$(document).ready(function(){
+    $("#list").hide();
+    $("#button_show").click(function(){
+        $("#list").toggle();
+    });
+    $("#button_close").click(function(){
+        $("#list").hide();
+    });
+    $('.group_menu').children('ul').children('li').bind('mouseenter',function(){
+        $('.group_menu').children('ul').children('li').attr('class','c1');
+        $(this).attr('class','c2');
+    });
+    $('.group_menu').children('ul').children('li').bind('mouseleave',function(){
+        $('.group_menu').children('ul').children('li').attr('class','c1');
+    });
+    var area = $.cookie('E667_groupbuy_area');
+   if(area == null) {
+        $("#show_area_name").html("全国");
+    }
+   else {
+        area_array = area.split(",");
+        $("#show_area_name").html(area_array[1]);
+        $("#groupbuy_area").val(area);
+    }
+});
+//选项卡样式
+function index_click(type,value){
+	$("#"+type+" li").removeClass("selected");
+	$("#"+type+" li a[type='"+value+"']").parents("li").addClass("selected");
+}
+//选择排序类型
+function set_groupbuy_order(value){
+	if(value=="price"){
+		$("input[name='sort_key']").val(1);
+	}else if(value=="sale"){
+		$("input[name='sort_key']").val(2);
+	}else if(value=="rebate"){
+		$("input[name='sort_key']").val(3);
+	}
+	loadPage();
+	index_click("groupbuy_sort",value);
+}
+//选择团购分类
+function set_groupbuy_class(value){
+	$("input[name='catid']").val(value);
+	loadPage();
+	index_click("groupbuy_cat",value);
+}
+function set_sort_type(value){
+	
+	$("input[name='sort_type']").val(value);
+	if(value!=1){
+		$(".group_right_nav").hide();
+	}else{
+		$(".group_right_nav").show();
+	}
+		
+	loadPage();
+	
+	$("#sort_type li a").removeClass("current");
+	$("#sort_type li a[type='"+value+"']").addClass("current");
+}
+function loadPage(page){
+	var minprice=$("input[name='minprice']").val();
+	var maxprice=$("input[name='maxprice']").val();
+	var sort_key=$("input[name='sort_key']").val();
+	var sort_type=$("input[name='sort_type']").val();
+	var catid=$("input[name='catid']").val();
+	var area_id=$("input[name='area_id']").val();
+	var url=""
+	if(page!=null){
+		 url="${ctx}/groupbuy/groupbuy_goods_list.html?minprice="+minprice+"&maxprice="+maxprice+"&sort_key="+sort_key+"&catid="+catid+"&sort_type="+sort_type+"&page="+page;
+	}else{
+		url="${ctx}/groupbuy/groupbuy_goods_list.html?minprice="+minprice+"&maxprice="+maxprice+"&sort_key="+sort_key+"&catid="+catid+"&sort_type="+sort_type;
+	}
+	console.log(url)
+	$("#groupbuyGoods").load(url,function(){
+		$(".page li a").click(function(){
+			var pageno= $(this).attr("page");
+			loadPage(pageno);
+		});
+	});	
+}
+</script>
+<#include '/common/footer.html'/>

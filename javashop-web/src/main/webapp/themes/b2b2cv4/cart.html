@@ -1,0 +1,71 @@
+<#assign title = "我的购物车" />
+<#include '/common/header.html' />
+<link rel="stylesheet" href="${file_path}/css/cart.css">
+<div class="flow_path">
+    <div class="cart_logo">
+        <a href="${ctx}/index.html"><@image src="${logo}" class="pngFix" style="width:240px;height:60px;" /></a>
+    </div>
+    <div class="flow_pathlist">
+        <ul>
+            <li class="selected">
+                <i class="process1"></i>
+                <span></span>
+                <p style="cursor:default">我的购物车</p>
+                <strong></strong>
+            </li>
+            <li class="">
+                <i class="process2"></i>
+                <span></span>
+                <p style="cursor:default">填写核对信息单</p>
+                <strong></strong>
+            </li>
+            <li class="">
+                <i class="process3"></i>
+                <span></span>
+                <p style="cursor:default">成功提交订单</p>
+                <strong></strong>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container-cart">
+    <div class="content-cart">
+        <div class="list-header-cart">
+            <span class="checkbox select-all"><a href="javascript:;" class="check check-all"><i class="material-icons">&#xE876;</i></a>全选</span>
+            <span class="title" style="cursor:default">商品信息</span>
+            <span class="price" style="cursor:default">单价（元）</span>
+            <span class="num" style="cursor:default">数量</span>
+            <span class="total" style="cursor:default">小计（元）</span>
+            <span class="action" style="cursor:default">操作</span>
+        </div>
+        <div class="list-content-cart">
+            <#include '/cart/cart-item.html' />
+        </div>
+    </div>
+    <div class="check-bar-cart">
+        <div class="check-bar">
+            <div class="inner-check-bar">
+                <div class="check-tools-left clearfix">
+                    <span class="select-all checkbox clearfix">
+                        <a class="check check-all" href="javascript:;"><i class="material-icons">&#xE876;</i></a>
+                        <label class="all-checked-label">全选（共<b id="allItemNum">0</b>件）</label>
+                    </span>|
+                    <span><a class="left-a-tool batch-delete" href="javascript:;">批量删除</a></span>|
+                    <span><a class="left-a-tool clean-all" href="javascript:;">清空购物车</a></span>
+                </div>
+                <div class="check-tools-right clearfix" style="cursor:default">
+                    <a class="checkout-btn" href="javascript:;">去结算</a>
+                    <div class="right-price-total"> 合计：
+                        <span class="price-count">¥<b id="orderTotal">0.00</b></span>
+                    </div>
+                    <div class="right-prod-view r_control_tip" style="cursor:default">
+                        <span class="product-count">已选商品<b id="checkedNum">0</b>件</span>  |
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="${file_path}/js/cart.js"></script>
+
+<#include '/common/footer.html' />

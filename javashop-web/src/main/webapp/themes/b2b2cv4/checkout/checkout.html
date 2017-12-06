@@ -1,0 +1,173 @@
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/jquery.addressSelect-1.0.js"></script>
+<script type="text/javascript" src="${ctx}${themes_path}/js/checkout-new.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/checkout-new.css"/>
+<#assign checkoutParamTag = newTag("checkoutParamTag") />
+<#assign checkoutParam = checkoutParamTag() />
+<#assign receiptParam = checkoutParam.receipt />
+<#assign receiptContentListTag = newTag("receiptContentListTag") />
+<#assign receiptContentList = receiptContentListTag() />
+<#assign checkCmptIsOnTag = newTag("checkCmptIsOnTag") />
+<#assign creditIsOn = checkCmptIsOnTag("{'componentName':'余额支付组件'}") />
+
+<form id="checkoutForm">
+    <div class="ckt-control">
+        <div class="ckt-title" style="cursor:default">填写并核对订单信息</div>
+        <div class="ckt-content">
+            <!--收货人信息 start-->
+            <div class="ckt-item info">
+                <div class="top-ckt" >
+                    <span class="title-top" style="cursor:default">收货人信息</span>
+                    <span class="other-top"><a href="javascript: void(0);" class="c-new-address">新增收货地址</a></span>
+                    <div class="clearfix"></div>
+                </div>
+
+                <!--地址列表-->
+                <div class="center-ckt-info">
+                    <ul id="address_list">
+                        <!--通过load方法加载-->
+                        <script type="text/javascript">
+                            $(function () { Ckt.info.i_InfoInitAddress(); });
+                        </script>
+                    </ul>
+                </div>
+                <!--地址列表 end-->
+
+                <div class="collapse-ckt-info">
+                    <span class="more-collapse-ckt">更多地址</span>
+                    <i class="icon-collapse-ckt-info"></i>
+                </div>
+                <div class="placeholder-20"></div>
+            </div>
+            <!--收货人信息 end-->
+
+            <!--支付方式 start-->
+            <div class="ckt-item payment">
+                <div class="top-ckt">
+                    <span class="title-top" style="cursor:default">支付方式</span>
+                    <span class="other-top"><a href="javascript: void(0);" class=""></a></span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="content-ckt-pay">
+                    <ul class="ul-ckt-pay min">
+                        <#assign paymentTypeListTag = newTag("paymentTypeListTag") />
+                        <#assign paymentList = paymentTypeListTag() />
+                        <#list paymentList as payment>
+                            <li class="ckt-checkbox pay<#if checkoutParam.paymentType == payment.value> selected</#if>"
+                                data-payment_type="${payment.value}">
+                                <span>${payment.name}</span>
+                            </li>
+                        </#list>
+                    </ul>
+                </div>
+                <div class="collapse-ckt-pay">
+                    <span class="more-collapse-ckt" style="cursor:default">更多方式</span>
+                    <i class="icon-collapse-ckt-pay"></i>
+                </div>
+                <div class="placeholder-20"></div>
+            </div>
+            <input type="hidden" name="typeId" value="0">
+            <!--支付方式 end-->
+
+            <!--配送清单 start-->
+            <div class="ckt-item inventory" id="inventory">
+                <div class="top-ckt">
+                    <span class="title-top" style="cursor:default">配送清单</span>
+                    <span class="other-top"><a href="${ctx}/cart.html" class="c-back-cart">返回购物车修改</a></span>
+                    <div class="clearfix"></div>
+                </div>
+                <#include '/checkout/checkout-inventory.html' />
+                <div class="bottom-ckt-inventory" style="cursor:default">
+                    订单备注：
+                    <input name="remark" id="remark" class="form-control" maxlength="120"
+                           value="${checkoutParam.remark!''}">
+                    <button type="button" class="btn btn-primary remark-confirm-btn" id="remark-confirm">确定</button>
+                    <i style="cursor:default">*请勿填写有关支付、收货、发票方面的信息，如有特殊需要请联系客服人员。</i>
+                </div>
+                <div class="placeholder-20"></div>
+            </div>
+            <!--配送清单 end-->
+
+            <!--送货时间 start-->
+            <div class="ckt-item time">
+                <div class="top-ckt">
+                    <span class="title-top" style="cursor:default">送货时间</span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="content-ckt time">
+                    <div class="ckt-checkbox time<#if checkoutParam.receive_time == '任意时间'> selected</#if>">
+                        <span>任意时间</span>
+                    </div>
+                    <div class="ckt-checkbox time<#if checkoutParam.receive_time == '仅工作日'> selected</#if>">
+                        <span>仅工作日</span>
+                    </div>
+                    <div class="ckt-checkbox time<#if checkoutParam.receive_time == '仅休息日'> selected</#if>">
+                        <span>仅休息日</span>
+                    </div>
+                </div>
+                <div class="placeholder-20"></div>
+            </div>
+            <!--送货时间 end-->
+
+            <!--发票信息 start-->
+            <div class="ckt-item invoice">
+                <div class="top-ckt">
+                    <div class="clearfix"></div>
+                </div>
+                <#include '/checkout/checkout-receipt.html' />
+            </div>
+            <!--发票信息 end-->
+            <#if creditIsOn=="ON" >
+                <#include 'credit_pay.html' />
+            </#if>
+        </div>
+        <div class="ckt-total">
+            <div class="total-ckt-total">
+                <#include '/checkout/checkout-total.html' />
+            </div>
+            <div class="summary-ckt-total">
+                <div class="address-info-ckt" style="cursor:default">
+                    <span>收货人信息：</span>
+                    <span id="address-info"></span>
+                    <span>&nbsp;收货人：&nbsp;<em id="address-name"></em>&nbsp;<em id="address-mobile"></em></span>
+                </div>
+            </div>
+            <div class="bill-btn-ckt">
+                <a href="javascript: void(0);" class="bill_btn" id="bill_btn">提交订单</a>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg trade-exception-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">商品异常</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    商品名称
+                                </th>
+                                <th>
+                                    异常原因  
+                                </th>
+                                <th>
+                                    建议措施
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</form>

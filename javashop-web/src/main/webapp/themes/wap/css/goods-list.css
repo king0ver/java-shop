@@ -1,0 +1,158 @@
+#navigator {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+    top: 0;
+    left: 0;
+}
+
+#navigator .icon-nav {
+    display: inline-block;
+    width: 30px;
+    height: 44px;
+}
+
+#navigator .icon-search {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEuElEQVR4Xu2agZEUNxBFeyIwRGCIwBABJgJDBJgI3BuBIYJtR2CIAIiAIwKTgY8IfBmM67k0LtEnjaQZ7e7c7qnqautu5zTS0+9udUuDXHgbLnz+cg/gXgEHJKCqj4ZheDaO4xMRmX4euFfeiMhXfoZhuB7H8YuZ8ftRWncTUFUm+kpEXojIo4WzAMo7EXl/aBjdAKjqzyLyu4jw2bNdDcPwbr/fv+/Z6dTXagBhxfcHmLifL2axM7OrniBWAVBVJq6FAX0KNs7Ab7yk8RPBVFAO5sPnDzN9moi8NTPMZHVbBCAM+kMYcGoQX7BhM8OOm5uq4j9+FZFfMv+MGl738A/NAILkP4uI9+aMldV+02NgdBZAvwlO1bNAAc/XvqsJwMzkv7Five1zmnFwsEj/p4QiUMIipdFXNYCZybPqTL6LTebsRVVRHBAIsb49XaqEKgBBin8lZP+HmZWcYLMPmPsHVcU3/OmeWWwOtQCYPB46bqukt4ZKBgKOEZ/QpMQiAFXFCbHBidvRV94Dy0BoHtcsgCD9v93LP5kZYerkTVVxft4noILqzVIJAOEu3tri7Z+0yuxQpIJjZLJxdPhqZk9r35kFEEIPAOL20sw+1nZ+jOcy46z2T3MA/OqTpvZOdLowSpjCtZk9ruk8CSBj+022VfPyXs9kxlu1N8gB8J5/s6s/QUyogFoCe4bZlgOA54+LGdU2VXrhob4PCRQJ2tTIPB+W3ncLQEZOD7fi+ecmpKpsguJUumgGKQB+q7l5+UdmQISKU2gKKOQP2ZYC4O2f4gN/23xTVfISijRTK/qBFAA2Fs+iTjYX+3MrkdgTFNVbA2Cz4c+DSPkvM5vd7aYA+Ajw2MyuN6//MEBVHeOxLgHQ1MHWwNwD6KAA5P5jtLJ3xgRCdvjPWhPwUeAuOUGStTiD7RIFLi4MXvxG6C5vhb35FpO4s0mGUg5QRIoOPJcOU2KO62xFkqfeDyTS4W9mVryfUFsQuTKz56eeZCEV9iW8qhL5uZTEfPiDVVH+PDRXFPUOZbMqUNXFBdxzLYtXb95KByNeBZSckFbT+duhfEfw/Jxbxs6uuPuLx1MCQMf+aGwzpqCqFEH9MV2xDlgNgAczh6Ncf3l9qJWt6TczrubyXfF0OEDwpsCfT7Y3yByHNUl/glwLgNsZpMn+9tZJlKCqVHp/c0ppkn4TgKACLkigBA+BUjRqOJpjPOoFiZhyuCeUgoA6qMEf7eQ4czeg+ZZIlQlUQuAx4OCIqi8oFLa3RCGOuJLq6gGhGUAwB3wCqx2fH8Rz+e9+7ziO3CZpNo3dbvdqHEfC2xTisg5XVf1pEOP4aGYva6LJIgBTx5lQ5N+LGgCCPG/2+z23SP9vu90OiA+iK/Wp6zfZg87MLRH6r3LQqwAENSBT7urk1FCzEKVnZlPbNRBWA4jUQEZGOa03CBSjpYuQSyF0AxCBQBEcUiLluLxeWuX4ey5jYdsc7lafSgUIqf1K1od0B+AiBjBQxvTJ114hk0/ARzB4HFj1pD3VmVCdhHBQAC1L3vPZFghnCWBm53ormpwtgAABPxTfG8KpfDfnswYQIHDOQfJEDnMrXT57ACXfcg+gROjcv794BfwLf9NFXzgATGIAAAAASUVORK5CYII=) no-repeat center;
+    background-size: 22px 22px;
+}
+
+#navigator .icon-cart {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEoAAABACAYAAAC9S+EXAAAE/klEQVR4XuVc/3nUMAxVJqCdADoB7QTABMAEtBMgJqCdoGICygTABLQTUCagnYAywfG9otynuL44vsjBPvxPfySX2M+y/PQkX0dExMzn+IHfE+2OiK67rrs4Pz//lLp5l653zLxHRL+2GNQ1Eb0QEYC3861Ti8Kgn24x2v8GrB4oWNXhBKBw3zERvTT3vhMRmfDZpm+5Byq3MfMXA9a1iBzlPqO1+7cF6jkRfTOD3d91X7UVUOrXVgYoOPXL1qwkp79zgAIwz/RlZyJymvPi1u6dAxSAea8DvhIRLMedbXOAekVEn3cWmb8Dw6rBrn49B6htiWpr2N6IyMHWQM0kqk2BJSLdXKAuiOhN76eIaFccOuLeNan2AAos/aMCdW+iTZnKhs4y808ieqKXP4nI8VyLwsPw0L41TzyZ2U4+xnU0y5n3yDDzDRE91r9fiwjCm2YbMyPi6KnOmvbMsih16Dbua5p4MjOEge9mltcT7wEUHB+EP7SmiScz283pVkR6P0UeQA1mATtEi+uOmUN/O5CPXAbFzFA5HylA986vNbCY2YZkv7HrWUXECygbIDcp5DEz5HBEG2j3lMBOthdQdjYevKR264pQggMRwW6+bl5AWSGvOeLJzNjpein8q4gg4B80F6CUJlghrxniycyhWhsVIT2Bsn6qGeIZ6P8DSuC+9NSikIl5qw9vgnhGKMGJiIBLPWieFmWFvCaIJzPbyX1ACUpZ1EDIq514aoYcAX1PCUZXgZtF6fKzAXLVxHMKJShiUQqUjZWqJp4xzWmM73lblNVyqiWezBwmRpJ5SW+gbGBZLfEMNKcfIpKsu3AFSpefDZCrI545lKCYj1KgrJBXHfEc05wW81EKlBXyqiKeuZSgtEVZIa8q4hloTsBhsmtw91FhgFwT8cylBEUtSoGyAXIt5UBhVWEWIS5lUVbIq1G3i2pOizpztahQ46kJrCsiepVbIVjEoiJC3lklSF1uWxlYEihbkv1Ag64EuMndKAmU1XqqDpCnoFUSKBt4ZjvPKZ1f8p6SQA0yrzXxqW0ALgZURMirLu7LAaw0UFbI+yAiU05w5fR/sXtLA7UzFXmlgRpUunRdBwf/z4+trVYr5O8GKfOUaRYBSuUM5PhgUesao1RnFr4OngcZaFKFoDtQWrWGAtikvLowMJteBz8Knjdq6a5AqSWhBrIVkHrwLkTkZLGgOJBZ8V4EoNwXlmlBBBi7PW3qroIGyQP0A+efT+GXdDIRtKMffZEu7tmYTsdFN4uKiPbRdJV2FH6hP5l1JyL7XsswUp0SDZ+0H/BTPVijWSNPoKxWPprHj4CazKtNBTKoJ9hYnbJBDtoYvHsCZcllMrZjZqsuuC0/Zs46R8jMkw5oegJlO5hk4bkDyrCoXKDscY5Fyn6yDjoGxaVuMkwwAaOWHfnOh40uwNOiwnz+RvGema0/g7FkCf1j1hU8G9wIz46y8Jz0lSdQyHKgQ329OX6HYjCoOdddCSdH+7ok19xfZKPA+9GPAViRQo3RohI3oHQXCU8m4d/SdR06u7darUBEB/Xb+rUlrimtiKXAsi5MP8CjbOUvdunDsfjPFSgFy+5+KR88SvJSH04sQVsDkXpUsh/uQClYqbweZhCMPVpYmhrV1OsBp4p97BYWPiUzUwQoBQuqAZYZzBxLDuYPP4GZRmy1iNyiPgubB/rQ9wOuAMt9cj/+AHIza19eOLE0AAAAAElFTkSuQmCC) no-repeat center;
+    background-size: 22px 22px;
+}
+
+.goods-list-selector {
+    position: fixed;
+    top: 44px;
+    width: 100%;
+    height: 40px;
+    z-index: 99;
+    font-size: 0;
+    background-color: #fff;
+}
+
+.goods-list-selector::after {
+    background-color: #bfbfbf;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 1px;
+    content: '';
+    -moz-transform: scale(.5, .5);
+    -ms-transform: scale(.5, .5);
+    -webkit-transform: scale(.5, .5);
+    transform: scale(.5, .5);
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.goods-list-selector li {
+    width: 25%;
+    border-right: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: .875rem;
+    text-align: center;
+    line-height: 2.4rem;
+}
+
+.goods-list-selector li.active span {
+    color: #f15353 !important;
+}
+
+/** 商品列表goods-list */
+.goods-list {
+    padding: 0;
+    background-color: #f0f2f5;
+    margin-top: 84px;
+}
+
+.goods-list .item-goods {
+    border-bottom: 0;
+    position: relative;
+    width: 50%;
+    padding: 2px 1px 0 0;
+    background-color: #f0f2f5;
+    float: left;
+    list-style: none;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.goods-list .item-goods a {
+    padding: 0 0 8px 0;
+    background-color: white;
+    position: relative;
+    display: block;
+}
+
+.goods-list .item-goods .image-item-goods {
+    width: 100%;
+    height: 186px;
+    box-sizing: border-box;
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    line-height: 0;
+    font-size: 0;
+}
+
+.goods-list .item-goods .image-item-goods img {
+    width: 100%;
+    height: 100%;
+}
+
+.goods-list .item-goods .other-item-goods {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.goods-list .item-goods .name-item-goods {
+    color: #232326;
+    font-size: 14px;
+    overflow: hidden;
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 6px;
+}
+
+.goods-list .item-goods .price-item-goods span {
+    color: #f15353;
+    font-size: 16px;
+}
+
+/** 没有更多、没有商品、加载中 */
+.no-more, .is-loading {
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    width: 100%;
+    background-color: #fff;
+    font-size: 14px;
+    border-top: 1px solid #e5e5e5;
+    clear: both;
+}
+
+.no-goods {
+    display: block;
+    position: fixed;
+    background-color: #fff;
+    width: 100%;
+    height: calc(100% - 85px);
+    z-index: 1;
+    line-height: 200px;
+    text-align: center;
+    border-bottom: 1px solid;
+    top: 85px;
+    clear: both;
+}

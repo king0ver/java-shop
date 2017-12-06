@@ -1,0 +1,107 @@
+<#assign  title="店铺详情" />
+<#include '/common/header.html' />
+<#-- 创建店铺信息标签 -->
+<#assign checkUrlTag= newTag("checkUrlTag") />
+<#-- 调用查询店铺信息标签 -->
+<#assign checkUrl = checkUrlTag("{'show_c':${show_c!0},'store_id':${store_id!0}}")!'' />
+<#-- 创建店铺信息标签 -->
+<#assign myShopDetailTag= newTag("myShopDetailTag") />
+<#-- 调用查询店铺信息标签 -->
+<#assign shop = myShopDetailTag("{'type':0,'store_id':${store_id!0}}")!'' />
+
+<#-- 创建店铺导航标签 -->
+<#assign storeNavigationTag= newTag("storeNavigationTag") />
+<#-- 查询店铺导航列表 -->
+<#assign storeNavigation= storeNavigationTag("{'store_id':${store_id!0}}")!'' />
+<link rel="stylesheet" href="${ctx}${themes_path}/css/store.css">
+<script type="text/javascript" src="${ctx}${themes_path}/js/page/store.js"></script>
+<div class="store">
+	<div class="store-banner">
+		<#if shop.shop_banner?? && shop.shop_banner!=''>
+			<@image alt="" src="${shop.shop_banner!''}" class="img-store-banner" />
+		<#else/>
+			<img src="${ctx}${themes_path}/images/home_def.jpg" id="img_store_banner" >
+		</#if>
+	</div>
+	<div class="store_intro">
+		<div class="store_logo">
+			<@image src="${shop.shop_logo!''}"  class="pngfix" />
+			<p>${shop.shop_name}的店铺</p>
+		</div>
+	<!-- 	<span class="collect_store">收藏店铺</span> -->
+	</div>
+</div>
+<div class="store_message">
+	<ul style="padding-top:10px;">
+		<li>卖家信用：${shop.shop_credit!0}</li>
+		<!-- 
+		<li>店铺等级：</li>
+		 -->
+		<li>商品数量：${shop.goods_num!0}</li>
+		<li>店铺收藏：${shop.shop_collect!0}</li>
+		<li class="last">联系电话：${shop.link_phone}</li>
+		<li class="last">所在地：${shop.shop_add}</li>
+	</ul>
+</div>
+<div class="store_bonus_box">
+    <#include '/store/store-bonus.html' />
+</div>
+<div class="store_goodslist">
+	<div class="same_goodslist">
+		<h1>推荐商品</h1>
+		<ul>
+			<#-- 创建标签商品标签 -->
+			<#assign storeTagsGoodsTag= newTag("storeTagsGoodsTag") />
+			<#-- 查询标签商品列表 -->
+			<#assign storeTagsGoods=storeTagsGoodsTag("{'mark':'recommend','storeid':${store_id!0},'num':4}")!'' />
+			<#if storeTagsGoods?size!=0>
+				<#list storeTagsGoods.list as st>
+					<li>
+						<div class="home_img">
+							<a href="${ctx}/goods-${st.goods_id}.html" target="_blank" class="thumb">
+								<@image src="${st.thumbnail!''}" />
+							</a>
+						</div>
+						<div class="goodslist_right">
+							<a href="${ctx}/goods-${st.goods_id}.html" target="_blank"><h2><@substring	title="${st.goods_name}" length="54" dot="..." /></h2></a>
+							<p>已销售：${st.buy_count!0}件</p>
+							<span>￥${st.price!0}</span>
+						</div>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+	</div>
+	
+	<div class="same_goodslist">
+		<h1>新品</h1>
+		<ul>
+			<#-- 创建标签商品标签 --> 
+		<#assign storeTagsGoodsTag=newTag("storeTagsGoodsTag") />
+		<#-- 查询标签商品列表 --> 
+		<#assign storeTagsGoods=storeTagsGoodsTag("{'mark':'new','storeid':${store_id!0},'num':4}")!'' />
+			<#if storeTagsGoods?size!=0>
+				<#list storeTagsGoods.list as st>
+					<li>
+						<div class="home_img">
+							<a href="${ctx}/goods-${st.goods_id}.html" target="_blank" class="thumb">
+								<@image src="${st.thumbnail!''}" />
+							</a>
+						</div>
+						<div class="goodslist_right">
+							<a href="${ctx}/goods-${st.goods_id}.html" target="_blank"><h2><@substring	title="${st.goods_name}" length="54" dot="..." /></h2></a>
+							<p>已销售：${st.buy_count!0}件</p>
+							<span>￥${st.price!0}</span>
+						</div>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+	</div>
+</div>
+<div class="this_classify">
+	<p><a href="${ctx}/store/store-goodslist.html?show_c=4&store_id=${store_id!0}">查看全部商品</a></p>
+	<span class="store_in" rel="${shop.shop_id}">收藏店铺</span>
+</div>
+</body>
+</html>

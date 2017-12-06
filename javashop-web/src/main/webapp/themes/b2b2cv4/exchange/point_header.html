@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="${ctx}${themes_path}/exchange/point_header.css" type="text/css" />
+<style type="text/css">
+/*****广告***/
+.exchange-adv{  background: #fff none repeat scroll 0 0;
+   
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    width:990px;
+    float:left;
+}
+.exchange-adv .flexslider{
+	  
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    width: 990px;
+}
+.exchange-adv .flexslider .slides{ 
+	height:500px;
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    width: 990px;
+    }
+.exchange-adv .flexslider .slides li{width:100%;height:100%;text-align:center;}
+.exchange-adv .flexslider .slides li img{height:245px;width:990px}
+.exchange-adv .flexslider .flex-control-nav{display:none;}
+
+.exchange-adv .flexslider .flex-direction-nav li a{display:none;overflow:hidden;opacity:0.5;filter:alpha(opacity=50);background:url("${ctx}/themes/kaben/images/icon-slides.png") no-repeat left top;width:41px;height:69px;line-height:245px;position:absolute;top:50%;}
+.exchange-adv .flexslider .flex-direction-nav li .flex-prev{background-position:3px 0px;margin:-35px 0px 0px 0px;left:60px;}
+.exchange-adv .flexslider .flex-direction-nav li .flex-next{background-position:-44px 0px;margin:-35px 0px 0px 0px;right:100px;}
+
+
+
+
+</style>
+
+<div class="wrap mod_point_nav clearfix" style="margin:-3px auto 0px auto">
+	<h2 style="width:212px">
+		<span></span>
+		积分商城
+	</h2>
+	<input type="hidden" id="markPos" value=""> 
+	<div class="nav_list">
+		<!-- <a href="/pointshop/pointProduct.do" data-tpa="JIFEN_PC_INDEX_EXCHANGE_PROD">兑换商品</a>
+		<a href="/pointlottery/pointLotteryInit.do" data-tpa="JIFEN_PC_INDEX_LOTTERY">抽奖</a>
+		<a href="http://coupon.yhd.com/coupon/index.do?type=2" target="_blank" data-tpa="JIFEN_PC_INDEX_EXCHANGE_COUPON">兑换抵用券</a>
+		<a href="/pointshop/pointGain.do" data-tpa="JIFEN_PC_INDEX_POINTGAIN">获取积分</a>
+		<a href="http://vip.yhd.com/" target="_blank" data-tpa="JIFEN_PC_INDEX_VIP_INDEX">权益专区</a> -->
+	</div>
+</div>
+<#assign exchangeCatListTag=newTag("exchangeCatListTag")>
+<#assign exchangeCatListTag2=exchangeCatListTag()>
+<#assign advListTag=newTag("advListTag") >
+<div class="wrap clearfix mt10" >
+	<div class="mod_point_menu" style="width:210px" >
+    	<ul>
+    		<#list exchangeCatListTag2 as el>
+			<#if el_index lt 7>
+    		<li class="gray_bg" style="width:212px">
+	            	<h3><a href="javascript:void(0);">${el.name}</a></h3>
+					<div class="sub_menu">
+							<#list el.children as c>
+								<dl>
+									<dt><a href="${ctx}/exchange_list.html?cat=${c.cat_id}">${c.name}<i>></i></a></dt>
+										<dd>
+											<#list c.children as cc>
+												<a href="${ctx}/exchange_list.html?cat=${cc.cat_id}" style="">${cc.name}</a>
+											</#list>
+										</dd>	
+									</dl>	
+							</#list>
+					</div>
+	           </li>
+    		</#if>
+			</#list>
+        </ul>
+    </div>
+    <div class="exchange-adv" style="width:990px">
+   		<div id="index-adv" class="flexslider" style="width:990px;height:245px;position:relative;">
+			<#assign adv = advListTag("'acid':'18'")!'' >
+			
+			<!-- 获取广告列表 -->
+			<ul class="slides">
+				<#list adv.advList as adv3>
+					<li rel="${ctx}/${adv3.url!''}">
+						<@image src="${adv3.atturl!''}"/>
+					</li>
+				</#list>
+			</ul>
+		</div>
+	</div>
+ </div>
+<script>
+	//点击跳转广告链接
+	$(".slides li").click(function(){
+		var advUrl = $(this).attr("rel");
+		location.href = advUrl;
+	})
+	$(function(){
+		$(".gray_bg").mouseover(function(){
+			$(this).addClass("cur");
+			
+		});
+		$(".gray_bg").mouseleave(function(){
+			$(this).removeClass("cur");
+			
+		})
+		$('#index-adv').flexslider({
+			animation: "slide",
+			direction:"horizontal",
+			easing:"swing"
+		});
+		$(".flexslider").mouseover(function(){
+			$(".exchange-adv .flexslider .flex-direction-nav li a").show(300);
+		})
+			
+		$(".flexslider").mouseleave(function(){
+			$(".exchange-adv .flexslider .flex-direction-nav li a").hide();
+		})
+	})
+</script>

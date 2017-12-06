@@ -1,0 +1,40 @@
+<style type="text/css">
+    .goods-table {
+        background-color: #ffffff;
+    }
+    .goods-table th,
+    .goods-table td {
+        text-align: center;
+        font-size: 12px;
+        vertical-align: middle;
+    }
+</style>
+<div class="select">
+	
+</div>
+<script type="text/javascript">
+(function(){
+	$(document).on('click','.paging a',function(e){
+		e.preventDefault();
+		loadGoods(/\d+/g.exec($(this).attr('href'))[0])
+	})
+	loadGoods(1);
+	function loadGoods(page){
+		$('.select').load('./conflict_goods.html?page='+page);
+	}
+	
+    var paging = $('.app-paging-tools').find('.paging');
+    if(paging){
+        $(document).ready(function(){
+            //  给分页添加样式--同时兼容IE78
+            if(lteIE8){
+                paging.find('.page').addClass('pagination');
+            }else {
+                paging.find('ul').addClass('pagination');
+            };
+            //  分页去掉一个span
+            paging.find('span').eq(1).css({display: 'none'});
+        });
+    };
+})();
+</script>

@@ -1,0 +1,27 @@
+<#assign  title="商城首页" />
+<#include '/common/header.html'/>
+<!-- 头部 -->
+	<div class="header">
+		<p>
+			Javashop示例商城
+		</p>
+	</div>
+<#include 'common/adv.html'/>
+<#include 'common/search.html'/>
+<#include 'common/quick.html'/>
+<div class="brand_list">
+<!--创建"品牌列表"标签-->
+<#assign brandListTag = newTag("brandListTag")>
+<!--调用"品怕列表"标签-->
+<#assign brandList = brandListTag()>
+	<ul>
+		<#list brandList as list>
+			<li>
+				<a href="${ctx}/goods_list.html?brand=${list.brand_id!1}">
+					<@image src="${list.logo!''}" alt="${list.name}" />
+				</a>
+			</li>
+		</#list>
+	</ul>
+</div>
+<#include 'common/footer.html'/>

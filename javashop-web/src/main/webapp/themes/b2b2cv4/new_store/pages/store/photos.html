@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '店铺相册' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/uploadify.css" />
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/jquery.flexslider-min.js"></script>
+    <link rel="stylesheet" href="${ctx}${themes_path}/js/lightbox/css/lightbox.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/js/lightbox/js/lightbox.js"></script>
+
+</head>
+<body>
+<#assign mainPageName = 'main_store' />
+<#assign lowerPageName = 'lower_store_photos' />
+
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav" onclick="location.reload(); ">
+        <li>
+            <a href="javascript: void(0); ">店铺相册</a>
+        </li>
+    </ul>
+</div>
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+        <#-- 调用店铺相册标签 -->
+        <#assign storePhotosListTag=newTag("storePhotosListTag")>
+            <#assign storePhotosList=storePhotosListTag()>
+           已用空间${storePhotosList.usedSpace}M，总空间为${storePhotosList.totalSpace}M
+        <div class="slideshow">
+                <form method="post" id="photoForm"  enctype="multipart/form-data">
+                    <!-- 图片上传部分 -->
+                    <ul id="goods_images" class="goods_images" style="overflow:hidden;clear:both;">
+                    <#if (storePhotosList?size>0)>
+	                    <#list storePhotosList.storePhotosList as storePhoto>
+		                   	 <li class="comment_img" style="float: left; margin: 8px;position:relative;">
+		                        	<input type="hidden" name="photo_id" value="${storePhoto.photo_id}"/>                        
+		                           <div class="suolue" style="clear: both;">
+											<#if storePhoto.img??>                             
+		                                      <a href="<@imgurl pic='${storePhoto.img}'/>"  rel="lightbox[img_${storePhoto.photo_id}]" > <@image src="${storePhoto.img}"  id="img${storePhoto.photo_id}"  width="300" height="200"/> </a>                                
+		                                    </#if>	        					
+		                           </div>   
+		                           <span class="close-img" style="position:absolute;   background-image: url('http://img.58cdn.com.cn/ui7/post/pc/imgs/icons_edit.png');background-position: -180px -92px; cursor: pointer;width:20px;height:20px;top:0px;right:0px;display:none;"></span>
+		                                                                                                     
+		                       </li>    
+	                       </#list>
+                       <#else>
+                        	您暂未上传任何图片
+                      </#if>
+                    </ul>
+					<div class="normal" style="border-top:1px solid #dedede;margin:15px 0 0 0;clear:both;overflow:hidden;width:100%;">
+                        <div class="upload_btn">
+                             <a href="javascript:void(0);">
+                                   <@imageuploader name="storephotos"/>
+                             </a>
+                         </div>		
+                    </div>
+                    <!-- 图片上传部分 -->
+                    <a href="javascript: void(0);" id="savePhoto" class="btn btn-success" style="width: 100px; margin-top: 20px; ">保存</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	//鼠标移入
+	$(".comment_img").mouseover(function(){
+		$(this).find(".close-img").show();
+	})
+	
+	$(".comment_img").mouseleave(function(){
+		$(this).find(".close-img").hide();
+	})
+
+	//点击
+	$(".close-img").on('click', function(){
+		var photo_id = $(this).parent().find("input").val();
+		$.ajax({
+			url:ctx + "/api/b2b2c/store-photos/delete-store-photos.do?photo_id="+photo_id,
+			type:"POST",
+			dataType:"json",
+			success:function(data){
+				$.message.success(data.message);
+				location.reload();
+			},
+			error:function(){
+				$.message.error(data.message);
+			}
+		});
+	})
+	
+	//上传图片插件配置
+	var image_uploader_setting_storephotos= {
+		imageName : "picnames_storephotos",	// 表单提交时 的name
+		subFolder : "/store/photos/${storePhotosList.store_id}",		// 上传目录
+		showImgs : [],	//显示的img值数组，不提交。只做显示用
+		actualImgs : [],	// 实际的img值数组，会提交
+		fileNumLimit : 6
+	}
+
+	lightbox.option({
+		'albumLabel': '第%1张   共%1张',	//设置显示的文字
+	    'maxWidth': 500,			//设置显示图片弹出框的宽度
+	    'maxHeight': 500,			//设置显示图片弹出框的高度
+	    'resizeDuration': 300,		//设置图片显示的加载时间(毫秒)
+	    'positionFromTop': 100,		//设置弹出框到屏幕顶部的距离
+	    'wrapAround': true			//设置可以循环查看图片
+	})
+
+    $(function() {
+        $("#savePhoto").unbind('click').on('click', function() {
+            var options = {
+                url : ctx + "/api/b2b2c/store-photos/add-store-photos.do?ajax=yes",
+                type : "POST",
+                dataType : 'json',
+                success : function(data) {
+                    if (data.result == 1) {
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1000);
+                    }else{
+                        $.message.error(data.message);
+                    };
+                },
+                error : function(e) {
+                    $.message.error("出现错误 ，请重试");
+                }
+            };
+            $("#photoForm").ajaxSubmit(options);
+        });
+    })
+</script>
+<style>
+	.left_member{display:none;}
+	
+	#content_wrapper{width:1200px;margin:0;padding:36px 0 0 0;}
+	.imgbar_wrap{overflow:hidden;}
+	.img_list{float:left;margin:10px 0 0 0;}
+	.upload_wrap{height:65px;float:left;margin-top:40px;}
+	.imgbar_wrap .upload_wrap .upload{width:50px;height:140px;}
+	.upload_wrap .upload .localUpload_wrap{width:50px;height:50px;border:0 none;margin:10px 0 0 0;}
+	.upload_wrap .localTitle{display:none;}
+	.upload_wrap .upload .localUpload_wrap .localUpload{width:50px;height:50px;background:url(${ctx}${themes_path}/images/bg-upload.png) no-repeat center center;margin:0;}
+	.discuss_form .imgbar_wrap .img_list .img_box img {width:50px;cursor: move;}
+	.imgbar_wrap .img_list_storephotos li{height:91px;}
+	.imgbar_wrap .img_list .img_box .opacity{
+	  bottom:-5px;
+	}
+	.imgbar_wrap .img_list .img_box .toolbar{
+		bottom:-5px;
+	}
+</style>
+</body>
+</html>

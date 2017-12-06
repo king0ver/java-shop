@@ -1,0 +1,457 @@
+body {
+    background-color: #f5f5f5;
+}
+.order-detail {
+    width: 100%;
+    background: #f5f5f5;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.detail-list {
+    background: white;
+    padding: 13px;
+    box-shadow: 1px 1px 1px #e2e2e2;
+}
+
+.detail-list .order-time {
+    padding: 0px 0px 13px;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    color: #ccc;
+    width: 94%;
+}
+
+.order-detail .order-time p span {
+    color: #656464f2;
+}
+
+.order-detail .payment {
+    padding-top: 5px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.order-detail .payment .handle {
+    float: left;
+    font-size: 15px;
+}
+
+.order-detail .payment .handle .pay-price {
+    color: #BB0808;
+}
+
+.order-detail .payment .pament-btn {
+    float: right;
+    font-size: 14px;
+}
+
+.order-detail .payment .pament-btn button {
+    padding: 0px 4px;
+    height: 35px;
+    color: white;
+    background: #B10505;
+    margin-left: 10px;
+    border: none;
+    border-radius: 3px;
+}
+
+.order-detail .payment .pament-btn button i {
+    font-style: inherit;
+}
+
+.good-info {
+    width: 100%;
+    clear: both;
+    margin-top: 10px;
+    background: white;
+}
+
+.good-info .shop-info {
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e5e5;
+    width: 97%;
+    margin: 0px auto;
+}
+
+.good-info .shop-info .shop-name {
+    float: left;
+    position: relative;
+    color: #999;
+}
+
+.good-info .shop-info .shop-name a i {
+    width: 10px;
+    height: 16px;
+    float: left;
+    font-size: 14px;
+    position: absolute;
+    right: -20px;
+    top: 12px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAgCAYAAADwvkPPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1NkFEMDVDREIxQjcxMUU0QTRDOEI2QzhGRTQyOEQ5OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1NkFEMDVDRUIxQjcxMUU0QTRDOEI2QzhGRTQyOEQ5OCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU2QUQwNUNCQjFCNzExRTRBNEM4QjZDOEZFNDI4RDk4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU2QUQwNUNDQjFCNzExRTRBNEM4QjZDOEZFNDI4RDk4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+HcRu+AAAAMZJREFUeNqs1sENgzAMBVDz6WDZowc6WA9w6BzJYlXaUBdBG8Cx/aVcQDwcG6R0McaeiG70yRhCeJIyYOjOa0op9RZsnasFLNj4Xg8PENyjwQOct+kFLj3zADcDsIK/0zSBqF3Ugti7oQFxVHYriLOmtoCQjFwKQvpBSsAu59z0//GDE0PflBcMIMfAq6rSBnhB4sokkAiTQqdYC3SItUK7mAaqYlroD7NAG8wKLZgHNGNe0PqsYYZq01RDJRc+a5DHkeolwADN0av3Y1+XBQAAAABJRU5ErkJggg==) no-repeat center;
+    background-size: 10px 14px;
+}
+
+.good-info .shop-info .shop-name span {
+    background: url(../images/shop.png)no-repeat;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin: 6px 4px 0px 4px;
+    float: left;
+}
+
+.good-info .shop-info span {
+    float: right;
+    margin-right: 10px;
+    color: #999;
+}
+
+.goods-list {
+    width: 100%;
+    background: white;
+}
+
+.goods-list ul li {
+    width: 95%;
+    margin: 10px auto;
+    height: 115px;
+    background: white;
+}
+
+.goods-list ul li .goods-img {
+    float: left;
+    width: 20%;
+    margin-top: 5%;
+    margin-left: 2%;
+}
+
+.goods-list ul li .goods-img img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.goods-list ul li .goods-name {
+    float: left;
+    width: 53%;
+}
+
+.goods-list ul li .goods-name .name {
+    display: -webkit-box;
+    height: 34px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #232326;
+    padding-top: 10px;
+}
+
+.goods-list ul li .goods-name p span {
+    font-size: 12px;
+    color: #999;
+}
+
+.goods-list ul li .goods-name button {
+    border: 1px solid red;
+    padding: 5px 15px;
+    background: white;
+    color: red;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+
+.goods-list ul li .goods-name .gifts {
+    border: 1px solid red;
+    background: white;
+    color: red;
+    margin-top: 13px;
+    margin-right: 5px;
+    float: left;
+    font-size: 12px;
+    padding: 1px;
+}
+
+.goods-list ul li .goods-info {
+    float: right;
+    position: relative;
+    width: 20%;
+    margin-top: 10px;
+}
+
+.goods-list ul li .goods-info .goods-pri {
+    color: red;
+    position: absolute;
+    right: 1%;
+    display: block;
+}
+
+.goods-list ul li .goods-info .goods-num {
+    position: absolute;
+    right: 1%;
+    color: #999;
+    display: block;
+    top: 20px;
+}
+
+.track-comment {
+    clear: both;
+    height: 50px;
+    line-height: 45px;
+    background: white;
+    width: 96%;
+    border-top: 1px solid #ccc;
+    margin: 0px auto;
+}
+
+.track-comment .track-btn {
+    float: right;
+}
+
+.track-comment .track-btn a {
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #B7B6B6;
+    text-align: center;
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.invoice {
+    height: 50px;
+    line-height: 50px;
+    background: white;
+    margin-top: 10px;
+    clear: both;
+    width: 100%;
+}
+
+.invoice span {
+    margin-left: 15px;
+    font-size: 14px;
+}
+
+.invoice a {
+    float: right;
+    width: 10px;
+    height: 16px;
+    font-size: 14px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAgCAYAAADwvkPPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1NkFEMDVDREIxQjcxMUU0QTRDOEI2QzhGRTQyOEQ5OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1NkFEMDVDRUIxQjcxMUU0QTRDOEI2QzhGRTQyOEQ5OCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU2QUQwNUNCQjFCNzExRTRBNEM4QjZDOEZFNDI4RDk4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU2QUQwNUNDQjFCNzExRTRBNEM4QjZDOEZFNDI4RDk4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+HcRu+AAAAMZJREFUeNqs1sENgzAMBVDz6WDZowc6WA9w6BzJYlXaUBdBG8Cx/aVcQDwcG6R0McaeiG70yRhCeJIyYOjOa0op9RZsnasFLNj4Xg8PENyjwQOct+kFLj3zADcDsIK/0zSBqF3Ugti7oQFxVHYriLOmtoCQjFwKQvpBSsAu59z0//GDE0PflBcMIMfAq6rSBnhB4sokkAiTQqdYC3SItUK7mAaqYlroD7NAG8wKLZgHNGNe0PqsYYZq01RDJRc+a5DHkeolwADN0av3Y1+XBQAAAABJRU5ErkJggg==) no-repeat center;
+    background-size: 10px 14px;
+    margin: 15px;
+}
+
+.information {
+    width: 100%;
+    background: white;
+    margin-top: 10px;
+}
+
+.information .address {
+    width: 95%;
+    margin: 0px auto;
+    padding: 10px 0px;
+    font-size: 14px;
+    border-bottom: 1px solid #ccc;
+    padding-left: 10px;
+}
+
+.information .address .name {
+    margin-right: 40px;
+    display: inline-block;
+    line-height: 25px;
+}
+
+.information .address p {
+    color: #999;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    font-size: 12px;
+}
+
+.information .total {
+    width: 95%;
+    margin: 0px auto;
+    padding: 10px 0px;
+    font-size: 14px;
+    color: #999;
+    font-size: 14px;
+    padding-left: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.information .total a {
+    display: inline-block;
+    width: 75px;
+}
+
+.information .total span {
+    margin-left: 10px;
+}
+
+.information .pay {
+    width: 95%;
+    margin: 0px auto;
+    padding: 10px 0px;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+.information .pay a {
+    width: 75px;
+    display: inline-block;
+    color: red;
+}
+
+.information .pay span {
+    margin-left: 10px;
+    color: red;
+}
+
+
+/* 发票详情 css */
+
+.invoice-details {
+    width: 100%;
+    background: white;
+}
+
+.invoice-details p {
+    margin-left: 15px;
+    font-size: 18px;
+    line-height: 40px;
+    font-weight: bold;
+    box-shadow: 0px 2px 1px 0px #e5e5e596;
+}
+
+.invoice-details .invoice-content {
+    width: 96%;
+    margin: 0 auto;
+    border-top: 2px solid #e5e5e5;
+}
+
+.invoice-details .invoice-content table {
+    width: 98%;
+    padding: 0px 10px;
+}
+
+.invoice-details .invoice-content table tr {
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.invoice-details .invoice-content table tr td:nth-child(odd) {
+    color: #807e7e;
+}
+
+
+/* 物流查询 css */
+
+.logistics-query {
+    width: 100%;
+    background: #f5f5f5;
+}
+
+.logistics-query .logistics {
+    height: 90px;
+    background: white;
+}
+
+.logistics-query .logistics .logi-logo {
+    float: left;
+    margin: 15px 10px;
+}
+
+.logistics-query .logistics .text {
+    float: left;
+    margin-top: 23px;
+}
+
+.logistics-query .logistics .text p {
+    color: #999;
+    font-size: 14px;
+}
+
+.logistics-query .logistics .logi-logo img {
+    width: 65px;
+    height: 65px;
+}
+
+.logistics-query .logistics-info {
+    clear: both;
+    margin-top: 10px;
+    background: white;
+}
+
+.logistics-query .logistics-info ul li {
+    height: 80px;
+    width: 90%;
+    margin: 0px auto;
+    padding-top: 10px;
+}
+
+.logistics-query .logistics-info ul li .box {
+    width: 100%;
+    height: 90px;
+    border-left: 1px dashed #ccc;
+    position: relative;
+    margin-top: 7px;
+}
+
+.logistics-query .logistics-info ul li .box .logi-quer {
+    border-bottom: 1px dashed #ccc;
+    padding-left: 10px;
+    width: 93%;
+    margin: 0px auto;
+    height: 70px;
+}
+
+.active .radios {
+    background: #30AB4B!important;
+}
+
+.active .logi-quer span {
+    color: #30AB4B!important;
+}
+
+.active .logi-quer p {
+    color: #30AB4B!important;
+}
+
+.logistics-query .logistics-info ul li .box .radios {
+    width: 12px;
+    height: 12px;
+    background: #ccc;
+    border-radius: 50% 50% 7%;
+    position: absolute;
+    left: -6px;
+    transform: rotate(43deg);
+    top: 1px;
+}
+
+.logistics-query .logistics-info ul li .box .logi-quer span {
+    font-size: 12px;
+    color: #999;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    height: 33px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
+.logistics-query .logistics-info ul li .box .logi-quer p {
+    font-size: 12px;
+    color: #999;
+}

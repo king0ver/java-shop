@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = "分类管理 - 店铺管理" />
+	<#include '/new_store/common/header.html' />
+   	<#assign title="等级申请 - 店铺管理">
+</head>
+<body>
+<#assign mainPageName = 'main_setting' />
+<#assign lowerPageName = 'lower_setting_level_apply' />
+
+<#include '/new_store/common/sidebar.html' />
+
+<div class="app-nav">
+    <ul class="list-nav" onclick="location.reload(); ">
+        <li><a href="javascript: void(0); ">店铺等级申请</a></li>
+    </ul>
+</div>
+
+
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+    	<#-- 获取店铺信息 -->
+		<#assign myShopDetailTag = newTag("myShopDetailTag")>
+		<#-- 调用订单状态标签 -->
+		<#assign shop = myShopDetailTag()> 	
+		<#-- 获取店铺等级信息 -->
+		<#assign storeLevelInfoTag = newTag("storeLevelInfoTag")>
+		<#-- 调用店铺等级标签 -->
+		<#assign levelInfo = storeLevelInfoTag("{'store_level':'${shop.shop_level!''}'}")>	
+    	<!-- 认证信息 -->
+			<div class="groupbuy_form">
+				<form id="applyForm"  enctype="multipart/form-data">
+					<input type="hidden" value="${shop.shop_id}" name="shop_id"/>
+					<dl>
+					     <dt>店铺等级</dt>
+					     <dd class="bg_gray">
+								<span style="color: #449d44; display:block;">当前店铺等级为${shop.shop_level}级，存储空间容量为${levelInfo.space_capacity}M</span>
+								<#if (levelInfo.next_space_capacity)??>
+									<span style="color: #449d44; display:block;" >提升店铺等级可增加空间容量到${levelInfo.next_space_capacity}M</span>	
+								<#else>
+									<span style="color: #449d44; display:block;" >当前店铺等级已达最高级</span>	
+								</#if>	
+										     
+						</dd>
+					</dl>
+					<dl class="bottom" style="border:none">
+						<dt>&nbsp;</dt>
+						<#if (shop.shop_level_apply==0)>
+								<#if (levelInfo.next_space_capacity)??>
+									<dd>
+										<input type="button" id="saveBtn" value="提升等级" class="btn btn-success submit to_save"/>
+									</dd>
+								<#else>
+									
+								</#if>	
+								
+								
+						<#elseif (shop.shop_level_apply==1)>
+							<dd>
+								申请已提交请耐心等待
+							</dd>
+						<#elseif (shop.shop_level_apply==2)>
+							
+								<dd>
+									<span style="color: #449d44; display:block;" >审核未通过请重新申请</span>	
+									<input type="button" id="saveBtn" value="提升等级" class="btn btn-success submit to_save"/>
+								</dd>
+							
+						</#if>
+					</dl>			
+				</form>
+			</div>
+    
+    </div>
+</div>
+<!--主页面区↑-->
+
+</body>
+<script type="text/javascript">
+	$(function() {
+	        $("#saveBtn").unbind('click').on('click', function() {
+	            var options = {
+	                url : ctx + "/api/b2b2c/shop-api/shop-levle-apply.do?ajax=yes",
+	                type : "POST",
+	                dataType : 'json',
+	                success : function(data) {
+	                    if (data.result == 1) {
+	                    	$.message.success(data.message);
+	                        setTimeout(function(){
+	                            location.reload();
+	                        }, 1000);
+	                    }else{
+	                        $.message.error(data.message);
+	                    };
+	                },
+	                error : function(e) {
+	                    $.message.error("出现错误 ，请重试");
+	                }
+	            };
+	            $("#applyForm").ajaxSubmit(options);
+	        });
+	    })
+</script>
+
+
+</html>

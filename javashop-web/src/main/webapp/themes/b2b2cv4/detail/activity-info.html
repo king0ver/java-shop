@@ -1,0 +1,33 @@
+<#assign checkStoreGoodsPartActTag = newTag("checkStoreGoodsPartActTag") />
+<#assign goodsPartActList = checkStoreGoodsPartActTag("{'goods_id':${goods_id}}")!'' />
+<#if (goodsPartActList?size>0)>
+	<div class="" style="height: auto;margin-left: 48px;">
+	<div class="other-item-title" style="top: 0;display: inline-block;width: 50px;margin-right: 6px;text-align:left;">促&#12288;销：</div>
+	<#list goodsPartActList as act>
+		    <#assign storeActivityDetailTag = newTag("storeActivityDetailTag") />
+		    <#assign detailList = storeActivityDetailTag("{'activity_id':'${act.activity.activity_id}'}") />
+		    
+		    <div class="other-item-title" style="top: 0;display: inline-block;width: 150px;margin-right: 6px;text-align:left;">${act.activity.activity_name}</div>
+		    
+	</#list>
+	</div>
+</#if>
+
+<script type="text/javascript">
+    $(function () {
+        var activity = $('.activity-item-content');
+        var showMore = $('.show-more'), data_href = showMore.attr('data-href');
+        var items    = activity.find('.item-activity');
+        showMore.on('click', function () {
+            if (showMore.is('.show-detail')) {
+                location.href = ctx + data_href;
+                return false
+            }
+            activity.css({height: 30 * items.length});
+            showMore.addClass('show-detail')
+            setTimeout(function () {
+                showMore.html('查看促销详情');
+            }, 200)
+        })
+    })
+</script>

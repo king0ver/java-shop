@@ -1,0 +1,89 @@
+<#include '/admin/header.html' >
+<style>
+ .layui-select-title input{
+  width:100%;
+ }
+ .layui-unselect {
+  width:50%;
+ }
+ .layui-form-radio {
+  display: inline;
+ }
+</style>
+<div class="main">
+    <!--表单区域  -->
+	<form id="editform" class="layui-form layui-form-pane" action="post" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="${wayBill.id!''}" autocomplete="off" class="layui-input">
+  		<#list wayBillHtml as wayBill>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">${wayBill.text!''}:</label>
+    		<div class="layui-input-block">
+      			 <#if configs??>
+					<input  name ="${wayBill.name!''}"  class = "layui-input item_value" type="text" autocomplete="off" value = "${configs[wayBill.name]!''}">
+				 <#else>
+					<input  name ="${wayBill.name!''}"  class = "layui-input item_value" type="text" autocomplete="off" value = "">
+				</#if>
+    		</div>
+    		</div>
+    		</#list>	
+  		<div class="layui-layer-btn layui-layer-btn-" style="padding:20px 12px;z-index:1000;top: 300px; position: fixed;left: 1px;width: 98%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save-stock">保存</a>
+  			<a class="layui-layer-btn1">取消</a>
+  		</div>		
+  	
+  	</form>
+</div>
+
+<script type="text/javascript">
+	var index = parent.layer.getFrameIndex(window.name);
+	
+	//绑定事件
+	layui.use(['form', 'layedit', 'laydate'], function(){
+	    var form = layui.form()
+	        ,layer = layui.layer
+	        ,layedit = layui.layedit
+	        ,laydate = layui.laydate;
+		form.render('select'); //刷新select选择框渲染
+	    //取消
+	    $(".layui-layer-btn1").click(function(){
+	    	parent.layer.close(index);
+	    });
+	    
+		
+
+	    //提交
+		form.on('submit(save-stock)', function(data){
+			var config={};
+			$(".item_value").each(function(){
+				var key=$(this).attr("name");
+				config[key]=$(this).val();
+			});
+		     var WayBill={
+		    		id:"${wayBill.id}",
+		    		bill_config:JSON.stringify(config)
+		    	} 
+		    var wayBill = JSON.stringify(WayBill);
+		   $.ajax({
+                url: "${ctx}/shop/admin/waybill/save-edit.do",
+               	type: "Post",
+               	dataType: "json",
+               	contentType: "application/json",
+			    data: wayBill,
+				success:function(data){
+					if(data.result==1){
+						$.Loading.success("修改成功");
+	   					parent.layer.close(index); //再执行关闭
+					}else{
+                        $.error(data.message);
+					}
+				},
+				error:function(data){
+					$.Loading.error("出错了，请稍候重试!");
+				}
+			});
+	       return false;
+	    });
+
+	});
+</script>
+<#include '/admin/footer.html' >

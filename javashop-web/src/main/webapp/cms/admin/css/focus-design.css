@@ -1,0 +1,37 @@
+#addFocus{
+    margin: 20px;
+}
+
+.focus-design .focus .panel{
+    width: 350px;
+    height: 160px;
+    margin: 10px;
+}
+
+.focus-design .focus .panel .handle{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    height: 160px;
+    width: 350px;
+}
+.focus-design .focus .panel .handle >span{
+    display: none;
+}
+
+.focus-design .focus .panel .handle >span:hover{
+    cursor: pointer;
+}
+
+.focus-design .focus .panel .handle .handle-body{
+    width: 350px;
+    height: 160px;
+    background: black;
+    opacity: 0.3;
+    display: none;
+}
+
+.focus-design .focus .panel .body a,.focus-design .focus .panel .body img {
+    width: 350px;
+    height: 160px;
+}

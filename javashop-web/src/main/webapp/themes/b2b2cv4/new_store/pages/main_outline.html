@@ -1,0 +1,18 @@
+<#assign checkB2b2cMemberTag=newTag("checkB2b2cMemberTag")>
+<#assign storeMember=checkB2b2cMemberTag()>
+<#if  !storeMember.member_id?? || storeMember.member_id==0 >
+	<#stop "not login">
+</#if>
+<#if storeMember.store_id??&&storeMember.store_id!=0>
+	<#-- 获取店铺信息  判断店铺状态-->
+	<#assign myShopDetailTag = newTag("myShopDetailTag")>
+	<#-- 调用订单状态标签 -->
+	<#assign shop = myShopDetailTag()> 
+	<#if (shop.shop_disable??&&shop.shop_disable=='open')>
+		<#include './main_store.html' />
+	<#else>
+		<#include './create_store.html' />
+	</#if>
+<#else>
+	<#include './create_store.html' />
+</#if>

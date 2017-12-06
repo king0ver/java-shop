@@ -1,0 +1,14 @@
+<#assign tradeDetail = paymentResult.tradePo>
+<dl>
+	<dt>交易编号：</dt>
+	<dd>${tradeDetail.trade_sn!''}</dd>
+</dl>
+<dl>
+	<dt>收货信息：</dt>
+	<dd>
+		<p>${tradeDetail.consignee_name!''}&nbsp;&nbsp;${tradeDetail.consignee_mobile!''}</p>
+		<p>
+			${tradeDetail.consignee_county!''}${tradeDetail.consignee_province!''}${tradeDetail.consignee_city!''}${tradeDetail.consignee_town!''}-${tradeDetail.consignee_address!''}
+			</p>
+	</dd>
+</dl>

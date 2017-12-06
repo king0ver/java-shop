@@ -1,0 +1,12 @@
+<#assign  title="404 - 页面找不到啦！" />
+<#include '/common/header.html'/>
+<div class="no_page">
+	<img src="${ctx}${themes_path}/images/404.png"/>
+</div>
+<script type="text/javascript">
+    $(function () {
+        new Module().navigator.init('找不到页面！');
+    })
+</script>
+</body>
+</html>

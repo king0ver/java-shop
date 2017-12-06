@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <#assign title = '店铺消息' />
+    <#include '/new_store/common/header.html' />
+    <link rel="stylesheet" href="${ctx}${themes_path}/new_store/css/pages/goods/warehouse.css">
+    <script type="text/javascript" src="${ctx}${themes_path}/new_store/js/pages/service/shop_message.js"></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<#assign mainPageName = 'main_service' />
+<#assign lowerPageName = 'lower_service_shop_message' />
+
+<#include '/new_store/common/sidebar.html' />
+<div class="app-nav">
+    <ul class="list-nav">
+        <li <#if !(type??)> class="active" </#if> ><a href="./shop_message.html" >所有</a></li>
+        <li <#if type??&& type=='GOODS'> class="active" </#if>><a href="./shop_message.html?type=GOODS">商品相关消息</a></li>
+        <li <#if type??&& type=='ORDER'> class="active" </#if>><a href="./shop_message.html?type=ORDER">订单相关消息</a></li>
+        <li <#if type??&& type=='AFTERSALE'> class="active" </#if>><a href="./shop_message.html?type=AFTERSALE">售后相关消息</a></li>
+    </ul>
+</div>
+<!--主页面区↓-->
+<div  class="app-wappler">
+    <div class="inner-app-wappler">
+        <!-- 获取店铺订单标签 -->
+        <#assign sellerMessageListTag = newTag("sellerMessageListTag")>
+		<#assign sellerMessagePage = sellerMessageListTag("{'messageState':'${type!\'\'}'}")>
+		<#assign sellerMessageList = sellerMessagePage.result>
+        
+        <div class="goods_warehouse">
+        <div class="top-tools">
+            <div class="left-top-tools">
+                <a href="#" class="btn btn-success delete-all">全部删除</a>
+                <a href="#" class="btn btn-info read-all">标记为已读</a>
+            </div>
+        </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:50px;"><input type ="checkbox" id="all-check"></th>
+                        <th>内容</th>
+                        <th>发送时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+            <#if sellerMessagePage.totalCount != 0>
+                <tbody>
+                     <#list sellerMessageList as message >
+                           <tr>
+                           	   <th><input type ="checkbox" name="msgcheckbox" value="${message.id}"></th>
+                               <th>${message.notice_content}</th>
+                               <th><@dateformat time="${message.send_time?c}" pattern="yyyy-MM-dd HH:mm"/></th>
+                               <th>
+                               		<a href="javascript:void(0)" class="btn btn-success delete-one" messageid = "${message.id}">删除</a>
+                               		<#if message.is_read==0>
+	                					<a href="javascript:void(0)" class="btn btn-info read-one" messageid = "${message.id}">标记为已读</a>
+                               		</#if>
+                               </th>
+                           </tr>
+                    </#list>
+                </tbody>
+            </table>
+            <div class="app-paging-tools">
+                <div class="demo"></div>
+                <div class="paging">
+                     <@pager pageno="${ sellerMessagePage.page!'1'}" pagesize="${ sellerMessagePage.pageSize}" totalcount="${ sellerMessagePage.totalCount}" />
+                </div>
+            </div>
+        <#else>
+            </table>
+            <div style="height: 10px; background-color: #FFFFFF; "></div>
+            <div class="app-no-data">
+                <span class="a-no-data">暂无相关数据</span>
+            </div>
+        </#if>
+    </div>
+    </div>
+</div>
+<!--主页面区↑-->
+
+<!--<div class="app-help">
+    <div class="head-help">
+        <span class="icomoon question-ico"></span>
+        <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+        <span class="icomoon close-ico" title="关闭">x</span>
+    </div>
+    <div class="body-help">
+        <p>帮</p>
+        <p>助</p>
+        <p>与</p>
+        <p>客</p>
+        <p>服</p>
+    </div>
+</div>
+<div class="open-help">
+    <span class="icomoon question-ico"></span>
+    <a href="javascript: void(0);" class="title-help">帮助和服务</a>
+</div>-->
+
+</body>
+</html>

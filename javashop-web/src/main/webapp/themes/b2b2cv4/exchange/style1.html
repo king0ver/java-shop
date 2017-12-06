@@ -1,0 +1,34 @@
+<div class="child_floor_show child_floor_style2 f-r-main"  id="child_floor_show_${childs.id}" <#if childs_index<1 >style="display:block;width:100%;height:421px" <#else>style="display:none;width:100%;height:421px"</#if>>
+	
+		<ul style="width:1170px;height:421px">
+			<li class="items-box" style="height:216px">
+			</li>
+			<#list 0..10 as count>
+			<li class="items-box" style="height:216px">
+				<#assign flag=0>
+				<#if childs.goods_ids?? >
+					<#list childs.goods_ids?keys as key>
+					<#if key ==count?string >
+						<#assign flag=1>
+						<#assign goods_id=childs.goods_ids[key] >
+						<#assign floorGoods=floorGoodsTag("{'goods_id':'${goods_id}'}") >
+							<input type="hidden"  class="p-list" data-sn="${floorGoods.sn}" />
+							<div class="goods-img">
+							<a target="_blank" href="${ctx}/goods-${floorGoods.goods_id}.html" >
+							<@image class="scrollLoading" src="${floorGoods.thumbnail!''}" alt="${floorGoods.name}" style="width:100%;" />
+							</a>
+							</div>
+							<div class="goods-name">
+								<a target="_blank" href="${ctx}/goods-${floorGoods.goods_id}.html"
+										title="${floorGoods.name}">${floorGoods.name}</a>
+							</div>
+							<div class="goods-price">
+								<span>${floorGoods.price?string.currency}</span>
+							</div>
+					</#if>
+					</#list>
+				</#if>
+			</li>
+			</#list>
+		</ul>
+</div>

@@ -1,0 +1,206 @@
+<#include '/admin/header.html' />
+<style>
+ .layui-btn{
+  background:#1E9FFF;
+  }
+</style>
+<div  class="admin-main">
+   <div>
+        <!--提示区域  -->
+        <div class="page_explain">
+           <h2>操作提示</h2>
+            <ul>
+                <li><span>·</span>可以添加不同规格，在添加商品或者类型中，选择当前不同的规格。</li>
+                <li><span>·</span>规格用途：比如前台购买鞋子，规格就是尺寸，颜色等等。。</li>
+                <li><span>·</span>关于库存：比如一个商品有不同规格，那么不同规格的商品，库存也是不一样的，可以按规格来进货。</li>
+            </ul>
+        </div>
+        <!--按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" title="添加" onclick='editSpec();' class="layui-btn layui-btn-primary " ><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+                <button type="button" id="deletespec" title="删除" class="layui-btn layui-btn-primary " onclick="delSpec();"><i class="icon iconfont icon-guanbi1"></i></button>
+                <button type="button" title="提示" class="layui-btn layui-btn-primary " id="explain"><i class="icon iconfont icon-tishi1"></i></button>
+				<button type="button" class="layui-btn layui-btn-primary " title="刷新" onclick="refresh();"><i class="layui-icon">&#x1002;</i></button>           
+            </div>
+        </div>
+   </div>
+   <!--表格区域  -->
+   <form id="specform">
+      <table id="specdata" class="layui-table site-table table-hover" width="100%" lay-skin="line"> 
+        <thead>
+        <tr>
+            <th><input type='checkbox'  class='btn-checkall fly-checkbox' id='selected-all'></th>
+            <th>规格名称</th>
+            <th>类型</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+      </table>
+      <!--传值等操作(暂定)  -->
+      <div id="addBrand" ></div>
+   </form>
+</div>
+
+<div id="eidt-spec" style="display: none;">
+    <form id="specEdit" class="layui-form" style="padding: 10px 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">规格名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="spec_name" required autocomplete="off" maxlength="8"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">规格备注：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="spec_memo" required autocomplete="off" maxlength="15"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">显示类型：</label>
+            <div class="layui-input-block specclick">
+                <input class="radio-0" type="radio" name="spec_type" value="0" title="文字" checked>
+                <input class="radio-1" type="radio" name="spec_type" value="1" title="图片">
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+var editSpec, editSpecValue, delSpec, refresh;
+$(function(){
+    var eidtSpecDom = $('#eidt-spec');
+    var editSpecFormDom = $('#specEdit');
+    layui.use('form', function () {
+        var form = layui.form();
+        editSpec = function (spec_id){
+            if(spec_id) {
+                $.ajax({
+                    url: ctx + '/goods-info/admin/spec/' + spec_id + '.do',
+                    type: 'GET',
+                    success: function (res) {
+                        editSpecFormDom.find("input[name='spec_name']").val(res.spec_name);
+                        editSpecFormDom.find("input[name='spec_memo']").val(res.spec_memo);
+                        editSpecFormDom.find(".radio-"+ res.spec_type)[0].checked = true;
+                        form.render('radio');
+                        openForm()
+                    },
+                    error: function (e) {
+                        alert('出现错误：' + e)
+                    }
+                });
+            }else {
+                openForm()
+            }
+
+            function openForm() {
+                eidtSpecDom.show();
+                layer.open({
+                    title: (spec_id ? '修改' : '添加') + "规格", //标题
+                    btn: ['保存', '取消'],
+                    maxmin: true, //右上角可否放大缩小
+                    type: 1, //弹框的类型
+                    shade: [0.3, '#000'], //黑色背景
+                    shadeClose: false, //黑色背景是否可以点击关闭
+                    content: $('#specEdit'),
+                    area: ['500px', '300px'], //弹框大小
+                    scrollbar: false, //是否允许浏览器出现滚动条,
+                    yes: function (index, layero) {
+                        editSpecFormDom.ajaxSubmit({
+                            url: ctx + '/goods/admin/spec' + (spec_id ? '/' + spec_id : '') + '.do',
+                            type: 'POST',
+                            success: function (res) {
+                                refresh();
+                                layer.close(index)
+                            },
+                            error: function (e) {
+                                alert('出现错误：' + e);
+                                layer.close(index)
+                            }
+                        });
+                    },
+                    end: function () {
+                        eidtSpecDom.hide();
+                    }
+                });
+            }
+        };
+        editSpecValue = function (spec_id, spec_type, title) {
+            newTab('修改规格值-' + title,'${ctx}/shop/admin/spec/edit-page.do?spec_id=' + spec_id + '&spec_type=' + spec_type);
+        };
+        delSpec = function (){
+            var checked = $(".fly-checkbox:checked");
+            if(checked.length === 0){
+                alert("请选择删除的规格");
+                return false;
+            }
+            if (!confirm("确认要删除规格吗？")) {
+                return false;
+            }
+
+            var _data = [];
+            checked.each(function () {
+                _data.push(parseInt($(this).val()));
+            });
+            var options = {
+                url    : ctx + '/goods/admin/spec/' + _data.join(',') + '.do',
+                type   : 'delete',
+                success: function () {
+                    layer.msg('删除成功！', {
+                        icon: 1,
+                        time: 1000,
+                        end : function () {
+                            refresh();
+                        }
+                    });
+                },
+                error: function (e) {
+                    layer.msg(e.responseJSON.error_message, {
+                        icon: 5,
+                        time: 1000,
+                        end : function () {
+                            refresh();
+                        }
+                    });
+                }
+            };
+           $.ajax(options);
+        };
+        refresh = function (){
+            table.ajax.url("${ctx}/goods-info/admin/spec.do").load();
+        }
+
+    });
+    table = $('#specdata').DataTable({
+        "language"    : {
+        		"url":ctx + "/zh_CN.txt"
+        },
+        "processing"  : true,
+        "serverSide"  : true,
+        "ordering"    : false,
+        "searching"   : false,
+        "lengthChange": false,
+        ajax          : {
+            //指定数据源
+            url: '${ctx}/goods-info/admin/spec.do'
+        },
+        columns       : [ //定义列
+            {"data": function (obj) {
+                    return '<input type="checkbox" name="spec_id" class="fly-checkbox" value=' + obj.spec_id + '>';
+
+            }},
+            {data: "spec_name"},
+            {"data": function (obj) {
+                return obj.spec_type ? '图片' : '文字';
+            }}, {
+                data: null, "render": function (_data, type, row) {
+                return '<a class="layui-btn layui-btn-small _aa _edit-spec" name="change_btn" onclick="editSpec(' + _data['spec_id'] + ')">修改规格</a>' +
+                    '<a class="layui-btn layui-btn-small _aa _edit-spec-val" name="change_btn" onclick="editSpecValue(' + _data['spec_id'] + ',' + _data['spec_type'] +',\''+ _data['spec_name'] +'\')" style="margin-left: 10px">修改规格值</a>';		//获取值:data["brand_id"]
+            }}
+        ]
+    });
+});
+</script>
+<#include '/admin/footer.html' />

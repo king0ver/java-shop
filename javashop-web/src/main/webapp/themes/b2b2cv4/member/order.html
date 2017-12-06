@@ -1,0 +1,204 @@
+<#assign  title="我的订单" />
+<#include 'member_header.html' />
+<!-- 获取会员订单列表标签 -->
+<#assign buyerOrderListTag = newTag("buyerOrderListTag")>
+<!-- 调用会员订单列表标签 -->
+<#assign memberOrderList = buyerOrderListTag("{'keyword':'${keyword!''}','status':'${status!''}','comment_status':'${comment_status!''}'}")>
+<#assign orderList = memberOrderList.orderList>
+<script  src="${ctx}${themes_path}/js/Order.js"  ></script>
+<div class="user_order">
+	<div class="order_title_nav">
+		<ul>
+			<li <#if (!memberOrderList.status?exists  && !memberOrderList.keyword?exists) || memberOrderList.status=="">class="selected"</#if> style="border:0px none;"><a href="order.html"><span>所有订单</span></a></li>						
+			<li <#if memberOrderList.status?exists && memberOrderList.status == "wait_pay">class="selected"</#if>><a href="order.html?status=wait_pay"><span>等待付款</span></a></li>
+			<li <#if memberOrderList.status?exists && memberOrderList.status == "wait_rog">class="selected"</#if>><a href="order.html?status=wait_rog"><span>已发货</span></a></li>
+			<li <#if memberOrderList.status?exists && memberOrderList.status == "cancel">class="selected"</#if>><a href="order.html?status=cancel"><span>已取消</span></a></li>
+			<li <#if memberOrderList.status?exists && memberOrderList.status == "complete">class="selected"</#if>><a href="order.html?status=complete"><span>已成功</span></a></li>
+			<li <#if memberOrderList.status?exists && memberOrderList.status == "wait_comment">class="selected"</#if>><a href="order.html?status=wait_comment"><span>待评论</span></a></li>
+		</ul>
+	</div>
+	<!-- 订单搜索 -->
+	<div class="user_ordersearch">
+		<span class="ordershearch_result" style="cursor:default">搜索到<strong>
+				${orderList.totalCount!0}
+		<strong style="cursor:default">笔订单</span>
+		<span class="ordershearch_button"><input class="searOrderBtn" id="btnSearch" type="button" value="在订单中搜索"/></span>
+		<span class="ordershearch_word"><input class="form-control" id="search_keyword" autocomplete="off" type="text" placeholder="输入订单中商品关键词" value="${keyword!''}" /></span>
+	</div>
+	<!-- 订单列表 -->
+	<div class="order_list">
+	
+		<#if orderList.totalCount gt 0 >
+			<table cellpadding="0" cellspacing="0" >
+				<thead>
+					<tr>
+						<th colspan="4" style="width:550px;">商品名称</th>
+						<th style="width:60px;"></th>
+						<th style="width:60px;">单价（元）</th>
+						<th style="width:90px;">数量</th>
+						<th style="width:60px;"></th>
+						<th style="width:100px;">订单金额</th>
+						<th style="width:100px;">交易状态</th>
+						<th style="width:100px;">交易操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- 订单详细 -->
+		 			<#list orderList.result as item >
+						<table class="order_box">	
+						<!-- 订单下商品列表 -->
+						<tr>
+							<td class="orderlist_title" colspan="20" >
+								<#if item.payment_type == 'online'>
+                                    <span>线上支付<em>${item.order_amount?string.currency}</em></span>
+                                <#elseif item.payment_type == 'offline'>
+                                    <span>线下支付<em>${item.order_amount?string.currency}</em></span>
+                                <#elseif item.payment_type == 'cod'>
+                                    <span>货到付款<em>${item.order_amount?string.currency}</em></span>
+                                </#if>
+							</td>
+						</tr>
+							<tr>
+								<td class="orderlist_sn" colspan="20" >
+									<span> 订单号：${ item.sn } </span>
+									<span> 下单时间：${item.create_time} </span>
+								</td>
+							</tr>
+							<tr>
+								<td class="orderlist_goodslist" colspan="6" style="padding:6px 0px 0px 0px;">
+									<#list item.orderSkuList as _item>
+										<table class="orderitem_goodslist" cellpadding="0" cellspacing="0" >
+											<tr>
+												<td class="order_image" style="border:0px none;">
+													<a target="_blank" href="${ctx}/goods-${_item.goods_id}.html">
+														<img height="50" src = "${_item.goods_image!''}"  style="cursor: pointer;" />
+													</a>
+												</td>
+												<td class="order_listtiele" style="border:0px none;">
+													<a target="_blank" href="${ctx}/goods-${_item.goods_id}.html">${_item.name}</a><#if _item.snapshot_id!=0><a href="${ctx}/snapshot-${_item.snapshot_id}.html?snapshot_id=${_item.snapshot_id}">[交易快照]</a></#if>
+													<#if _item.specList?exists>
+														<span style="margin: ">
+													<#list _item.specList as spec>
+														<#if spec_index!=0></#if>(<strong>${spec.spec_name}:<em style="color:#ED7108">${spec.spec_value}</em></strong>)
+															</#list>
+														</span>
+													</#if>
+												</td>
+												<td class="order_listprice" style="border:0px none;">
+													${_item.purchase_price}
+												</td>
+												<td class="order_listnum" style="border:0px none;padding-left:10px;">
+													${_item.num}
+												</td>
+												<#if _item.allowApplyService> 
+			                                        <td style="border:none;">
+			                                            <a href="aftersale/after_sales.html?ordersn=${item.sn!''}&skuid=${_item.product_id!''}&status='NOT_APPLY'">申请售后</a>
+			                                        </td>
+			                                        <#else>
+			                                        <td style="border:none;"></td>
+			                                    </#if>
+											</tr>
+										</table>
+									</#list>	
+								</td>
+								<td class="orderlist_pay">
+									<strong>${item.order_amount?string.currency}</strong>
+									<p>运费(${ item.shipping_amount?string.currency})</p>
+									<p> 
+                                        <#if item.payment_type == 'cod'>
+                                                                                                                          货到付款
+                                        <#elseif item.payment_type == 'online'>
+                                           	 线上支付
+                                        <#elseif item.payment_type == 'offline'>
+                                           	 线下支付    
+                                        </#if>
+                                    </p>
+								</td>
+								<td class="orderlist_staus">
+									<p>
+										${item.order_status_text}
+									</p>
+									<a href="order_detail.html?ordersn=${item.sn}">订单详情</a>
+									<#if item.operateAllowable.allowComment>
+                                        <a href="member_comment.html?ordersn=${item.sn!''}" class="go-comment">去评论</a>
+                                    </#if>
+								</td>
+								<td class="orderlist_tools">
+									<!--不是货到付款订单并且订单未支付订单并且订单未申请取消订单 -->
+									<#if item.operateAllowable.allowPay> 
+                                        <span>
+                                            <a  target="_blank" href="${ctx}/order_pay_desk.html?ordersn=${item.sn}" class="green_btn">订单付款</a> 
+                                        </span>
+                                    </#if>
+									<!-- 在线支付付款前 || 货到付款确认后可取消订单 -->
+									<#if item.operateAllowable.allowCancel> 
+                                        <span >
+                                            <a href='javascript:;' class="cancelBtn"  sn="${item.sn!''}">取消订单</a>
+                                        </span>
+                                    </#if>
+									<!-- 订单已发货 -->
+									<#if item.operateAllowable.allowRog>
+                                        <span >
+                                            <a href="javascript:;"   class="rogBtn" ordersn="${item.sn}">确认收货</a>
+                                        </span>
+                                    </#if>
+									
+									<a href="order_detail.html?ordersn=${item.sn!''} ">查看订单</a>
+								</td>
+							</tr>
+						</table>
+						
+						</#list>
+					</tbody>
+				</table>
+		
+		
+		<#else>
+			<div class="empty" style="cursor:pointer" >尚无订单</div>
+		</#if>
+		<@pager pageno="${memberOrderList.page!'1'}" pagesize="${memberOrderList.pageSize}" totalcount="${memberOrderList.totalCount}" />
+	</div>
+	<!-- 隐藏取消订单弹出框 -->
+	<#include 'order_cancel.html'/>
+</div>
+<script>
+var ordersearchTipText = "输入订单中商品关键词";
+function odersearch(){
+	var orderkeyword = $.trim($("#search_keyword").val());
+	if(orderkeyword == ordersearchTipText){
+		orderkeyword = '';
+	}
+	if(orderkeyword==''){
+		alert("请输入订单中商品关键词！");
+	}else{
+		location.href="order.html?status=${status!''}&keyword=" + orderkeyword;
+	}
+}
+$(function(){	
+	$("#search_keyword").keypress(function(event){
+		$("#search_keyword").attr("class","form-control");
+		if(event.keyCode=="13" ){
+			odersearch();
+		}
+	});
+	$("#search_keyword").click(function(){
+		if($(this).val() == ordersearchTipText){
+			$(this).val("");
+		}
+	});
+	$("#search_keyword").blur(function(){
+		if($(this).val() == ''){
+			$(this).val(ordersearchTipText);
+		}
+	});
+	
+	$("#btnSearch").click(function(){
+		odersearch();
+	});
+	Order.init();	
+});
+</script>
+<!-- 会员中心公用底部 -->
+</div>
+<#include '../common/footer.html'/>
+		

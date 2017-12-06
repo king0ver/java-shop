@@ -1,0 +1,36 @@
+<#assign title="商城首页" />
+<#include '/common/header.html'/>
+<link rel="stylesheet" href="${ctx}${themes_path}/css/index.css">
+<link rel="stylesheet" href="${ctx}/statics/e_tools/mobile/library/swiper/swiper-3.4.2.min.css">
+<script src="${ctx}/statics/e_tools/mobile/library/iscroll/iscroll-probe.js"></script>
+<script src="${ctx}/statics/e_tools/mobile/library/swiper/swiper-3.4.2.min.js"></script>
+<script src="${ctx}${themes_path}/js/TouchSlide.1.1.js"></script>
+<script src="${ctx}${themes_path}/js/page/index.js"></script>
+<#include '/index/search-nav.html'/>
+<div class="index" id="index">
+    <div class="inner-index">
+        <!--首页横幅-->
+        <div class="item adv-box">
+            <#include '/index/adv.html'/>
+        </div>
+        <!-- index_content: 首页楼层容器 -->
+        <div class="index_content">
+            <#assign floorTag=newTag( "floorTag") />
+            <#assign floorList=floorTag ( "{'client_type':'mobile'}") />
+            <#list floorList as floor>
+                <div class="floor-line-con floor-color-${floor_index}" data-lift="floor-${floor_index}">
+                    <div class="floor-body">
+                        <#list floor.panelList as pl>
+                            ${pl.panel_html}
+                        </#list>
+                    </div>
+                </div>
+            </#list>
+        </div>
+        <div style="text-align: center; line-height: 44px; font-size: 12px; color: #333;">
+            已经到底啦...
+        </div>
+    </div>
+</div>
+
+<#include '/common/footer.html'/>
