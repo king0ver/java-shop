@@ -36,5 +36,23 @@
 		<field><name>category</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>content</name><type>memo</type><size>715827882</size><option>00</option></field>
 	</action>
+	
+	<action>
+		<command>create</command>
+		<table>nanshan_spec</table>
+		<field><name>spec_id</name><type>int</type><size>10</size><option>11</option></field>
+		<field><name>spec_name</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>creation_time</name><type>long</type><size>10</size><option>00</option></field>
+	</action>
+	
+	<action>
+		<command>create</command>
+		<table>nanshan_specval</table>
+		<field><name>specval_id</name><type>int</type><size>10</size><option>11</option></field>
+		<field><name>spec_id</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>specval_name</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>is_valid</name><type>int</type><size>1</size><option>00</option></field>
+		<field><name>creation_time</name><type>long</type><size>10</size><option>00</option></field>
+	</action>
 
 </dbsolution>
