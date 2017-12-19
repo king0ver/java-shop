@@ -242,6 +242,9 @@
 				<menu text="文章管理" url="/cms/admin/cat/list.do" />
 				<menu text="导航栏管理" url="/core/admin/site-menu/list.do" />
 			</menu>
+			<menu text="基础数据">
+				<menu text="基础数据管理" url="/core/admin/spec/list.do" />
+			</menu>
 			<menu text="关于我们">
 				<menu text="组件管理" url="/core/admin/component/list.do" />
 			</menu>
