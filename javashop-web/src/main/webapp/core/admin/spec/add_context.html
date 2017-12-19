@@ -1,0 +1,128 @@
+<#include '/admin/sonheader.html' >
+<style >
+  .layui-input{
+    width: 60%;
+  }
+</style>
+<form  class="layui-form" id="addUriForm" action="" enctype="multipart/form-data">
+ 	<div class="layui-form-item">
+   		<label class="layui-form-label">属性名称：</label>
+   		<div class="layui-input-block">
+     			<input type="text" name="spec_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+   		</div>
+   		<div id="specInfoId">
+	
+   		</div>
+   		
+   		<input type="button" value="增加段落" onclick="add();">
+		<input type="button" value="增加图片" onclick="addImg();">
+		<input type="button" value="获取内容" onclick="getContext();">
+   		<fieldset>
+		<legend>编辑区</legend>
+			<div id="article">
+				<div class="content">
+					<div contenteditable="true" style="width:400px;min-height:100px;border:2px dashed #ccc"></div>
+					<input type="button" value="删除" onclick="delButton(this);"/>
+				</div>
+				<div class="content">
+					<div>
+						<img src="file://E:/李涧明/日常处理/20171215/123123131/c.jpg"  width="112" height="112" />	
+					</div>
+					<input type="button" value="删除" onclick="delButton(this);"/>
+				</div>
+				<div id="test"></div>
+			</div>
+		</fieldset>
+   		
+ 	</div>
+</form>
+<script type="text/javascript">
+
+
+function add(){
+	$("#article").append("<div class='content'><div contenteditable='true' style='width:400px;min-height:100px;border:2px dashed #ccc'></div><input type='button' value='删除'/></div>");
+}
+
+function addImg(){
+	$("#article").append("<div class='content'><div>"+
+			"<img src='file://E:/李涧明/日常处理/20171215/123123131/c.jpg' width='112' height='112' /></div>"+
+		"<input type='button' value='删除' onclick='delButton(this);'/></div>");
+}
+
+function delButton(k){
+	if(confirm("确认要删除吗?")){
+	 	$(k).parent().remove();
+    }
+};
+
+function getContext(){
+	var divContext = $(".content div");
+	var jsonList = new Array();
+	for(var i=0;i<divContext.length;i++){
+		var articleContext = null;
+		var content = $(divContext[i]);
+		var picture = content.find("img"); //找到图片
+		var imgSrc = picture.attr('src')//取src路径
+		if(imgSrc != null){
+			articleContext = imgSrc;
+			jsonList.push({"index":i,"type":"img","content":articleContext});  
+		}else{
+			articleContext = content.text();
+			jsonList.push({"index":i,"type":"text","content":articleContext}); 
+		}
+	}
+	$.each(jsonList, function(idx, obj) {
+		alert(obj.index+"  ,  "+obj.type+"  ,  "+obj.content);
+	}); 
+}
+
+
+  var specInfo = $("#specInfoId").myPlugin(1,2,function(){
+	
+	   var form = layui.form();
+	   console.log(form);
+	  form.render();
+}); 
+ 
+//getSpecInfoList(1,2);
+
+
+/* function getTest(){
+	specInfo.getData();
+} */
+
+//var index = parent.layer.getFrameIndex(window.name);
+
+function checkLength(){
+	if($("#rolememo").val().length>100){
+		$("#rolememo").val($("#rolememo").val().substring(0,100));
+	}
+}
+
+layui.use(['form', 'layedit', 'laydate','element'], function(){
+	var form = layui.form(),
+    layedit = layui.layedit,
+    laydate = layui.laydate;
+	element = layui.element;
+	form.render();
+	form.on('submit(save_spec)', function(data){
+    	var options = {
+   			url:ctx+"/core/admin/spec/save-add.do",
+   			type:"post",
+   			dataType:"json",
+   			success:function(data){
+   				if(data.result==1){	
+   					$.Loading.success(data.message);
+   					parent.layer.close(index); //再执行关闭        
+   					parent.table.ajax.url(ctx+"/core/admin/spec/list-json.do").load();
+   				}
+   			}
+   		};
+   		$("#addUriForm").ajaxSubmit(options);
+       return false;
+    });
+   
+});
+
+
+</script>
