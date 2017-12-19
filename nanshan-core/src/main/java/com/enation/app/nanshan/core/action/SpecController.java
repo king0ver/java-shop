@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.enation.app.nanshan.core.model.Spec;
+import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.ISpecManager;
 import com.enation.eop.resource.IThemeUriManager;
 import com.enation.eop.resource.model.AdminUser;
@@ -22,6 +26,7 @@ import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.util.JsonResultUtil;
+import com.qq.connect.utils.json.JSONObject;
 
 /**
  * 基础数据属性规格信息管理
@@ -64,12 +69,76 @@ public class SpecController extends GridController{
 	}
 	
 	/**
-	 * 跳转至uri映射添加页面
-	 * @return uri映射添加页面
+	 * 跳转到属性规格管理
+	 * @return 添加页面
 	 */
 	@RequestMapping(value="/add")
 	public String add(){
 		return "/core/admin/spec/add";
+	}
+	
+	
+	/**
+	 * 跳转到属性规格管理
+	 * @return 添加页面
+	 */
+	@RequestMapping(value="/add1")
+	public String add1(){
+		return "/core/admin/spec/add_context";
+	}
+	
+	
+	/**
+	 *  新增属性规格
+	 * @param sepc
+	 * @param specvalName
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/save-add")
+	public JsonResult saveAdd(Spec spec,String[] specvalName){
+		try{
+			List<SpecVal> specValList = new ArrayList<SpecVal>();
+			AdminUser user  = UserConext.getCurrentAdminUser();
+			String userName = user.getUsername();
+			if(specvalName!=null && specvalName.length >0){
+				for(int i=0, len=specvalName.length;i<len;i++){
+					SpecVal specVal  = new SpecVal();
+					specVal.setSpecval_name(specvalName[i]);
+					specVal.setOperator(userName);
+					specValList.add(specVal);
+				}
+			}
+			spec.setOperator(userName);
+			this.specManager.add(spec,specValList);
+			return JsonResultUtil.getSuccessJson("添加成功");
+		}catch(RuntimeException e){
+			return JsonResultUtil.getErrorJson("失败:"+e.getMessage());
+		}
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getSpecInfo")
+	public JsonResult getSpecInfo(Integer articlId,Integer catId){
+		try{
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<Spec> specList = specManager.list(map);
+			List<Integer> specIdList = new ArrayList<Integer>();
+			for (Spec spec : specList) {
+				specIdList.add(spec.getSpec_id());
+			}
+			map.put("specIdList", specIdList);
+			List<SpecVal> specValList = specManager.querySpecValList(map);
+			JSONObject jsonInfo = new JSONObject();
+			JSONArray  specJsonArray = JSONArray.fromObject(specList);
+			JSONArray  specValJsonArray = JSONArray.fromObject(specValList);
+			jsonInfo.put("specList", specJsonArray);
+			jsonInfo.put("specValList", specValJsonArray);
+			return JsonResultUtil.getSuccessJson(jsonInfo.toString());
+		}catch(Exception e){
+			return JsonResultUtil.getErrorJson("失败:"+e.getMessage());
+		}
 	}
 	
 	/**
@@ -86,21 +155,7 @@ public class SpecController extends GridController{
 		return view;
 	}
 	
-	/**
-	 * 新增uri映射
-	 * @param themeUri uri映射
-	 * @return 新增状态
-	 */
-	@ResponseBody
-	@RequestMapping(value="/save-add")
-	public JsonResult saveAdd(ThemeUri themeUri){
-		try{
-			this.themeUriManager.add(themeUri);
-			return JsonResultUtil.getSuccessJson("添加成功");
-		}catch(RuntimeException e){
-			return JsonResultUtil.getErrorJson("失败:"+e.getMessage());
-		}
-	}
+	
 	
 	/**
 	 * 保存修改uri映射

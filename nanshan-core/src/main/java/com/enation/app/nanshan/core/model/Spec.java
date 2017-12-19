@@ -1,7 +1,8 @@
 package com.enation.app.nanshan.core.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 属性规格信息
@@ -25,8 +26,23 @@ public class Spec implements Serializable{
 	/**
 	 * 创建时间
 	 */
-	private Integer creation_time;
-
+	private Long creation_time;
+	
+	/**
+	 * 更新时间
+	 */
+	private Long update_time;
+	
+	/**
+	 * 操作人
+	 */
+	private String operator;
+	
+	/**
+	 * 创建时间(显示)
+	 */
+	private String creationTime;
+	
 	public Integer getSpec_id() {
 		return spec_id;
 	}
@@ -43,12 +59,36 @@ public class Spec implements Serializable{
 		this.spec_name = spec_name;
 	}
 
-	public Integer getCreation_time() {
+	public String getOperator() {
+		return operator;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	public String getCreationTime() {
+		return creationTime;
+	}
+
+	public void setCreationTime(String creationTime) {
+		this.creationTime = creationTime;
+	}
+
+	public Long getCreation_time() {
 		return creation_time;
 	}
 
-	public void setCreation_time(Integer creation_time) {
+	public void setCreation_time(Long creation_time) {
 		this.creation_time = creation_time;
+	}
+
+	public Long getUpdate_time() {
+		return update_time;
+	}
+
+	public void setUpdate_time(Long update_time) {
+		this.update_time = update_time;
 	}
 
 	

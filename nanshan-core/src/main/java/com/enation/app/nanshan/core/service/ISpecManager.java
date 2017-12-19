@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.enation.app.nanshan.core.model.Spec;
+import com.enation.app.nanshan.core.model.SpecVal;
 
 /**
  * 属性规格信息服务
@@ -16,7 +17,7 @@ public interface ISpecManager {
 	 * 新增
 	 * @param spec
 	 */
-	public void add(Spec spec);
+	public void add(Spec spec,List<SpecVal> specValList);
 
 	/**
 	 * 所有规格列表
@@ -24,6 +25,13 @@ public interface ISpecManager {
 	 * @return
 	 */
 	public List<Spec> list(Map<String,Object> params);
+	
+	/**
+	 * 
+	 * @param params
+	 * @return
+	 */
+	public List<SpecVal> querySpecValList(Map<String, Object> params);
 
 	/**
 	 * 修改
