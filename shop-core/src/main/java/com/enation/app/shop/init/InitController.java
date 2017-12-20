@@ -42,7 +42,8 @@ public class InitController {
 	@ResponseBody
 	@RequestMapping("/reg-init")
 	public JsonResult regionsInit() {
-		this.regionsManager.reset();
+		System.out.println("test");
+		//this.regionsManager.reset();
 		return JsonResultUtil.getSuccessJson("初始化地区成功");
 	}
 }

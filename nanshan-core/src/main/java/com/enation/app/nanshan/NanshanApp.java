@@ -31,14 +31,19 @@ public class NanshanApp extends App {
 
 
         /**
-         * 安装网店数据库表结构
+         * 安装分类数据库表结构
          */
         this.doInstall("file:com/enation/app/nanshan/nanshan.xml");
 
         /**
-         * 安装网店数据库索引
+         * 安装分类数据库索引
          */
         this.doInstall("file:com/enation/app/nanshan/nanshan_index.xml");
+        
+        /**
+         * 初始化分类数据
+         */
+        this.doInstall("file:com/enation/app/nanshan/nanshan_cat_data.xml");
     }
 
     @Override

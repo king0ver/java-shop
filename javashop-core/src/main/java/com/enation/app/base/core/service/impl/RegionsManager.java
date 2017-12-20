@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,8 +25,6 @@ import com.enation.framework.database.IntegerMapper;
 import com.enation.framework.database.data.IDataOperation;
 import com.enation.framework.log.LogType;
 import com.enation.framework.util.JsonUtil;
-
-import net.sf.json.JSONArray;
 
 /**
  * 地区管理

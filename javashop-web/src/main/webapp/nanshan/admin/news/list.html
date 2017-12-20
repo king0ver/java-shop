@@ -1,0 +1,118 @@
+
+<#include '/admin/header.html' >
+<div  class="admin-main">
+   <div>
+        <!--提示区域  -->
+       <!--  <div class="page_explain">
+            <h2>操作提示</h2>
+            <ul>
+                <li><span>.</span>在新增文章的时候，需要先建立文章模型，文章模型主要可以更好的对文章进行分类，以便于同一类型文章在不同页面输出时的统一性及复用性</li>
+                <li><span>.</span>建立好文章模型之后，请到开发者-页面管理-文章管理中添加此模板模型并添加此模型下的文章。</li>
+            </ul>
+        </div> -->
+        <!--按钮操作区域  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" id="add_model_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+              <!--   <button type="button" class="layui-btn layui-btn-primary " title="提示" id="explain"><i class="icon iconfont icon-tishi1"></i></button> -->
+            </div>
+
+        </div>
+    </div>
+    
+   <!--表格区域  -->
+   <form id="modelForm">
+    <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        <thead>
+          <tr>
+           
+            <th>分类名称</th>
+            <th>名称</th>
+            <th>创建时间</th>
+            <th>链接</th>
+            <th>状态</th>
+            <th>图片</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+    </table>
+    <!--传值等操作  -->
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+$(function(){
+	
+	table = $('#modeldata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/article/newsbulletin/list-json.do',
+	    },
+	    columns: [ //定义列
+	        
+	        {data: "cat_name"},
+	        {data: "title"},
+	        {data: "create_time"},
+	        {data: "url"},
+	        {data: "is_del"},
+	        {data: "pic_url"},	      
+	        {data: null,"render": function(data, type, row) {
+	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/article/newsbulletin/edit.do?id="+data.id+"')\">修改</a>"
+	        			+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger'  onclick='del("+data.id +")'>删除</a>";		
+	       	}}
+	     ]
+	});
+	
+
+	$("#add_model_button").click(function(){
+	   	 layer.open({
+	            title:"添加文章",//标题
+	            maxmin :true,//右上角可否放大缩小
+	            type:2,//弹框的类型
+	            shade: [0.3, '#000'],//黑色背景
+	            offset: '10px',//弹框位置
+	            shadeClose:false,//黑色背景是否可以点击关闭
+	            content:"${ctx}/article/newsbulletin/add.do",//内容的URL
+	            area:['800px','750px'],//弹框大小
+	            scrollbar: false//是否允许浏览器出现滚动条
+	        });
+		});
+});
+	function del(id){
+		if(!confirm("确认删除此文章吗！")){	
+			return ;
+		}
+		var options = {
+				url : '${ctx}/article/newsbulletin/del.do?id='+id+'&ajax=yes',
+				type : "POST",
+				dataType : 'json',
+				success : function(result) {
+					if(result.result==1){
+						$.Loading.success(result.message);
+						table.ajax.url(ctx+"/article/newsbulletin/list-json.do").load();
+					}
+					if(result.result==0){
+						$.Loading.error(result.message);
+					}
+				},
+				error : function(e) {
+					$.Loading.error("出现错误 ，请重试");
+				}
+		};
+		$('#modelForm').ajaxSubmit(options);
+	}
+</script>
+
+<#include '/admin/footer.html' >
