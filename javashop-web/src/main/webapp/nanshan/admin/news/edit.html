@@ -17,10 +17,9 @@
 				<div class="layui-input-block">
 	      			<select>
 	      			     <option>请选择分类</option>
-	      			     <option>新闻公告</option>
-	      			     <option>行业动态</option>
-	      			     <option>科技之光</option>
-	      			     <option>媒体声音</option>
+	      			     <#list cats as cat>
+                         <option value="${cat.cat_id}" <#if data.cat_id==cat.cat_id> selected="selected" </#if> > ${cat.cat_name}</option>
+                         </#list>
 	      			</select>
     		     </div>
 			</div>
@@ -28,7 +27,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">文章标题：</label>
 	    		<div class="layui-input-block">
-	    		    <input type="text" name="id"  value="${data.id}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		    <input name="id" type='hidden'  value="${data.id}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	      			<input type="text" name="title" id="uri" value="${data.title!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	    		</div>
 			</div>

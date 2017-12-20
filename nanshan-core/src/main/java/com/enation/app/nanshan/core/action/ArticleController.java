@@ -88,10 +88,11 @@ public class ArticleController extends GridController {
 	}
 	
 	@RequestMapping(value="/list")
-	public ModelAndView list() {
+	public ModelAndView list(long catId) {
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/news/list");
 		view.addObject("ctx",ctx);
+		view.addObject("catId",catId);
 		return view;
 	}
 	/**
@@ -100,7 +101,7 @@ public class ArticleController extends GridController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list-json")
-	public GridJsonResult listJson() {	
+	public GridJsonResult listJson(long catId) {	
 		Page page = this.articleManager.queryArticleList(null, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);
 	}
@@ -116,10 +117,12 @@ public class ArticleController extends GridController {
 	*  
 	*/ 
 	@RequestMapping(value = "/add")
-	public ModelAndView  add() {
+	public ModelAndView  add(int catId) {
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/news/add");
 		view.addObject("ctx",ctx);
+		view.addObject("cats",this.articleManager.getCats(catId));
+		view.addObject("catId",catId);
 		return view;
 	}
 	
@@ -130,12 +133,14 @@ public class ArticleController extends GridController {
 	*  
 	*/ 
 	@RequestMapping(value = "/edit")
-	public ModelAndView  edit(int id) {
+	public ModelAndView  edit(int id,int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
 			view.setViewName("/nanshan/admin/news/edit");
 			view.addObject("ctx",ctx);
 			view.addObject("data",this.articleManager.queryArticleById(id));
+			view.addObject("cats",this.articleManager.getCats(catId));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

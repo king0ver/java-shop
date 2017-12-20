@@ -2,6 +2,7 @@ package com.enation.app.nanshan.core.service.impl;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.nanshan.core.service.IArticleManager;
+import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
@@ -85,6 +87,13 @@ public class ArticleManagerImpl implements IArticleManager  {
 		map.put("is_del", 1);
 		this.daoSupport.update("es_nanshan_article", map, "id="+id);
 		
+	}
+
+	@Override
+	public List<ArticleCat> getCats(int id) {
+		String sql = "select * from es_nanshan_article_category where parent_id="+id;
+		List<ArticleCat> list = (List<ArticleCat>) this.daoSupport.queryForList(sql, ArticleCat.class);
+		return list;
 	}
 
 }
