@@ -5,32 +5,23 @@
   }
 </style>
 <div class="main">
-	<form id="addUriForm" class="" action="" enctype="multipart/form-data">
+	<form id="addSpecForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
   		<div class="layui-form-item">
     		<label class="layui-form-label">属性名称：</label>
     		<div class="layui-input-block">
-      			<input type="text" name="spec_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+      			<input type="text" name="spec_name" maxlength="60"  dataType="string" placeholder="请输入属性名称"  lay-verify="required" autocomplete="off" class="layui-input">
     		</div>
   		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-				<label class="layui-form-label">属性值：</label>
-    			<div class="layui-inline">
-      				<input type="text" name="specvalName" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		<div id="attrId">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">属性值</label>
+			    <div class="layui-input-inline">
+					<input type="text" name="specValName" placeholder="请输入属性值" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+			    </div>
+			    <div class="layui-inline">
+    				<a onclick="return addButton();" class="layui-btn"><i class="layui-icon">&#xe654;</i></a>
     			</div>
-    			<div class="layui-inline">
-      				<button class="layui-btn layui-btn-s">+</button>
-    			</div>
-			</div>
-			<div class="layui-inline">
-				<label class="layui-form-label">属性值：</label>
-    			<div class="layui-inline">
-      				<input type="text" name="specvalName" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-    			</div>
-    			<div class="layui-inline">
-      				<button class="layui-btn layui-btn-s">+</button>
-    			</div>
-			</div>
+			  </div>
 		</div>
 		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
   			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_spec">保存</a>
@@ -41,7 +32,26 @@
 </div>
 <script>
 
+function addButton(){
+	 var addHtml ="<div class='layui-form-item'>"+
+	    "<label class='layui-form-label'>属性值</label>"+
+	    "<div class='layui-input-inline'>"+
+			"<input type='text' name='specValName' placeholder='请输入属性值' maxlength='60' dataType='string' lay-verify='required' autocomplete='off' class='layui-input'>"+
+	    "</div>"+
+	    "<div class='layui-inline'>"+
+			"<a onclick='return addButton();' class='layui-btn'><i class='layui-icon'>&#xe654;</i></a>"+
+		"</div>"+
+		"<div class='layui-inline'>"+
+			"<a  onclick='return delButton(this);' class='layui-btn'><i class='layui-icon'>&#xe640;</i></a>"+
+		"</div>"+
+	  "</div>";
+	$("#attrId").append(addHtml);
+};
 
+//删除按钮
+function delButton(k){
+	var a = $(k).parent().parent().remove();
+}
 var index = parent.layer.getFrameIndex(window.name);
 
 function checkLength(){
@@ -67,9 +77,10 @@ layui.use(['form', 'layedit', 'laydate'], function(){
    				}
    			}
    		};
-   		$("#addUriForm").ajaxSubmit(options);
+   		$("#addSpecForm").ajaxSubmit(options);
        return false;
     });
    
 });
+
 </script>
