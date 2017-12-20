@@ -10,9 +10,9 @@
    		<div class="layui-input-block">
      			<input type="text" name="spec_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
    		</div>
-   		<div id="specInfoId">
-	
-   		</div>
+   		
+   		<div id="specInfoId"></div>
+   		
    		
    		<input type="button" value="增加段落" onclick="add();">
 		<input type="button" value="增加图片" onclick="addImg();">
@@ -33,7 +33,6 @@
 				<div id="test"></div>
 			</div>
 		</fieldset>
-   		
  	</div>
 </form>
 <script type="text/javascript">
@@ -78,10 +77,10 @@ function getContext(){
 
 
   var specInfo = $("#specInfoId").myPlugin(1,2,function(){
-	
-	   var form = layui.form();
-	   console.log(form);
-	  form.render();
+	  layui.use(['form'], function(){
+		  var form = layui.form();
+		  form.render();
+	  });
 }); 
  
 //getSpecInfoList(1,2);
@@ -91,7 +90,7 @@ function getContext(){
 	specInfo.getData();
 } */
 
-//var index = parent.layer.getFrameIndex(window.name);
+var index = parent.layer.getFrameIndex(window.name);
 
 function checkLength(){
 	if($("#rolememo").val().length>100){
