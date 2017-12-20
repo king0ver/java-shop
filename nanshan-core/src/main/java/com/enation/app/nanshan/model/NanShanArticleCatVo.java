@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class NanShanArticleCatVo extends  NanShanArticleCat implements Serializable {	
+public class NanShanArticleCatVo extends  ArticleCat implements Serializable {	
 
 	
 	/**
@@ -21,15 +21,12 @@ public class NanShanArticleCatVo extends  NanShanArticleCat implements Serializa
 		super();
 	}
 	
-	public NanShanArticleCatVo(NanShanArticleCat nanShanArticleCat) {
+	public NanShanArticleCatVo(ArticleCat nanShanArticleCat) {
 		this.setCat_id(nanShanArticleCat.getCat_id());
 		this.setCat_name(nanShanArticleCat.getCat_name());
 		this.setParent_id(nanShanArticleCat.getParent_id());
 		this.setIs_del(nanShanArticleCat.getIs_del());
-		this.setPc_detail_template_uri(nanShanArticleCat.getPc_detail_template_uri());
-		this.setPc_list_template_uri(nanShanArticleCat.getPc_list_template_uri());
-		this.setWap_detail_template_uri(nanShanArticleCat.getWap_detail_template_uri());
-		this.setWap_list_template_uri(nanShanArticleCat.getWap_list_template_uri());
+	
 		this.setPc_url(nanShanArticleCat.getPc_url());
 		this.setWap_url(nanShanArticleCat.getWap_url());
 	}

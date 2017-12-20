@@ -1,4 +1,4 @@
-package com.enation.app.nanshan.controller;
+package com.enation.app.nanshan.core.action;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,8 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.model.NanShanArticleVo;
-import com.enation.app.nanshan.service.INanShanArticleService;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
 import com.enation.framework.action.JsonResult;
@@ -42,11 +43,11 @@ import com.enation.framework.util.StringUtil;
 */ 
 @Controller
 @Scope("prototype")
-@RequestMapping("/article")
-public class NanShanArticleController extends GridController {
+@RequestMapping("/admin/article")
+public class ArticleController extends GridController {
 	
 	@Autowired
-	INanShanArticleService  nanShanArticleService;
+	IArticleManager  articleManager;
 	String ctx=ThreadContextHolder.getHttpRequest().getContextPath();
 	
 
@@ -64,7 +65,7 @@ public class NanShanArticleController extends GridController {
 				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd HH:mm:ss");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
-			this.nanShanArticleService.addArticle(nanShanArticleVo);			
+			this.articleManager.addArticle(nanShanArticleVo);			
 			return JsonResultUtil.getSuccessJson("添加文章成功");		
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
@@ -86,7 +87,7 @@ public class NanShanArticleController extends GridController {
 		return list;
 	}
 	
-	@RequestMapping(value="/newsbulletin/list")
+	@RequestMapping(value="/list")
 	public ModelAndView list() {
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/news/list");
@@ -98,9 +99,9 @@ public class NanShanArticleController extends GridController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/newsbulletin/list-json")
+	@RequestMapping(value = "/list-json")
 	public GridJsonResult listJson() {	
-		Page page = this.nanShanArticleService.queryArticleList(null, this.getPage(), this.getPageSize());
+		Page page = this.articleManager.queryArticleList(null, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);
 	}
 	
@@ -114,7 +115,7 @@ public class NanShanArticleController extends GridController {
 	* @date 2017年12月19日 上午10:35:10
 	*  
 	*/ 
-	@RequestMapping(value = "/newsbulletin/add")
+	@RequestMapping(value = "/add")
 	public ModelAndView  add() {
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/news/add");
@@ -128,13 +129,13 @@ public class NanShanArticleController extends GridController {
 	* @date 2017年12月19日 上午10:35:10
 	*  
 	*/ 
-	@RequestMapping(value = "/newsbulletin/edit")
+	@RequestMapping(value = "/edit")
 	public ModelAndView  edit(int id) {
 		ModelAndView view=new ModelAndView();
 		try {
 			view.setViewName("/nanshan/admin/news/edit");
 			view.addObject("ctx",ctx);
-			view.addObject("data",this.nanShanArticleService.queryArticleById(id));
+			view.addObject("data",this.articleManager.queryArticleById(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -144,14 +145,14 @@ public class NanShanArticleController extends GridController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/newsbulletin/save-edit")
+	@RequestMapping(value="/save-edit")
 	public JsonResult saveEdit(NanShanArticleVo nanShanArticleVo,String createTime ){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
 				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd HH:mm:ss");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
-            this.nanShanArticleService.updateArticle(nanShanArticleVo);
+            this.articleManager.updateArticle(nanShanArticleVo);
 		    return JsonResultUtil.getSuccessJson("修改成功");
 		} catch (RuntimeException e) {
 			return JsonResultUtil.getErrorJson("修改失败");
@@ -159,10 +160,10 @@ public class NanShanArticleController extends GridController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/newsbulletin/del")
+	@RequestMapping(value="/del")
 	public JsonResult del(int id ){
 		try {
-            this.nanShanArticleService.delArticle(id);
+            this.articleManager.delArticle(id);
 		    return JsonResultUtil.getSuccessJson("修改成功");
 		} catch (RuntimeException e) {
 			return JsonResultUtil.getErrorJson("修改失败");

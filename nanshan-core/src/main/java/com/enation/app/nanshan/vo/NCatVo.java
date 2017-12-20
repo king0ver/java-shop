@@ -1,13 +1,19 @@
 package com.enation.app.nanshan.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by yulong on 17/12/18.
  */
-public class NCatVo {
+public class NCatVo implements Serializable {
 
-    private long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private long id;
 
     private String name;
 
@@ -18,9 +24,19 @@ public class NCatVo {
     private List<NCatVo> leafs;
 
     private NCatVo parent;
+    
+    private long parentId;
 
 
-    public long getId() {
+    public long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(long parentId) {
+		this.parentId = parentId;
+	}
+
+	public long getId() {
         return id;
     }
 

@@ -3,25 +3,26 @@ package com.enation.app.nanshan.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.enation.app.nanshan.vo.NCatVo;
+
 import net.sf.json.JSONArray;
 
-import com.enation.app.nanshan.model.NanShanArticleCatVo;
 
 
-public class NanShanArticleCatTreeUtil {
-	 List<NanShanArticleCatVo> nodes = new ArrayList<NanShanArticleCatVo>();	 
-     public NanShanArticleCatTreeUtil(List<NanShanArticleCatVo> nodes) {
+
+public class NCatTreeUtil {
+	 List<NCatVo> nodes = new ArrayList<NCatVo>();	 
+     public NCatTreeUtil(List<NCatVo> nodes) {
                super();
                this.nodes= nodes;
 
-     }   
-
+     }  
      /**
       * 构建JSON树形结构
       * @return
       */
      public String buildJSONTree() {
-           List<NanShanArticleCatVo> nodeTree = buildTree();
+           List<NCatVo> nodeTree = buildTree();
            JSONArray jsonArray = JSONArray.fromObject(nodeTree);
            return jsonArray.toString();
 
@@ -30,14 +31,13 @@ public class NanShanArticleCatTreeUtil {
       * 构建树形结构
       * @return
       */
+     public List<NCatVo> buildTree() {
 
-     public List<NanShanArticleCatVo> buildTree() {
+               List<NCatVo> treeNodes = new ArrayList<NCatVo>();
 
-               List<NanShanArticleCatVo> treeNodes = new ArrayList<NanShanArticleCatVo>();
+               List<NCatVo> rootNodes = getRootNodes();
 
-               List<NanShanArticleCatVo> rootNodes = getRootNodes();
-
-               for (NanShanArticleCatVo rootNode : rootNodes) {
+               for (NCatVo rootNode : rootNodes) {
 
                         buildChildNodes(rootNode);
 
@@ -54,14 +54,15 @@ public class NanShanArticleCatTreeUtil {
       * 递归子节点
       * @param node
       */
-     public void buildChildNodes(NanShanArticleCatVo node) {
-		   List<NanShanArticleCatVo> children = getChildNodes(node); 
+     public void buildChildNodes(NCatVo node) {
+    	 NCatVo p=this.getCatParent(node.getParentId());
+		   List<NCatVo> children = getChildNodes(node); 
 		   if (!children.isEmpty()) {
-		        for(NanShanArticleCatVo child : children) {
+		        for(NCatVo child : children) {
 		                 buildChildNodes(child);
 		        } 
-		        node.setNotes(children);
-		        
+		        node.setLeafs(children);
+		        node.setParent(p);
 		   }
      }
 
@@ -75,13 +76,13 @@ public class NanShanArticleCatTreeUtil {
 
       */
 
-     public List<NanShanArticleCatVo> getChildNodes(NanShanArticleCatVo node) {
+     public List<NCatVo> getChildNodes(NCatVo node) {
 
-               List<NanShanArticleCatVo> childNodes = new ArrayList<NanShanArticleCatVo>();
+               List<NCatVo> childNodes = new ArrayList<NCatVo>();
 
-               for (NanShanArticleCatVo n : nodes){
+               for (NCatVo n : nodes){
 
-                        if (node.getCat_id()==n.getParent_id()) {
+                        if (node.getId()==n.getParentId()) {
 
                                  childNodes.add(n);
                         }
@@ -97,10 +98,10 @@ public class NanShanArticleCatTreeUtil {
       * @return
       */
 
-     public boolean rootNode(NanShanArticleCatVo node) {
+     public boolean rootNode(NCatVo node) {
            boolean isRootNode = true;
-           for (NanShanArticleCatVo n : nodes){
-                    if (node.getParent_id()==n.getCat_id()) {
+           for (NCatVo n : nodes){
+                    if (node.getParentId()==n.getId()) {
                              isRootNode= false;
                              break;
                     }
@@ -109,8 +110,6 @@ public class NanShanArticleCatTreeUtil {
            return isRootNode;
 
      }
-
-    
 
      /**
 
@@ -121,12 +120,11 @@ public class NanShanArticleCatTreeUtil {
       * @return
 
       */
-
-     public List<NanShanArticleCatVo> getRootNodes() {
-           List<NanShanArticleCatVo> rootNodes = new ArrayList<NanShanArticleCatVo>();
-           NanShanArticleCatVo vo=new NanShanArticleCatVo();
+     public List<NCatVo> getRootNodes() {
+           List<NCatVo> rootNodes = new ArrayList<NCatVo>();
+           NCatVo vo=new NCatVo();
            
-           for (NanShanArticleCatVo n : nodes){
+           for (NCatVo n : nodes){
                     if (rootNode(n)) {
                              rootNodes.add(n);
                     }
@@ -134,20 +132,30 @@ public class NanShanArticleCatTreeUtil {
            return rootNodes;
 
      }
-
+     public NCatVo getCatParent(long x){  
+    	 NCatVo p=new NCatVo();
+         for(int i = 0; i<nodes.size();i++){  
+             if(nodes.get(i).getId()==x){
+            	 p.setId(nodes.get(i).getId());
+            	 p.setName(nodes.get(i).getName());
+            	 p.setPcUrl(nodes.get(i).getPcUrl());
+            	 p.setWapUrl(nodes.get(i).getWapUrl());
+            	 return p; 
+             }
+         }  
+         return null;  
+     }
     
 
    
 
     
 
-     public static void main(String[] args) {
+     public static void main(String[] args) {              
 
-              
+               List<NCatVo> nodes = new ArrayList <NCatVo>();
 
-               List<NanShanArticleCatVo> nodes = new ArrayList <NanShanArticleCatVo>();
-
-               NanShanArticleCatTreeUtil treeBuilder = new NanShanArticleCatTreeUtil(nodes);
+               NCatTreeUtil treeBuilder = new NCatTreeUtil(nodes);
 
                System.out.println(treeBuilder.buildJSONTree());
 

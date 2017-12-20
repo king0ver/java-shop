@@ -1,4 +1,4 @@
-package com.enation.app.nanshan.service.impl;
+package com.enation.app.nanshan.core.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,19 +13,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.base.core.service.dbsolution.DBSolutionFactory;
 import com.enation.app.nanshan.constant.NanShanCommonConstant;
+import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.NanShanActReserve;
-import com.enation.app.nanshan.model.NanShanArticleCat;
+import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleCatVo;
-import com.enation.app.nanshan.service.INanShanService;
-import com.enation.app.nanshan.util.NanShanArticleCatTreeUtil;
+import com.enation.app.nanshan.util.NCatTreeUtil;
+import com.enation.app.nanshan.vo.NCatVo;
 import com.enation.framework.annotation.Log;
 import com.enation.framework.cache.ICache;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.data.IDataOperation;
 import com.enation.framework.log.LogType;
 
-@Service("nanShanService")
-public class NanShanArticleCatServiceImpl implements INanShanService  {
+@Service("catManager")
+public class CatManagerImpl implements ICatManager  {
 
 
 	@Autowired
@@ -55,15 +56,21 @@ public class NanShanArticleCatServiceImpl implements INanShanService  {
 	}
 
 	
-	private List<NanShanArticleCatVo> getCats() {	
-        List<NanShanArticleCat> list=this.getCategoryList();
-        List<NanShanArticleCatVo> newCatlist=null;
-        NanShanArticleCatVo NanShanArticleCatVo;
-        if(list!=null&&list.size()>0){  
-        	newCatlist=new ArrayList<NanShanArticleCatVo>();
-        	for (NanShanArticleCat nanShanArticleCat : list) {
-        		NanShanArticleCatVo=new NanShanArticleCatVo(nanShanArticleCat);
-        		newCatlist.add(NanShanArticleCatVo);
+	private List<NCatVo> getCats() {	
+        List<ArticleCat> list=this.getCategoryList();
+        List<NCatVo> newCatlist=null;
+        NCatVo nCatVo;
+        if(list!=null&&list.size()>0){ 
+        	
+        	newCatlist=new ArrayList<NCatVo>();
+        	for (ArticleCat articleCat : list) {
+        		nCatVo=new NCatVo();
+        		nCatVo.setId(articleCat.getCat_id());
+        		nCatVo.setName(articleCat.getCat_name());
+        		nCatVo.setParentId(articleCat.getParent_id());
+        		nCatVo.setPcUrl(articleCat.getPc_url());
+        		nCatVo.setWapUrl(articleCat.getWap_url());
+        		newCatlist.add(nCatVo);
 			}
         }
 		return newCatlist;
@@ -73,28 +80,27 @@ public class NanShanArticleCatServiceImpl implements INanShanService  {
 	/**
 	 * 查询所有分类列表
 	 */
-	private List<NanShanArticleCat> getCategoryList() {
+	private List<ArticleCat> getCategoryList() {
 		String sql = "select * from es_nanshan_article_category";
-		List<NanShanArticleCat> list = this.daoSupport.queryForList(sql, NanShanArticleCat.class);
+		List<ArticleCat> list = this.daoSupport.queryForList(sql, ArticleCat.class);
 		return list;
-	}
-
-
-	@Override
-	public List<NanShanArticleCatVo> getCatTree() {
-		this.cache.remove(NanShanCommonConstant.NANSHANCATCACHENAME);
-		List<NanShanArticleCatVo> listTree= (List<NanShanArticleCatVo>) this.cache.get(NanShanCommonConstant.NANSHANCATCACHENAME);
-	    if(listTree==null||listTree.size()<1){
-	    	listTree= new NanShanArticleCatTreeUtil(this.getCats()).buildTree();
-		    this.cache.put(NanShanCommonConstant.NANSHANCATCACHENAME,listTree);
-	    }
-		return listTree;
 	}
 
 
 	@Override
 	public void reserve(NanShanActReserve NanShanActReserve) {
 		this.daoSupport.insert("nanshan_act_reserve", NanShanActReserve);		
+	}
+
+
+	@Override
+	public List<NCatVo> getCatList() {
+		List<NCatVo> listTree= (List<NCatVo>) this.cache.get(NanShanCommonConstant.NANSHANCATCACHENAME);
+	    if(listTree==null||listTree.size()<1){
+	    	listTree= new NCatTreeUtil(this.getCats()).buildTree();
+		    this.cache.put(NanShanCommonConstant.NANSHANCATCACHENAME,listTree);
+	    }
+		return listTree;
 	}
 
 }

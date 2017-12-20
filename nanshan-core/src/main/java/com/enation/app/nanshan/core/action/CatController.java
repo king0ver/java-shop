@@ -1,4 +1,4 @@
-package com.enation.app.nanshan.controller;
+package com.enation.app.nanshan.core.action;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,25 +8,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.NanShanActReserve;
-import com.enation.app.nanshan.service.INanShanService;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.util.JsonResultUtil;
 
 @Controller
 @Scope("prototype")
-@RequestMapping("/nanshan")
-public class NanController {
+@RequestMapping("/admin/cat")
+public class CatController {
 	
 	@Autowired
-	INanShanService  nanShanService;
+	ICatManager  catManager;
 	
 	
 	@ResponseBody
 	@RequestMapping("/catreset")
 	public JsonResult reset(){
 		try {
-			this.nanShanService.reset();			
+			this.catManager.reset();			
 			return JsonResultUtil.getSuccessJson("初始化分类成功");
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
@@ -43,7 +43,7 @@ public class NanController {
 	@RequestMapping("/getcat")
 	public JsonResult getcCat(){
 		try {
-			return JsonResultUtil.getObjectJson(this.nanShanService.getCatTree());
+			return JsonResultUtil.getObjectJson(this.catManager.getCatList());
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
 			return JsonResultUtil.getErrorJson("初始化分类失败");
@@ -60,7 +60,7 @@ public class NanController {
 	@RequestMapping("/reserve")
 	public JsonResult reserve(@RequestBody NanShanActReserve anShanActReserve){
 		try {
-			this.nanShanService.reserve(anShanActReserve);
+			this.catManager.reserve(anShanActReserve);
 			return JsonResultUtil.getSuccessJson("预约成功");
 		} catch (RuntimeException e) {
 			e.printStackTrace();			

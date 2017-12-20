@@ -1,9 +1,9 @@
-package com.enation.app.nanshan.service;
+package com.enation.app.nanshan.core.service;
 
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.database.Page;
 
-public interface INanShanArticleService {
+public interface IArticleManager {
 	
 	public void addArticle(NanShanArticleVo nanShanArticleVo);
 	

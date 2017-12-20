@@ -1,4 +1,4 @@
-package com.enation.app.nanshan.service.impl;
+package com.enation.app.nanshan.core.service.impl;
 
 
 import java.util.HashMap;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
-import com.enation.app.nanshan.service.INanShanArticleService;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
 import com.enation.framework.database.data.IDataOperation;
@@ -24,8 +24,8 @@ import com.enation.framework.database.data.IDataOperation;
 * @date 2017年12月14日 下午5:13:42
 *  
 */ 
-@Service("nanShanArticleService")
-public class NanShanArticleServiceImpl implements INanShanArticleService  {
+@Service("articleManager")
+public class ArticleManagerImpl implements IArticleManager  {
 
 	@Autowired
 	private IDataOperation dataOperation;	
