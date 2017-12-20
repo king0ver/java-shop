@@ -37,4 +37,5 @@ public class SpecVo implements Serializable{
     public void setSpecValVos(List<SpecValVo> specValVos) {
         this.specValVos = specValVos;
     }
+
 }

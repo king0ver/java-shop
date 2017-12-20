@@ -9,6 +9,17 @@ public class SpecValVo {
 
     private String name;
 
+    private boolean isSelected;
+
+    public SpecValVo() {
+    }
+
+    public SpecValVo(long id, String name, boolean isSelected) {
+        this.id = id;
+        this.name = name;
+        this.isSelected = isSelected;
+    }
+
     public long getId() {
         return id;
     }
@@ -23,5 +34,13 @@ public class SpecValVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

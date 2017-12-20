@@ -1,7 +1,9 @@
 package com.enation.app.nanshan.tag;
 
+import com.enation.app.nanshan.core.model.Spec;
 import com.enation.app.nanshan.vo.SpecValVo;
 import com.enation.app.nanshan.vo.SpecVo;
+import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 import freemarker.template.TemplateModelException;
 import org.springframework.stereotype.Component;
@@ -63,10 +65,41 @@ public class SelectionConditionTag extends BaseFreeMarkerTag{
         specVos.add(specVo1);
 
 
+        handleSelectedSpecVo(specVos);
+
         Map<String, Object> result = new HashMap<>();
         result.put("specVos",specVos);
 
         return result;
+    }
+
+    /**
+     * 处理属性值
+     * @param specVos
+     */
+    private void handleSelectedSpecVo(List<SpecVo> specVos){
+
+        String selectedSpecIds = "," + getRequest().getParameter("specs") + ",";
+
+        for(SpecVo specVo : specVos){
+
+            boolean flag = false;
+            for(SpecValVo specValVo : specVo.getSpecValVos()){
+                if(selectedSpecIds.indexOf("," + specValVo.getId() + ",") != -1){
+                    specValVo.setSelected(true);
+                    flag = true;
+                }else{
+                    specValVo.setSelected(false);
+                }
+            }
+
+            if(flag){
+                specVo.getSpecValVos().set(0,new SpecValVo(0,"全部", false));
+            }else{
+                specVo.getSpecValVos().set(0,new SpecValVo(0,"全部", true));
+            }
+
+        }
     }
 
 
