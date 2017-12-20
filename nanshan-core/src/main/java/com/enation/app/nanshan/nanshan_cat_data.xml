@@ -10,43 +10,43 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>1,'展示展览',-1,0</values>
+		<values>1,'展示展览',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>2,'线上体验',-1,0</values>
+		<values>2,'线上体验',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>3,'电子商城',-1,0</values>
+		<values>3,'电子商城',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>4,'活动资讯',-1,0</values>
+		<values>4,'活动资讯',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>5,'服务导览',-1,0</values>
+		<values>5,'服务导览',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>6,'会员中心',-1,0</values>
+		<values>6,'会员中心',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>7,'关于我们',-1,0</values>
+		<values>7,'关于我们',0,0</values>
 	</action>
 	<action>
 		<command>insert</command>

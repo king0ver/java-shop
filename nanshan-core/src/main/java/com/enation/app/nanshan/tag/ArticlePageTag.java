@@ -20,7 +20,10 @@ public class ArticlePageTag extends BaseFreeMarkerTag {
 
         Map<String, Object> map = new HashMap<>();
 
+
         NCatVo nCatVo = findNCatVo(null, 1);
+
+      
         map.put("secondCat", new NCatVo());
         map.put("thirdCats", new ArrayList<>());
         map.put("thirdCats", new ArrayList<>());
