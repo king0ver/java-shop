@@ -77,14 +77,14 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     
 	form.on('submit(save_uri)', function(data){
     	var options = {
-   			url:ctx+"/article/add_save.do",
+   			url:ctx+"/admin/article/add_save.do",
    			type:"post",
    			dataType:"json",
    			success:function(data){
    				if(data.result==1){	
    					$.Loading.success(data.message);
    					parent.layer.close(index); //再执行关闭        
-   					parent.table.ajax.url(ctx+"/nanshan/newsbulletin/list-json.do").load();
+   					parent.table.ajax.url(ctx+"/admin/article/list-json.do").load();
    				}
    			}
    		};

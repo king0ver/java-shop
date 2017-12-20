@@ -76,7 +76,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
 form.on('submit(editModel)', function(data){
 	var options = {
-		url : ctx+"/article/newsbulletin/save-edit.do",
+		url : ctx+"/admin/article/save-edit.do",
 		type : "POST",
 		dataType : 'json',
 		success : function(result) {
@@ -98,29 +98,7 @@ form.on('submit(editModel)', function(data){
 });
 
 });
-//删除
-function del(field_id) {
-	if (!confirm("确认要删除吗？")) {
-		return;
-	}
-	var options = {
-		url : ctx + "/cms/admin/field/delete.do?field_id=" + field_id,
-		type : "POST",
-		dataType : 'json',
-		success : function(result) {
-			if (result.result == 1) {
-				$.Loading.success(result.message);
-			    table.ajax.url("${ctx}/cms/admin/model/file-list-json.do?modelid=${data.id }")
-						.load();
-				 				
-			}
-			if (result.result == 0) {
-				$.Loading.error(result.message);
-			}
-		}
-	};
-	$("#fieldForm").ajaxSubmit(options);
-}
+
 //修改字段弹框
 	 function edit(fieldid){
 		 var modelid=$("#modelid").val();

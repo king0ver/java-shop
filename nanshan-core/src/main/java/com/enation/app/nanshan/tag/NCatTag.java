@@ -27,17 +27,13 @@ public class NCatTag extends BaseFreeMarkerTag {
         catVos=catManager.getCatList();
         return catVos;
     }
-
     private  NCatVo build(long id, String name, String pcUrl, String wapUrl, List<NCatVo> leafs){
-
         NCatVo nCatVo = new NCatVo();
-
         nCatVo.setId(id);
         nCatVo.setName(name);
         nCatVo.setPcUrl(pcUrl);
         nCatVo.setWapUrl(wapUrl);
         nCatVo.setLeafs(leafs);
-
         return nCatVo;
     }
 }
