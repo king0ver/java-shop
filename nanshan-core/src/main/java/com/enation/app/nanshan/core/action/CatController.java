@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.NanShanActReserve;
+import com.enation.app.nanshan.service.ICatManager;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.util.JsonResultUtil;
 

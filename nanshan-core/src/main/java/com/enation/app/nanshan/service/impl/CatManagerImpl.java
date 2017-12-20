@@ -1,4 +1,4 @@
-package com.enation.app.nanshan.core.service.impl;
+package com.enation.app.nanshan.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.base.core.service.dbsolution.DBSolutionFactory;
 import com.enation.app.nanshan.constant.NanShanCommonConstant;
-import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.NanShanActReserve;
 import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleCatVo;
+import com.enation.app.nanshan.service.ICatManager;
 import com.enation.app.nanshan.util.NCatTreeUtil;
 import com.enation.app.nanshan.vo.NCatVo;
 import com.enation.framework.annotation.Log;

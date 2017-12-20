@@ -1,4 +1,4 @@
-package com.enation.app.nanshan.core.service;
+package com.enation.app.nanshan.service;
 
 import java.util.List;
 

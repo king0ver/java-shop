@@ -1,6 +1,6 @@
 package com.enation.app.nanshan.tag;
 
-import com.enation.app.nanshan.core.service.ICatManager;
+import com.enation.app.nanshan.service.ICatManager;
 import com.enation.app.nanshan.vo.NCatVo;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 
