@@ -4,7 +4,7 @@
         <!--按钮操作  -->
         <div class="table_control">
             <div class="table_opera">
-                <button type="button" id="add_uri_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+                <button type="button" id="add_spec_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
             </div>
             <!--搜索区域  -->
             <div class="table_search">
@@ -73,14 +73,14 @@ $(function(){
 	});
 	
 	
-	$("#add_uri_button").click(function(){
+	$("#add_spec_button").click(function(){
 	   	 layer.open({
 	            title:"添加",//标题
 	            maxmin :true,//右上角可否放大缩小
 	            type:2,//弹框的类型
 	            shade: [0.3, '#000'],//黑色背景
 	            shadeClose:false,//黑色背景是否可以点击关闭
-	            content:"${ctx}/core/admin/spec/add1.do",//内容的URL
+	            content:"${ctx}/core/admin/spec/add.do",//内容的URL
 	            area:['700px','600px'],//弹框大小
 	            scrollbar: false//是否允许浏览器出现滚动条
 	        });
@@ -97,7 +97,7 @@ function edit(id){
          shade: [0.3, '#000'],//黑色背景
          shadeClose:false,//黑色背景是否可以点击关闭
          content:ctx+"/core/admin/spec/edit.do?id="+id,//内容的URL
-         area:['600px','500px'],//弹框大小
+         area:['700px','600px'],//弹框大小
          scrollbar: false//是否允许浏览器出现滚动条
      });
 }

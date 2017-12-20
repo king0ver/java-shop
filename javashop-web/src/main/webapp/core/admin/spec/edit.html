@@ -6,65 +6,63 @@
 </style>
 <div class="main">
     <!--表单区域  -->
-	<form id="editUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+	<form id="editSpecForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
   		<div class="layui-form-item">
-    		<label class="layui-form-label">URL：</label>
+    		<label class="layui-form-label">属性名称：</label>
     		<div class="layui-input-block">
-    			<input type="hidden" name="id" value="${themeUri.id}"/>
-      			<input type="text" name="uri" id="uri" maxlength="60" value="${themeUri.uri}" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    			<input type="hidden" name="spec_id" value="${spec.spec_id}">
+      			<input type="text" name="spec_name" value="${spec.spec_name}" maxlength="60"  dataType="string" placeholder="请输入属性名称"  lay-verify="required" autocomplete="off" class="layui-input">
     		</div>
   		</div>
-  		
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">模板文件：</label>
-    		<div class="layui-input-block">
-      			<input type="text" name="path" id="path" maxlength="60" value="${themeUri.path}" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-    		</div>
-  		</div>
-  		
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">http缓存：</label>
-    		<div class="layui-input-block">
-      			<input type="radio" name="httpcache" value="1" title="是" <#if themeUri.httpcache==1>checked</#if>>
-      			<input type="radio" name="httpcache" value="0" title="否" <#if themeUri.httpcache==0>checked</#if>>
-    		</div>
-  		</div>
-  		
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">页面名称：</label>
-    		<div class="layui-input-block">
-      			<input type="text" name="pagename" id="pagename" maxlength="60" value="${themeUri.pagename}" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-    		</div>
-  		</div>
-  		
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">积分</label>
-    		<div class="layui-input-block">
-      			<input type="text" name="point" id="point" maxlength="9" value="${themeUri.point}" value="0" dataType="string" lay-verify="" autocomplete="off" class="layui-input">
-    		</div>
-  		</div>
-  		
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">关键字：</label>
-    		<div class="layui-input-block">
-      			<input type="text" name="keywords" id="keywords" maxlength="60" value="${themeUri.keywords!''}" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-    		</div>
-  		</div>
-  		
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">描述：</label>
-    		<div class="layui-input-block">
-      			<textarea name="description" id="description" style="height:100px" placeholder="请输入内容" class="layui-textarea">${themeUri.description!''}</textarea>
-    		</div>
-  		</div>
-  		
-  		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
-  			<a style=" margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="edit_uri">保存</a>
-  			<button class="layui-btn layui-btn-primary layui-btn-small" type="reset">还原</button>
+		<div id="attrId">
+			<#list specValList as specVal>
+				<div class="layui-form-item">
+				    <label class="layui-form-label">属性值</label>
+				    <div class="layui-input-inline">
+				    	<input type="hidden" name="specValId" value="${specVal.specval_id}">
+						<input type="text" name="specValName" value="${specVal.specval_name}" placeholder="请输入属性值" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+				    </div>
+				    <#if specVal_index != 0>
+				    	<div class="layui-inline">
+	    					<a onclick="return addButton();" class="layui-btn"><i class="layui-icon">&#xe654;</i></a>
+	    				</div>
+				    </#if>
+				    <div class="layui-inline">
+    					<a onclick="return delButton(this);" class="layui-btn"><i class='layui-icon'>&#xe640;</i></a>
+    				</div>
+			 	</div>
+			</#list>
+		</div>
+		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="edit_spec">保存</a>
+  			<button class="layui-btn layui-btn-primary layui-btn-small" type="reset" >还原</button>
+  			<div id="test"></div>
   		</div>
   	</form>
 </div>
 <script>
+
+function addButton(){
+	 var addHtml ="<div class='layui-form-item'>"+
+	    "<label class='layui-form-label'>属性值</label>"+
+	    "<div class='layui-input-inline'>"+
+			"<input type='text' name='specValName' placeholder='请输入属性值' maxlength='60' dataType='string' lay-verify='required' autocomplete='off' class='layui-input'>"+
+	    "</div>"+
+	    "<div class='layui-inline'>"+
+			"<a onclick='return addButton();' class='layui-btn'><i class='layui-icon'>&#xe654;</i></a>"+
+		"</div>"+
+		"<div class='layui-inline'>"+
+			"<a  onclick='return delButton(this);' class='layui-btn'><i class='layui-icon'>&#xe640;</i></a>"+
+		"</div>"+
+	  "</div>";
+	$("#attrId").append(addHtml);
+};
+
+//删除按钮
+function delButton(k){
+	var a = $(k).parent().parent().remove();
+}
+
 var index = parent.layer.getFrameIndex(window.name);
 
 function checkLength(){
@@ -77,20 +75,20 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     layedit = layui.layedit,
     laydate = layui.laydate;
     
-	form.on('submit(edit_uri)', function(data){
+	form.on('submit(edit_spec)', function(data){
     	var options = {
-   			url:ctx+"/core/admin/themeUri/save-edit.do",
+   			url:ctx+"/core/admin/spec/save-edit.do",
    			type:"post",
    			dataType:"json",
    			success:function(data){
    				if(data.result==1){	
    					$.Loading.success(data.message);
    					parent.layer.close(index); //再执行关闭        
-   					parent.table.ajax.url(ctx+"/core/admin/themeUri/list-json.do").load();
+   					parent.table.ajax.url(ctx+"/core/admin/spec/list-json.do").load();
    				}
    			}
    		};
-   		$("#editUriForm").ajaxSubmit(options);
+   		$("#editSpecForm").ajaxSubmit(options);
        return false;
     });
    
