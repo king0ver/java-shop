@@ -36,5 +36,9 @@
 		<field><name>category</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>content</name><type>memo</type><size>715827882</size><option>00</option></field>
 	</action>
+	
+
+	
+	
 
 </dbsolution>
