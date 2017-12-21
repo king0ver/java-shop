@@ -45,5 +45,12 @@ public interface ISpecManager {
 	 */
 	public void delete(int id);
 
+	/**
+	 * 通过id查询
+	 * @param id
+	 * @return
+	 */
+	public Spec querySpecById(int id);
+
 
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.enation.app.nanshan.core.model.Spec;
 import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.ISpecManager;
+import com.enation.eop.resource.model.ThemeUri;
 import com.enation.framework.annotation.Log;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.log.LogType;
@@ -88,6 +89,11 @@ public class ISpecManagerImpl implements ISpecManager {
 		}
 		List<SpecVal> specValList = daoSupport.queryForList(sql, SpecVal.class);
 		return specValList;
+	}
+
+	@Override
+	public Spec querySpecById(int id) {
+		return daoSupport.queryForObject("select * from es_nanshan_spec where spec_id=?", Spec.class, id);
 	}
 
 }

@@ -83,8 +83,20 @@ public class SpecController extends GridController{
 	 * @return 添加页面
 	 */
 	@RequestMapping(value="/add1")
-	public String add1(){
-		return "/core/admin/spec/add_context";
+	public ModelAndView add1(){
+		ModelAndView view = new ModelAndView();
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Spec> specList = specManager.list(map);
+		List<Integer> specIdList = new ArrayList<Integer>();
+		for (Spec spec : specList) {
+			specIdList.add(spec.getSpec_id());
+		}
+		map.put("specIdList", specIdList);
+		List<SpecVal> specValList = specManager.querySpecValList(map);
+		view.addObject("specList",specList);
+		view.addObject("specValList", specValList);
+		view.setViewName("/core/admin/spec/add_context");
+		return view;
 	}
 	
 	
@@ -96,15 +108,15 @@ public class SpecController extends GridController{
 	 */
 	@ResponseBody
 	@RequestMapping(value="/save-add")
-	public JsonResult saveAdd(Spec spec,String[] specvalName){
+	public JsonResult saveAdd(Spec spec,String[] specValName){
 		try{
 			List<SpecVal> specValList = new ArrayList<SpecVal>();
 			AdminUser user  = UserConext.getCurrentAdminUser();
 			String userName = user.getUsername();
-			if(specvalName!=null && specvalName.length >0){
-				for(int i=0, len=specvalName.length;i<len;i++){
+			if(specValName!=null && specValName.length >0){
+				for(int i=0, len=specValName.length;i<len;i++){
 					SpecVal specVal  = new SpecVal();
-					specVal.setSpecval_name(specvalName[i]);
+					specVal.setSpecval_name(specValName[i]);
 					specVal.setOperator(userName);
 					specValList.add(specVal);
 				}
@@ -142,41 +154,40 @@ public class SpecController extends GridController{
 	}
 	
 	/**
-	 * 跳转至uri映射修改页面
-	 * @param id uri映射Id
-	 * @param themeUri uri映射
-	 * @return uri映射修改页面
+	 * 跳转到修改页面
+	 * @param id
+	 * @return
 	 */
 	@RequestMapping(value="/edit")
 	public ModelAndView edit(int id){
+		Spec spec = specManager.querySpecById(id);
+		Map<String, Object> map = new HashMap<String, Object>();
 		ModelAndView view = new ModelAndView();
-		view.addObject("themeUri",this.themeUriManager.get(id));
-		view.setViewName("/core/admin/uri/edit");
+		map.put("specId",spec.getSpec_id());
+		List<SpecVal> specValList = specManager.querySpecValList(map);
+		view.addObject("spec",spec);
+		view.addObject("specValList", specValList);
+		view.setViewName("/core/admin/spec/edit");
 		return view;
 	}
 	
-	
-	
 	/**
-	 * 保存修改uri映射
-	 * @param themeUri uri映射
-	 * @return 修改状态 
+	 * 
+	 * @param spec
+	 * @param specValName
+	 * @param spec
+	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/save-edit")
-	public JsonResult saveEdit(ThemeUri themeUri,int id){
-		
-		//判断是否为演示站点
+	public JsonResult saveEdit(Spec spec,String[] specValName,Integer[] specValId){
 		AdminUser user  = UserConext.getCurrentAdminUser();
-		if(EopSetting.IS_DEMO_SITE && user!= null && user.getFounder() != 1){
-			if(id<=6){
-				return JsonResultUtil.getErrorJson("抱歉，当前为演示站点，以不能修改这些示例数据，请下载安装包在本地体验这些功能！");
-			}
-		}
-		
-		//保存修改uri映射
+		//保存修改
 		try{
-			this.themeUriManager.edit(themeUri);
+			if(spec.getSpec_id() == null){
+				return JsonResultUtil.getErrorJson("修改失败:修改参数ID为空.");
+			}
+			specManager.edit(spec);
 			return JsonResultUtil.getSuccessJson("修改成功");
 		}catch(RuntimeException e){
 			return JsonResultUtil.getErrorJson("修改失败:"+e.getMessage());

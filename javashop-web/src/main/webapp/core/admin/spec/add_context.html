@@ -10,66 +10,113 @@
    		<div class="layui-input-block">
      			<input type="text" name="spec_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
    		</div>
-   		<div id="specInfoId">
-	
+   		
+   		<div class="layui-collapse">
+			<div class="layui-colla-item">
+				<h2 class="layui-colla-title">基础属性</h2>
+				<div class='layui-colla-content'>
+					<#list specList as spec>
+						<div class="layui-form-item">
+							<label class="layui-form-label">${spec.spec_name}</label>
+							<div class="layui-input-block">
+								<#list specValList as specVal>
+									<#if specVal.spec_id == spec.spec_id>
+				    					<input name="specValId" title="${specVal.specval_name}" type="checkbox">
+				    				</#if>
+								</#list>
+							</div>
+						</div>
+					</#list>
+				</div>
+			</div>
    		</div>
    		
-   		<input type="button" value="增加段落" onclick="add();">
-		<input type="button" value="增加图片" onclick="addImg();">
-		<input type="button" value="获取内容" onclick="getContext();">
-   		<fieldset>
-		<legend>编辑区</legend>
+   		<div id="specInfoId"></div>
+   		
+   		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+		<legend>文章编辑区</legend>
+			 <div class="layui-form-item">
+    			<a class="layui-btn" onclick="add();">增加段落</a>
+				<a class="layui-btn" onclick="addImg();">增加图片</a>
+				<a class="layui-btn" onclick="getContext();">获取内容</a>
+  			</div>
 			<div id="article">
-				<div class="content">
-					<div contenteditable="true" style="width:400px;min-height:100px;border:2px dashed #ccc"></div>
-					<input type="button" value="删除" onclick="delButton(this);"/>
-				</div>
-				<div class="content">
-					<div>
-						<img src="file://E:/李涧明/日常处理/20171215/123123131/c.jpg"  width="112" height="112" />	
-					</div>
-					<input type="button" value="删除" onclick="delButton(this);"/>
-				</div>
-				<div id="test"></div>
+			  <div class="layui-form-item">
+			    <div class="layui-inline">
+			      <textarea id="content" name="content" style="width: 500px;" placeholder="请输入内容" class="layui-textarea"></textarea>
+			    </div>
+			    <div class="layui-inline">
+			      <a class="layui-btn layui-btn-sm layui-btn-danger" data-method="setTop" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <div class="layui-inline">
+					<img name="img" src="file://E:/李涧明/日常处理/20171215/123123131/c.jpg"  width="112" height="112" />	
+			    </div>
+			    <div class="layui-inline">
+			      <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
+			    </div>
+			  </div>
 			</div>
 		</fieldset>
-   		
  	</div>
 </form>
 <script type="text/javascript">
 
 
 function add(){
-	$("#article").append("<div class='content'><div contenteditable='true' style='width:400px;min-height:100px;border:2px dashed #ccc'></div><input type='button' value='删除'/></div>");
+	$("#article").append("<div class='layui-form-item'>"+
+		    "<div class='layui-inline'>"+
+		      "<textarea id='content' name='desc' style='width: 500px;' placeholder='请输入内容' class='layui-textarea'></textarea>"+
+		    "</div>"+
+		    "<div class='layui-inline'>"+
+		      "<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+		    "</div>"+
+		  "</div>");
 }
 
 function addImg(){
-	$("#article").append("<div class='content'><div>"+
-			"<img src='file://E:/李涧明/日常处理/20171215/123123131/c.jpg' width='112' height='112' /></div>"+
-		"<input type='button' value='删除' onclick='delButton(this);'/></div>");
+	$("#article").append("<div class='layui-form-item'>"+
+		    "<div class='layui-inline'>"+
+				"<img src='file://E:/李涧明/日常处理/20171215/123123131/c.jpg'  width='112' height='112' />"+	
+	    	"</div>"+
+	    	"<div class='layui-inline'>"+
+	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+	    	"</div>"+
+	  	"</div>");
 }
 
 function delButton(k){
-	if(confirm("确认要删除吗?")){
-	 	$(k).parent().remove();
-    }
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$(k).parent().parent().remove();
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
 };
 
 function getContext(){
-	var divContext = $(".content div");
+	var divContext = $("#article .layui-form-item");
 	var jsonList = new Array();
 	for(var i=0;i<divContext.length;i++){
 		var articleContext = null;
-		var content = $(divContext[i]);
-		var picture = content.find("img"); //找到图片
+		var content = $(divContext[i]).children();
+		var picture = content.find("[name='img']"); //找到图片
 		var imgSrc = picture.attr('src')//取src路径
 		if(imgSrc != null){
 			articleContext = imgSrc;
 			jsonList.push({"index":i,"type":"img","content":articleContext});  
 		}else{
-			articleContext = content.text();
+			articleContext = content.find("#content").val();
 			jsonList.push({"index":i,"type":"text","content":articleContext}); 
-		}
+		}  
 	}
 	$.each(jsonList, function(idx, obj) {
 		alert(obj.index+"  ,  "+obj.type+"  ,  "+obj.content);
@@ -77,12 +124,12 @@ function getContext(){
 }
 
 
-  var specInfo = $("#specInfoId").myPlugin(1,2,function(){
-	
-	   var form = layui.form();
-	   console.log(form);
-	  form.render();
-}); 
+/* var specInfo = $("#specInfoId").myPlugin(1,2,function(){
+	  layui.use(['form'], function(){
+		  var form = layui.form();
+		  form.render();
+	  });
+});  */
  
 //getSpecInfoList(1,2);
 
@@ -91,7 +138,7 @@ function getContext(){
 	specInfo.getData();
 } */
 
-//var index = parent.layer.getFrameIndex(window.name);
+var index = parent.layer.getFrameIndex(window.name);
 
 function checkLength(){
 	if($("#rolememo").val().length>100){
@@ -105,6 +152,7 @@ layui.use(['form', 'layedit', 'laydate','element'], function(){
     laydate = layui.laydate;
 	element = layui.element;
 	form.render();
+	
 	form.on('submit(save_spec)', function(data){
     	var options = {
    			url:ctx+"/core/admin/spec/save-add.do",

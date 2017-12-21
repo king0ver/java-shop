@@ -37,13 +37,13 @@
 	    				  });
 	    				  contentInfo =contentInfo+aa+"</div></div></div>";
 	    				  $this.html(contentInfo);
+	    				  renderCallback();
             		}
             	},
             error: function(data) {
             		alert("error:"+data.responseText);
             }
     	});
-    	renderCallback();
     	return {
     		getData : function(){
     			alert("test123");
