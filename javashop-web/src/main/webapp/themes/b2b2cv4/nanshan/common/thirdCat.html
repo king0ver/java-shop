@@ -1,13 +1,17 @@
+<#assign sblingCats = article.sbling/>
 <div class="nav-bar">
 	<div class="nav-content">
 		<div class="nav-title"></div>
 		<ul class="nav-list">
-			<#if nCat.lea>
-
+			<#if sblingCats?size gt 0>
+				<#list sblingCats as cat>
+					<#if cat.id??>
+						<li><a href="${cat.pcUrl!''}" class="active">${cat.name}</a></li>
+					<#else>
+						<li><a href="${cat.pcUrl!''}">${cat.name}</a></li>
+					</#if>
+				</#list>
 			</#if>
-			<li><a href="#">游戏推荐区</a></li>
-			<li><a href="#">游戏排行榜</a></li>
-			<li><a href="#" class="active">游戏列表</a></li>
 		</ul>
 	</div>
 </div>

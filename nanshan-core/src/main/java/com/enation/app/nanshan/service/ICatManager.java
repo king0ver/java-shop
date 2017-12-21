@@ -30,7 +30,7 @@ public interface ICatManager {
 	* @date 2017年12月18日 下午7:53:53
 	*  
 	*/ 
-	public List<NCatVo> getCatList();
+	public NCatVo getCatTree();
 	
 	
 	

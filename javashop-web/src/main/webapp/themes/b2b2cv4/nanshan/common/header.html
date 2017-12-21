@@ -83,11 +83,11 @@ var ctxPath = '${file_path}/';
 						<#else/>
 							<div class="item">
 						</#if>
-							<a href="${cat.pcUrl}">${cat.name}</a>
+							<a href="${cat.pcUrl!''}">${cat.name}</a>
 						<#if cat.leafs?? && cat.leafs?size gt 0>
 							<div class="itmeList">
 								<#list cat.leafs as leaf>
-									<div><a href="${leaf.pcUrl}">${leaf.name}</a></div>
+									<div><a href="${leaf.pcUrl!''}">${leaf.name}</a></div>
 								</#list>
 							</div>
 						</#if>

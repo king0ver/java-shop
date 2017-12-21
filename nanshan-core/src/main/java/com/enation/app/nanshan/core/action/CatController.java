@@ -43,7 +43,7 @@ public class CatController {
 	@RequestMapping("/getcat")
 	public JsonResult getcCat(){
 		try {
-			return JsonResultUtil.getObjectJson(this.catManager.getCatList());
+			return JsonResultUtil.getObjectJson(this.catManager.getCatTree());
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
 			return JsonResultUtil.getErrorJson("初始化分类失败");

@@ -94,13 +94,18 @@ public class CatManagerImpl implements ICatManager  {
 
 
 	@Override
-	public List<NCatVo> getCatList() {
-		List<NCatVo> listTree= (List<NCatVo>) this.cache.get(NanShanCommonConstant.NANSHANCATCACHENAME);
+	public  NCatVo getCatTree(){
+		List<NCatVo> listTree= (List<NCatVo>)this.cache.get(NanShanCommonConstant.NANSHANCATCACHENAME);
+
 	    if(listTree==null||listTree.size()<1){
-	    	listTree= new NCatTreeUtil(this.getCats()).buildTree();
-		    this.cache.put(NanShanCommonConstant.NANSHANCATCACHENAME,listTree);
+
+			listTree= new NCatTreeUtil(this.getCats()).buildTree();
+
+			this.cache.put(NanShanCommonConstant.NANSHANCATCACHENAME,listTree);
 	    }
-		return listTree;
+
+
+		return listTree == null ? null : listTree.get(0);
 	}
 
 }

@@ -44,7 +44,7 @@ public class NCatTreeUtil {
                         treeNodes.add(rootNode);
 
                }
-               System.out.println(JSONArray.fromObject(treeNodes).toString());
+
                return treeNodes;
                
               
@@ -133,14 +133,10 @@ public class NCatTreeUtil {
 
      }
      public NCatVo getCatParent(long x){  
-    	 NCatVo p=new NCatVo();
+
          for(int i = 0; i<nodes.size();i++){  
              if(nodes.get(i).getId()==x){
-            	 p.setId(nodes.get(i).getId());
-            	 p.setName(nodes.get(i).getName());
-            	 p.setPcUrl(nodes.get(i).getPcUrl());
-            	 p.setWapUrl(nodes.get(i).getWapUrl());
-            	 return p; 
+            	 return nodes.get(i);
              }
          }  
          return null;  

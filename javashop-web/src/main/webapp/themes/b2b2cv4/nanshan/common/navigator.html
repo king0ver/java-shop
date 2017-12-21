@@ -1,3 +1,8 @@
 <div class="crumbs">
-	首页&nbsp;&gt;&nbsp;线上体验&nbsp;&gt;&nbsp;青少年安全游戏&nbsp;&gt;&nbsp;游戏排行榜
+	<#assign subCat= article.curCat.parent/>
+	<#assign mainCat= subCat.parent/>
+	<a href="${mainCat.pcUrl!'#'}">${mainCat.name!''}"</a>&nbsp;&gt;&nbsp;<a href="${subCat.pcUrl!'#'}">${subCat.name!''}"</a>
+		&nbsp;&gt;&nbsp;<a href="${article.curCat.pcUrl!'#'}">${article.curCat.name!''}"</a>
+	<#if article.page??>&nbsp;&gt;&nbsp;${article.page.title!''}</#if>
+
 </div>

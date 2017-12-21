@@ -9,15 +9,15 @@ public class SpecValVo {
 
     private String name;
 
-    private boolean isSelected;
+    private boolean selected;
 
     public SpecValVo() {
     }
 
-    public SpecValVo(long id, String name, boolean isSelected) {
+    public SpecValVo(long id, String name, boolean selected) {
         this.id = id;
         this.name = name;
-        this.isSelected = isSelected;
+        this.selected = selected;
     }
 
     public long getId() {
@@ -37,10 +37,10 @@ public class SpecValVo {
     }
 
     public boolean isSelected() {
-        return isSelected;
+        return selected;
     }
 
     public void setSelected(boolean selected) {
-        isSelected = selected;
+        this.selected = selected;
     }
 }

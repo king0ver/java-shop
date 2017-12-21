@@ -1,7 +1,10 @@
 
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
 <#include 'common/header.html'/>
 <#include 'common/thirdCat.html'/>
 <div class="section-content">
     <#include 'common/navigator.html'/>
+    <#include 'selection-condition.html'/>
 </div>
 <#include 'common/footer.html'/>

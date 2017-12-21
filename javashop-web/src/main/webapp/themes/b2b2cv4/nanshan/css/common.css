@@ -32,3 +32,31 @@
 .crumbs{
     margin: 30px auto;
 }
+
+.change-game-box{
+    border: 1px solid #c3c3c3;
+    border-bottom: 2px solid #c3c3c3;
+    padding: 10px 0 15px 26px;
+}
+.g-type{
+    height: 34px;
+    line-height: 34px;
+}
+.g-type .title{
+    display: inline-block;
+}
+.g-type a{
+    color: #333;
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    text-align: center;
+    padding: 0 9px;
+}
+.g-type a:hover{
+    cursor: pointer
+}
+.g-type .g-active{
+    background: #3375c3;
+    color: #fff;
+}

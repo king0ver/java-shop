@@ -1,5 +1,5 @@
 <#assign selectionConditionTag = newTag("selectionConditionTag") />
-<#assign selection = new selectionConditionTag() />
+<#assign selection = selectionConditionTag() />
 <ul class="change-game-box">
     <#if  selection.specVos?size gt 0>
         <#list selection.specVos as spec>
@@ -8,9 +8,9 @@
 
                 <#if spec.specValVos?size gt 0>
                     <#list spec.specValVos as specVal>
-                         <#if specVal.isSelected>
+                         <#if specVal.selected?string("true","flase") == "true">
                              <a class="type-name g-active" data-id="${specVal.id}">${specVal.name}</a>
-                         </#esle>
+                          <#else/>
                              <a class="type-name" data-id="${specVal.id}">${specVal.name}</a>
                          </#if>
                     </#list>

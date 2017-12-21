@@ -6,6 +6,7 @@ import com.enation.framework.taglib.BaseFreeMarkerTag;
 
 import freemarker.template.TemplateModelException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,23 +18,23 @@ import java.util.Map;
  */
 @Component("nCatTag")
 public class NCatTag extends BaseFreeMarkerTag {
-	
+
+    @Autowired
 	private ICatManager catManager;
 
 
     @Override
     protected Object exec(Map params) throws TemplateModelException {
-        List<NCatVo> catVos = new ArrayList<NCatVo>();   
-        catVos=catManager.getCatList();
-        return catVos;
+
+        NCatVo nCatVo = catManager.getCatTree();
+
+        List<NCatVo> nCatVos = new ArrayList<>();
+
+        nCatVos.add(nCatVo);
+        nCatVos.addAll(nCatVo.getLeafs());
+        nCatVo.setLeafs(null);
+
+        return nCatVos;
     }
-    private  NCatVo build(long id, String name, String pcUrl, String wapUrl, List<NCatVo> leafs){
-        NCatVo nCatVo = new NCatVo();
-        nCatVo.setId(id);
-        nCatVo.setName(name);
-        nCatVo.setPcUrl(pcUrl);
-        nCatVo.setWapUrl(wapUrl);
-        nCatVo.setLeafs(leafs);
-        return nCatVo;
-    }
+
 }
