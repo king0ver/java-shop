@@ -83,8 +83,20 @@ public class SpecController extends GridController{
 	 * @return 添加页面
 	 */
 	@RequestMapping(value="/add1")
-	public String add1(){
-		return "/core/admin/spec/add_context";
+	public ModelAndView add1(){
+		ModelAndView view = new ModelAndView();
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Spec> specList = specManager.list(map);
+		List<Integer> specIdList = new ArrayList<Integer>();
+		for (Spec spec : specList) {
+			specIdList.add(spec.getSpec_id());
+		}
+		map.put("specIdList", specIdList);
+		List<SpecVal> specValList = specManager.querySpecValList(map);
+		view.addObject("specList",specList);
+		view.addObject("specValList", specValList);
+		view.setViewName("/core/admin/spec/add_context");
+		return view;
 	}
 	
 	
