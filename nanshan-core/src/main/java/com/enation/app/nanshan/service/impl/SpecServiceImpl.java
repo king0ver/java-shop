@@ -24,6 +24,7 @@ import com.enation.framework.database.IDaoSupport;
 @Service("specService")
 public class SpecServiceImpl implements ISpecService {
 
+	
 	private Logger logger = Logger.getLogger(SpecServiceImpl.class);
 	
 	@Autowired
