@@ -10,7 +10,6 @@ import com.enation.app.nanshan.vo.SpecVo;
  * @version $Id: SpecService.java,v 0.1 2017年12月21日 下午2:57:09$
  */
 public interface ISpecService {
-	
 	/**
 	 * 通过分类ID属性信息
 	 * @param catId
