@@ -238,9 +238,9 @@
 				<menu text="站点后台主题" url="/core/admin/user/siteAdminTheme/info.do" />
 			</menu>
 			<menu text="活动资讯">
-				<menu text="文章模型" url="/cms/admin/model/list.do" />
-				<menu text="文章管理" url="/cms/admin/cat/list.do" />
-				<menu text="导航栏管理" url="/core/admin/site-menu/list.do" />
+				<menu text="新闻公告" url="/admin/article/list.do?catId=37" />
+				<menu text="活动管理" url="/admin/article/act/list.do?catId=38" />
+				
 			</menu>
 			<menu text="基础数据">
 				<menu text="基础数据管理" url="/core/admin/spec/list.do" />
