@@ -87,4 +87,32 @@ public class ArticleManagerImpl implements IArticleManager  {
 		
 	}
 
+	/**
+	 *  条件查询信息
+	 * @param params
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 * @see com.enation.app.nanshan.core.service.IArticleManager#queryArticleListByConiditon(java.util.Map, int, int)
+	 */
+	@Override
+	public Page queryArticleListByConiditon(Map<String, Object> params,int page, int pageSize) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name ");
+		sql.append("from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t ");
+		sql.append(" where a.cat_id=t.cat_id and a.content=c.id ");
+		if(params.containsKey("catParentIds")){
+			if(StringUtils.isNotBlank(String.valueOf(params.get("catParentIds")))){
+				sql.append(" and t.parent_id in (").append(String.valueOf(params.get("catParentIds"))).append(") ");
+			}
+		}
+		if(params.containsKey("catIds")){
+			if(StringUtils.isNotBlank(String.valueOf(params.get("catIds")))){
+				sql.append(" and t.cat_id in (").append(String.valueOf(params.get("catIds"))).append(") ");
+			}
+		}
+		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
+	}
+
 }
