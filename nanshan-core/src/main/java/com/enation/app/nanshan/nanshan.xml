@@ -65,5 +65,6 @@
 		<field><name>specval_id</name><type>int</type><size>10</size><option>00</option></field>
 	</action>
 
+
 </dbsolution>
 
