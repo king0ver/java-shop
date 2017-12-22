@@ -1,0 +1,19 @@
+<div id="specPanel" class="layui-collapse" style="margin-bottom:10px">
+		<div class="layui-colla-item">
+			<h2 class="layui-colla-title">基础属性</h2>
+			<div class='layui-colla-content'>
+				<#list specList as spec>
+					<div class="layui-form-item">
+						<label class="layui-form-label">${spec.spec_name}</label>
+						<div class="layui-input-block">
+							<#list specValList as specVal>
+								<#if specVal.spec_id == spec.spec_id>
+			    					<input name="specValId" title="${specVal.specval_name}" value="${specVal.specval_id}" type="checkbox">
+			    				</#if>
+							</#list>
+						</div>
+					</div>
+				</#list>
+			</div>
+		</div>
+</div>

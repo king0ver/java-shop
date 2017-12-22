@@ -117,7 +117,7 @@ $(function(){
 	        {data: "is_del"},
 	        {data: "pic_url"},	      
 	        {data: null,"render": function(data, type, row) {
-	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/admin/article/edit.do?catId=${catId}&id="+data.id+"')\">修改</a>"
+	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/admin/article/act/edit.do?catId=${catId}&id="+data.id+"')\">修改</a>"
 	        			+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger'  onclick='del("+data.id +")'>删除</a>";		
 	       	}}
 	     ]
@@ -132,7 +132,7 @@ $(function(){
 	            shade: [0.3, '#000'],//黑色背景
 	            offset: '10px',//弹框位置
 	            shadeClose:false,//黑色背景是否可以点击关闭
-	            content:"${ctx}/admin/article/add.do?catId=${catId}",//内容的URL
+	            content:"${ctx}/admin/article/act/add.do?catId=${catId}",//内容的URL
 	            area:['100%','750px'],//弹框大小
 	            scrollbar: false//是否允许浏览器出现滚动条
 	        });
@@ -143,7 +143,7 @@ $(function(){
 			return ;
 		}
 		var options = {
-				url : '${ctx}/article/newsbulletin/del.do?id='+id+'&ajax=yes',
+				url : '${ctx}/admin/aticle/del.do?id='+id+'&ajax=yes',
 				type : "POST",
 				dataType : 'json',
 				success : function(result) {

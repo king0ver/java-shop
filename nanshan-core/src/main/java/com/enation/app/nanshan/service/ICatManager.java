@@ -3,7 +3,6 @@ package com.enation.app.nanshan.service;
 import java.util.List;
 
 import com.enation.app.nanshan.model.NanShanActReserve;
-import com.enation.app.nanshan.model.NanShanArticleCatVo;
 import com.enation.app.nanshan.vo.NCatVo;
 
 

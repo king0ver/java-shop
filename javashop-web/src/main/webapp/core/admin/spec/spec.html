@@ -1,0 +1,123 @@
+<#include '/admin/header.html' >
+<div  class="admin-main">
+   <div>
+        <!--按钮操作  -->
+        <div class="table_control">
+            <div class="table_opera">
+                <button type="button" id="add_spec_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+            </div>
+            <!--搜索区域  -->
+            <div class="table_search">
+                 <input type="text" name="keyword" class="keyword" placeholder="请输入关键字" id="searchbtn">
+            </div>
+        </div>
+    </div>
+    
+   <!--表格区域  -->
+   <form id="uriForm">
+    <table id="uridata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>创建时间</th>
+            <th>操作人</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+    </table>
+    <!--传值等操作  -->
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+$(function(){
+	//搜索栏
+    var cent = $("#templist").html();
+    $("#searchbtn").searchBox({
+    	  content: cent,
+        keywordSearch: function () {
+        	var keyword = $("input[name=keyword]").val();
+			var url = table.ajax.url("${ctx}/core/admin/spec/list-json.do?keyword="+keyword);
+			url.load();
+        },
+        advanced: true,
+    });
+	
+	table = $('#uridata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/core/admin/spec/list-json.do',
+	    },
+	    columns: [ //定义列
+	        {data: "spec_id"},
+	        {data: "spec_name"},
+	        {data: "creationTime"},
+	        {data: "operator"},
+	        {data: null,"render": function(data, type, row) {
+	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick='edit("+data["spec_id"]+")'>修改</a>"+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger' onclick='del("+data["spec_id"]+")'>删除</a>";		//获取值:data["brand_id"]
+	       	}}
+	     ]
+	});
+	
+	
+	$("#add_spec_button").click(function(){
+	   	 layer.open({
+	            title:"添加",//标题
+	            maxmin :true,//右上角可否放大缩小
+	            type:2,//弹框的类型
+	            shade: [0.3, '#000'],//黑色背景
+	            shadeClose:false,//黑色背景是否可以点击关闭
+	            content:"${ctx}/core/admin/spec/add.do",//内容的URL
+	            area:['700px','600px'],//弹框大小
+	            scrollbar: false//是否允许浏览器出现滚动条
+	        });
+		});
+});
+
+
+//修改
+function edit(id){
+	 layer.open({
+         title:"修改",//标题
+         maxmin :true,//右上角可否放大缩小
+         type:2,//弹框的类型
+         shade: [0.3, '#000'],//黑色背景
+         shadeClose:false,//黑色背景是否可以点击关闭
+         content:ctx+"/core/admin/spec/edit.do?id="+id,//内容的URL
+         area:['700px','600px'],//弹框大小
+         scrollbar: false//是否允许浏览器出现滚动条
+     });
+}
+
+//删除
+function del(id){
+	if(!confirm("确认要删除吗？")){
+		return;
+	}
+	$.ajax({
+		url:ctx+"/core/admin/themeUri/delete.do?id="+id,
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			if(data.result == 1){
+				$.Loading.success(data.message);
+				table.ajax.url(ctx+"/core/admin/spec/list-json.do").load();
+			}
+		}
+	});
+}
+</script>
+<#include '/admin/footer.html' >

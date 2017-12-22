@@ -1,5 +1,9 @@
 package com.enation.app.nanshan.core.service;
 
+import java.util.List;
+
+import com.enation.app.nanshan.model.ArtSpecRel;
+import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.database.Page;
 
@@ -14,6 +18,12 @@ public interface IArticleManager {
 	public void updateArticle(NanShanArticleVo nanShanArticleVo);
 	
 	public void delArticle(int id);
+	
+	public List<ArticleCat> getCats(int id);
+	
+	
+	
+   
 	
 	
 	

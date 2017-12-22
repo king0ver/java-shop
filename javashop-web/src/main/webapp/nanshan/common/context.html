@@ -1,0 +1,27 @@
+<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;padding-left:20px;padding-top:10px">
+<legend>文章编辑区</legend>
+	<div id="article">
+	  <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <textarea id="content" style="width: 500px;" placeholder="请输入内容" class="layui-textarea"></textarea>
+	    </div>
+	    <div class="layui-inline">
+	      <a class="layui-btn layui-btn-sm layui-btn-danger" data-method="setTop" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-inline">
+			<img name="img" src="file://E:/李涧明/日常处理/20171215/123123131/c.jpg"  width="112" height="112" />	
+	    </div>
+	    <div class="layui-inline">
+	      <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
+	    </div>
+	  </div>
+	</div>
+	<div class="layui-form-item">
+  		<a class="layui-btn" onclick="add();">增加段落</a>
+		<a class="layui-btn" onclick="addImg();">增加图片</a>
+	</div>
+</fieldset>
+ 
+

@@ -5,18 +5,18 @@
     width: 75%;
   }
 </style>
+<script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
 <div class="main">
     <!--表单区域  -->
 	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
 	    <div class="layui-form-item">
     		<label class="layui-form-label">分类：</label>
     		<div class="layui-input-block">
-      			<select name="cat_id">
+      			<select name="cat_id" id="cats">
       			     <option>请选择分类</option>
-      			     <option value="40">新闻公告</option>
-      			     <option value="41">行业动态</option>
-      			     <option value="42">科技之光</option>
-      			     <option value="43">媒体声音</option>
+      			<#list cats as cat>
+                    <option value="${cat.cat_id}">${cat.cat_name}</option>
+                </#list>
       			</select>
     		</div>
   		</div>
@@ -30,7 +30,7 @@
   		<div class="layui-form-item">
     		<label class="layui-form-label">创建时间：</label>
     		<div class="layui-input-inline" >
-      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" />
     		</div>
     		
   		</div>
@@ -46,19 +46,12 @@
   		<div class="layui-form-item">
     		<label class="layui-form-label">文章摘要：</label>
     		<div class="layui-input-block">
-      			<input type="text" name="summary" id="pagename" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		    <textarea name="summary" id="summary" style="height:100px" placeholder="请输入内容" class="layui-textarea"></textarea>
     		</div>
   		</div>
-  		<div class="layui-form-item">
-    		<label class="layui-form-label">详情：</label>
-    		<div class="layui-input-block">
-      			<textarea name="content" id="description" style="height:100px" placeholder="请输入内容" class="layui-textarea"></textarea>
-    		</div>
-  		</div>
-  		
+	    <#include '${ctx}/nanshan/common/context.html' >
   		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
   			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
-  			<button class="layui-btn layui-btn-primary layui-btn-small" type="reset">还原</button>
   		</div>
   	</form>
 </div>
@@ -70,21 +63,27 @@ function checkLength(){
 		$("#rolememo").val($("#rolememo").val().substring(0,100));
 	}
 }
+
 layui.use(['form', 'layedit', 'laydate'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
     laydate = layui.laydate;
     
 	form.on('submit(save_uri)', function(data){
+		console.log(JSON.stringify(getContext()));
+		
+		var content=JSON.stringify(getContext());
+		var content='{"content":'+content+'}';
     	var options = {
-   			url:ctx+"/admin/article/add_save.do",
+   			url:ctx+"/admin/article/add_save.do?catId=${catId}",
    			type:"post",
    			dataType:"json",
+   			data:{"content":content},
    			success:function(data){
    				if(data.result==1){	
    					$.Loading.success(data.message);
    					parent.layer.close(index); //再执行关闭        
-   					parent.table.ajax.url(ctx+"/admin/article/list-json.do").load();
+   					parent.table.ajax.url(ctx+"/admin/article/list-json.do?catId=${catId}").load();
    				}
    			}
    		};
@@ -93,4 +92,91 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     });
    
 });
+
+function add(){
+	$("#article").append("<div class='layui-form-item'>"+
+		    "<div class='layui-inline'>"+
+		      "<textarea id='content' name='desc' style='width: 700px;' placeholder='请输入内容' class='layui-textarea'></textarea>"+
+		    "</div>"+
+		    "<div class='layui-inline'>"+
+		      "<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+		    "</div>"+
+		  "</div>");
+}
+
+function addImg(){
+	$("#article").append("<div class='layui-form-item'>"+
+		    "<div class='layui-inline'>"+
+				"<img src='http://localhost:8080/statics/images/logo2.png'  width='112' height='112' />"+	
+	    	"</div>"+
+	    	"<div class='layui-inline'>"+
+	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+	    	"</div>"+
+	  	"</div>");
+}
+
+function getText(text){
+	 var html="<div class='layui-form-item'>"+
+	    "<div class='layui-inline'>"+
+	      "<textarea id='content' name='desc' style='width: 700px;' placeholder='请输入内容' class='layui-textarea'>"+text+"</textarea>"+
+	    "</div>"+
+	    "<div class='layui-inline'>"+
+	      "<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+	    "</div>"+
+	  "</div>"
+}
+
+function getImgHtml(url){
+		var html="<div class='layui-form-item'>"+
+	    "<div class='layui-inline'>"+
+			"<img src='"+url+"'  width='112' height='112' />"+	
+		"</div>"+
+		"<div class='layui-inline'>"+
+	  		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+		"</div>"+
+		"</div>"
+		return html;
+}
+
+function delButton(k){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$(k).parent().parent().remove();
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+
+function getContext(){
+	var divContext = $("#article .layui-form-item");
+	var jsonList = new Array();
+	for(var i=0;i<divContext.length;i++){
+		var articleContext = null;
+		var content = $(divContext[i]).children();
+		var picture = content.find("[name='img']"); //找到图片
+		var imgSrc = picture.attr('src')//取src路径
+		if(imgSrc != null){
+			articleContext = imgSrc;
+			jsonList.push({"index":i,"type":"img","content":articleContext});  
+		}else{
+			articleContext = content.find("#content").val();
+			jsonList.push({"index":i,"type":"text","content":articleContext}); 
+		}  
+	}
+	return jsonList;
+	/* $.each(jsonList, function(idx, obj) {
+		alert(obj.index+"  ,  "+obj.type+"  ,  "+obj.content);
+	});  */
+}
+
+
+
+
 </script>
