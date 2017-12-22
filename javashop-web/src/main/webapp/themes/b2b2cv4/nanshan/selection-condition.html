@@ -18,6 +18,49 @@
         </#list>
     </#if>
 </ul>
+<script type="text/javascript">
+    $(function(){
+        $("a[data-id]").click(function(){
+            var url = location.href;
+            var prams = url.substring(url.indexOf("?")+1).split("&");
+            url = url.substr(0,url.indexOf("?"));
+
+            for(var n in prams){
+                var tmp = prams[n].split("=")[0];
+                console.log(tmp);
+                if(tmp != "page" && tmp != "specs"){
+                    url += prams[n];
+                }
+            }
+
+            var $this = $(this);
+            if($this.attr("data-id") == "0"){
+                $this.siblings("a[data-id]").removeClass("g-active");
+                $this.addClass("g-active");
+            }else{
+                if($this.hasClass("g-active")){
+                    $this.removeClass("g-active");
+                }else{
+                    $this.addClass("g-active");
+                }
+
+                $this.siblings("a[data-id='0']").removeClass("g-active");
+            }
+
+            var specs = "";
+            $("a[data-id].g-active").each(function(){
+                var tmp = $(this).attr("data-id");
+                console.log(tmp)
+                if(tmp != "0"){
+                    specs += $(this).attr("data-id") + ",";
+                }
+            });
+            url += (url.indexOf("?")==-1 ? "?" : "&") + "specs="+specs.substr(0, specs.length -1);
+
+            location.href = url;
+        });
+    });
+</script>
 
 
 

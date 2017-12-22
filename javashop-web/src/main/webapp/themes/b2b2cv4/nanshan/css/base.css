@@ -110,7 +110,7 @@ input:-webkit-autofill {
 
 html,body {outline:none; background-color:#fff; min-width:1200px; width:100%; font-family:'PingFang sc','Helvetica Neue','Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif; font-size:14px; line-height:26px; color:#707070;}
 img,input,textarea,button,select {border:0; font-family:'PingFang sc','Helvetica Neue','Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif;}
-a {text-decoration:none; display:inline-block; color:#fff;}
+a {text-decoration:none; display:inline-block;}
 input[type="button"],input[type="submit"],button {cursor:pointer;}
 
 
@@ -137,7 +137,7 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 /*Header - start*/
 .Header {width:100%; overflow:hidden;}
 .headerWrap {width:1200px; height:50px; margin:0 auto; position:relative;}
-.tel {float:left; padding-top:15px;color: #fff;}
+.Header .tel {float:left; padding-top:15px;}
 .tel em {font:italic 22px "Times New Roman", Times, serif;}
 .header_link {float:right; padding-top:15px;}
 .header_link a {margin-right:3px; -moz-transition:all 0.4s ease 0s; -webkit-transition:all 0.4s ease 0s; -ms-transition:all 0.4s ease 0s; transition:all 0.4s ease 0s;}
@@ -273,12 +273,13 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	color: #fff;
 	margin-left: 30px;
 }
+/*导航*/
 .navCss {
     width: 100%;
     position: relative;
- 	background:rgba(0,0,0,0.7);
    	z-index: 999;
-   	
+   	border-top: 1px solid #333333;
+
 }
 .navCss .navWrap{
 	    width: 1200px;
@@ -309,13 +310,19 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	float: left;
 	width: 115px;
 	height: 110px;
-	
 	text-align: center;
 	color: #fff;
 	font-size: 16px;
 	position: relative;
 }
-.navCss .navWrap .fr .navList .item>a{
+.navCss .navWrap .fr .navList .item:hover{
+	background: #1173D1;
+	
+}
+.navCss .navWrap .fr .navList .item:hover a{
+	color: #fff;	
+}
+.navCss .navWrap .fr .navList .item a{
 	line-height: 40px;
 	height: 40px;
 	margin-top: 35px;
@@ -329,16 +336,16 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	display: none;
 }
 .navCss .navWrap .fr .navList .item .itmeList div{
-	background:rgba(0,0,0,0.7);
+	background:#fff;
 	height: 50px;
 	width: 170px;
-	
 	margin-top: 1px;
 }
 .navCss .navWrap .fr .navList .item .itmeList div>a{
 	line-height: 30px;
 	height: 30px;
 	margin-top: 10px;
+	color: #000;
 }
 .navCss .navWrap .fr .navList .item a:hover{
 	border-bottom:1px solid #0075d0;

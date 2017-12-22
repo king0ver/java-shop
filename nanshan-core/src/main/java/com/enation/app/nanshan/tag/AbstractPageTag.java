@@ -25,9 +25,9 @@ public abstract class AbstractPageTag extends BaseFreeMarkerTag{
 
         NCatVo cur = findNCatVo(nCatVo.getLeafs(), Long.parseLong(catId));
 
-
         result.put("curCat", cur);
-        result.put("sbling", cur.getParent().getLeafs());
+        result.put("siblings", cur.getParent().getLeafs());
+        result.put("parentCat",cur.getParent());
 
     }
 

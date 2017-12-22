@@ -1,0 +1,35 @@
+.content-title{
+	font-size: 28px;
+	margin: 21px auto;
+	color: #333;
+}
+
+.detail-lists li{
+	display: inline-block;
+	width: 370px;
+	height: 456px;
+	border:2px solid #f3f3f3;
+	outline:2px solid #f0f0f0;
+	text-align: center;
+}
+.detail-lists li:not(:last-child){
+	margin-right: 34px;
+	margin-bottom: 32px;
+}
+.detail-lists h3{
+	margin: 17px auto 19px;
+}
+.detail-lists .txt{
+	padding: 0 30px;
+}
+.detail-lists .btn{
+	display: inline-block;
+	width: 156px;
+	height: 46px;
+	text-align: center;
+	line-height: 46px;
+	background: #ddd;
+	color: #fff;
+	font-size: 16px;
+	margin:10px auto 22px;
+}

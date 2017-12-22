@@ -33,6 +33,8 @@
     margin: 30px auto;
 }
 
+.crumbs a {text-decoration:none; display:inline-block; }
+
 .change-game-box{
     border: 1px solid #c3c3c3;
     border-bottom: 2px solid #c3c3c3;
@@ -59,4 +61,87 @@
 .g-type .g-active{
     background: #3375c3;
     color: #fff;
+}
+
+.page span {
+    background-color: #fafafa;
+    border: 1px solid #e6e6e6;
+    color: #aaa;
+    display: block;
+    font: 14px/20px "microsoft yahei";
+    min-width: 20px;
+    padding: 8px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    float: left;
+}
+
+.page ul {
+    float: left;
+    display: inline;
+}
+
+.page ul li {
+    float: left;
+    display: inline;
+}
+
+.page ul li a {
+    background-color: #fafafa;
+    border: 1px solid #e6e6e6;
+    color: #aaa;
+    display: block;
+    font: 14px/20px "microsoft yahei";
+    min-width: 20px;
+    padding: 8px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+}
+
+.page ul li .selected {
+    color: #ec4f4a;
+    font-size: 16px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.item-detail{
+    height: 590px;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
+.item-detail .img,.item-detail .txt{
+    float: left;
+}
+.item-detail .txt{
+    width: 750px;
+    margin: 0 20px;
+}
+.content-title{
+    margin: 35px auto;
+    font-size: 29px;
+}
+.content-list li{
+    height: 36px;
+    line-height: 36px;
+    font-size: 20px;
+}
+.item-detail p{
+    font-size: 16px;
+    text-indent: 2em;
+}
+.list-title{
+    font-size: 32px;
+    margin: 30px auto;
+}
+.highlights-box ul{
+    overflow: hidden;
+}
+.highlights-box li{
+    float: left;
+}
+.highlights-box li:not(:last-child){
+    margin-right: 27px;
 }

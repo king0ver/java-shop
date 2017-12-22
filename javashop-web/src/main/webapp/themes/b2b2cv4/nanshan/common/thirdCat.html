@@ -1,11 +1,11 @@
-<#assign sblingCats = article.sbling/>
+<#assign siblings = article.siblings/>
 <div class="nav-bar">
 	<div class="nav-content">
-		<div class="nav-title"></div>
+		<div class="nav-title">${article.parentCat.name!''}</div>
 		<ul class="nav-list">
-			<#if sblingCats?size gt 0>
-				<#list sblingCats as cat>
-					<#if cat.id??>
+			<#if siblings?size gt 0>
+				<#list siblings as cat>
+					<#if cat.id?? && cat.id == article.curCat.id>
 						<li><a href="${cat.pcUrl!''}" class="active">${cat.name}</a></li>
 					<#else>
 						<li><a href="${cat.pcUrl!''}">${cat.name}</a></li>
