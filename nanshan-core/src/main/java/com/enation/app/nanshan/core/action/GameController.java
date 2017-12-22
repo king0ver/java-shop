@@ -46,6 +46,7 @@ public class GameController extends GridController{
 	@Autowired
 	private IArticleManager  articleManager;
 	
+	
 	@Autowired
 	private IThemeUriManager themeUriManager;
 	

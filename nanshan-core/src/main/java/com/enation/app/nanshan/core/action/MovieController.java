@@ -109,6 +109,7 @@ public class MovieController extends GridController{
 			e.printStackTrace();
 			return JsonResultUtil.getErrorJson("电影添加失败.");
 		}
+		
 	}
 	
 	

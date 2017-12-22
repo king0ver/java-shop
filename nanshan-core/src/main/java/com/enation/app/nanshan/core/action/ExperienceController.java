@@ -52,6 +52,7 @@ public class ExperienceController extends GridController{
 	@Autowired
 	private ISpecManager specManager;
 	
+	
 	/**
 	 * 跳转到管理列表
 	 * @return
