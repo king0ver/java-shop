@@ -228,10 +228,10 @@
 
 		<menu text="南山" type="app" url="" icon="/adminthemes/new/images/menu_07.gif">
 			<menu text="展示展览">
-				<menu text="展示展览管理" url="/core/admin/themeUri/list.do" />
-				<menu text="科学影城" url="/core/admin/menu/tree.do" />
-				<menu text="放映时间表" url="/core/admin/data-export/export.do" />
-				<menu text="影片管理" url="/core/admin/example-data-clean/info.do" />
+				<menu text="展示展览管理" url="/core/admin/exhibition/list.do" />
+				<menu text="科学影城" url="" />
+				<menu text="放映时间表" url="" />
+				<menu text="影片管理" url="/core/admin/movie/list.do" />
 			</menu>
 			<menu text="线上体验" >
 				<menu text="站点前台主题" url="/core/admin/user/siteTheme/info.do" />
@@ -248,7 +248,7 @@
 			<menu text="关于我们">
 				<menu text="组件管理" url="/core/admin/component/list.do" />
 			</menu>
-
+			
 		</menu>
 
 
