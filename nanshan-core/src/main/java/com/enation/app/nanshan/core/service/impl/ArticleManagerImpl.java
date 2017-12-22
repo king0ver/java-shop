@@ -71,7 +71,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 
 	@Override
 	public NanShanArticleVo queryArticleById(int id) {
-		String sql ="select c.id content_id, a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,group_concat(l.id) specValIds "+ 
+		String sql ="select c.id content_id, a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,group_concat(l.specval_id) specValIds "+ 
 					"from es_nanshan_article a LEFT JOIN es_nanshan_clob c on a.content=c.id "+
 					"left JOIN es_nanshan_article_category t on a.cat_id=t.cat_id "+
 					"LEFT JOIN es_nanshan_article_rel l on a.id=l.article_id where a.id=? group by a.id";
