@@ -248,6 +248,7 @@
 			<menu text="关于我们">
 				<menu text="组件管理" url="/core/admin/component/list.do" />
 			</menu>
+			
 		</menu>
 
 
