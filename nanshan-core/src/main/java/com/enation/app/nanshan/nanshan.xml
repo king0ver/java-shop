@@ -55,6 +55,14 @@
 		<field><name>update_time</name><type>long</type><size>20</size><option>00</option></field>
 		<field><name>operator</name><type>varchar</type><size>50</size><option>00</option></field>
 	</action>
+	
+	<action>
+		<command>create</command>
+		<table>nanshan_article_rel</table>
+		<field><name>id</name><type>int</type><size>10</size><option>11</option></field>
+		<field><name>article_id</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>specval_id</name><type>int</type><size>10</size><option>00</option></field>
+	</action>
 
 </dbsolution>
 

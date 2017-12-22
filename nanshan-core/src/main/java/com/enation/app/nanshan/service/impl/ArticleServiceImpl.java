@@ -30,7 +30,7 @@ public class ArticleServiceImpl implements IArticleService {
 				"select 1 from es_nanshan_article_rel esnsar where " +
 				"esns.id = esnsar.article_id ";
 		if(StringUtils.isNotBlank(specValIds)){
-			sql+= " and esnsar.specVal_id in ("+specValIds+")";
+			sql+= " and esnsar.specval_id in ("+specValIds+")";
 		}
 		sql += ") and esns.cat_id  = "+ catId;
 		return daoSupport.queryForList(sql, ArticleVo.class);
