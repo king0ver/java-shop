@@ -25,6 +25,16 @@
       			<input type="text" name="title" maxlength="60" lay-verify="required" autocomplete="off" class="layui-input">
     		</div>
   		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">电影主图：</label>
+    		<div class="layui-upload">
+				<button type="button" class="layui-btn" id="test1">上传图片</button>
+			  	<div class="layui-upload-list">
+			    	<img class="layui-upload-img" id="demo1">
+			    	<p id="demoText"></p>
+			  	</div>
+			</div>
+  		</div>
   		<div class="layui-form-item" style="width:400px;">
     		<label class="layui-form-label">电影时长：</label>
     		<div class="layui-input-block">
@@ -46,7 +56,7 @@
   		<div class="layui-form-item layui-form-text" style="width:600px;">
 		    <label class="layui-form-label">影片介绍：</label>
 		    <div class="layui-input-block">
-		      <textarea placeholder="请输入内容" id="movieIntroduce" name="movieIntroduce" class="layui-textarea"></textarea>
+		      <textarea placeholder="请输入内容" id="movieIntroduce" lay-verify="required" name="movieIntroduce" class="layui-textarea"></textarea>
 		    </div>
   		</div>
   		<div class="layui-form-item">
@@ -101,6 +111,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     laydate = layui.laydate;
 	
 	form.on('submit(save_info)', function(data){
+		$("#filmTidbits").val(JSON.stringify(getFilmImg()));
     	var options = {
    			url:ctx+"/core/admin/movie/add_save.do",
    			type:"post",
@@ -108,8 +119,8 @@ layui.use(['form', 'layedit', 'laydate'], function(){
    			success:function(data){
    				if(data.result==1){	
    					$.Loading.success(data.message);
-   					parent.layer.close(index); //再执行关闭        
-   					parent.table.ajax.url(ctx+"/core/admin/exhibition/list-json.do").load();
+   					parent.layer.close(index); //再执行关闭  
+   					parent.table.ajax.url(ctx+"/core/admin/movie/list-json.do").load();
    				}
    			}
    		};
