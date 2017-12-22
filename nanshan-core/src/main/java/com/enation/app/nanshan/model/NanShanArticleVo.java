@@ -1,6 +1,7 @@
 package com.enation.app.nanshan.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 
@@ -29,8 +30,17 @@ public class NanShanArticleVo implements Serializable  {
 	private String content; //文章内容，json格式
 	private int content_id;
 	private String cat_name;
+	private String specValIds;
 	
 	
+	
+
+	public String getSpecValIds() {
+		return specValIds;
+	}
+	public void setSpecValIds(String specValIds) {
+		this.specValIds = specValIds;
+	}
 	public int getContent_id() {
 		return content_id;
 	}

@@ -4,7 +4,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -23,7 +26,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
+
+
+import com.enation.app.nanshan.core.model.Spec;
+import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.IArticleManager;
+import com.enation.app.nanshan.core.service.ISpecManager;
+import com.enation.app.nanshan.model.ArtSpecRel;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
@@ -45,10 +56,11 @@ import com.enation.framework.util.StringUtil;
 @Scope("prototype")
 @RequestMapping("/admin/article")
 public class ArticleController extends GridController {
-	
+	String ctx=ThreadContextHolder.getHttpRequest().getContextPath();
 	@Autowired
 	IArticleManager  articleManager;
-	String ctx=ThreadContextHolder.getHttpRequest().getContextPath();
+	@Autowired
+	ISpecManager specManager;
 	
 
 	/** 
@@ -62,10 +74,10 @@ public class ArticleController extends GridController {
 	public JsonResult add(NanShanArticleVo nanShanArticleVo,String createTime){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd HH:mm:ss");
+				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
-			this.articleManager.addArticle(nanShanArticleVo);			
+			this.articleManager.addArticle(nanShanArticleVo);
 			return JsonResultUtil.getSuccessJson("添加文章成功");		
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
@@ -154,7 +166,7 @@ public class ArticleController extends GridController {
 	public JsonResult saveEdit(NanShanArticleVo nanShanArticleVo,String createTime ){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd HH:mm:ss");
+				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
             this.articleManager.updateArticle(nanShanArticleVo);
@@ -174,6 +186,82 @@ public class ArticleController extends GridController {
 			return JsonResultUtil.getErrorJson("修改失败");
 		}
 	}
+	
+	/** 
+	* @param @param 
+	* @Description: 添加活动页面
+	* @author luyanfen  
+	* @date 2017年12月19日 上午10:35:10
+	*  
+	*/ 
+	@RequestMapping(value = "/act/add")
+	public ModelAndView  actList(int catId) {
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/act/add");
+		view.addObject("ctx",ctx);
+		view.addObject("catId",catId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Spec> specList = specManager.list(map);
+		List<Integer> specIdList = new ArrayList<Integer>();
+		for (Spec spec : specList) {
+			specIdList.add(spec.getSpec_id());
+		}
+		map.put("specIdList", specIdList);
+		List<SpecVal> specValList = specManager.querySpecValList(map);
+		view.addObject("specList",specList);
+		view.addObject("specValList", specValList);
+		return view;
+	}
+	
+	/** 
+	* @param @param 
+	* @Description: 添加活动页面
+	* @author luyanfen  
+	* @date 2017年12月19日 上午10:35:10
+	*  
+	*/ 
+	@RequestMapping(value = "/act/list")
+	public ModelAndView  addAct(int catId) {
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/act/list");
+		view.addObject("ctx",ctx);		
+		view.addObject("catId",catId);		
+		return view;
+	}
+	
+	
+	/** 
+	* @Description: 编辑页面
+	* @author luyanfen  
+	* @date 2017年12月19日 上午10:35:10
+	*  
+	*/ 
+	@RequestMapping(value = "/act/edit")
+	public ModelAndView  actEdit(int id,int catId) {
+		ModelAndView view=new ModelAndView();
+		try {
+			view.setViewName("/nanshan/admin/act/edit");
+			view.addObject("ctx",ctx);
+			view.addObject("data",this.articleManager.queryArticleById(id));
+			Map<String, Object> map = new HashMap<String, Object>();
+			List<Spec> specList = specManager.list(map);
+			List<Integer> specIdList = new ArrayList<Integer>();
+			for (Spec spec : specList) {
+				specIdList.add(spec.getSpec_id());
+			}
+			map.put("specIdList", specIdList);
+			List<SpecVal> specValList = specManager.querySpecValList(map);
+			view.addObject("specList",specList);
+			view.addObject("specValList", specValList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return view;
+		
+	}
+	
+	
+	
 	
 	
 

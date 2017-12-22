@@ -10,6 +10,13 @@ import net.sf.json.JSONArray;
 
 
 
+/**  
+*
+* @Description: 
+* @author luyanfen
+* @date 2017年12月21日 上午10:53:18
+*  
+*/ 
 public class NCatTreeUtil {
 	 List<NCatVo> nodes = new ArrayList<NCatVo>();	 
      public NCatTreeUtil(List<NCatVo> nodes) {
@@ -32,23 +39,15 @@ public class NCatTreeUtil {
       * @return
       */
      public List<NCatVo> buildTree() {
+           List<NCatVo> treeNodes = new ArrayList<NCatVo>();
 
-               List<NCatVo> treeNodes = new ArrayList<NCatVo>();
+           List<NCatVo> rootNodes = getRootNodes();
 
-               List<NCatVo> rootNodes = getRootNodes();
-
-               for (NCatVo rootNode : rootNodes) {
-
-                        buildChildNodes(rootNode);
-
-                        treeNodes.add(rootNode);
-
-               }
-               System.out.println(JSONArray.fromObject(treeNodes).toString());
-               return treeNodes;
-               
-              
-
+           for (NCatVo rootNode : rootNodes) {
+                    buildChildNodes(rootNode);
+                    treeNodes.add(rootNode);
+           }
+           return treeNodes;
      }
      /**
       * 递归子节点
@@ -77,21 +76,14 @@ public class NCatTreeUtil {
       */
 
      public List<NCatVo> getChildNodes(NCatVo node) {
-
-               List<NCatVo> childNodes = new ArrayList<NCatVo>();
-
-               for (NCatVo n : nodes){
-
-                        if (node.getId()==n.getParentId()) {
-
-                                 childNodes.add(n);
-                        }
-               }
-               return childNodes;
-
+           List<NCatVo> childNodes = new ArrayList<NCatVo>();
+           for (NCatVo n : nodes){
+                if (node.getId()==n.getParentId()) {
+                         childNodes.add(n);
+                }
+           }
+           return childNodes;
      }
-
-    
 
      /**
       * 判断是否为根节点
@@ -123,11 +115,10 @@ public class NCatTreeUtil {
      public List<NCatVo> getRootNodes() {
            List<NCatVo> rootNodes = new ArrayList<NCatVo>();
            NCatVo vo=new NCatVo();
-           
            for (NCatVo n : nodes){
-                    if (rootNode(n)) {
-                             rootNodes.add(n);
-                    }
+                if (rootNode(n)) {
+                         rootNodes.add(n);
+                }
            }
            return rootNodes;
 
@@ -145,11 +136,6 @@ public class NCatTreeUtil {
          }  
          return null;  
      }
-    
-
-   
-
-    
 
      public static void main(String[] args) {              
 

@@ -11,41 +11,70 @@
 <div class="main">
 	<!--表单区域  -->
 	<div class="main-top">
+	   
 		<form id="addmodelForm" class="layui-form layui-form-pane" action=""
 			enctype="multipart/form-data" style="padding-top: 10px">
+			 <#include '${ctx}/nanshan/common/spec.html' >
 			<div class="layui-form-item">
 				<label class="layui-form-label">分类:</label>
 				<div class="layui-input-block">
-	      			<select name="cat_id">
-	      			     <option>请选择分类</option>
-	      			     <#list cats as cat>
-                         <option value="${cat.cat_id}" <#if data.cat_id==cat.cat_id> selected="selected" </#if> > ${cat.cat_name}</option>
-                         </#list>
+	      			<select>
+	      			    <option>请选择分类</option>
+	                    <option value="38" <#if data.cat_id==38> selected="selected" </#if>>最新活动</option>
+	                    <option value="39" <#if data.cat_id==39> selected="selected" </#if>>活动回顾</option>
 	      			</select>
     		     </div>
 			</div>
 
 			<div class="layui-form-item">
-				<label class="layui-form-label">文章标题：</label>
+				<label class="layui-form-label">文章标题:</label>
 	    		<div class="layui-input-block">
 	    		    <input name="id" type='hidden'  value="${data.id}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		     <input name="content_id" type='hidden'  value="${data.content_id}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	      			<input type="text" name="title" id="uri" value="${data.title!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	    		</div>
 			</div>
 
 			<div class="layui-form-item">
-	    		<label class="layui-form-label">创建时间：</label>
+	    		<label class="layui-form-label">创建时间:</label>
 	    		<div class="layui-input-inline" >
 	      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" value='<@dateformat time='${data.create_time}' pattern='yyyy-MM-dd'/>' />
 	    		</div>
   		    </div>
 			<div class="layui-form-item">
-    		<label class="layui-form-label">文章摘要：</label>
-    		<div class="layui-input-block">
-      			<input type="text" name="summary" id="pagename"  value="${data.summary!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-    		</div>
+	    		<label class="layui-form-label">文章摘要:</label>
+	    		<div class="layui-input-block">
+	      			<input type="text" name="summary" id="pagename"  value="${data.summary!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
   		   </div>
-	  	   <#include '${ctx}/nanshan/common/context.html' >
+  		   <div id="act">
+  		    <div class="layui-form-item">
+	    		<label class="layui-form-label">截止时间:</label>
+	    		<div class="layui-input-inline">
+	    		<input class="layui-input" placeholder="截止时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" />
+	    		</div>
+  		    </div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">活动对象:</label>
+	    		<div class="layui-input-block">
+	    		<input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">活动费用:</label>
+	    		<div class="layui-input-block">
+	    		<input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">活动地址:</label>
+	    		<div class="layui-input-block">
+	    		   <input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+  		</div>
+  		   
+            <#include '${ctx}/nanshan/common/context.html' >
 			<div class="layui-form-item">
 				<div class="layui-layer-btn layui-layer-btn-"
 					style="padding: 8px 12px; z-index: 1000;">
@@ -59,11 +88,17 @@
 <!--js区域  -->
 <script>
 var table;
-
-var index = parent.layer.getFrameIndex(window.name);
 var desc='${data.content}';
 var context=$.parseJSON(desc).content;
+var actExt=$.parseJSON(desc).actExt;
+var specIds='${data.specValIds!''}'
+
+initActExtVal(actExt);
 initContextHtml(context);
+initSpecId(specIds);
+
+
+var index = parent.layer.getFrameIndex(window.name);
 
 layui.use(['form', 'layedit', 'laydate'], function(){
     var form = layui.form()
@@ -74,13 +109,14 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
 form.on('submit(editModel)', function(data){
 	var content=JSON.stringify(getContext());
-	
-	var content='{"content":'+content+'}';
+	var actExt=JSON.stringify(getActExt());
+	var specValue=getSpecValId();
+	var content='{"content":'+content+',"actExt":'+actExt+'}';
 	var options = {
 		url : ctx+"/admin/article/save-edit.do",
 		type : "POST",
 		dataType : 'json',
-		data:{"content":content},
+		data:{"content":content,"specValIds":specValue},
 		success : function(result) {
 			if (result.result == 1) {
 				$.Loading.success(result.message);
@@ -116,6 +152,11 @@ form.on('submit(editModel)', function(data){
 	            scrollbar: true//是否允许浏览器出现滚动条
 	        });
 	 }
+	 
+	 
+	
 
+
+  
 </script>
 <#include '/admin/footer.html' >
