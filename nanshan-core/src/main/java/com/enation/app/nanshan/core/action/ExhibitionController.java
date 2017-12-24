@@ -102,6 +102,7 @@ public class ExhibitionController extends GridController{
 		}
 	}
 	
+	
 	/**
 	 * 跳转到修改页面
 	 * @param id
