@@ -15,16 +15,12 @@ import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
-import com.enation.eop.resource.model.AdminUser;
-import com.enation.eop.sdk.context.EopSetting;
-import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.database.Page;
 import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
-import com.enation.framework.util.StringUtil;
 
 /**
  * 展示展览管理
@@ -88,14 +84,11 @@ public class ExhibitionController extends GridController{
 	 */
 	@ResponseBody
 	@RequestMapping("/add_save")
-	public JsonResult add(NanShanArticleVo nanShanArticleVo,String createTime){
+	public JsonResult add(NanShanArticleVo nanShanArticleVo){
 		try {
-			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd HH:mm:ss");
-				nanShanArticleVo.setCreate_time(create_time);
-			}
+			nanShanArticleVo.setCreate_time(DateUtil.getDateline());
 			this.articleManager.addArticle(nanShanArticleVo);			
-			return JsonResultUtil.getSuccessJson("添加成功.");		
+			return JsonResultUtil.getSuccessJson("添加成功.");
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return JsonResultUtil.getErrorJson("添加失败.");
@@ -137,28 +130,21 @@ public class ExhibitionController extends GridController{
 		}
 	}
 	
-	
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/delete")
-	public JsonResult delete(int id){
-		
-		AdminUser user  = UserConext.getCurrentAdminUser();
-		if(EopSetting.IS_DEMO_SITE && user!= null && user.getFounder() != 1){
-			if(id<=6){
-				return JsonResultUtil.getErrorJson("抱歉，当前为演示站点，以不能删除这些示例数据，请下载安装包在本地体验这些功能！");
-			}
-		}
-		
-		try{
-			//this.themeUriManager.delete(id);
-			return JsonResultUtil.getSuccessJson("删除成功");
-
-		}catch(RuntimeException e){
-			return JsonResultUtil.getErrorJson("删除失败:"+e.getMessage());
-
+	public JsonResult del(int id ){
+		try {
+            this.articleManager.delArticle(id);
+		    return JsonResultUtil.getSuccessJson("删除成功");
+		} catch (RuntimeException e) {
+			return JsonResultUtil.getErrorJson("删除失败");
 		}
 	}
-	
 	
 	
 }

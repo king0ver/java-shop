@@ -29,7 +29,7 @@ public class SpecVal implements Serializable{
 	/**
 	 * 是否有效
 	 */
-	private Integer isValid;
+	private Integer is_valid;
 	
 	/**
 	 * 创建时间
@@ -71,12 +71,12 @@ public class SpecVal implements Serializable{
 		this.specval_name = specval_name;
 	}
 
-	public Integer getIsValid() {
-		return isValid;
+	public Integer getIs_valid() {
+		return is_valid;
 	}
 
-	public void setIsValid(Integer isValid) {
-		this.isValid = isValid;
+	public void setIs_valid(Integer is_valid) {
+		this.is_valid = is_valid;
 	}
 
 	public Long getCreation_time() {
