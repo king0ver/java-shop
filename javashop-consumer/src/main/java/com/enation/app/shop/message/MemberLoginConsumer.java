@@ -12,8 +12,6 @@ import com.enation.app.shop.message.service.IEmailSendlManager;
 import com.enation.app.shop.message.service.IMemberMessageManager;
 import com.enation.app.shop.message.service.IMessageManager;
 import com.enation.app.shop.message.service.IMobileSmsSendManager;
-import com.enation.app.shop.shop.apply.model.po.ShopDetail;
-import com.enation.app.shop.trade.model.po.OrderPo;
 import com.enation.eop.resource.model.EopSite;
 import com.enation.eop.sdk.context.EopSetting;
 import com.enation.framework.jms.EmailModel;

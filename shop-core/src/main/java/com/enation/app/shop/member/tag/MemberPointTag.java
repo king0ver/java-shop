@@ -15,7 +15,6 @@ import com.enation.app.base.core.model.Member;
 import com.enation.app.base.core.model.MemberLv;
 import com.enation.app.shop.member.service.IMemberLvManager;
 import com.enation.app.shop.member.service.IMemberManager;
-import com.enation.app.shop.member.service.IMemberPointManger;
 import com.enation.app.shop.member.service.IPointHistoryManager;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.context.webcontext.ThreadContextHolder;

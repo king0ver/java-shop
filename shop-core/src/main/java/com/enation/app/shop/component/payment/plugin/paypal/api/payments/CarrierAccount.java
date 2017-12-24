@@ -1,7 +1,5 @@
 package com.enation.app.shop.component.payment.plugin.paypal.api.payments;
 
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.CountryCode;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.JSONFormatter;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalModel;
 
 public class CarrierAccount extends PayPalModel{

@@ -2,14 +2,10 @@ package com.enation.app.shop.shop.seller;
 
 import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.comments.service.IStoreMemberCommentManager;
-import com.enation.app.shop.goods.model.vo.GoodsQueryParam;
-import com.enation.app.shop.goods.service.IGoodsManager;
 import com.enation.app.shop.goods.service.IGoodsQueryManager;
 import com.enation.app.shop.trade.model.enums.OrderStatus;
 import com.enation.app.shop.trade.model.vo.OrderQueryParam;
 import com.enation.app.shop.trade.service.IOrderQueryManager;
-import com.enation.eop.sdk.context.UserConext;
-import com.enation.framework.database.Page;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 import freemarker.template.TemplateModelException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -30,7 +30,6 @@ import com.enation.app.shop.promotion.tool.service.IPromotionGoodsManager;
 import com.enation.framework.cache.ICache;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.util.DateUtil;
-import com.enation.framework.util.StringUtil;
 
 /**
  * 活动商品对照表实现类

@@ -2,14 +2,11 @@ package com.enation.app.shop.goodssearch.tag;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.enation.app.shop.goods.service.ICategoryManager;
 import com.enation.app.shop.goodssearch.service.IGoodsSearchManager;
 import com.enation.app.shop.goodssearch.service.SearchEngineFactory;
-import com.enation.framework.context.spring.SpringContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 
 import freemarker.template.TemplateModelException;

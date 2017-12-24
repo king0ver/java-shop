@@ -1,7 +1,5 @@
 package com.enation.app.shop.aftersale.model.vo;
 
-import com.enation.app.shop.aftersale.model.enums.RefundStatus;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

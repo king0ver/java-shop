@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.shop.goods.service.ITagManager;
-import com.enation.app.shop.promotion.groupbuy.model.po.GroupBuy;
 import com.enation.app.shop.promotion.groupbuy.model.po.GroupBuyActive;
 import com.enation.app.shop.promotion.groupbuy.model.vo.GroupBuyActiveVo;
 import com.enation.app.shop.promotion.groupbuy.service.IGroupBuyActiveManager;

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.enation.app.shop.trade.model.enums.OrderStatus;
-import com.enation.framework.util.StringUtil;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;

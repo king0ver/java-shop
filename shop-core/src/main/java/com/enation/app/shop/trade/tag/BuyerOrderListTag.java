@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.enation.app.shop.trade.model.enums.PayStatus;
-import com.enation.app.shop.trade.model.po.OrderItem;
 import com.enation.app.shop.trade.model.vo.*;
 import com.enation.app.shop.trade.service.IOrderItemManager;
 import org.springframework.beans.factory.annotation.Autowired;

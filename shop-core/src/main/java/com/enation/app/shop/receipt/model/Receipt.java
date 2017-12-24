@@ -3,8 +3,6 @@ package com.enation.app.shop.receipt.model;
 
 import java.io.Serializable;
 
-import com.enation.framework.database.PrimaryKeyField;
-
 /**
  * 
  * 发票实体类

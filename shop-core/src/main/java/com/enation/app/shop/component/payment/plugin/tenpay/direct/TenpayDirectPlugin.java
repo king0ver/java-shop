@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Formatter.BigDecimalLayoutForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Component;
 import com.enation.app.base.core.model.ConfigItem;
 import com.enation.app.shop.aftersale.model.vo.RefundBill;
 import com.enation.app.shop.aftersale.model.vo.RefundPartVo;
-import com.enation.app.shop.orderbill.model.enums.BillStatusEnum;
-import com.enation.app.shop.payment.model.enums.ClientType;
 import com.enation.app.shop.payment.model.vo.PayBill;
 import com.enation.app.shop.payment.model.vo.PaymentResult;
 import com.enation.app.shop.payment.service.AbstractPaymentPlugin;

@@ -8,13 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.enation.app.base.core.model.Member;
-import com.enation.app.shop.goods.model.po.GoodsGallery;
 import com.enation.app.shop.goods.model.vo.GoodsSkuVo;
-import com.enation.app.shop.goods.model.vo.GoodsVo;
 import com.enation.app.shop.goods.service.IGoodsGalleryManager;
-import com.enation.app.shop.goods.service.IGoodsManager;
 import com.enation.app.shop.goods.service.IGoodsSkuManager;
-import com.enation.app.shop.goods.service.impl.GoodsManager;
 import com.enation.app.shop.promotion.bonus.model.MemberBonus;
 import com.enation.app.shop.promotion.fulldiscount.model.vo.FullDiscountVo;
 import com.enation.app.shop.promotion.fulldiscount.service.IFullDiscountManager;

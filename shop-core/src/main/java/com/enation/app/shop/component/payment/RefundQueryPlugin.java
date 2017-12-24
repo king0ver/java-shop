@@ -1,7 +1,6 @@
 package com.enation.app.shop.component.payment;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enation.app.base.core.plugin.job.IEveryHourExecuteEvent;
 import com.enation.app.shop.payment.service.IOrderPayManager;

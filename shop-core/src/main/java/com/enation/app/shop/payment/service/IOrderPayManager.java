@@ -38,13 +38,22 @@ public interface IOrderPayManager {
 	 * @return 支付跳转HTML
 	 */
 	public String payTrade(String tradesn,Integer payment_method_id,String payMode,String client_type);
-	
-	
+
 	/**
 	 * 支付同步回调
 	 * @param pluginId
 	 */
 	public String payReturn(TradeType tradeType,String pluginId);
+
+	/**
+	 * 支付充值订单
+	 * @param rechange_sn
+	 * @param payment_method_id
+	 * @param pay_mode
+	 * @param client_type
+     * @return
+     */
+	public String payRecharge(String rechange_sn,Integer payment_method_id,String pay_mode,String client_type);
 	
 	
 	/**

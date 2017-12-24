@@ -17,8 +17,6 @@ import com.enation.app.shop.shop.apply.service.IShopManager;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 
-import freemarker.template.TemplateModelException;
-
 /**
  * 店铺申请获取店铺信息标签
  * @author zjp

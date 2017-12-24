@@ -16,7 +16,6 @@ import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.shop.seller.ISellerManager;
 import com.enation.app.shop.trade.model.enums.OrderPermission;
 import com.enation.app.shop.trade.model.po.OrderPo;
-import com.enation.app.shop.trade.model.vo.Consignee;
 import com.enation.app.shop.trade.model.vo.OrderConsigneeVo;
 import com.enation.app.shop.trade.model.vo.operator.Cancel;
 import com.enation.app.shop.trade.model.vo.operator.Complete;

@@ -18,7 +18,6 @@ import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalREST
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalResource;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.RESTUtil;
 import com.enation.app.shop.component.payment.plugin.paypal.base.sdk.info.SDKVersionImpl;
-import com.google.gson.GsonBuilder;
 
 public class Agreement  extends PayPalResource {
 

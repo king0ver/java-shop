@@ -2,7 +2,6 @@ package com.enation.app.shop.component.payment.plugin.weixin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.enation.app.shop.payment.service.IPaymentBillManager;
 import com.enation.framework.cache.ICache;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.google.zxing.BarcodeFormat;

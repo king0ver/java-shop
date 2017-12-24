@@ -35,6 +35,10 @@ public class TradeSnCreatorImpl implements ITradeSnCreator {
     //订单编号缓存key前缀
     private  static  final  String ORDER_SN_CACHE_REFIX="ORDER_SN";
 
+    //订单编号缓存key前缀
+    private  static  final  String RECHNAGE_SN_CACHE_REFIX="RECHANGE_SN";
+
+
     /**
      * 生成交易编号
      * @return 交易编号，格式如：20171022000011
@@ -63,6 +67,8 @@ public class TradeSnCreatorImpl implements ITradeSnCreator {
         return sn;
     }
 
+
+
     @Override
     public void cleanCache() {
         Date yesterday = getYesterday( );
@@ -71,7 +77,15 @@ public class TradeSnCreatorImpl implements ITradeSnCreator {
         stringRedisTemplate.delete(ORDER_SN_CACHE_REFIX+"_"+timeStr);
     }
 
+    @Override
+    public String generateRechangeSn() {
 
+        String key = RECHNAGE_SN_CACHE_REFIX;
+
+        String sn = generateSn(key);
+
+        return sn;
+    }
 
 
     private  Date getYesterday(   ){

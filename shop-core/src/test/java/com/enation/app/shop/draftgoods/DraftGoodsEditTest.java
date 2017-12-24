@@ -1,16 +1,9 @@
 package com.enation.app.shop.draftgoods;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
-import com.enation.app.shop.goods.model.po.GoodsGallery;
-import com.enation.app.shop.goods.model.po.GoodsParams;
-import com.enation.app.shop.goods.model.po.SpecValue;
-import com.enation.app.shop.goods.model.vo.GoodsSkuVo;
 import com.enation.app.shop.goods.model.vo.GoodsVo;
 import com.enation.app.shop.goods.service.IDraftGoodsManager;
 import com.enation.app.shop.member.service.IMemberManager;

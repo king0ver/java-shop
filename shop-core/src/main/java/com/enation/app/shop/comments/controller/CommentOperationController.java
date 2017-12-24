@@ -1,6 +1,5 @@
 package com.enation.app.shop.comments.controller;
 
-import javax.management.RuntimeErrorException;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enation.app.shop.comments.model.po.MemberComment;
 import com.enation.app.shop.comments.model.vo.CommentVo;
 import com.enation.app.shop.comments.service.IMemberCommentManager;
-import com.enation.framework.validator.ErrorCode;
-import com.enation.framework.validator.NoPermissionException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

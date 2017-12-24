@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.Order;
 import com.enation.app.shop.trade.model.po.OrderItem;
 import com.enation.app.shop.trade.service.IOrderItemManager;
 import com.enation.framework.database.IDaoSupport;

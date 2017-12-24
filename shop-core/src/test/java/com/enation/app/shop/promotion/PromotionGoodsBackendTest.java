@@ -6,7 +6,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.shop.promotion.tool.service.IPromotionBackupManager;
-import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.test.SpringTestSupport;
 
 /**

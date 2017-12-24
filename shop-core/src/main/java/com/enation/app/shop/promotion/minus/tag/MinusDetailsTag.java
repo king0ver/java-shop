@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.promotion.minus.model.vo.MinusVo;
 import com.enation.app.shop.promotion.minus.service.IMinusManager;
 import com.enation.app.shop.shop.seller.ISellerManager;
-import com.enation.eop.processor.core.UrlNotFoundException;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 
 import freemarker.template.TemplateModelException;

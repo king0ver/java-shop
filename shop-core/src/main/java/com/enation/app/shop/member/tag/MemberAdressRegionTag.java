@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.base.core.model.Member;
-import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.member.service.IMemberAddressManager;
-import com.enation.app.shop.shop.seller.ISellerManager;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 

@@ -1,9 +1,7 @@
 package com.enation.app.shop.promotion.fulldiscount.model.po;
 
 import java.io.Serializable;
-import java.util.List;
 
-import com.enation.app.shop.promotion.tool.model.vo.PromotionGoodsVo;
 /**
  * 
  * 满优惠活动实体

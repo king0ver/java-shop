@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enation.app.shop.member.service.IPointHistoryManager;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
-import com.enation.framework.action.JsonResult;
 import com.enation.framework.util.JsonResultUtil;
 
 import io.swagger.annotations.ApiOperation;

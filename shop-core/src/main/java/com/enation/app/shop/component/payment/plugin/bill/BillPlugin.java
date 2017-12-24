@@ -12,8 +12,6 @@ import com.enation.app.base.core.model.ConfigItem;
 import com.enation.app.shop.aftersale.model.vo.RefundBill;
 import com.enation.app.shop.aftersale.model.vo.RefundPartVo;
 import com.enation.app.shop.component.payment.plugin.bill.util.Pkipair;
-import com.enation.app.shop.orderbill.model.po.Bill;
-import com.enation.app.shop.payment.model.enums.ClientType;
 import com.enation.app.shop.payment.model.vo.PayBill;
 import com.enation.app.shop.payment.model.vo.PaymentResult;
 import com.enation.app.shop.payment.service.AbstractPaymentPlugin;

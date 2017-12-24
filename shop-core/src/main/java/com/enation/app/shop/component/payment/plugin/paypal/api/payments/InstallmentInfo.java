@@ -2,9 +2,6 @@ package com.enation.app.shop.component.payment.plugin.paypal.api.payments;
 
 import java.util.List;
 
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.InstallmentOption;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.JSONFormatter;
-
 public class InstallmentInfo  {
 
 	/**

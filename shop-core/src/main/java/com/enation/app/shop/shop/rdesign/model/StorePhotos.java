@@ -1,7 +1,5 @@
 package com.enation.app.shop.shop.rdesign.model;
 
-import com.enation.framework.database.NotDbField;
-
 /**
  * 
  * (店铺相册) 

@@ -3,14 +3,11 @@ package com.enation.app.shop.comments.model.po;
 
 import java.io.Serializable;
 
-import javax.print.DocFlavor.STRING;
-
 import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.comments.model.vo.MemberCommentVo;
 import com.enation.app.shop.goods.model.po.Goods;
 import com.enation.app.shop.trade.model.vo.OrderDetail;
 import com.enation.app.shop.trade.model.vo.Product;
-import com.enation.framework.database.PrimaryKeyField;
 import com.enation.framework.util.DateUtil;
 import com.google.gson.Gson;
 

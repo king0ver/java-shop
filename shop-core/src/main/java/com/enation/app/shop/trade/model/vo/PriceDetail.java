@@ -2,7 +2,6 @@ package com.enation.app.shop.trade.model.vo;
 
 import java.io.Serializable;
 
-import com.enation.app.shop.promotion.fulldiscount.model.vo.FullDiscountVo;
 import com.enation.framework.util.CurrencyUtil;
 
 import io.swagger.annotations.ApiModel;

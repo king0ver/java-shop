@@ -1,15 +1,11 @@
 package com.enation.app.shop.component.payment.plugin.alipay.direct.executor;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.enation.app.shop.component.payment.PaymentUtil;
 import com.enation.app.shop.component.payment.plugin.alipay.JavashopAlipayUtil;
 import com.enation.app.shop.component.payment.plugin.alipay.direct.AlipayPluginConfig;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.AlipayClient;
@@ -18,7 +14,6 @@ import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.domain.Ali
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.request.AlipayTradeAppPayRequest;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.response.AlipayTradeAppPayResponse;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.config.AlipayConfig;
-import com.enation.app.shop.component.payment.plugin.alipay.util.SignUtils;
 import com.enation.app.shop.payment.model.vo.PayBill;
 import com.enation.app.shop.payment.model.vo.PaymentResult;
 import com.enation.app.shop.trade.model.enums.TradeType;
@@ -26,8 +21,6 @@ import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.util.StringUtil;
 import com.enation.framework.validator.ErrorCode;
 import com.enation.framework.validator.UnProccessableServiceException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 
 /**
  * 支付宝app支付执行者

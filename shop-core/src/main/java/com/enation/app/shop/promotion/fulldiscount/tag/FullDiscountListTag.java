@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.promotion.fulldiscount.service.IFullDiscountManager;
 import com.enation.app.shop.shop.seller.ISellerManager;
-import com.enation.app.shop.trade.model.vo.PriceDetail;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.database.Page;
 import com.enation.framework.taglib.BaseFreeMarkerTag;

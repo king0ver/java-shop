@@ -1,6 +1,5 @@
 package com.enation.app.shop.shop.seller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.shop.setting.model.po.ShipTemplate;
 import com.enation.app.shop.shop.setting.service.IShipTemplateManager;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
-import com.enation.framework.util.JsonUtil;
 
 import freemarker.template.TemplateModelException;
  

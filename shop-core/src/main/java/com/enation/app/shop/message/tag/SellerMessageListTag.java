@@ -11,7 +11,6 @@ import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.message.service.IStoreMessageManager;
 import com.enation.app.shop.shop.seller.ISellerManager;
 import com.enation.eop.processor.core.UrlNotFoundException;
-import com.enation.framework.context.spring.SpringContextHolder;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 import com.enation.framework.util.StringUtil;

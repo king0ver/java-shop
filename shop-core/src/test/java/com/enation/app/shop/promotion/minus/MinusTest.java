@@ -10,14 +10,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import com.enation.app.shop.member.service.IMemberManager;
 import com.enation.app.shop.promotion.tool.model.enums.PromotionTypeEnum;
 import com.enation.app.shop.promotion.tool.service.IPromotionToolManager;
-import com.enation.app.shop.trade.model.vo.Cart;
 import com.enation.app.shop.trade.model.vo.CartPromotionGoodsVo;
 import com.enation.app.shop.trade.model.vo.CartVo;
 import com.enation.app.shop.trade.model.vo.PriceDetail;
 import com.enation.app.shop.trade.model.vo.Product;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.test.SpringTestSupport;
-import com.enation.framework.util.CurrencyUtil;
 
 import junit.framework.Assert;
 

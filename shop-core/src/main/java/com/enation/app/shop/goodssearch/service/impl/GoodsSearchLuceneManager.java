@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.facet.DrillDownQuery;
 import org.apache.lucene.facet.FacetResult;
@@ -43,7 +42,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
 import com.enation.app.shop.goods.model.po.Category;
 import com.enation.app.shop.goods.service.ICategoryManager;
 import com.enation.app.shop.goodssearch.model.GoodsSearchLine;

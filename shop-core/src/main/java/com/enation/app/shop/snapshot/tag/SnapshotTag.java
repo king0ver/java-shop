@@ -1,6 +1,5 @@
 package com.enation.app.shop.snapshot.tag;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.enation.app.shop.goods.model.po.GoodsGallery;
 import com.enation.app.shop.goods.model.po.SpecValue;
-import com.enation.app.shop.goods.model.vo.GoodsParamsList;
 import com.enation.app.shop.snapshot.model.po.Snapshot;
 import com.enation.app.shop.snapshot.model.vo.SnapshotVo;
 import com.enation.app.shop.snapshot.service.ISnapshotManager;

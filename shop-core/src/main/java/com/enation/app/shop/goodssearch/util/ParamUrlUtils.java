@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.enation.app.shop.goodssearch.model.SearchSelector;
-import com.enation.app.shop.goodssearch.util.ParamsUtils;
-import com.enation.app.shop.goodssearch.util.Separator;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.util.StringUtil;
 

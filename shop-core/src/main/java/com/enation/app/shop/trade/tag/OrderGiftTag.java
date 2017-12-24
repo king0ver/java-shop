@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.shop.promotion.fulldiscount.model.po.FullDiscountGift;
-import com.enation.app.shop.trade.model.enums.ServiceStatus;
 import com.enation.app.shop.trade.model.po.OrderMeta;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.database.IDaoSupport;

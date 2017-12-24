@@ -1,7 +1,5 @@
 package com.enation.app.shop.message.controller.front;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;

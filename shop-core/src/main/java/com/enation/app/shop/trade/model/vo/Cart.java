@@ -3,10 +3,8 @@ package com.enation.app.shop.trade.model.vo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.enation.app.shop.promotion.fulldiscount.model.po.FullDiscountGift;
-import com.enation.framework.util.JsonUtil;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

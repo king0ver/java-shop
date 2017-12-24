@@ -10,9 +10,6 @@ package com.enation.app.shop.waybill.model.waybilljson;
 
 import java.util.List;
 
-import com.enation.framework.util.JsonUtil;
-import com.rabbitmq.tools.json.JSONUtil;
-
 /**
  * 	快递鸟电子面板封装参数实体
  * @author dongxin

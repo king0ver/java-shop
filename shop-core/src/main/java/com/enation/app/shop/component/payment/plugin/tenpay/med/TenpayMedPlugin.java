@@ -1,24 +1,17 @@
 package com.enation.app.shop.component.payment.plugin.tenpay.med;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
 import com.enation.app.base.core.model.ConfigItem;
 import com.enation.app.shop.aftersale.model.vo.RefundBill;
 import com.enation.app.shop.aftersale.model.vo.RefundPartVo;
-import com.enation.app.shop.payment.model.enums.ClientType;
 import com.enation.app.shop.payment.model.vo.PayBill;
 import com.enation.app.shop.payment.service.AbstractPaymentPlugin;
 import com.enation.app.shop.payment.service.IPaymentPlugin;
 import com.enation.app.shop.trade.model.enums.TradeType;
-import com.enation.framework.context.webcontext.ThreadContextHolder;
 
 /**
  * 财付通(中介担保)支付插件

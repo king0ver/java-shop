@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.enation.framework.context.webcontext.ThreadContextHolder;
-import com.enation.framework.context.webcontext.WebSessionContext;
 import com.enation.framework.directive.ImageUrlDirectiveModel;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 

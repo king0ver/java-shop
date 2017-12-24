@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 2017年9月4日 下午5:01:04
  */
 
-import com.ctc.wstx.util.DataUtil;
 import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.ShopApp;
 import com.enation.app.shop.goods.service.IGoodsQueryManager;

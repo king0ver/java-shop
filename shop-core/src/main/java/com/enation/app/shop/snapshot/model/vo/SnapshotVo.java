@@ -1,6 +1,5 @@
 package com.enation.app.shop.snapshot.model.vo;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.enation.app.shop.goods.model.po.GoodsGallery;

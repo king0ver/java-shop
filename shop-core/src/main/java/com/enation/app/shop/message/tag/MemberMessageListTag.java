@@ -10,7 +10,6 @@ import com.enation.app.shop.message.service.IMemberMessageManager;
 import com.enation.eop.processor.core.UrlNotFoundException;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
-import com.enation.framework.util.StringUtil;
 
 import freemarker.template.TemplateModelException;
 /**

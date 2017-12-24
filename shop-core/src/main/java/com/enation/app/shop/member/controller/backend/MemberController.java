@@ -28,7 +28,6 @@ import com.enation.app.shop.member.service.IMemberManager;
 import com.enation.app.shop.member.service.IPointHistoryManager;
 import com.enation.app.shop.shop.apply.model.po.Shop;
 import com.enation.app.shop.shop.apply.service.IShopManager;
-import com.enation.app.shop.trade.model.enums.OrderStatus;
 import com.enation.eop.sdk.context.EopSetting;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;

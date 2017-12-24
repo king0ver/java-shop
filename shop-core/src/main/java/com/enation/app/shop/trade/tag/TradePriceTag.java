@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.shop.trade.model.vo.PriceDetail;
-import com.enation.app.shop.trade.service.ICartWriteManager;
 import com.enation.app.shop.trade.service.ITradePriceManager;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 

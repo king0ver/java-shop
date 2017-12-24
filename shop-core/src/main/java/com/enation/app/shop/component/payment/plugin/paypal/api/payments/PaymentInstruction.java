@@ -3,24 +3,12 @@ package com.enation.app.shop.component.payment.plugin.paypal.api.payments;
 import java.util.List;
 import java.io.File;
 import java.io.InputStream;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Properties;
 
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.Currency;
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.DefinitionsLinkdescription;
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.RecipientBankingInstruction;
-import com.enation.app.shop.component.payment.plugin.paypal.base.Constants;
-import com.enation.app.shop.component.payment.plugin.paypal.base.SDKVersion;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.APIContext;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.HttpMethod;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.JSONFormatter;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.OAuthTokenCredential;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalModel;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalRESTException;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalResource;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.QueryParameters;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.RESTUtil;
 
 public class PaymentInstruction extends PayPalModel {
 

@@ -3,9 +3,8 @@ package com.enation.app.shop.promotion.fulldiscount.model.vo;
 import java.io.Serializable;
 import java.util.List;
 
-import com.enation.app.shop.promotion.fulldiscount.model.po.FullDiscountGift;
 import com.enation.app.shop.promotion.tool.model.vo.PromotionGoodsVo;
-import com.enation.app.shop.trade.model.vo.Gift;
+
 /**
  * 
  * 满优惠活动实体

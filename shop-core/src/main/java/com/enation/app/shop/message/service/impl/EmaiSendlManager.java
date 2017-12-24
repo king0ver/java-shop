@@ -1,27 +1,15 @@
 package com.enation.app.shop.message.service.impl;
 
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.enation.app.base.core.model.Smtp;
 import com.enation.app.base.core.service.ISendEmailManager;
 import org.apache.log4j.Logger;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.enation.app.base.AmqpExchange;
 import com.enation.app.base.core.service.ISmtpManager;
 import com.enation.app.shop.message.service.IEmailSendlManager;
-import com.enation.eop.resource.model.EopSite;
-import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.jms.EmailModel;
 import com.enation.framework.util.StringUtil;
-
-import freemarker.cache.StringTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 
 /**
  * amqp邮箱发送管理类

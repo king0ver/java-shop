@@ -3,8 +3,6 @@ package com.enation.app.shop.shop.apply.service;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.validator.PublicClassValidator;
-
 import com.enation.app.shop.shop.apply.model.po.Shop;
 import com.enation.app.shop.shop.apply.model.po.ShopDetail;
 import com.enation.app.shop.shop.apply.model.vo.ApplyStep1;

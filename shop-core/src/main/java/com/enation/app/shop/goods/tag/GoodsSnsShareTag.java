@@ -12,7 +12,6 @@ import com.enation.eop.SystemSetting;
 import com.enation.eop.sdk.utils.StaticResourcesUtil;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
-import com.enation.framework.util.RequestUtil;
 import com.enation.framework.util.StringUtil;
 
 import freemarker.template.TemplateModelException;

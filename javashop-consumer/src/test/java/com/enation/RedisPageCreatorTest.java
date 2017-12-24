@@ -16,7 +16,6 @@ import com.enation.app.cms.floor.model.vo.Layout;
 import com.enation.app.cms.floor.model.vo.ManualGoodsBlock;
 import com.enation.app.cms.floor.model.vo.Panel;
 import com.enation.app.cms.floor.service.IFloorManager;
-import com.enation.app.cms.floor.service.impl.FloorManager;
 import com.enation.app.cms.pagecreate.service.IPageCreator;
 import com.enation.app.shop.payment.model.enums.ClientType;
 

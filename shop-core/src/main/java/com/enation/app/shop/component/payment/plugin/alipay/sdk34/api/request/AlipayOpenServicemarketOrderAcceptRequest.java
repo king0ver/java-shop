@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.AlipayObject;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.AlipayRequest;
-import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.domain.AlipayOpenServicemarketOrderAcceptModel;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.internal.util.AlipayHashMap;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.response.AlipayOpenServicemarketOrderAcceptResponse;
 

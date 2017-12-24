@@ -3,15 +3,12 @@ package com.enation.app.shop.waybill.tag;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.shop.trade.model.po.Logi;
 import com.enation.app.shop.trade.service.ILogiManager;
 import com.enation.app.shop.waybill.service.IExpressManager;
-import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 import com.enation.framework.util.StringUtil;
 

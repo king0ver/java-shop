@@ -1,8 +1,5 @@
 package com.enation.app.shop.shop.apply.model.po;
 
-import javax.validation.constraints.Min;
-import com.enation.framework.database.PrimaryKeyField;
-
 /**
  * 
  * (店铺详情) 

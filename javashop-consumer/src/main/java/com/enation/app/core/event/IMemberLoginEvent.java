@@ -1,7 +1,5 @@
 package com.enation.app.core.event;
 
-import java.util.Map;
-
 import com.enation.app.shop.member.model.vo.MemberLoginMsg;
 
 /**

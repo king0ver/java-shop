@@ -1,6 +1,5 @@
 package com.enation.app.shop.goods.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;

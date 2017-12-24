@@ -28,6 +28,10 @@ public class CmsApp extends App {
 		tables.add("data_cat");
 		tables.add("data_model");
 		tables.add("data_field");
+
+
+		System.out.println("------------------------测试CMS-------------------------");
+
 	}
 	
  
@@ -75,6 +79,7 @@ public class CmsApp extends App {
 
 	
 	public void install() {
+		System.out.println("------------------------安装CMS-------------------------");
 		this.doInstall("file:com/enation/app/cms/cms.xml");
 	}
 

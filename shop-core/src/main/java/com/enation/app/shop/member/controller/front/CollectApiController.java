@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ContextLoader;
 
 import com.enation.app.base.core.model.Member;
 import com.enation.app.shop.member.model.Favorite;

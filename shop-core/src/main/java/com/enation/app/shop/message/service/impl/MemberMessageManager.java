@@ -14,7 +14,6 @@ import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
 import com.enation.framework.util.DateUtil;
-import com.enation.framework.util.StringUtil;
 
 /**
  * 会员消息管理类

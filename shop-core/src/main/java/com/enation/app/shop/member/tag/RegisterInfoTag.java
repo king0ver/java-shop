@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
-import com.enation.framework.util.JsonUtil;
 
 import freemarker.template.TemplateModelException;
 

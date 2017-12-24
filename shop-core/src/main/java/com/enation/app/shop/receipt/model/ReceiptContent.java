@@ -1,7 +1,5 @@
 package com.enation.app.shop.receipt.model;
 
-import com.enation.framework.database.PrimaryKeyField;
-
 /**
  * 
  * 发票内容实体类

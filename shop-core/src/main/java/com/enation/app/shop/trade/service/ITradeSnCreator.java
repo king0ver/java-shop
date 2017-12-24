@@ -30,4 +30,10 @@ public interface ITradeSnCreator {
      */
     void cleanCache();
 
+    /**
+     * 生成充值訂單號
+     * @return
+     */
+    String generateRechangeSn();
+
 }

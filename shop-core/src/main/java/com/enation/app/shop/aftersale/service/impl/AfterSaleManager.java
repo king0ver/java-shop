@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +34,8 @@ import com.enation.app.shop.aftersale.service.IAfterSaleManager;
 import com.enation.app.shop.aftersale.service.RefundOperateChecker;
 import com.enation.app.shop.aftersale.support.RefundChangeMessage;
 import com.enation.app.shop.goods.model.vo.GoodsQuantityVo;
-import com.enation.app.shop.goods.model.vo.SpecValueVo;
 import com.enation.app.shop.goods.service.IGoodsQuantityManager;
 import com.enation.app.shop.payment.service.IOrderPayManager;
-import com.enation.app.shop.promotion.fulldiscount.model.po.FullDiscountGift;
 import com.enation.app.shop.shop.seller.ISellerManager;
 import com.enation.app.shop.trade.model.enums.ServiceStatus;
 import com.enation.app.shop.trade.model.po.OrderMeta;
@@ -60,9 +56,6 @@ import com.enation.framework.validator.NoPermissionException;
 import com.enation.framework.validator.ResourceNotFoundException;
 import com.enation.framework.validator.UnProccessableServiceException;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 售后管理业务类

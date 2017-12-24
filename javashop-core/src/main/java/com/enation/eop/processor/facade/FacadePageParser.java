@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +29,7 @@ import com.enation.eop.resource.model.ThemeUri;
 import com.enation.eop.sdk.HeaderConstants;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.eop.sdk.utils.FreeMarkerUtil;
+import com.enation.framework.cache.ICache;
 import com.enation.framework.context.spring.SpringContextHolder;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.TagCreator;
@@ -37,6 +39,8 @@ import freemarker.core.StopException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 /**
  * 前台页面解析器<br>
@@ -136,6 +140,11 @@ public class FacadePageParser  {
 				uri=uri+"/index.html";
 			}
 		}
+
+	/*	if(getPageInfoFromRedis(uri)){
+			return true;
+		}*/
+
 
 		// 得到模板文件名
 		IThemeUriManager themeUriManager = SpringContextHolder.getBean("themeUriManager");
@@ -331,6 +340,27 @@ public class FacadePageParser  {
 		String severname= SystemSetting.getWap_domain();
 		String url  = "http://"+severname+portstr+contextPath+"/index.html";
 		return url;
+
+	}
+
+
+	private boolean getPageInfoFromRedis(String url){
+
+
+		StringRedisTemplate stringRedisTemplate = SpringContextHolder.getBean("stringRedisTemplate");
+
+		String content = stringRedisTemplate.opsForValue().get("/" + (isMobile()?"WAP":"PC") + SystemSetting.getContext_path() + url);
+
+		if(StringUtils.isBlank(content)){
+			return false;
+		}else{
+			try {
+				ThreadContextHolder.getHttpResponse().getWriter().write(content);
+				return true;
+			} catch (IOException e) {
+				return false;
+			}
+		}
 
 	}
 

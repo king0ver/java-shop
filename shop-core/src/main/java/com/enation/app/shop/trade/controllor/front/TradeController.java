@@ -65,8 +65,8 @@ public class TradeController {
 		}else{
 			client_type = ClientType.PC.name();
 		}
-		this.checkoutParamManager.setClientType(client_type);
-		
+
+
 		try {
 			trade = tradeCreator.createTrade();
 		} catch (Exception e) {

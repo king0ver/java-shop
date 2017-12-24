@@ -1,6 +1,5 @@
 package com.enation.app.shop.shop.rdesign.service;
 
-import java.io.File;
 import java.util.List;
 
 import com.enation.app.shop.shop.rdesign.model.StorePhotos;

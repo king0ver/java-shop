@@ -12,7 +12,6 @@ import com.enation.app.shop.component.payment.plugin.alipay.JavashopAlipayUtil;
 import com.enation.app.shop.component.payment.plugin.alipay.direct.AlipayPluginConfig;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.AlipayClient;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.DefaultAlipayClient;
-import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.request.AlipayTradeAppPayRequest;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.request.AlipayTradeWapPayRequest;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.config.AlipayConfig;
 import com.enation.app.shop.payment.model.vo.PayBill;

@@ -9,8 +9,6 @@ import java.util.Map;
 import com.enation.app.shop.trade.model.enums.*;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -230,7 +228,14 @@ public class OrderOperateManager implements IOrderOperateManager {
 			this.changeOrderPayStatus(param,"trade_sn",bill);
 		}
 	}
-	
+
+	@Override
+	public void payRecharge(OrderPayReturnParam payReturnParam, OrderPermission permission) {
+
+
+
+	}
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void payOrder(OrderPayReturnParam param, OrderPermission permission) {

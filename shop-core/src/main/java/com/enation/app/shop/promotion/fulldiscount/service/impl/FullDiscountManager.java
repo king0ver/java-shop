@@ -1,12 +1,10 @@
 package com.enation.app.shop.promotion.fulldiscount.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.promotion.fulldiscount.model.po.FullDiscount;
 import com.enation.app.shop.promotion.fulldiscount.model.vo.FullDiscountVo;
 import com.enation.app.shop.promotion.fulldiscount.service.IFullDiscountManager;

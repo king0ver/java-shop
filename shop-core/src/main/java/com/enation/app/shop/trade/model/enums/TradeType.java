@@ -10,7 +10,8 @@ package com.enation.app.shop.trade.model.enums;
 public enum TradeType {
 	
 	order("订单"),
-	trade("交易");
+	trade("交易"),
+	recharge("充值");
 	
 	private String description;
 

@@ -73,6 +73,28 @@ public class OrderPayControllor {
 		
 		return html;
 	}
+
+	@ApiOperation(value="对一个订单发起支付" )
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "order_sn", value = "要支付的订单sn", required = true, dataType = "String" ,paramType="path"),
+			@ApiImplicitParam(name = "payment_method_id", value = "支付方式id，如果不传递则使用订单中记录的支付方式", required = false, dataType = "Integer",paramType="query"),
+			@ApiImplicitParam(name = "pay_mode", value = "支付模式，如果不传递使用normal正常模式", required = false, dataType = "String",paramType="query",allowableValues="normal,qr"),
+			@ApiImplicitParam(name = "client_type", value = "客户端类型", required = false, dataType = "String",paramType="query",allowableValues="PC,WAP,APP")
+
+	})
+	@ResponseBody
+	@RequestMapping(value="/order/{recharge_sn}", produces = MediaType.TEXT_HTML_VALUE,method=RequestMethod.GET)
+	public String payRecharge(@NotNull(message="充值sn不能为空") @PathVariable(name="recharge_sn")  String recharge_sn, Integer payment_method_id,String pay_mode,
+						   String client_type){
+		//默认值为normal
+		if( StringUtil.isEmpty( pay_mode) ){
+			pay_mode = "normal";
+		}
+
+		String html = orderPayManager.payRecharge(recharge_sn, payment_method_id, pay_mode,client_type);
+
+		return html;
+	}
 	
 	@ApiOperation(value="接收支付同步回调" )
 	@ApiImplicitParams({

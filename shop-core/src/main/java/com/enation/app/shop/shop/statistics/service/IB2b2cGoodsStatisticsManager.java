@@ -3,8 +3,6 @@ package com.enation.app.shop.shop.statistics.service;
 import java.util.List;
 import java.util.Map;
 
-import com.enation.framework.database.Page;
-
 /**
  * 商品分析manager接口
  * @author xin

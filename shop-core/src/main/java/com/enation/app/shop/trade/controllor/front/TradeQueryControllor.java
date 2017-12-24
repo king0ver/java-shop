@@ -9,17 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.enation.app.base.core.model.Member;
 import com.enation.app.shop.trade.model.po.TradePo;
-import com.enation.app.shop.trade.model.vo.OrderQueryParam;
-import com.enation.app.shop.trade.model.vo.TradeLine;
 import com.enation.app.shop.trade.service.IOrderQueryManager;
 import com.enation.app.shop.trade.service.ITradeQueryManager;
-import com.enation.eop.resource.model.AdminUser;
 import com.enation.eop.sdk.context.UserConext;
-import com.enation.framework.database.Page;
 import com.enation.framework.validator.ErrorCode;
 import com.enation.framework.validator.NoPermissionException;
 

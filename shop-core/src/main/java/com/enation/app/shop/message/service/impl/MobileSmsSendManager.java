@@ -1,27 +1,18 @@
 package com.enation.app.shop.message.service.impl;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.enation.app.base.core.model.SmsPlatform;
 import com.enation.app.base.core.plugin.sms.ISmsSendEvent;
 import com.enation.app.base.core.service.ISmsManager;
 import com.enation.framework.context.spring.SpringContextHolder;
-import com.enation.framework.context.webcontext.ThreadContextHolder;
-import com.enation.framework.database.IDaoSupport;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.text.StrSubstitutor;
-import org.apache.log4j.Logger;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.enation.app.base.AmqpExchange;
 import com.enation.app.shop.message.model.vo.MobileVo;
 import com.enation.app.shop.message.service.IMobileSmsSendManager;
-import com.enation.eop.resource.model.EopSite;
-import com.enation.framework.util.StringUtil;
 
 /**
  * 手机短信发送管理类

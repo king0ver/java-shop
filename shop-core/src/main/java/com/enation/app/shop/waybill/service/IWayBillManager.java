@@ -1,7 +1,6 @@
 package com.enation.app.shop.waybill.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.enation.app.base.core.model.ConfigItem;
 import com.enation.app.shop.waybill.model.WayBill;

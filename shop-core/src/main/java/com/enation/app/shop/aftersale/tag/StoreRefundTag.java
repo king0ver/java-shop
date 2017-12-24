@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.base.core.model.Seller;
-import com.enation.app.shop.aftersale.model.enums.RefundStatus;
 import com.enation.app.shop.aftersale.model.vo.RefundQueryParam;
 import com.enation.app.shop.aftersale.service.IAfterSaleManager;
 import com.enation.app.shop.shop.seller.ISellerManager;

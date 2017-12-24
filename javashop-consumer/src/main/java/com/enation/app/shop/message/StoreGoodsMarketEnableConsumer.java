@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.core.event.IGoodsChangeEvent;
-import com.enation.app.core.event.IGoodsReasonEvent;
 import com.enation.app.shop.goods.model.vo.GoodsVo;
 import com.enation.app.shop.goods.service.IGoodsManager;
 import com.enation.app.shop.message.model.MessageTemplate;
@@ -28,7 +27,6 @@ import com.enation.eop.resource.model.EopSite;
 import com.enation.eop.sdk.context.EopSetting;
 import com.enation.framework.jms.EmailModel;
 import com.enation.framework.jms.support.goods.GoodsChangeMsg;
-import com.enation.framework.jms.support.goods.GoodsReasonMsg;
 import com.enation.framework.util.StringUtil;
 
 import freemarker.cache.StringTemplateLoader;

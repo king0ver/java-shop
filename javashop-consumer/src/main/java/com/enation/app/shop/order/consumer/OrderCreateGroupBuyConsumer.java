@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.enation.app.shop.promotion.tool.model.enums.PromotionTypeEnum;
 import com.enation.app.shop.trade.model.po.OrderItem;
 import com.enation.app.shop.trade.service.IOrderItemManager;
 import com.enation.framework.database.IDaoSupport;

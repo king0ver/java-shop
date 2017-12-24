@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.goods.service.impl.GoodsManager;
-import com.enation.app.shop.promotion.fulldiscount.model.vo.FullDiscountVo;
 import com.enation.app.shop.promotion.halfprice.model.po.HalfPrice;
 import com.enation.app.shop.promotion.halfprice.model.vo.HalfPriceVo;
 import com.enation.app.shop.promotion.halfprice.service.IHalfPriceManager;

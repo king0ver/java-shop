@@ -1,7 +1,5 @@
 package com.enation.app.shop.promotion.exchange.service;
 
-import java.util.List;
-
 import com.enation.app.shop.goods.model.vo.GoodsQueryParam;
 import com.enation.framework.database.Page;
 

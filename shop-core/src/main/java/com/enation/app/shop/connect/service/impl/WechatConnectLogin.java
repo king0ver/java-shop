@@ -4,8 +4,6 @@ import com.enation.app.shop.connect.model.ConnectType;
 import com.enation.app.shop.connect.model.ConnectUser;
 import com.enation.app.shop.connect.service.ConnectLogin;
 import com.enation.app.shop.connect.utils.HttpUtils;
-import com.enation.framework.util.HttpUtil;
-import com.enation.framework.util.StringUtil;
 import com.qq.connect.utils.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 

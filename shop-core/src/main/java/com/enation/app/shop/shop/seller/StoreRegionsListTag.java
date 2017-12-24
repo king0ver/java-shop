@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enation.app.base.core.service.IRegionsManager;
 import com.enation.app.shop.shop.setting.service.IStoreRegionsManager;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 

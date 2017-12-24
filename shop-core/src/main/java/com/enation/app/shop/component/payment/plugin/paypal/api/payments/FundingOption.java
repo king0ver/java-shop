@@ -2,13 +2,6 @@ package com.enation.app.shop.component.payment.plugin.paypal.api.payments;
 
 import java.util.List;
 
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.CurrencyConversion;
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.DefinitionsLinkdescription;
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.FundingInstrument;
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.FundingSource;
-import com.enation.app.shop.component.payment.plugin.paypal.api.payments.InstallmentInfo;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.JSONFormatter;
-
 public class FundingOption  {
 
 	/**

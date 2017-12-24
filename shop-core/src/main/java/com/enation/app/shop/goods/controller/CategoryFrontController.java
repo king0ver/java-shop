@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.goods.model.po.Category;
-import com.enation.app.shop.goods.model.vo.CategoryVo;
 import com.enation.app.shop.goods.service.ICategoryManager;
 import com.enation.app.shop.shop.seller.ISellerManager;
 import com.enation.framework.validator.UnProccessableServiceException;

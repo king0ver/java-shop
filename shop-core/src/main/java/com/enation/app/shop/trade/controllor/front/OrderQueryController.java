@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.enation.app.base.core.model.Seller;
 import com.enation.app.shop.shop.seller.ISellerManager;
-import com.enation.app.shop.trade.model.vo.OrderLine;
 import com.enation.app.shop.trade.model.vo.OrderLineSeller;
 import com.enation.app.shop.trade.model.vo.OrderQueryParam;
 import com.enation.app.shop.trade.service.IOrderQueryManager;

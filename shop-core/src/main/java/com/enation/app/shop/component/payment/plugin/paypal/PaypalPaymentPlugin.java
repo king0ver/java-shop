@@ -40,15 +40,12 @@ import com.enation.app.shop.component.payment.plugin.paypal.base.rest.APIContext
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalRESTException;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalResource;
 import com.enation.app.shop.component.payment.plugin.paypal.util.GenerateAccessToken;
-import com.enation.app.shop.payment.model.enums.ClientType;
 import com.enation.app.shop.payment.model.vo.PayBill;
-import com.enation.app.shop.payment.model.vo.PaymentResult;
 import com.enation.app.shop.payment.service.AbstractPaymentPlugin;
 import com.enation.app.shop.payment.service.IPaymentPlugin;
 import com.enation.app.shop.trade.model.enums.TradeType;
 import com.enation.eop.resource.model.EopSite;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
-import com.enation.framework.util.StringUtil;
 
 
 /**

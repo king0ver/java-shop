@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.AccessControlException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalResource;
-import com.enation.app.shop.component.payment.plugin.paypal.base.util.ResourceLoader;
 
 /**
  * <code>ConfigManager</code> loads configuration from 'sdk_config.properties'

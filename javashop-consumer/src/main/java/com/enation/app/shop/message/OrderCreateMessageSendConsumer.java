@@ -23,7 +23,6 @@ import com.enation.app.shop.message.service.IStoreMessageManager;
 import com.enation.app.shop.shop.apply.model.po.ShopDetail;
 import com.enation.app.shop.shop.apply.service.IShopManager;
 import com.enation.app.shop.trade.model.enums.OrderStatus;
-import com.enation.app.shop.trade.model.vo.OrderDetail;
 import com.enation.app.shop.trade.service.IOrderQueryManager;
 import com.enation.app.shop.trade.support.OrderStatusChangeMessage;
 import com.enation.eop.resource.model.EopSite;

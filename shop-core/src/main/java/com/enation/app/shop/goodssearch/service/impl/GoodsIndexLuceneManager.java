@@ -37,12 +37,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import com.chenlb.mmseg4j.analysis.MaxWordAnalyzer;
 import com.chenlb.mmseg4j.analysis.TokenUtils;
 import com.enation.app.shop.goods.model.po.Category;
 import com.enation.app.shop.goods.model.po.GoodsParams;
 import com.enation.app.shop.goods.service.ICategoryManager;
-import com.enation.app.shop.goodssearch.model.GoodsWords;
 import com.enation.app.shop.goodssearch.service.IGoodsIndexManager;
 import com.enation.app.shop.goodssearch.util.PinYinUtil;
 import com.enation.eop.SystemSetting;

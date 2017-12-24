@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.enation.app.core.event.IGoodsChangeEvent;
 import com.enation.app.shop.goods.model.vo.GoodsVo;
 import com.enation.app.shop.goods.service.IGoodsManager;
 import com.enation.app.shop.message.model.MessageTemplate;
@@ -28,7 +27,6 @@ import com.enation.app.shop.shop.apply.model.po.ShopDetail;
 import com.enation.app.shop.shop.apply.service.IShopManager;
 import com.enation.eop.resource.model.EopSite;
 import com.enation.framework.jms.EmailModel;
-import com.enation.framework.jms.support.goods.GoodsChangeMsg;
 
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;

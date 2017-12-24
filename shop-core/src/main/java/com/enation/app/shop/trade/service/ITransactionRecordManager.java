@@ -1,7 +1,5 @@
 package com.enation.app.shop.trade.service;
 
-import java.util.List;
-
 import com.enation.app.shop.trade.model.po.TransactionRecord;
 import com.enation.framework.database.Page;
 

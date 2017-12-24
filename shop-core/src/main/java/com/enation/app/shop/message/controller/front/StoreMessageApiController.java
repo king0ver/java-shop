@@ -8,9 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.enation.app.base.core.model.Member;
 import com.enation.app.shop.message.service.IStoreMessageManager;
-import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.util.JsonResultUtil;

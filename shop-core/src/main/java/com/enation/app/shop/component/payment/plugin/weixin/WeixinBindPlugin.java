@@ -1,6 +1,5 @@
 package com.enation.app.shop.component.payment.plugin.weixin;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;

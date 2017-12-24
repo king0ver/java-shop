@@ -10,7 +10,6 @@ import com.enation.app.shop.message.service.IMessageManager;
 import com.enation.app.shop.message.service.IMobileSmsSendManager;
 import com.enation.eop.resource.model.EopSite;
 import com.enation.eop.sdk.context.EopSetting;
-import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.jms.EmailModel;
 import com.enation.framework.util.StringUtil;
 import freemarker.cache.StringTemplateLoader;

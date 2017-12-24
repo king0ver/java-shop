@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.enation.app.shop.goods.model.po.Category;
 import com.enation.app.shop.goods.model.vo.GoodsQueryParam;
-import com.enation.app.shop.promotion.exchange.model.po.ExchangeGoodsCategory;
 import com.enation.app.shop.promotion.exchange.service.IExchangeGoodsManager;
 import com.enation.framework.annotation.Log;
 import com.enation.framework.database.IDaoSupport;

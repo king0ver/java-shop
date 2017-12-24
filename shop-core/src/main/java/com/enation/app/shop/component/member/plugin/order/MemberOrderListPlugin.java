@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.enation.app.base.core.model.Member;
 import com.enation.app.shop.member.plugin.IMemberTabShowEvent;
-import com.enation.app.shop.trade.model.enums.OrderStatus;
 import com.enation.app.shop.trade.service.IOrderQueryManager;
 import com.enation.eop.processor.core.freemarker.FreeMarkerPaser;
 import com.enation.framework.context.webcontext.ThreadContextHolder;

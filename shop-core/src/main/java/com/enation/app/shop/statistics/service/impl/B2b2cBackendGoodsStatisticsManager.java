@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.enation.app.shop.goods.service.ICategoryManager;
 import com.enation.app.shop.statistics.service.IB2b2cGoodsStatisticsManager;
 import com.enation.eop.sdk.context.EopSetting;
 import com.enation.framework.database.IDaoSupport;

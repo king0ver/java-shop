@@ -1,7 +1,6 @@
 package com.enation.app.shop.component.payment;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.enation.framework.component.IComponent;
 import com.enation.framework.database.data.IDataOperation;

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.enation.app.shop.goodssearch.service.IGoodsIndexSendManager;
 import com.enation.framework.action.JsonResult;
-import com.enation.framework.jms.EopJmsMessage;
-import com.enation.framework.jms.EopProducer;
 import com.enation.framework.util.JsonResultUtil;
 
 /**

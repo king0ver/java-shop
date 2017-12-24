@@ -18,7 +18,6 @@ import com.enation.app.shop.comments.service.IMemberCommentManager;
 import com.enation.app.shop.comments.service.IMemeberCommentGalleryManager;
 import com.enation.app.shop.comments.service.IShopScoreManager;
 import com.enation.app.shop.goods.model.po.Goods;
-import com.enation.app.shop.goods.model.vo.GoodsSkuVo;
 import com.enation.app.shop.goods.service.IGoodsSkuManager;
 import com.enation.app.shop.shop.seller.ISellerManager;
 import com.enation.app.shop.trade.model.enums.OrderStatus;
@@ -33,8 +32,6 @@ import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
 import com.enation.framework.log.LogType;
 import com.enation.framework.util.StringUtil;
-import com.enation.framework.validator.ErrorCode;
-import com.enation.framework.validator.NoPermissionException;
 
 /**
  * 

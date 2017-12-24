@@ -2,7 +2,6 @@ package com.enation.app.shop.goods;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
 import com.enation.app.shop.goods.service.IGoodsManager;
 import com.enation.framework.test.SpringTestSupport;

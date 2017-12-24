@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.enation.app.shop.promotion.bonus.model.Bonus;
 import com.enation.app.shop.promotion.bonus.model.MemberBonus;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.util.CurrencyUtil;

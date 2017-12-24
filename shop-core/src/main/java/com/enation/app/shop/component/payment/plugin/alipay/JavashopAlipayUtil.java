@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.api.internal.util.AlipaySignature;
 import com.enation.app.shop.component.payment.plugin.alipay.sdk34.config.AlipayConfig;
-import com.enation.app.shop.component.payment.plugin.alipay.sdk34.config.AlipayConfig34;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 
 

@@ -1,8 +1,5 @@
 package com.enation.app.shop.member.service;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.enation.app.shop.member.model.MessageBg;
 import com.enation.app.shop.member.model.po.MessageBack;
 import com.enation.framework.database.Page;

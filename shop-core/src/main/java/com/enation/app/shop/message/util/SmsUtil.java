@@ -2,7 +2,6 @@ package com.enation.app.shop.message.util;
 
 import com.enation.app.shop.member.model.enums.MemberSendCodeEnum;
 import com.enation.app.shop.member.service.IMemberManager;
-import com.enation.app.shop.message.model.enums.MessageCodeEnum;
 import com.enation.framework.context.spring.SpringContextHolder;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.util.DateUtil;

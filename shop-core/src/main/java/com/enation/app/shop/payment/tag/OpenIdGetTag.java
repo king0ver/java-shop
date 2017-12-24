@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 import com.enation.app.base.core.model.ConfigItem;
 import com.enation.app.shop.component.payment.plugin.weixin.WeixinPayPlugin;
 import com.enation.app.shop.component.payment.plugin.weixin.WeixinUtil;
-import com.enation.app.shop.payment.service.IPaymentMethodManager;
 import com.enation.framework.cache.ICache;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.database.IDaoSupport;

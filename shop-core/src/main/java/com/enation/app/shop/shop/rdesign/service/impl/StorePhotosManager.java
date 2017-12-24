@@ -11,7 +11,6 @@ import com.enation.app.base.upload.UploadFactory;
 import com.enation.app.base.upload.plugin.IUploader;
 import com.enation.app.shop.shop.rdesign.model.StorePhotos;
 import com.enation.app.shop.shop.rdesign.service.IStorePhotosManager;
-import com.enation.eop.SystemSetting;
 import com.enation.eop.sdk.context.EopSetting;
 import com.enation.framework.database.IDaoSupport;
 /**

@@ -7,7 +7,6 @@ import com.enation.app.base.core.model.ConfigItem;
 import com.enation.app.shop.payment.model.enums.OpenType;
 import com.enation.app.shop.payment.model.po.PaymentMethod;
 import com.enation.app.shop.payment.service.IPaymentPlugin;
-import com.enation.app.shop.trade.model.vo.Product;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

@@ -2,9 +2,6 @@ package com.enation.app.shop.shop.apply.model.po;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Min;
-import com.enation.framework.database.PrimaryKeyField;
-
 /**
  * 
  * (店铺) 

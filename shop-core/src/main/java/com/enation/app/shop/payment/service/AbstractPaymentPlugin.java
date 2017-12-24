@@ -1,7 +1,6 @@
 package com.enation.app.shop.payment.service;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +96,10 @@ public abstract class AbstractPaymentPlugin {
 		if( paymentResult.getTrade_type().name().equals( tradeType.trade.name()) ){//交易
 			
 			orderOperateManager.payTrade(param, null );
+		}
+
+		if(paymentResult.getTrade_type().name().equals(TradeType.recharge.name())){//充值
+
 		}
 		
 		

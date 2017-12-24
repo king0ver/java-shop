@@ -2,9 +2,6 @@ package com.enation.app.shop.goods.service;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.enation.app.shop.goods.model.vo.GoodsSkuVo;
 
 /**

@@ -1,7 +1,5 @@
 package com.enation.app.shop.snapshot.service;
 
-import org.springframework.stereotype.Service;
-
 import com.enation.app.shop.snapshot.model.po.Snapshot;
 import com.enation.app.shop.trade.model.po.OrderPo;
 

@@ -102,6 +102,25 @@ public class OrderPayManager implements IOrderPayManager {
 		 	
 	}
 
+	@Override
+	public String payRecharge(String rechange_sn, Integer payment_method_id,String pay_mode,String client_type){
+
+		PayBill bill = this.daoSupport.queryForObject("select recharge_id as order_id , recharge_sn as trade_sn, price order_price from es_recharge  where recharge_sn=?",
+				PayBill.class, rechange_sn);
+
+		if(bill==null){
+			throw new RuntimeException("未找到相应的充值订单["+rechange_sn+"]");
+		}
+
+		bill.setTradeType(TradeType.recharge);
+		bill.setPay_mode(pay_mode);
+		bill.setClientType(ClientType.valueOf(client_type));
+
+		return this.pay(bill, payment_method_id);
+
+
+	}
+
 
 	@Override
 	public String payTrade(String  trade_sn,Integer payment_method_id,String pay_mode,String client_type) {
@@ -118,8 +137,7 @@ public class OrderPayManager implements IOrderPayManager {
 		return this.pay(bill, payment_method_id);
 	}
 
-	
-	
+
 	@Override
 	public String payReturn(TradeType tradeType,String pluginId) {
 		IPaymentPlugin plugin = this.findPlugin(pluginId);

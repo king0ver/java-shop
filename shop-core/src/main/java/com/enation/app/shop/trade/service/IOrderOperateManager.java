@@ -6,7 +6,6 @@ import com.enation.app.shop.trade.model.enums.CommentStatus;
 import com.enation.app.shop.trade.model.enums.OrderPermission;
 import com.enation.app.shop.trade.model.enums.ServiceStatus;
 import com.enation.app.shop.trade.model.po.OrderPo;
-import com.enation.app.shop.trade.model.vo.Consignee;
 import com.enation.app.shop.trade.model.vo.OrderConsigneeVo;
 import com.enation.app.shop.trade.model.vo.operator.Cancel;
 import com.enation.app.shop.trade.model.vo.operator.Complete;
@@ -48,8 +47,13 @@ public interface IOrderOperateManager {
 	 * @param permission 需要检测的订单权限
 	 */
 	public void payTrade(OrderPayReturnParam param, OrderPermission permission) ;
-	
-	
+
+	/**
+	 * 对充值付款
+	 * @param payReturnParam
+	 * @param permission
+     */
+	void payRecharge(OrderPayReturnParam payReturnParam, OrderPermission permission);
 	
 	/**
 	 * 发货

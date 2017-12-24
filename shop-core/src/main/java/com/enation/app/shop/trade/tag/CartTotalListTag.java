@@ -8,10 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.enation.app.shop.trade.model.vo.CartVo;
-import com.enation.app.shop.trade.model.vo.GroupPromotionVo;
-import com.enation.app.shop.trade.model.vo.Product;
 import com.enation.app.shop.trade.service.ICartReadManager;
-import com.enation.app.shop.trade.service.ICartWriteManager;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 
 import freemarker.template.TemplateModelException;

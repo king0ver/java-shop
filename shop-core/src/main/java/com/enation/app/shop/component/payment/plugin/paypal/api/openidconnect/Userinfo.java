@@ -7,7 +7,6 @@ import com.enation.app.shop.component.payment.plugin.paypal.base.rest.APIContext
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.HttpMethod;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalRESTException;
 import com.enation.app.shop.component.payment.plugin.paypal.base.rest.PayPalResource;
-import com.enation.app.shop.component.payment.plugin.paypal.base.rest.RESTUtil;
 
 /**
  * Class Userinfo
