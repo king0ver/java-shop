@@ -1,0 +1,53 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage('{"id":16}') />
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/pay.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${file_path}/nanshan/js/pay.js"></script>
+<#include 'common/thirdCat.html'/>
+<!-- nav-bar  end -->
+
+<!-- 主体部分 -->
+
+<div class="section-content">
+    <!-- 面包屑 -->
+    <#include 'common/navigator.html'/>
+   
+   	<div class="czUser">
+   		<span>充值账号</span>
+   		<input type="text" value="186732323" />
+   		<span>[更换账号]</span>
+   	</div>
+   	<div class="czNum clearfix">
+   		<div class="czLt">充值数量</div>
+   		<div class="czRg">
+   			<span class="chooseNum select">50点</span>
+   			<span class="chooseNum">100点</span>
+   			<span class="chooseNum">200点</span>
+   			<span class="chooseNum">500点</span>
+   		</div>
+   	</div>
+   	<div class="txNum">
+   		<span>
+   			<input type="text" class="puyNum" placeholder="输入其他点数" />
+   		</span>
+   		<span>充值数量必须为50的倍数，且在50-10000000000之间</span>
+   	</div>
+   	<div class="borderDesh"></div>
+   <div class="czUser" >
+   		<span>应付金额</span>
+   		<div class="priceNum">
+   			<span>300.00元</span>
+   			<span>获得0积分</span>
+   		</div>
+   	</div>
+   	<div class="buttom">下一步</div>
+   	
+   	<div class="payTitie">
+   		<p>什么是通用点？</p>
+   		<p>通用点数可以消费公司提供的各种增值服务和游戏产品,包括:梦幻西游电脑版、新大话西游2、大话西游2免费版、天下3、新倩女幽魂、镇魔曲、西楚霸王、天谕
+大唐无双零、新大话西游3、武魂2、新飞飞飞、精灵传说、同城约会、ⅥP邮箱等产品。</p>
+<p>注:只可消费于网易各产品,战网游戏(魔兽世界、星际争霸、暗黑破坏神、炉石传说、风暴英雄)除外</p>
+   	</div>
+ </div>
+<!-- 主体结束 -->
+<#include 'common/footer.html'/>

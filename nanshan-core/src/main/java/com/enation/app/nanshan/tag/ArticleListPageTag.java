@@ -29,44 +29,23 @@ public class ArticleListPageTag extends AbstractPageTag{
         Map<String, Object> map = new HashMap<>();
 
         HttpServletRequest request  = ThreadContextHolder.getHttpRequest();
-        String catId  = request.getParameter("cat");
+        String catId  = request.getParameter("catId");
+        String specs  = request.getParameter("specs");
 
         handlePageCat(map, catId);
 
         int pageNo = getPage();
 
-        List<ArticleVo> items = buildArticleVos();
+        Page<ArticleVo> webPage =articleService.querySpecInfoByCatId(Integer.parseInt(catId),
+                specs, pageNo, getPageSize());
 
-        Page webPage = new Page(0, 100, 16, items);
+
         webPage.setCurrentPageNo(pageNo);
 
         map.put("webPage", webPage);
-        map.put("items", items);
+        map.put("items", webPage.getResult());
 
         return map;
-    }
-
-    /**
-     * 构建文章列表
-     * @return
-     */
-    private List<ArticleVo> buildArticleVos(){
-
-        List<ArticleVo> items = new ArrayList<>();
-
-        for(int i = 0; i < 16; i++){
-
-            ArticleVo articleVo = new ArticleVo();
-
-            articleVo.setImgUrl("http://localhost:8180/images/drill5.jpg");
-            articleVo.setTitle("地震应急演练");
-            articleVo.setSummary("硬件设备电动6自由度地震平台、厨房场景家具、显示器、观众席座椅、控制中心。");
-            articleVo.setUrl("http://www.baidu.com");
-
-            items.add(articleVo);
-        }
-
-        return items;
     }
 
 

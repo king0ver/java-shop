@@ -34,6 +34,6 @@ public interface ITradeSnCreator {
      * 生成充值訂單號
      * @return
      */
-    String generateRechangeSn();
+    String generateRechargeSn();
 
 }

@@ -1,0 +1,724 @@
+/*消防图片平铺*/
+.content-title{
+    font-size: 28px;
+    margin: 21px auto;
+    color: #333;
+}
+
+.xfdetail-lists li{
+    display: inline-block;
+    width: 370px;
+    height: 456px;
+       border: 1px solid #f3f3f3;
+    box-shadow: 0px 0px 10px 2px #f3f3f3;
+    text-align: center;
+}
+.xfdetail-lists li img{
+	width: 370px;
+	height: 265px;
+}
+.xfdetail-lists li:not(:last-child){
+    margin-right: 20px;
+    margin-bottom: 32px;
+}
+.xfdetail-lists h3{
+    margin: 17px auto 19px;
+}
+.xfdetail-lists .txt{
+    padding: 0 30px;
+}
+.xfdetail-lists .btn{
+    display: inline-block;
+    width: 156px;
+    height: 46px;
+    text-align: center;
+    line-height: 46px;
+    background: #ddd;
+    color: #fff;
+    font-size: 16px;
+    margin:10px auto 22px;
+}
+/*消防图片平铺影片预告*/
+.recommended-movie{
+    margin: 49px 0 37px;
+    font-size: 32px;
+}
+.movie-img-list{
+    overflow: hidden;
+}
+.movie-img-list li{
+    float: left;
+    text-align: center;
+}
+.movie-img-list li:not(:last-child){
+    margin-right: 55px;
+}
+.movie-img-list .title{
+    margin: 14px 0 28px;
+}
+/*体验图片平铺影片预告*/
+.tiyan-img-list{
+    overflow: hidden;
+}
+.tiyan-img-list li{
+    float: left;
+    text-align: center;
+}
+.tiyan-img-list li img{
+	width: 375px;
+	height: 265px;
+}
+.tiyan-img-list li:not(:last-child){
+    margin-right: 20px;
+}
+.tiyan-img-list .title{
+    margin: 14px 0 28px;
+}
+/*游戏图片平铺影片预告*/
+.youxi-img-list{
+    overflow: hidden;
+}
+.youxi-img-list li{
+    float: left;
+    text-align: center;
+}
+.youxi-img-list li img{
+	width: 340px;
+	height: 515px;
+}
+
+.youxi-img-list li:not(:last-child){
+    margin-right: 20px;
+}
+.youxi-img-list .title{
+    margin: 14px 0 28px;
+}
+/*游戏列表左右平铺*/
+/* 游戏列表 */
+
+.game-lists{
+	width: 840px;
+}
+.game-lists li{
+    display: inline-block;
+    text-align: center;
+}
+.game-lists li img{
+	width: 195px;
+	height: 250px;
+}
+
+.game-lists li:not(:last-child){
+    margin-right: 10px;
+}
+.game-lists .txt{
+    margin: 15px auto 27px;
+}
+.game-item-lt{
+    float: left;
+}
+.game-item-rt{
+    float: right;
+    width: 278px;
+    border: 1px solid #ccc;
+    padding: 7px 24px;
+}
+.game-item-rt .hot-game-title{
+    font-size: 20px;
+    margin: 14px 0;
+}
+.game-item-rt li{
+    margin: 10px 2px
+}
+.game-item-rt .txt-con{
+    display: inline-block;
+    width: 168px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+.game-item-rt .game-name{
+    font-size: 16px;
+}
+.game-item-rt .game-detail{
+     color: #7d7d7d;
+
+}
+
+/* 活动列表 背景灰色 */
+.sectionBG{
+    width: 100%;
+    height: 100%;
+    background: #f4f4f4;
+}
+.sectionBG .content{
+    width: 1200px;
+    margin: auto;
+}
+.game-title{
+    display: inline-block;
+    font-size: 24px;
+    padding: 43px 15px 36px;
+}
+.icon-btns-box{
+    display: inline-block;
+    text-align: right;
+    width: 856px;
+    padding: 43px 0 36px;
+}
+.icon-btns-box img{
+    margin: 0 15px;
+}
+.activity-lists .row{
+    background: #fff;
+    height: 308px;
+    border: 1px solid #ececec;
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+.activity-lists .lt-img{
+    float: left;
+}
+.activity-lists .lt-img img{
+    vertical-align: baseline;
+}
+.activity-lists .rt-txt{
+    float: left;
+    width: 726px;
+    margin-left: 34px;
+    padding-top: 33px;
+    position: relative;
+}
+
+.activity-lists .content-title{
+    font-size: 25px;
+    color: #333;
+    padding: 15px 0;
+}
+.activity-lists .content-list ,
+.activity-lists p{
+    padding: 6px 0;
+    font-size: 17px;
+}
+
+.activity-img-list li{
+    display: inline-block;
+    margin-bottom: 34px;
+    background: #fff;
+}
+.activity-img-list li img{
+	width: 375px;
+	height: 260px;
+}
+
+.activity-img-list li:not(:last-child){
+    margin-right: 20px;
+}
+.activity-img-list .title{
+    margin: 14px 0 28px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* 推荐电影 */
+.tuijian-box{
+    border-top: 10px solid transparent;
+    -moz-border-top-colors: #f1f1f1 #f0f0f0 #efefef #eee #ececec #eaeaea #e9e9e9 #e3e3e3;
+    border-top-colors: #f1f1f1 #f0f0f0 #efefef #eee #ececec #eaeaea #e9e9e9 #e3e3e3;
+    height: 638px;
+    width: 100%;
+    background: #f1f1f1;
+}
+.tuijian-box-block{
+    border-top: 10px solid transparent;
+    -moz-border-top-colors: #f1f1f1 #f0f0f0 #efefef #eee #ececec #eaeaea #e9e9e9 #e3e3e3;
+    border-top-colors: #f1f1f1 #f0f0f0 #efefef #eee #ececec #eaeaea #e9e9e9 #e3e3e3;
+    height: 638px;
+    width: 100%;
+    background: #fff;
+}
+.recommended-movie-box{
+    width: 1200px;
+    margin: 0 auto;
+}
+.recommended-movie{
+    margin: 49px 0 37px;
+    font-size: 32px;
+}
+.movie-img-list{
+    overflow: hidden;
+}
+.movie-img-list li{
+    float: left
+}
+.movie-img-list li img{
+	width: 340px;
+	height: 450px;
+}
+.movie-img-list li:not(:last-child){
+    margin-right: 60px;
+}
+.highlights-box {
+	margin: 0 auto;
+}
+.highlights-box ul{
+    overflow: hidden;
+}
+.highlights-box li{
+    float: left;
+}
+.highlights-box li:not(:last-child){
+    margin-right: 27px;
+}
+
+.item-detail p{
+    font-size: 16px;
+    text-indent: 2em;
+}
+.list-title{
+    font-size: 32px;
+    margin: 30px auto;
+}
+
+/*背景颜色*/
+.content-bg{
+	    width: 100%;
+    height: 100%;
+    background: #f8f8f8;
+}
+/*筛选*/
+.change-game-boxAll{
+    border: 1px solid #c3c3c3;
+    border-bottom: 2px solid #c3c3c3;
+    padding: 10px 0 15px 26px;
+}
+.g-type .type-title{
+    height: 50px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+.g-type{
+    padding: 12px 0;
+}
+.g-type .title{
+    display: inline-block;
+}
+.g-type a{
+    color: #333;
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    text-align: center;
+    padding: 0 9px;
+}
+.g-type a:hover{
+    cursor: pointer
+}
+.g-type .g-active{
+    background: #ec664d;
+    color: #fff;
+}
+.type-box{
+    width: 860px;
+    height: 55px;
+    display: inline-block;
+}
+/*科学影城时间表*/
+.title-bg{
+    width: 674px;
+    height: 133px;
+    line-height: 144px;
+    background: url('css/img/row-table-title.png') no-repeat;
+    text-align: center;
+    font-size: 32px;
+    color: #3C97EE;
+    margin: auto;
+}
+.table{
+    overflow: hidden;
+    width: 800px;
+    margin: auto;
+}
+.table .header{
+    width: 800px;
+    height: 70px;
+    background: #f7f7f7;
+    line-height: 70px;
+    color: #333;
+    font-size: 24px;
+    margin: auto;
+}
+.table li{
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+.table .row {
+    overflow: hidden;
+    padding: 46px 0 40px 0;
+    font-size: 19px;
+    border-bottom: 1px solid #ccc;
+}
+/*.table .row li:not(:eq(2)){
+    line-height: 124px;
+}*/
+.table .row i{
+    font-size: 22px;
+    font-style:italic;
+}
+.mark-red{
+    color: red;
+}
+
+/*游戏排行榜*/
+.title-bgGame{
+    width: 674px;
+    height: 133px;
+    line-height: 144px;
+    text-align: center;
+    font-size: 32px;
+    color: #000;
+    margin: auto;
+}
+.tableGame{
+    overflow: hidden;
+    width: 980px;
+    margin: auto;
+}
+.tableGame .header{
+    width: 800px;
+    height: 70px;
+    background: #f7f7f7;
+    line-height: 70px;
+    color: #333;
+    font-size: 24px;
+    margin: auto;
+}
+.tableGame li:nth-child(1){
+    float: left;
+     width: 140px;
+    height: 160px;
+    line-height: 160px;
+    text-align: center;
+}
+.tableGame li img{
+	width: 160px;
+	height: 160px;
+}
+
+.tableGame li:nth-child(2){
+    float: left;
+    width: 160px;
+    height: 160px;
+    text-align: center;
+}
+.tableGame li:nth-child(3){
+    float: left;
+    width: 620px;
+    height: 160px; 
+    margin-left: 25px;     
+}
+.tableGame .row {
+    overflow: hidden;
+    padding: 30px 0;
+    font-size: 19px;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+.tableGame .row i{
+    font-size: 22px;
+    font-style:italic;
+}
+.rowTitle{
+	font-size: 24px;
+}
+.rowTxt{
+	margin-top: 30px;
+	color: #7d7d7d;
+	font-size: 16px;
+}
+/*新闻公告*/
+.item-content .detail-lists{
+    overflow: hidden;
+}
+.item-content .detail-lists li{
+    width: 1200px;
+    background: #fff;
+    overflow: hidden;
+    padding: 17px 12px 17px 73px;
+}
+.item-content .detail-lists li:not(:last-child){
+    margin-bottom: 20px;
+}
+.item-content .lt-num .num{
+    display: inline-block;
+    width: 71px;
+    height: 71px;
+    line-height: 71px;
+    text-align: center;
+    font-size: 36px;
+    background: #dcdcdc;
+}
+.item-content .lt-num{
+    padding: 30px 73px 14px 73px;
+    border-right: 1px solid #ececec;
+}
+.item-content .lt-num .date{
+    font-size: 20px;
+    margin: 13px auto;
+}
+.item-content .lt-num, .item-content .rt-txt{
+    float: left;
+}
+.detail-lists .rt-txt p{
+    width: 730px;
+    padding: 15px 2px;
+}
+.item-content .rt-txt{
+    padding: 7px 8px 7px 42px;
+}
+.item-content .rt-title{
+    font-size: 20px;
+    padding: 7px 0;
+}
+
+/* 媒体声音 */
+
+.detail-lists .article-source .a_link{
+    color: #1173d1;
+    border-bottom: 1px solid #1173d1;
+    line-height: 16px;
+}
+.detail-lists .article-source .a_txt{
+    color: #333;
+    border-bottom: 1px solid #333;
+    line-height: 16px;
+}
+
+.change-game-box a{
+    margin: 10px;
+}
+/* 最新活动列表 */
+.section{
+    width: 100%;
+    height: 100%;
+    background: #f4f4f4;
+}
+.section .content{
+    width: 1200px;
+    margin: auto;
+}
+.game-title{
+    display: inline-block;
+    font-size: 24px;
+    padding: 43px 15px 36px;
+}
+.icon-btns-box{
+    display: inline-block;
+    text-align: right;
+    width: 856px;
+    padding: 43px 0 36px;
+}
+.icon-btns-box img{
+    margin: 0 15px;
+}
+.activity-lists .row{
+    background: #fff;
+    height: 308px;
+    border: 1px solid #ececec;
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+.activity-lists .lt-img{
+    float: left;
+}
+.activity-lists .lt-img img{
+    vertical-align: baseline;
+    width: 405px;
+    height: 310px;
+}
+.activity-lists .rt-txt{
+    float: left;
+    width: 726px;
+    margin-left: 34px;
+    padding-top: 33px;
+    position: relative;
+}
+
+.activity-lists .content-title{
+    font-size: 25px;
+    color: #333;
+    padding: 15px 0;
+}
+.activity-lists .content-list ,
+.activity-lists p{
+    padding: 6px 0;
+    font-size: 17px;
+}
+/* 预约按钮 */
+.reservation-btn{
+    display: inline-block;
+    padding: 22px 50px;
+    background: #3375c3;
+    color: #fff;
+    font-size: 24px;
+    position: absolute;
+    right: 42px;
+    top: 37px;
+}
+
+
+/* 2-1-1 最新活动 */
+
+.activity-img-list li{
+    display: inline-block;
+    margin-bottom: 34px;
+    background: #fff;
+}
+.activity-img-list li:not(:last-child){
+    margin-right: 20px;
+}
+.activity-img-list .title{
+    margin: 14px 0 28px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* 最新活动-灾情报警详情 */
+.activity-detail h3{
+    font-size: 24px;
+    margin: 40px 0 23px;
+}
+
+.activity-detail .content-list span{
+    color: #7d7d7d
+}
+
+.activity-detail .precautions{
+    display: inline-block;
+    vertical-align: text-top;
+}
+
+.activity-detail h4{
+    margin: 25px 0 29px;
+    font-size: 20px;
+
+}
+.detailInfo .content-list{
+	width: 999px;
+	float: left;
+}
+.detailInfo .yuyue{
+	width: 200px;
+	height: 150px;
+	border-left: 1px solid #c7c7c7;
+	float: right;
+	
+}
+.detailInfo .yuyue img{
+	width: 110px;
+	margin: 20px 40px;
+}
+
+/*侧边栏预约*/
+.bgColorShadow{
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.4;
+	 position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 998;
+ }
+.activity-reservation{
+    position: fixed;
+    right: -549px;
+    top: 0;
+    z-index: 999;
+    width: 549px;
+    height: 1783px;
+    background: #ececec;
+}
+.activity-reservation .item-title{
+    color: #39a3d5;
+    font-size: 24px;
+    margin: 43px 35px 25px 34px;
+}
+.activity-reservation .item-title img{
+    margin-right: 10px;
+}
+
+#reservation .form-list{
+    width: 480px;
+    margin: auto;
+}
+.form-list li{
+    padding: 0 46px 0 33px;
+}
+.form-list li:last-child{
+    margin-top: 17px;
+    padding-bottom: 31px;
+    border-bottom: 1px solid #e5e5e5;
+}
+#reservation .form-list label{
+    margin: 0 15px;
+    display: inline-block;
+    width: 85px;
+    text-align: right;
+}
+#reservation .form-list input{
+    width: 260px;
+    padding: 5px;
+    height: 29px;
+    border: 1px solid #dddee1;
+    border-radius: 4px;
+}
+
+#member{
+    background: #fff;
+    padding: 21px 33px;
+    margin: 23px 0 19px;
+}
+
+#member .row{
+    padding: 10px 0
+}
+#reservation .form-list span{
+    margin-right: 8px;
+}
+.error{
+    color: red;
+}
+
+/* 提交按钮 */
+.btn-box{
+    width: 476px;
+    margin: 24px auto 19px;
+}
+#submit-btn{
+    width: 100%;
+    border: none;
+    height: 66px;
+    line-height: 66px;
+    color: #fff;
+    background: #36a7e1;
+    text-align: center;
+    font-size: 20px;
+}
+
+#reservation .tip-txt{
+    font-size: 12px;
+    margin-left: 38px;
+}
+
+.activity-reservation .db{
+    display: block!important;
+    -moz-transition:2s; /* Firefox 4 */
+    -webkit-transition:2s; /* Safari and Chrome */
+    -o-transition:2s; /* Opera */
+}
+
+.dn{
+    display: none;
+}
+

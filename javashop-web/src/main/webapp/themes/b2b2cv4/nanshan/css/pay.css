@@ -1,0 +1,93 @@
+.czUser span:nth-child(1){
+		display: inline-block;
+		width: 100px;
+		vertical-align: top;
+		font-weight: bold;
+	}
+	.czUser span:nth-child(3){
+		color: red;
+	}
+	.czNum{
+		margin-top: 70px;
+	}
+	.czLt{
+		float: left;
+		width: 100px;
+		font-weight: bold;
+	}
+	.czRg{
+		float: left;
+		width: 400px;
+	}
+	.czRg .chooseNum{
+		display: inline-block;
+		width: 120px;
+		height: 35px;
+		text-align: center;
+		line-height: 35px;
+		background: #f7f7f7;
+		border: 1px solid #e8e8e8;
+		margin-bottom: 10px;
+		color: #999999;
+			}
+			
+	.txNum span:nth-child(1){
+		display: inline-block;
+		margin-left: 100px;
+		width: 250px;
+		height: 40px;
+		border:1px solid #000;
+	} 
+	.txNum span:nth-child(1)>input{
+		height: 20px;
+		width: 150px;
+		margin-top: 10px;
+		margin-left: 50px;
+		padding-left: 10px;
+		border-left: 1px solid #F1F1F1;
+	}
+	.txNum span:nth-child(2){
+		display: inline-block;
+		vertical-align: bottom;
+		color: red;
+	} 
+	.borderDesh{
+		height: 1px;
+		width: 800px;
+		margin: 20px 0;
+		border-bottom: 1px dashed #f1f1f1;
+		
+	}
+	.buttom{
+		width: 250px;
+		text-align: center;
+		height: 50px;
+		line-height: 50px;
+		background: #555555;
+		margin-top: 30px;
+		color: #fff;
+	}
+.czRg .chooseNum.select {
+	    border-color: #ff6002;
+	    background: #fff url(img/i_select.jpg) 101px 16px no-repeat;
+	}
+	.priceNum{
+		display: inline-block;
+	}
+	.priceNum span{
+		display: block;
+	}
+	.priceNum span:first-child{
+		color: red;
+	}
+	.priceNum span:last-child{
+		color: red;
+	}
+	.payTitie{
+		margin-top: 30px;
+		font-size: 13px;
+		margin-left: 10px;
+	}
+	.borderRed{
+		border: 1px solid red !important;
+	}

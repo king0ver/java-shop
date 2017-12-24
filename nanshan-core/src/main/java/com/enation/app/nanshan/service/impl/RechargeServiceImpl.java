@@ -36,7 +36,7 @@ public class RechargeServiceImpl implements RechargeService {
         rechargeVo.setOrder_status(OrderStatus.NEW.description());
         rechargeVo.setCreate_time(System.currentTimeMillis());
 
-        rechargeVo.setRecharge_sn(tradeSnCreator.generateRechangeSn());
+//        rechargeVo.setRecharge_sn(tradeSnCreator.generateRechargeSn());
 
         iDaoSupport.insert("es_recharge", rechargeVo);
 

@@ -99,7 +99,7 @@ public abstract class AbstractPaymentPlugin {
 		}
 
 		if(paymentResult.getTrade_type().name().equals(TradeType.recharge.name())){//充值
-
+			orderOperateManager.payRecharge(param, null);
 		}
 		
 		

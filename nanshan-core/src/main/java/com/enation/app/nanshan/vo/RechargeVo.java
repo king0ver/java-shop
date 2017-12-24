@@ -34,6 +34,8 @@ public class RechargeVo implements Serializable{
 
     private String pay_order_no;
 
+    private Long payment_time;
+
     public int getRecharge_id() {
         return recharge_id;
     }
@@ -133,6 +135,14 @@ public class RechargeVo implements Serializable{
 
     public Double getPrice() {
         return price;
+    }
+
+    public Long getPayment_time() {
+        return payment_time;
+    }
+
+    public void setPayment_time(Long payment_time) {
+        this.payment_time = payment_time;
     }
 
     public void setPrice(Double price) {

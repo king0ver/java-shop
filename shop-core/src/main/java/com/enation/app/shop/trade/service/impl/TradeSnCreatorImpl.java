@@ -36,7 +36,7 @@ public class TradeSnCreatorImpl implements ITradeSnCreator {
     private  static  final  String ORDER_SN_CACHE_REFIX="ORDER_SN";
 
     //订单编号缓存key前缀
-    private  static  final  String RECHNAGE_SN_CACHE_REFIX="RECHANGE_SN";
+    private  static  final  String RECHNARGE_SN_CACHE_REFIX="RECHARGE_SN";
 
 
     /**
@@ -78,9 +78,9 @@ public class TradeSnCreatorImpl implements ITradeSnCreator {
     }
 
     @Override
-    public String generateRechangeSn() {
+    public String generateRechargeSn() {
 
-        String key = RECHNAGE_SN_CACHE_REFIX;
+        String key = RECHNARGE_SN_CACHE_REFIX;
 
         String sn = generateSn(key);
 

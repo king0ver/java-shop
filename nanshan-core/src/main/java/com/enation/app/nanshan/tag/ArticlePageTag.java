@@ -25,10 +25,19 @@ public class ArticlePageTag extends AbstractPageTag {
 
         Map<String, Object> map = new HashMap<>();
 
-        HttpServletRequest request  = ThreadContextHolder.getHttpRequest();
-        String catId  = request.getParameter("cat");
+        String articleId;
 
-        handlePageCat(map, catId);
+        if(map.containsKey("id")){
+            articleId = map.get("id").toString();
+        }else{
+            HttpServletRequest request  = ThreadContextHolder.getHttpRequest();
+            articleId = request.getParameter("id");
+        }
+
+
+
+
+        handlePageCat(map, "9");
 
 
 

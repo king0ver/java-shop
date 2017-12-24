@@ -232,8 +232,24 @@ public class OrderOperateManager implements IOrderOperateManager {
 	@Override
 	public void payRecharge(OrderPayReturnParam payReturnParam, OrderPermission permission) {
 
+		PaymentBill bill = paymentBillManager.getByPayKey(payReturnParam.getPay_key());
+
+		bill.setPay_order_no(payReturnParam.getPay_order_no());
+		bill.setIs_pay(1);
+		paymentBillManager.update(bill);
 
 
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("pay_order_no", bill.getPay_order_no());
+		map.put("payment_time", DateUtil.getDateline()); //支付时间
+		map.put("pay_status", PayStatus.PAY_YES.value()); //支付状态
+
+
+		daoSupport.update("es_recharge", map, "recharge_sn" + " = " + bill.getSn());
+
+		this.log(bill.getSn(), "充值支付, "+ payReturnParam.getPayment_method_name()+" "
+				+payReturnParam.getPayprice()+"元成功", "会员");
 	}
 
 	@Override
