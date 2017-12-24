@@ -10,10 +10,6 @@
 <#assign orderDetail = orderDetailTag()>
 <#assign order = orderDetail.orderDetail>
 
-<#assign paymentListTag=newTag("paymentListTag")>
-<#--读取订单发票详细 -->
-<#assign paymentList=paymentListTag("{'client_type':'PC'}")>
-
 
 <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/checkout.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}${themes_path}/css/cart.css" />
@@ -25,14 +21,15 @@
 	<h1 style="cursor:default">收银台</h1>
 	<div class="cashier-img">
 		<@image src="${ctx}${themes_path}/images/jstj.jpg" alt=""/>
-		<h2 style="cursor:default">订单提交成功，请您尽快付款</h2>
+		<h2 style="cursor:default">充值订单提交成功，请您尽快付款</h2>
 	</div>
 </div>
 
 <!-- 支付方式选择 -->
 <div class="cashier-box">
 	<div class="cashier-change">
-		<h2 style="cursor:default">订单号：<a href="${ctx}/member/order.html" target="_blank" ><b>${order.sn}</b></a></h2>
+		<h2 style="cursor:default">
+			订单号： <!--<a href="${ctx}/member/order.html" target="_blank" ><b>${order.sn}</b></a> -->  <b>${order.sn}</b></h2>
 		<h2 style="cursor:default">应付金额：<span>${order.order_price?string("currency")}</span><i>元</i></h2>
 		<div class="cashier-order-detail">
 			<div class="cashier-order-inside">
@@ -179,21 +176,7 @@
 	$(function(){
 		
 		var t; //循环调用对象
-		
-		//地址信息
-		$(".cashier-order-inside h3 b").click(function(){
-			var isShow = $(this).attr("rel");
-			if(isShow == "close"){
-				$(".cashier-order-inside").css("height","auto");
-				$(this).attr("rel","show");
-				$(this).text("收起-");
-			}else{
-				$(".cashier-order-inside").css("height","52px");
-				$(this).attr("rel","close");
-				$(this).text("展开+");
-			}
-			
-		})
+
 		
 		//切换支付方式
 		$(".cashier-pay-list li").click(function(){

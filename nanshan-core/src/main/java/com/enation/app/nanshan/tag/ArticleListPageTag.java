@@ -2,11 +2,14 @@ package com.enation.app.nanshan.tag;
 
 import com.enation.app.nanshan.service.IArticleService;
 import com.enation.app.nanshan.vo.ArticleVo;
+import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.database.Page;
+import com.enation.framework.util.StringUtil;
 import freemarker.template.TemplateModelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +28,8 @@ public class ArticleListPageTag extends AbstractPageTag{
     protected Object exec(Map params) throws TemplateModelException {
         Map<String, Object> map = new HashMap<>();
 
-        String catId = "9";
+        HttpServletRequest request  = ThreadContextHolder.getHttpRequest();
+        String catId  = request.getParameter("cat");
 
         handlePageCat(map, catId);
 

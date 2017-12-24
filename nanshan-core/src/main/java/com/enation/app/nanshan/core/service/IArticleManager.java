@@ -1,7 +1,9 @@
 package com.enation.app.nanshan.core.service;
 
+import java.util.List;
 import java.util.Map;
 
+import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.database.Page;
 
@@ -22,5 +24,7 @@ public interface IArticleManager {
 	 * @return
 	 */
 	public Page queryArticleListByConiditon(Map<String, Object> params,int page,int pageSize);
+
+	public List<ArticleCat> getCats(int id);
 	
 }

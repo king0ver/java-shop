@@ -7,14 +7,16 @@ import java.io.Serializable;
  */
 public class RechargeVo implements Serializable{
 
-    private int rechange_id;
+    private int recharge_id;
 
     /*游戏点数*/
     private String game_account;
 
     private int points;
 
-    private String rechange_sn;
+    private String recharge_sn;
+
+    private Double price;
 
     private int member_id;
 
@@ -32,13 +34,20 @@ public class RechargeVo implements Serializable{
 
     private String pay_order_no;
 
-
-    public int getRechange_id() {
-        return rechange_id;
+    public int getRecharge_id() {
+        return recharge_id;
     }
 
-    public void setRechange_id(int rechange_id) {
-        this.rechange_id = rechange_id;
+    public void setRecharge_id(int recharge_id) {
+        this.recharge_id = recharge_id;
+    }
+
+    public String getRecharge_sn() {
+        return recharge_sn;
+    }
+
+    public void setRecharge_sn(String recharge_sn) {
+        this.recharge_sn = recharge_sn;
     }
 
     public String getGame_account() {
@@ -57,13 +66,6 @@ public class RechargeVo implements Serializable{
         this.points = points;
     }
 
-    public String getRechange_sn() {
-        return rechange_sn;
-    }
-
-    public void setRechange_sn(String rechange_sn) {
-        this.rechange_sn = rechange_sn;
-    }
 
     public int getMember_id() {
         return member_id;
@@ -127,5 +129,13 @@ public class RechargeVo implements Serializable{
 
     public void setPay_order_no(String pay_order_no) {
         this.pay_order_no = pay_order_no;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

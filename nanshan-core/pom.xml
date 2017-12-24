@@ -23,6 +23,11 @@
             <artifactId>javashop-core</artifactId>
             <version>6.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.enation.app.javashop</groupId>
+            <artifactId>shop-core</artifactId>
+            <version>6.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>

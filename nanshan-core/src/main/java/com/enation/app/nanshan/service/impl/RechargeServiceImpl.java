@@ -6,11 +6,12 @@ import com.enation.app.shop.trade.model.enums.OrderStatus;
 import com.enation.app.shop.trade.service.ITradeSnCreator;
 import com.enation.framework.database.IDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by yulong on 17/12/23.
  */
-
+@Service("rechargeService")
 public class RechargeServiceImpl implements RechargeService {
 
 
@@ -25,24 +26,20 @@ public class RechargeServiceImpl implements RechargeService {
     public RechargeVo create(String gameAccount, int points, String clientType, int memberId, String memberName) {
 
 
-        RechargeVo rechangeVo = new RechargeVo();
+        RechargeVo rechargeVo = new RechargeVo();
 
-        rechangeVo.setGame_account(gameAccount);
-        rechangeVo.setClient_type(clientType);
-        rechangeVo.setMember_id(memberId);
-        rechangeVo.setPoints(points);
-        rechangeVo.setMember_name(memberName);
-        rechangeVo.setOrder_status(OrderStatus.NEW.description());
-        rechangeVo.setCreate_time(System.currentTimeMillis());
+        rechargeVo.setGame_account(gameAccount);
+        rechargeVo.setClient_type(clientType);
+        rechargeVo.setMember_id(memberId);
+        rechargeVo.setPoints(points);
+        rechargeVo.setMember_name(memberName);
+        rechargeVo.setOrder_status(OrderStatus.NEW.description());
+        rechargeVo.setCreate_time(System.currentTimeMillis());
 
-        rechangeVo.setRechange_sn(tradeSnCreator.generateRechangeSn());
+        rechargeVo.setRecharge_sn(tradeSnCreator.generateRechangeSn());
 
+        iDaoSupport.insert("es_recharge", rechargeVo);
 
-
-        iDaoSupport.insert("", rechangeVo);
-
-
-
-        return rechangeVo;
+        return rechargeVo;
     }
 }

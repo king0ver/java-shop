@@ -1,5 +1,7 @@
 package com.enation.app.nanshan.vo;
 
+import net.sf.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -32,6 +34,13 @@ public class ArticleVo implements Serializable {
 	 * 摘要
 	 */
 	private String summary;
+
+	/**
+	 * 文件内容
+	 */
+	private JSONObject content;
+
+
 	
 	public Integer getId() {
 		return id;
@@ -69,5 +78,12 @@ public class ArticleVo implements Serializable {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	
+
+	public JSONObject getContent() {
+		return content;
+	}
+
+	public void setContent(JSONObject content) {
+		this.content = content;
+	}
 }

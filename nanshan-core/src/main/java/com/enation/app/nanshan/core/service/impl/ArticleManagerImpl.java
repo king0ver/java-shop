@@ -2,8 +2,10 @@ package com.enation.app.nanshan.core.service.impl;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.enation.app.nanshan.model.ArticleCat;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,5 +116,15 @@ public class ArticleManagerImpl implements IArticleManager  {
 		}
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
+
+
+	@Override
+	public List<ArticleCat> getCats(int id) {
+
+		String sql = "select * from es_nanshan_article_category where parent_id="+id;
+		List<ArticleCat> list = (List<ArticleCat>) this.daoSupport.queryForList(sql, ArticleCat.class);
+		return list;
+	}
+
 
 }

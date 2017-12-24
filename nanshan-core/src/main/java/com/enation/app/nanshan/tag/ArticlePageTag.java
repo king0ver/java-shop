@@ -1,11 +1,13 @@
 package com.enation.app.nanshan.tag;
 
 import com.enation.app.nanshan.vo.NCatVo;
+import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 import freemarker.template.TemplateModelException;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +25,15 @@ public class ArticlePageTag extends AbstractPageTag {
 
         Map<String, Object> map = new HashMap<>();
 
-        String catId = "9";
+        HttpServletRequest request  = ThreadContextHolder.getHttpRequest();
+        String catId  = request.getParameter("cat");
 
         handlePageCat(map, catId);
+
+
+
+
+
 
         return map;
     }
