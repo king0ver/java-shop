@@ -16,5 +16,12 @@ public interface IArticleService {
 	 * @param spceValId
 	 * @return
 	 */
-	public List<ArticleVo> querySpecInfoByCatId(Integer catId,String spceValId);
+	public List<ArticleVo> querySpecInfoByCatId(Integer catId,String spceValId,int pageNo,int pageSize);
+	
+	/**
+	 * 通过文章ID查询文章信息
+	 * @param articleId
+	 * @return
+	 */
+	public ArticleVo queryArticleInfoById(Integer articleId);
 }
