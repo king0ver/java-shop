@@ -1,8 +1,7 @@
 package com.enation.app.nanshan.service;
 
-import java.util.List;
-
 import com.enation.app.nanshan.vo.ArticleVo;
+import com.enation.framework.database.Page;
 
 /**
  * 文章服务
@@ -16,7 +15,7 @@ public interface IArticleService {
 	 * @param spceValId
 	 * @return
 	 */
-	public List<ArticleVo> querySpecInfoByCatId(Integer catId,String spceValId,int pageNo,int pageSize);
+	public Page<ArticleVo> querySpecInfoByCatId(Integer catId,String spceValId,int pageNo,int pageSize);
 	
 	/**
 	 * 通过文章ID查询文章信息

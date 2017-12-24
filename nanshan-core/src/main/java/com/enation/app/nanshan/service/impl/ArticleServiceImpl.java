@@ -15,6 +15,7 @@ import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.service.IArticleService;
 import com.enation.app.nanshan.vo.ArticleVo;
 import com.enation.framework.database.IDaoSupport;
+import com.enation.framework.database.Page;
 import com.enation.framework.util.DateUtil;
 
 /**
@@ -29,20 +30,17 @@ public class ArticleServiceImpl implements IArticleService {
 	private IDaoSupport daoSupport;
 	
 	@Override
-	public List<ArticleVo> querySpecInfoByCatId(Integer catId, String specValIds,int pageNo,int pageSize) {
+	public Page<ArticleVo> querySpecInfoByCatId(Integer catId, String specValIds,int pageNo,int pageSize) {
 		if(catId == null){
 			return null;
 		}
-		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url,esns.summary imgUrl from es_nanshan_article esns where EXISTS ("+
-				"select 1 from es_nanshan_article_rel esnsar where " +
-				"esns.id = esnsar.article_id ";
+		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url,esns.summary imgUrl from es_nanshan_article esns where 1=1 ";
 		if(StringUtils.isNotBlank(specValIds)){
-			sql+= " and esnsar.specval_id in ("+specValIds+")";
+			sql+= " EXISTS ( select 1 from es_nanshan_article_rel esnsar where " +
+				"esns.id = esnsar.article_id and esnsar.specval_id in ("+specValIds+") ) ";
 		}
-		sql += ") and esns.is_del = 0 and esns.cat_id  = "+ catId;
-		@SuppressWarnings("unchecked")
-		List<ArticleVo> list = (List<ArticleVo>) daoSupport.queryForPage(sql, pageNo,pageSize);
-		return list;
+		sql += " and esns.is_del = 0 and esns.cat_id = "+ catId;
+		return daoSupport.queryForPage(sql, pageNo,pageSize);
 	}
 
 	@Override
