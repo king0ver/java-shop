@@ -1,8 +1,11 @@
 package com.enation.app.nanshan.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -49,7 +52,7 @@ public class ISpecManagerImpl implements ISpecManager {
 		String sql = "select * from es_nanshan_spec spec";
 		if(params != null){
 			String keyword = (String) params.get("keyword");
-			Integer specId = (Integer) params.get("specId");
+			String specId = (String) params.get("specId");
 			if(!StringUtil.isEmpty(keyword)){
 				sql+=" where spec.spec_name '%"+keyword+"%'";
 			}
@@ -67,23 +70,42 @@ public class ISpecManagerImpl implements ISpecManager {
 
 	@Override
 	public void edit(Spec spec) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("spec_name", spec.getSpec_name());
+		params.put("operator", spec.getOperator());
+		params.put("update_time", DateUtil.getDateline());
+		daoSupport.update("es_nanshan_spec", params, "spec_id="+spec.getSpec_id());
 	}
 
 	@Override
 	public void delete(int id) {
+		
 	}
 
 	@Override
 	public List<SpecVal> querySpecValList(Map<String, Object> params) {
-		String sql = "select * from es_nanshan_specval spec";
+		String sql = "select * from es_nanshan_specval spec where 1=1";
 		if(params != null){
-			String keyword = (String) params.get("keyword");
-			Integer specId = (Integer) params.get("specId");
-			if(!StringUtil.isEmpty(keyword)){
-				sql+=" where spec.spec_name '%"+keyword+"%'";
+			String keyword =null;
+			String specId = null;
+			String isValid = null;
+			if(params.containsKey("keyword")){
+				keyword = (String) params.get("keyword");
 			}
-			if(specId!=null){
-				sql+=" where spec.spec_id="+specId;
+			if(params.containsKey("specId")){
+				specId = (String) params.get("specId");
+			}
+			if(params.containsKey("is_valid")){
+				isValid = (String) params.get("is_valid");
+			}
+			if(!StringUtil.isEmpty(isValid)){
+				sql+=" and spec.is_valid ="+isValid;
+			}
+			if(!StringUtil.isEmpty(keyword)){
+				sql+=" and spec.spec_name '%"+keyword+"%'";
+			}
+			if(!StringUtil.isEmpty(specId)){
+				sql+=" and spec.spec_id in ("+specId+")";
 			}
 		}
 		List<SpecVal> specValList = daoSupport.queryForList(sql, SpecVal.class);
@@ -93,6 +115,94 @@ public class ISpecManagerImpl implements ISpecManager {
 	@Override
 	public Spec querySpecById(int id) {
 		return daoSupport.queryForObject("select * from es_nanshan_spec where spec_id=?", Spec.class, id);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,rollbackFor=Exception.class)
+	public void updateSpecInfo(Map<String, Object> params) {
+		Spec spec = (Spec) params.get("spec");
+		@SuppressWarnings("unchecked")
+		List<SpecVal> specValList =  (List<SpecVal>) params.get("specValList");
+		params.put("specId",String.valueOf(spec.getSpec_id()));
+		List<SpecVal> specValInfoList = querySpecValList(params);
+		List<SpecVal> existList = new ArrayList<SpecVal>();
+		List<SpecVal> notExistList = new ArrayList<SpecVal>();
+		List<SpecVal> delList = new ArrayList<SpecVal>();
+		compareSpecInfo(specValList,specValInfoList,delList,existList,notExistList);
+		//更新属性
+		edit(spec);
+		//更新属性值
+		if(existList!=null && existList.size()>0){
+			for (SpecVal specVal : existList) {
+				updateSpecValInfo(specVal);
+			}
+		}
+		if(delList!=null && delList.size()>0){
+			for (SpecVal specVal : delList) {
+				specVal.setIs_valid(1);
+				updateSpecValInfo(specVal);
+			}
+		}
+		if(notExistList!=null && notExistList.size()>0){
+			for (SpecVal specVal : notExistList) {
+				daoSupport.insert("es_nanshan_specval", specVal);
+			}
+		}
+	}
+	
+	public void updateSpecValInfo(SpecVal specVal){
+		Map<String, Object> params = new HashMap<String, Object>();
+		if(StringUtils.isBlank(specVal.getSpecval_name())){
+			params.put("specval_name", specVal.getSpecval_name());
+		}
+		if(StringUtils.isBlank(specVal.getOperator())){
+			params.put("operator", specVal.getOperator());
+		}
+		if(null != specVal.getIs_valid()){
+			params.put("is_valid", specVal.getIs_valid());
+		}
+		params.put("update_time", DateUtil.getDateline());
+		daoSupport.update("es_nanshan_specval", params, "specval_id="+specVal.getSpecval_id());
+	}
+
+	/**
+	 * 比较id
+	 * @param specValList
+	 * @param specValInfoList
+	 * @param existMap
+	 * @param notExistMap
+	 */
+	private void compareSpecInfo(List<SpecVal> specValList,List<SpecVal> specValInfoList, List<SpecVal> delList,List<SpecVal> existList,List<SpecVal> notExistList) {
+		//查找存在的,与不存在的
+		for (SpecVal specVal : specValList) {
+			Integer specValId = specVal.getSpecval_id();
+			if(specValId==null){
+				if(!notExistList.contains(specVal)){
+					notExistList.add(specVal);
+					continue;
+				}
+			}
+			for (SpecVal specValInfo : specValInfoList) {
+				Integer specValInfoId = specValInfo.getSpecval_id();
+				if(specValInfoId.intValue() == specValId.intValue()){
+					existList.add(specVal);
+					break;
+				}
+			}
+		}
+		//需要删除的
+		for (SpecVal specValInfo : specValInfoList) {
+			boolean flag = false;
+			Integer specValInfoId = specValInfo.getSpecval_id();
+			for (SpecVal specVal : existList) {
+				if(specValInfoId.intValue()==specVal.getSpecval_id().intValue()){
+					flag = true;
+				}
+			}
+			if(!flag){
+				delList.add(specValInfo);
+			}
+		}
 	}
 
 }

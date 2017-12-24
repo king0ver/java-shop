@@ -34,7 +34,10 @@ public class ArticleVo implements Serializable {
 	 * 摘要
 	 */
 	private String summary;
-
+	/**
+	 * 时间
+	 */
+	private String dateTime;
 	/**
 	 * 文件内容
 	 */
@@ -86,4 +89,11 @@ public class ArticleVo implements Serializable {
 	public void setContent(JSONObject content) {
 		this.content = content;
 	}
+	public String getDateTime() {
+		return dateTime;
+	}
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
+	
 }

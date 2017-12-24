@@ -13,17 +13,22 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.enation.app.base.upload.UploadFactory;
+import com.enation.app.base.upload.plugin.IUploader;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
+import com.enation.app.nanshan.service.IArticleService;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.database.Page;
 import com.enation.framework.util.DateUtil;
+import com.enation.framework.util.FileUtil;
 import com.enation.framework.util.JsonResultUtil;
 
 /**
@@ -42,12 +47,50 @@ public class MovieController extends GridController{
 	@Autowired
 	private ICatManager catManager;
 	
+	@Autowired
+	private IArticleService articleService;
+	
+	@Autowired
+	private UploadFactory uploadFactory;
+
+	/**
+	 * 上传附件
+	 * @param file 附件
+	 * @param fileFileName 附件名称
+	 * @param subFolder 附件存放文件夹
+	 * @param path 上传后的图片路径
+	 * @param ajax 是否为异步提交
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/upload")
+	public JSONObject uploadFile(MultipartFile file){
+		JSONObject json = new JSONObject();
+		String path = null;
+		if (file != null && file.getOriginalFilename() != null) {
+			try{
+				if(!FileUtil.isAllowUpImg(file.getOriginalFilename())){
+					throw new IllegalArgumentException("不允许上传的文件格式，请上传gif,jpg,bmp格式文件。");
+				}
+				IUploader uploader= uploadFactory.getUploader();
+				path = uploader.upload(file);
+			}catch(IllegalArgumentException e){
+				throw new IllegalArgumentException(e.toString());
+			}
+			json.put("url", path);
+		}else{
+			throw new IllegalArgumentException("没有文件");
+		}
+		return json;
+	}
+	
 	/**
 	 * 跳转到管理列表
 	 * @return
 	 */
 	@RequestMapping(value="/list")
 	public String list(){
+		articleService.queryArticleInfoById(97);
 		return "/nanshan/admin/movie/list";
 	}
 	
@@ -81,9 +124,9 @@ public class MovieController extends GridController{
 	}
 	
 	/**
-	 * 增加展示展览
+	 * 增加
 	 * @param nanShanArticleVo
-	 * @param createTime
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -112,7 +155,6 @@ public class MovieController extends GridController{
 		
 	}
 	
-	
 	/**
 	 * 跳转到修改页面
 	 * @param id
@@ -129,4 +171,50 @@ public class MovieController extends GridController{
 		return view;
 	}
 	
+	
+
+	/**
+	 * 保存修改
+	 * @param nanShanArticleVo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/save-edit")
+	public JsonResult saveEdit(NanShanArticleVo nanShanArticleVo,HttpServletRequest request){
+		try {
+			String movieTimeLength = request.getParameter("movieTimeLength");//电影时长
+			String movieTime = request.getParameter("movieTime");//放映时间
+			String movieAddr = request.getParameter("movieAddr");//放映地点
+			String movieIntroduce = request.getParameter("movieIntroduce");//影片介绍
+			String filmTidbits = request.getParameter("filmTidbits");//电影详情花絮
+			nanShanArticleVo.setCreate_time(DateUtil.getDateline());
+			JSONObject movieInfo = new JSONObject();
+			movieInfo.put("movieTimeLength", movieTimeLength);
+			movieInfo.put("movieTime", movieTime);
+			movieInfo.put("movieAddr",movieAddr);
+			movieInfo.put("movieIntroduce",movieIntroduce);
+			movieInfo.put("filmTidbits",filmTidbits);
+			nanShanArticleVo.setContent(movieInfo.toString());
+            this.articleManager.updateArticle(nanShanArticleVo);
+		    return JsonResultUtil.getSuccessJson("修改成功");
+		} catch (RuntimeException e) {
+			return JsonResultUtil.getErrorJson("修改失败");
+		}
+	}
+	
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/delete")
+	public JsonResult del(int id ){
+		try {
+            this.articleManager.delArticle(id);
+		    return JsonResultUtil.getSuccessJson("删除成功");
+		} catch (RuntimeException e) {
+			return JsonResultUtil.getErrorJson("删除失败");
+		}
+	}
 }

@@ -19,12 +19,11 @@ import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.ISpecManager;
 import com.enation.eop.resource.IThemeUriManager;
 import com.enation.eop.resource.model.AdminUser;
-import com.enation.eop.resource.model.ThemeUri;
-import com.enation.eop.sdk.context.EopSetting;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
 import com.enation.framework.action.JsonResult;
+import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
 import com.qq.connect.utils.json.JSONObject;
 
@@ -50,7 +49,7 @@ public class SpecController extends GridController{
 	 */
 	@RequestMapping(value="/list")
 	public String list(){
-		return "/core/admin/spec/list";
+		return "/nanshan/admin/spec/list";
 	}
 	
 	/**
@@ -74,31 +73,8 @@ public class SpecController extends GridController{
 	 */
 	@RequestMapping(value="/add")
 	public String add(){
-		return "/core/admin/spec/add";
+		return "/nanshan/admin/spec/add";
 	}
-	
-	
-	/**
-	 * 跳转到属性规格管理
-	 * @return 添加页面
-	 */
-	@RequestMapping(value="/add1")
-	public ModelAndView add1(){
-		ModelAndView view = new ModelAndView();
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Spec> specList = specManager.list(map);
-		List<Integer> specIdList = new ArrayList<Integer>();
-		for (Spec spec : specList) {
-			specIdList.add(spec.getSpec_id());
-		}
-		map.put("specIdList", specIdList);
-		List<SpecVal> specValList = specManager.querySpecValList(map);
-		view.addObject("specList",specList);
-		view.addObject("specValList", specValList);
-		view.setViewName("/core/admin/spec/add_context");
-		return view;
-	}
-	
 	
 	/**
 	 *  新增属性规格
@@ -118,6 +94,7 @@ public class SpecController extends GridController{
 					SpecVal specVal  = new SpecVal();
 					specVal.setSpecval_name(specValName[i]);
 					specVal.setOperator(userName);
+					specVal.setIs_valid(0);
 					specValList.add(specVal);
 				}
 			}
@@ -163,16 +140,17 @@ public class SpecController extends GridController{
 		Spec spec = specManager.querySpecById(id);
 		Map<String, Object> map = new HashMap<String, Object>();
 		ModelAndView view = new ModelAndView();
-		map.put("specId",spec.getSpec_id());
+		map.put("specId",String.valueOf(spec.getSpec_id()));
+		map.put("is_valid", "0");
 		List<SpecVal> specValList = specManager.querySpecValList(map);
 		view.addObject("spec",spec);
 		view.addObject("specValList", specValList);
-		view.setViewName("/core/admin/spec/edit");
+		view.setViewName("/nanshan/admin/spec/edit");
 		return view;
 	}
 	
 	/**
-	 * 
+	 * 修改
 	 * @param spec
 	 * @param specValName
 	 * @param spec
@@ -187,71 +165,32 @@ public class SpecController extends GridController{
 			if(spec.getSpec_id() == null){
 				return JsonResultUtil.getErrorJson("修改失败:修改参数ID为空.");
 			}
-			specManager.edit(spec);
+			spec.setOperator(user.getUsername());
+			List<SpecVal> specValList = new ArrayList<SpecVal>();
+			for (int i = 0; i < specValName.length; i++) {
+				int specValIdLength = specValId.length;
+				SpecVal specVal = new SpecVal();
+				if( i < specValIdLength){
+					specVal.setSpecval_id(specValId[i]);
+					specVal.setSpecval_name(specValName[i]);
+					specVal.setUpdate_time(DateUtil.getDateline());
+					specValList.add(specVal);
+					continue;
+				}
+				specVal.setSpec_id(spec.getSpec_id());
+				specVal.setSpecval_name(specValName[i]);
+				specVal.setIs_valid(0);
+				specVal.setCreation_time(DateUtil.getDateline());
+				specValList.add(specVal);
+			}
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("spec", spec);
+			params.put("specValList", specValList);
+			specManager.updateSpecInfo(params);
 			return JsonResultUtil.getSuccessJson("修改成功");
 		}catch(RuntimeException e){
 			return JsonResultUtil.getErrorJson("修改失败:"+e.getMessage());
 		}		
 	}
-	
-	/**
-	 * 批量修改
-	 * @param uri uri映射数组
-	 * @param ids uriId数组
-	 * @param path  
-	 * @param pagename 页面名称
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value="/batch-edit")
-	public JsonResult batchEdit(String[] uri,int[] ids,String[] path,String[] pagename,int[] point,int[] httpcache){
-		try{
-			List<ThemeUri> uriList  = new ArrayList<ThemeUri>();
-			if(uri!=null ){
-				for(int i=0, len=uri.length;i<len;i++){
-					ThemeUri themeUri  = new ThemeUri();
-					themeUri.setUri( uri[i] );
-					themeUri.setId(ids[i]);
-					themeUri.setPath(path[i]);
-					themeUri.setPagename(pagename[i]);
-					if (point != null) {
-						themeUri.setPoint(point[i]);
-					}
-					if (httpcache != null) {
-						themeUri.setHttpcache(httpcache[i]);
-					}
-					uriList.add(themeUri);
-				}
-			}
-			this.themeUriManager.edit(uriList);
-			return JsonResultUtil.getSuccessJson("保存修改成功");
-		}catch(RuntimeException e){
-			e.printStackTrace();
-			return JsonResultUtil.getErrorJson("失败:"+e.getMessage());
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/delete")
-	public JsonResult delete(int id){
-		
-		AdminUser user  = UserConext.getCurrentAdminUser();
-		if(EopSetting.IS_DEMO_SITE && user!= null && user.getFounder() != 1){
-			if(id<=6){
-				return JsonResultUtil.getErrorJson("抱歉，当前为演示站点，以不能删除这些示例数据，请下载安装包在本地体验这些功能！");
-			}
-		}
-		
-		try{
-			this.themeUriManager.delete(id);
-			return JsonResultUtil.getSuccessJson("删除成功");
-
-		}catch(RuntimeException e){
-			return JsonResultUtil.getErrorJson("删除失败:"+e.getMessage());
-
-		}
-	}
-	
-	
 	
 }

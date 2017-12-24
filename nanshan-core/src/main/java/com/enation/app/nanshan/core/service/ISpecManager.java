@@ -35,9 +35,14 @@ public interface ISpecManager {
 
 	/**
 	 * 修改
-	 * @param themeUri
 	 */
 	public void edit(Spec spec);
+	
+	/**
+	 * 修改
+	 * @param params
+	 */
+	public void updateSpecInfo(Map<String, Object> params);
 	
 	/**
 	 * 删除
