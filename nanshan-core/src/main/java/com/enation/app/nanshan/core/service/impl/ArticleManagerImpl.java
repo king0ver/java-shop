@@ -62,7 +62,6 @@ public class ArticleManagerImpl implements IArticleManager  {
 				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id");
 		Page webpage = this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 		return webpage;
-	
 	}
 
 	@Override
