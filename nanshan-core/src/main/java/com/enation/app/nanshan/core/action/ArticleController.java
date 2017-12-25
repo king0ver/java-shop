@@ -145,6 +145,7 @@ public class ArticleController extends GridController {
 			view.addObject("ctx",ctx);
 			view.addObject("data",this.articleManager.queryArticleById(id));
 			view.addObject("cats",this.articleManager.getCats(catId));
+			view.addObject("catId",catId);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
