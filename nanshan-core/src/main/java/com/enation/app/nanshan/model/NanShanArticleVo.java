@@ -33,8 +33,54 @@ public class NanShanArticleVo implements Serializable  {
 	private String specValIds;
 	
 	
+	private int reserve_num;
+	private int reserved_num;
+	private String  expiryDate;
+	private String act_name;
+	private String act_cost;
+	private String act_address;
+	
+	
+	
+	
 	
 
+	public int getReserve_num() {
+		return reserve_num;
+	}
+	public void setReserve_num(int reserve_num) {
+		this.reserve_num = reserve_num;
+	}
+	public int getReserved_num() {
+		return reserved_num;
+	}
+	public void setReserved_num(int reserved_num) {
+		this.reserved_num = reserved_num;
+	}
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public String getAct_name() {
+		return act_name;
+	}
+	public void setAct_name(String act_name) {
+		this.act_name = act_name;
+	}
+	public String getAct_cost() {
+		return act_cost;
+	}
+	public void setAct_cost(String act_cost) {
+		this.act_cost = act_cost;
+	}
+	public String getAct_address() {
+		return act_address;
+	}
+	public void setAct_address(String act_address) {
+		this.act_address = act_address;
+	}
 	public String getSpecValIds() {
 		return specValIds;
 	}

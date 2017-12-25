@@ -20,16 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
-
-
-
-
-
-
-
-
-
-
+import com.enation.app.nanshan.constant.DefaultArticleIdEnum;
 import com.enation.app.nanshan.core.model.Spec;
 import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.IArticleManager;
@@ -122,7 +113,7 @@ public class ArticleController extends GridController {
 
 
 	/** 
-	* @param @param a
+	* @param 
 	* @Description: 添加页面
 	* @author luyanfen  
 	* @date 2017年12月19日 上午10:35:10
@@ -259,6 +250,106 @@ public class ArticleController extends GridController {
 		return view;
 		
 	}
+	
+	
+	/** 
+	* @param @param 
+	* @Description: 添加活动页面
+	* @author luyanfen  
+	* @date 2017年12月19日 上午10:35:10
+	*  
+	*/ 
+	@RequestMapping(value = "/imgPanel")
+	public ModelAndView  imgPanel(String panelId) {
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/common/img");
+		view.addObject("ctx",ctx);		
+		view.addObject("panelId",panelId);		
+		return view;
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "gamerank")
+	public ModelAndView gameRank(int catId) {
+		int id=2;
+		NanShanArticleVo    vo=this.articleManager.queryArticleById(id);
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/game/addrank");
+		view.addObject("ctx",ctx);	
+		view.addObject("vo",vo);	
+		view.addObject("catId",catId);	
+		return view;
+	}
+	
+	
+	/** 
+	* @Description: 
+	* @author luyanfen  
+	* @date 2017年12月14日 下午5:21:52
+	*  
+	*/ 
+	@ResponseBody
+	@RequestMapping("/add_edit_rank")
+	public JsonResult addEditRank(NanShanArticleVo nanShanArticleVo){
+		try {
+			nanShanArticleVo.setId(2);
+			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
+			if(vo==null){
+				this.articleManager.addArticle(nanShanArticleVo);
+			}
+			this.articleManager.updateArticle(nanShanArticleVo);
+			return JsonResultUtil.getSuccessJson("添加更改游戏排行成功");		
+		} catch (RuntimeException e) {
+			e.printStackTrace();			
+			return JsonResultUtil.getErrorJson("添加更改游戏排行失败");
+		}
+	}
+	
+	
+	@RequestMapping(value = "cinema-time")
+	public ModelAndView movie(int catId) {
+		int id=DefaultArticleIdEnum.MOVIETIME.getId();
+		NanShanArticleVo   vo=this.articleManager.queryArticleById(id);
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/cinema/add");
+		view.addObject("ctx",ctx);	
+		view.addObject("vo",vo);
+		view.addObject("catId",catId);	
+		return view;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "cinema-edit")
+	public JsonResult cinemaEdit(NanShanArticleVo nanShanArticleVo) {
+		try {
+			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
+			if(vo==null){
+				this.articleManager.addArticle(nanShanArticleVo);
+			}
+			this.articleManager.updateArticle(nanShanArticleVo);
+			return JsonResultUtil.getSuccessJson("操作成功");		
+		} catch (RuntimeException e) {
+			e.printStackTrace();			
+			return JsonResultUtil.getErrorJson("操作失败");
+		}
+	}
+	
+	@RequestMapping(value = "cinema4d")
+	public ModelAndView fourDcinema(int catId) {
+		int id=DefaultArticleIdEnum.CINEMA4D.getId();
+		NanShanArticleVo   vo=this.articleManager.queryArticleById(id);
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/cinema/cinema4d");
+		view.addObject("ctx",ctx);	
+		view.addObject("vo",vo);
+		view.addObject("catId",catId);	
+		return view;
+	}
+	
+	
+	
 	
 	
 	
