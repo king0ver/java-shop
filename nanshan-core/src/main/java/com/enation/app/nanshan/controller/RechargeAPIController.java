@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(description="充值订单生成")
 @RestController
-@RequestMapping("/rechange-opration")
+@RequestMapping("/recharge-operation")
 @Validated
 public class RechargeAPIController {
 

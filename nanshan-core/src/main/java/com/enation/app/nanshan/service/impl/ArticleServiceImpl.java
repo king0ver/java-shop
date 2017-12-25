@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.enation.framework.database.Page;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -29,11 +30,11 @@ public class ArticleServiceImpl implements IArticleService {
 	private IDaoSupport daoSupport;
 	
 	@Override
-	public Page<ArticleVo> querySpecInfoByCatId(Integer catId, String specValIds,int pageNo,int pageSize) {
+	public Page<ArticleVo> querySpecInfoByCatId(Integer catId, String specValIds, int pageNo, int pageSize) {
 		if(catId == null){
 			return null;
 		}
-		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url,esns.summary imgUrl from es_nanshan_article esns where 1=1 ";
+		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url imgUrl,esns.summary from es_nanshan_article esns where 1=1 ";
 		if(StringUtils.isNotBlank(specValIds)){
 			sql+= " EXISTS ( select 1 from es_nanshan_article_rel esnsar where " +
 				"esns.id = esnsar.article_id and esnsar.specval_id in ("+specValIds+") ) ";
@@ -50,7 +51,7 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url imgUrl,c.content ");
 		sql.append("from es_nanshan_article a,es_nanshan_clob c");
 		sql.append(" where a.content=c.id and a.is_del = 0 and a.id= ?");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, articleId);

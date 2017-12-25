@@ -7,13 +7,14 @@
 <div class="section-content">
     <#include 'common/navigator.html'/>
     <#if article.items?? && article.items?size gt 0>
-        <ul class="xfdetail-lists">
+        <ul class="game-lists">
             <#list article.items as item>
                 <li>
-                    <img src="${item.imgUrl!''}">
-                    <h3>${item.title!''}</h3>
-                    <div class="txt">${item.summary!''}</div>
-                    <a href="${item.url!''}" class="btn">查看详情</a>
+                    <a href="${item.url}}">
+                        <img src="${item.imgUrl}">
+
+                        <div class="txt">${item.summary}</div>
+                    </a>
                 </li>
             </#list>
         </ul>

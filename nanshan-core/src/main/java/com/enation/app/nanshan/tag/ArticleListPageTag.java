@@ -39,7 +39,6 @@ public class ArticleListPageTag extends AbstractPageTag{
         Page<ArticleVo> webPage =articleService.querySpecInfoByCatId(Integer.parseInt(catId),
                 specs, pageNo, getPageSize());
 
-
         webPage.setCurrentPageNo(pageNo);
 
         map.put("webPage", webPage);

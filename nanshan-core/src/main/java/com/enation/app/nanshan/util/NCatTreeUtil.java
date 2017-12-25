@@ -55,14 +55,14 @@ public class NCatTreeUtil {
       */
      public void buildChildNodes(NCatVo node) {
     	 NCatVo p=this.getCatParent(node.getParentId());
-		   List<NCatVo> children = getChildNodes(node); 
-		   if (!children.isEmpty()) {
-		        for(NCatVo child : children) {
-		                 buildChildNodes(child);
-		        } 
-		        node.setLeafs(children);
-		        node.setParent(p);
-		   }
+         List<NCatVo> children = getChildNodes(node);
+         if (!children.isEmpty()) {
+             for(NCatVo child : children) {
+                 buildChildNodes(child);
+             }
+         }
+         node.setLeafs(children);
+         node.setParent(p);
      }
 
      /**
