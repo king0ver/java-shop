@@ -57,6 +57,8 @@ public class ArticleManagerImpl implements IArticleManager  {
 		int clobId=this.daoSupport.queryForInt("SELECT LAST_INSERT_ID()");
 		nanShanArticle.setContent(clobId);
 		this.daoSupport.insert("es_nanshan_article", nanShanArticle);
+		
+		if(StnanShanArticleVo.getAct_name())
 	}
 
 	@Override
@@ -84,10 +86,14 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(nanShanArticleVo.getCreate_time()>0) articleFields.put("create_time", nanShanArticleVo.getCreate_time());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getContent())&&!StringUtils.isBlank(nanShanArticleVo.getContent())) clobFields.put("content", nanShanArticleVo.getContent());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getPic_url())&&!StringUtils.isBlank(nanShanArticleVo.getPic_url())) articleFields.put("pic_url", nanShanArticleVo.getPic_url());
+		
 		this.delArtSpeRel(nanShanArticleVo.getId());
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
 		this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
 		this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
+		ArticleExt articleExt=new ArticleExt();
+		articleExt=this.covertArticleExt(nanShanArticleVo);
+		this.insertArtcleExt(articleExt);
 	}
 
 	@Override
@@ -137,13 +143,19 @@ public class ArticleManagerImpl implements IArticleManager  {
 
 	
 	private void insertArtcleExt(ArticleExt articleExt ){
+		
 		this.daoSupport.insert("es_nanshan_article_ext", articleExt);
 	}
 	
 	private ArticleExt covertArticleExt(NanShanArticleVo vo){
 		ArticleExt ext=new ArticleExt();
+		
 		ext.setAct_address(vo.getAct_address());
 		ext.setAct_cost(vo.getAct_cost());
+		ext.setAct_name(vo.getAct_name());
+		ext.setReserve_num(vo.getReserved_num());
+		ext.setAct_cost(vo.getAct_cost());
+		//ext.setExpiry_date(vo.getExpiryDate());
 		
 		return ext;
 		

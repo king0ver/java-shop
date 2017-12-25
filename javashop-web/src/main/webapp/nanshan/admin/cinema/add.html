@@ -52,7 +52,7 @@
 	    		</div> 
 	  		</div>
   		</div>
-  		<div class="layui-form-item" style="margin-left:20%">
+  		<div class="layui-form-item" style="float:right;margin-right:30px">
 	  		<a class="layui-btn" onclick="addPanel();">增加记录</a>			
 	    </div>
 	   
@@ -62,7 +62,25 @@
   	</form>
 </div>
 
-
+<div id="contentTemp" style="display:none">
+  		<div  class="layui-form-item" name="contentPanel">
+  		    <label class="layui-form-label" style="width:30px"></label>
+    		<div class="layui-input-inline">
+      			<input type="text"  name="articleId"   maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+    		  <label class="layui-form-label" style="width:60px" ></label>
+    		<div class="layui-input-inline">
+    		  <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" value=''/>
+    		</div>
+    		  <label class="layui-form-label" style="width:70px"></label>
+    		<div class="layui-input-inline">
+      			<input type="text"  name="cinamePrice"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+   		     <div class="layui-input-inline">
+   		      <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>
+    		 </div>
+  		</div>
+ </div>
 <script>
  var index = parent.layer.getFrameIndex(window.name);
 
@@ -75,7 +93,7 @@ function getPanel(id,time,price){
 		'</div>'+
 		  '<label class="layui-form-label" style="width:60px" ></label>'+
 		'<div class="layui-input-inline">'+
-		 ' <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: \'YYYY-MM-DD\'})" style="width:100%;height:38px;" value='+time+'>'+
+		 ' <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: \'YYYY-MM-DD\'})" style="width:100%;height:38px;" value='+time+' />'+
 		'</div>'+
 		  '<label class="layui-form-label" style="width:70px"></label>'+
 		'<div class="layui-input-inline">'+
