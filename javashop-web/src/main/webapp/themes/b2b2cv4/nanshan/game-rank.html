@@ -1,0 +1,11 @@
+
+<#assign articleListPageTag = newTag("articleListPageTag") />
+<#assign article = articleListPageTag() />
+<#include 'common/header.html'/>
+<#include 'common/thirdCat.html'/>
+<div class="section-content">
+    <#include 'common/navigator.html'/>
+    <#include 'selection-condition.html'/>
+    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+</div>
+<#include 'common/footer.html'/>
