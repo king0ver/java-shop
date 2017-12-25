@@ -54,11 +54,15 @@ public class ArticleManagerImpl implements IArticleManager  {
 		nanShanClob.setContent(nanShanArticleVo.getContent());
 		nanShanClob.setCategory(nanShanArticleVo.getCat_id());
 		this.daoSupport.insert("es_nanshan_clob", nanShanClob);
-		int clobId=this.daoSupport.queryForInt("SELECT LAST_INSERT_ID()");
+		int clobId=this.daoSupport.getLastId("es_nanshan_clob");
 		nanShanArticle.setContent(clobId);
 		this.daoSupport.insert("es_nanshan_article", nanShanArticle);
-		
-		if(StnanShanArticleVo.getAct_name())
+		int articleId=this.daoSupport.getLastId("es_nanshan_article");
+		nanShanArticleVo.setId(articleId);
+		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
+			ArticleExt articleExt=this.covertArticleExt(nanShanArticleVo);
+			this.insertArtcleExt(articleExt);
+		}
 	}
 
 	@Override
