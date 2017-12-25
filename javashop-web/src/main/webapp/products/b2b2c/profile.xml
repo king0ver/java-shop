@@ -230,12 +230,12 @@
 			<menu text="展示展览">
 				<menu text="展示展览管理" url="/core/admin/exhibition/list.do" />
 				<menu text="科学影城" url="" />
-				<menu text="放映时间表" url="" />
-				<menu text="影片管理" url="/core/admin/movie/list.do" />
+				<menu text="放映时间表" url="/admin/article/cinema-time.do?catId=12" />
+				<menu text="四维影院" url="/admin/article/cinema4d.do?catId=11" />
+				
 			</menu>
 			<menu text="线上体验" >
-				<menu text="体验管理" url="/core/admin/experience/list.do" />
-				<menu text="游戏管理" url="/core/admin/game/list.do" />
+				<menu text="游戏排行" url="/admin/article/gamerank.do?catId=25" />
 			</menu>
 			<menu text="活动资讯">
 				<menu text="新闻公告" url="/admin/article/list.do?catId=37" />
