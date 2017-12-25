@@ -4,6 +4,7 @@
   .layui-input{
     width: 75%;
   }
+      form{margin-bottom:0px;}
 </style>
 <script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
 <div class="main">
@@ -49,7 +50,21 @@
     		    <textarea name="summary" id="summary" style="height:100px" placeholder="请输入内容" class="layui-textarea"></textarea>
     		</div>
   		</div>
-	    <#include '${ctx}/nanshan/common/context.html' >
+	    <div class="layui-form-item">
+    		<label class="layui-form-label">新闻详情：</label>
+    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+				<legend>编辑区</legend>
+				<div id="article"></div>
+				<div class="layui-form-item">
+	    			<a class="layui-btn" onclick="add();">增加段落</a>
+	    			<div class="layui-input-inline" style="width:120px;">
+						<input name="file" class="layui-upload-file" id="exhInfoImgUploadBtn" type="file">	
+					</div>
+	  			</div>
+				
+			</fieldset>
+			<input type="hidden" id="contentInfo" name="content"/>
+  		</div>
   		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
   			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
   		</div>
@@ -64,11 +79,36 @@ function checkLength(){
 	}
 }
 
-layui.use(['form', 'layedit', 'laydate'], function(){
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
     laydate = layui.laydate;
-    
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#exhImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#exhImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#picUrl").val(res.url);
+	    }
+	});
+	
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+		    ,elem: '#exhInfoImgUploadBtn' 
+		    ,method: 'POST'
+		    ,success: function(res){
+		    	$("#article").append("<div class='layui-form-item'>"+
+		    		    "<div class='layui-inline'>"+
+		    				"<img name='img' src='"+res.url+"'  width='112' height='112' />"+	
+		    	    	"</div>"+
+		    	    	"<div class='layui-inline'>"+
+		    	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+		    	    	"</div>"+
+		    	  	"</div>");
+		    }
+		});
 	form.on('submit(save_uri)', function(data){
 		console.log(JSON.stringify(getContext()));
 		
