@@ -6,6 +6,7 @@
 	border-radius: 2px;
 	border-color: #01AAED !important;
 }
+   form{margin-bottom:0px;}
 </style>
 <script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
 <div class="main">
@@ -42,39 +43,61 @@
 	    		</div>
   		    </div>
 			<div class="layui-form-item">
-	    		<label class="layui-form-label">文章摘要:</label>
-	    		<div class="layui-input-block">
-	      			<input type="text" name="summary" id="pagename"  value="${data.summary!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-	    		</div>
-  		   </div>
-  		   <div id="act">
-  		    <div class="layui-form-item">
-	    		<label class="layui-form-label">截止时间:</label>
-	    		<div class="layui-input-inline">
-	    		<input class="layui-input" placeholder="截止时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" />
-	    		</div>
-  		    </div>
-	  		<div class="layui-form-item">
-	    		<label class="layui-form-label">活动对象:</label>
-	    		<div class="layui-input-block">
-	    		<input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-	    		</div>
+	    		<label class="layui-form-label">文章大图：</label>
+	    		<input type="hidden" name="pic_url" id="picUrl">
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
+				</div>
+				<div id="exhImg" class="layui-inline"></div>
 	  		</div>
-	  		<div class="layui-form-item">
-	    		<label class="layui-form-label">活动费用:</label>
-	    		<div class="layui-input-block">
-	    		<input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-	    		</div>
-	  		</div>
-	  		<div class="layui-form-item">
-	    		<label class="layui-form-label">活动地址:</label>
-	    		<div class="layui-input-block">
-	    		   <input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-	    		</div>
-	  		</div>
-  		</div>
+  		   	<div id="act">
   		   
-            <#include '${ctx}/nanshan/common/context.html' >
+		  		<div class="layui-form-item">
+		    		<label class="layui-form-label">活动对象：</label>
+		    		<div class="layui-input-block">
+		    		<input type="text" name="act_name"  value="${(data.act_name)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    		</div>
+		  		</div>
+		  		<div class="layui-form-item">
+		    		<label class="layui-form-label">截止时间：</label>
+		    		<div class="layui-input-inline">
+		    		<input class="layui-input" placeholder="截止时间" name="expiryDate" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" value='<@dateformat time='${data.expiryDate}' pattern='yyyy-MM-dd'/>' />
+		    		</div>
+	  		    </div>
+		  		<div class="layui-form-item">
+		    		<label class="layui-form-label">活动费用：</label>
+		    		<div class="layui-input-block">
+		    		<input type="text" name="act_cost"  value="${(data.act_cost)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    		</div>
+		  		</div>
+		  		<div class="layui-form-item">
+		    		<label class="layui-form-label">活动地址：</label>
+		    		<div class="layui-input-block">
+		    		   <input type="text" name="act_address" value="${(data.act_address)!''}"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    		</div>
+		  		</div>
+		  		<div class="layui-form-item">
+		    		<label class="layui-form-label">可预约人数：</label>
+		    		<div class="layui-input-block">
+		    		   <input type="text" name="reserve_num" value="${(data.reserve_num)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    		</div>
+		  		</div>
+	  		</div>
+  		   
+           <div class="layui-form-item">
+	    		<label class="layui-form-label">活动详情：</label>
+	    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+					<legend>编辑区</legend>
+					<div id="article"></div>
+					<div class="layui-form-item">
+		    			<a class="layui-btn" onclick="add();">增加段落</a>
+		    			<div class="layui-input-inline" style="width:120px;">
+							<input name="file" class="layui-upload-file" id="exhInfoImgUploadBtn" type="file">	
+						</div>
+		  			</div>
+					
+				</fieldset>
+	  		</div>
 			<div class="layui-form-item">
 				<div class="layui-layer-btn layui-layer-btn-"
 					style="padding: 8px 12px; z-index: 1000;">
@@ -88,24 +111,50 @@
 <!--js区域  -->
 <script>
 var table;
-var desc='${data.content}';
+var desc='${(data.content)!''}';
 var context=$.parseJSON(desc).content;
-var actExt=$.parseJSON(desc).actExt;
+
 var specIds='${data.specValIds!''}'
 
-initActExtVal(actExt);
+
 initContextHtml(context);
 initSpecId(specIds);
 
 
 var index = parent.layer.getFrameIndex(window.name);
 
-layui.use(['form', 'layedit', 'laydate'], function(){
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var form = layui.form()
         ,layer = layui.layer
         ,layedit = layui.layedit
         ,laydate = layui.laydate;
-
+    layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#exhImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#exhImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#picUrl").val(res.url);
+	    }
+	});
+	
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+		    ,elem: '#exhInfoImgUploadBtn' 
+		    ,method: 'POST'
+		    ,success: function(res){
+		    	$("#article").append("<div class='layui-form-item'>"+
+		    		    "<div class='layui-inline'>"+
+		    				"<img name='img' src='"+res.url+"'  width='112' height='112' />"+	
+		    	    	"</div>"+
+		    	    	"<div class='layui-inline'>"+
+		    	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+		    	    	"</div>"+
+		    	  	"</div>");
+		    }
+		});
+    
 
 form.on('submit(editModel)', function(data){
 	var content=JSON.stringify(getContext());
