@@ -115,7 +115,13 @@ $(function(){
 	       	}},
 	        {data: "url"},
 	        {data: "is_del"},
-	        {data: "pic_url"},	      
+	        {data: null,"render": function(data, type, row) {
+	        	if(data.pic_url==null){
+	        		return " ";
+	        	}else{
+	        		return "<img style='width:50px;height:50px' src="+data.pic_url+">";
+	        	}
+	       	}},      
 	        {data: null,"render": function(data, type, row) {
 	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/admin/article/edit.do?catId=${catId}&id="+data.id+"')\">修改</a>"
 	        			+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger'  onclick='del("+data.id +")'>删除</a>";		
