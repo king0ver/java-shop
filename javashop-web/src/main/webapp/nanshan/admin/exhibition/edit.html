@@ -1,10 +1,12 @@
 <#include '/admin/sonheader.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
 <style>
 .layui-form-pane .layui-input:focus, .layui-form-pane .layui-textarea:focus
 	{
 	border-radius: 2px;
 	border-color: #01AAED !important;
 }
+form{margin-bottom:0px;}
 </style>
 <div class="main">
 	<!--表单区域  -->
@@ -25,7 +27,7 @@
 	      			</select>
     			</div>
 			</div>
-			<div class="layui-form-item">
+			<div class="layui-form-item" style="width:400px;">
 	    		<label class="layui-form-label">展览标题：</label>
 	    		<div class="layui-input-block">
 	    			<input type="hidden" name="id" value="${data.id}" />
@@ -40,22 +42,27 @@
   			</div>
   			<div class="layui-form-item">
 	    		<label class="layui-form-label">展览主图：</label>
-	    		<div class="layui-upload">
-					<button type="button" class="layui-btn" id="test1">上传图片</button>
-				  	<div class="layui-upload-list">
-				    	<img class="layui-upload-img" id="demo1">
-				    	<p id="demoText"></p>
-				  	</div>
+	    		<input type="hidden" name="pic_url" id="picUrl">
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
 				</div>
-  			</div>
+				<div id="exhImg" class="layui-inline">
+					<#if data.pic_url??>
+						<img src="${data.pic_url}" width='130' height='130' />
+						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="return delImg();"><i class='layui-icon'>&#xe640;</i></a>
+					</#if>
+				</div>
+			</div>
 	  		<div class="layui-form-item">
 	    		<label class="layui-form-label">展览详情：</label>
 	    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
 					<legend>编辑区</legend>
 					<div class="layui-form-item">
 		    			<a class="layui-btn" onclick="add();">增加段落</a>
-						<a class="layui-btn" onclick="addImg();">增加图片</a>
-		  			</div>
+		    			<div class="layui-input-inline" style="width:120px;">
+							<input name="file" class="layui-upload-file" id="exhInfoImgUploadBtn" type="file">	
+						</div>
+	  				</div>
 					<div id="article">
 						<#if data.content??>
 							<#assign dataInfo = data.content?eval/>
@@ -101,12 +108,39 @@
 var table;
 var index = parent.layer.getFrameIndex(window.name);
 
-layui.use(['form', 'layedit', 'laydate'], function(){
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var form = layui.form()
         ,layer = layui.layer
         ,layedit = layui.layedit
         ,laydate = layui.laydate;
 
+    layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#exhImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#exhImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#picUrl").val(res.url);
+	    }
+	});
+	
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+		    ,elem: '#exhInfoImgUploadBtn' 
+		    ,method: 'POST'
+		    ,success: function(res){
+		    	$("#article").append("<div class='layui-form-item'>"+
+		    		    "<div class='layui-inline'>"+
+		    				"<img name='img' src='"+res.url+"'  width='112' height='112' />"+	
+		    	    	"</div>"+
+		    	    	"<div class='layui-inline'>"+
+		    	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+		    	    	"</div>"+
+		    	  	"</div>");
+		    }
+		});
+    
 	form.on('submit(editModel)', function(data){
 		$("#contentInfo").val(JSON.stringify(getContext()));
 		var options = {
@@ -158,23 +192,13 @@ function add(){
 		  "</div>");
 }
 
-function addImg(){
-	$("#article").append("<div class='layui-form-item'>"+
-		    "<div class='layui-inline'>"+
-				"<img src='file://E:/李涧明/日常处理/20171215/123123131/c.jpg'  width='112' height='112' />"+	
-	    	"</div>"+
-	    	"<div class='layui-inline'>"+
-	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
-	    	"</div>"+
-	  	"</div>");
-}
-
-function delButton(k){
+function delImg(){
 	 layer.confirm('确认要删除吗？', {
 		  btn: ['删除','取消'] //按钮
 		  ,area:['80px','150px']
 		}, function(){
-			$(k).parent().parent().remove();
+			$("#exhImg").html("");
+			$("#picUrl").val("");
 		  	 layer.msg({
 			    time: 20000
 			 }); 
