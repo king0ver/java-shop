@@ -1,0 +1,95 @@
+<#include '/admin/sonheader.html' >
+<style >
+  .layui-input{
+    width: 60%;
+  }
+</style>
+<div class="main">
+	<form id="addSpecForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">属性名称：</label>
+    		<div class="layui-input-block">
+      			<input type="text" name="spec_name" maxlength="60"  dataType="string" placeholder="请输入属性名称"  lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+		<div id="attrId">
+			<div class="layui-form-item">
+			    <label class="layui-form-label">属性值</label>
+			    <div class="layui-input-inline">
+					<input type="text" name="specValName" placeholder="请输入属性值" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+			    </div>
+			    <div class="layui-inline">
+    				<a onclick="return addButton();" class="layui-btn"><i class="layui-icon">&#xe654;</i></a>
+    			</div>
+			  </div>
+		</div>
+		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_spec">保存</a>
+  			<button class="layui-btn layui-btn-primary layui-btn-small" type="reset" >还原</button>
+  			<div id="test"></div>
+  		</div>
+  	</form>
+</div>
+<script>
+
+function addButton(){
+	 var addHtml ="<div class='layui-form-item'>"+
+	    "<label class='layui-form-label'>属性值</label>"+
+	    "<div class='layui-input-inline'>"+
+			"<input type='text' name='specValName' placeholder='请输入属性值' maxlength='60' dataType='string' lay-verify='required' autocomplete='off' class='layui-input'>"+
+	    "</div>"+
+	    "<div class='layui-inline'>"+
+			"<a onclick='return addButton();' class='layui-btn'><i class='layui-icon'>&#xe654;</i></a>"+
+		"</div>"+
+		"<div class='layui-inline'>"+
+			"<a  onclick='return delButton(this);' class='layui-btn'><i class='layui-icon'>&#xe640;</i></a>"+
+		"</div>"+
+	  "</div>";
+	$("#attrId").append(addHtml);
+};
+
+
+//删除按钮
+function delButton(k){
+	layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$(k).parent().parent().remove();
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+	});
+}
+
+var index = parent.layer.getFrameIndex(window.name);
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+	var form = layui.form(),
+    layedit = layui.layedit,
+    laydate = layui.laydate;
+    
+	form.on('submit(save_spec)', function(data){
+    	var options = {
+   			url:ctx+"/core/admin/spec/save-add.do",
+   			type:"post",
+   			dataType:"json",
+   			success:function(data){
+   				if(data.result==1){	
+   					$.Loading.success(data.message);
+   					parent.layer.close(index); //再执行关闭        
+   					parent.table.ajax.url(ctx+"/core/admin/spec/list-json.do").load();
+   				}
+   			}
+   		};
+   		$("#addSpecForm").ajaxSubmit(options);
+       return false;
+    });
+   
+});
+
+</script>
