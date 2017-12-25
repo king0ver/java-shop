@@ -15,12 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.model.ArtSpecRel;
 import com.enation.app.nanshan.model.ArticleExt;
+import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
 import com.enation.framework.database.data.IDataOperation;
+import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.StringUtil;
 
 /**  
@@ -66,17 +68,31 @@ public class ArticleManagerImpl implements IArticleManager  {
 	}
 
 	@Override
-	public Page queryArticleList(NanShanArticleVo nanShanArticleVo,int page,int pageSize) {
+	public Page queryArticleList(ArticleQueryParam param,int page,int pageSize) {
 		StringBuffer sql = new StringBuffer();
+        
 		sql.append(
-				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id");
+				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id and a.is_del<>1");
+		if(!StringUtil.isEmpty(param.getCatId())){
+			sql.append(" and a.cat_id in ("+param.getCatId()+")");
+		}
+		if(!StringUtil.isEmpty(param.getArticleId())){
+			sql.append(" and a.id="+param.getArticleId());
+		}
+		if(!StringUtil.isEmpty(param.getArticleName())){
+			sql.append(" and a.titile like %"+param.getArticleName()+"%");
+		}
+		if(!StringUtil.isEmpty(param.getParentId())){
+			sql.append(" and t.parent_id="+param.getParentId());
+		}
+		
 		Page webpage = this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 		return webpage;
 	}
 
 	@Override
 	public NanShanArticleVo queryArticleById(int id) {
-		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,c.id as content_id from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id and a.id=?";
+		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,c.id as content_id,e.reserve_num,e.reserved_num,e.act_name,e.act_cost,e.act_address,e.expiry_date  from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t,es_nanshan_article_ext e  where   a.cat_id=t.cat_id and a.content=c.id and a.id=e.article_id  and a.id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
 
@@ -97,7 +113,8 @@ public class ArticleManagerImpl implements IArticleManager  {
 		this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
 		ArticleExt articleExt=new ArticleExt();
 		articleExt=this.covertArticleExt(nanShanArticleVo);
-		this.insertArtcleExt(articleExt);
+		this.updateArticle(nanShanArticleVo);
+		this.updateArtcleExt(articleExt);
 	}
 
 	@Override
@@ -151,15 +168,24 @@ public class ArticleManagerImpl implements IArticleManager  {
 		this.daoSupport.insert("es_nanshan_article_ext", articleExt);
 	}
 	
+	private void updateArtcleExt(ArticleExt articleExt){
+		this.daoSupport.update("es_nanshan_article_ext", articleExt, "article_id="+articleExt.getArticle_id());
+	}
+	
 	private ArticleExt covertArticleExt(NanShanArticleVo vo){
 		ArticleExt ext=new ArticleExt();
-		
+		ext.setArticle_id(vo.getId());
 		ext.setAct_address(vo.getAct_address());
 		ext.setAct_cost(vo.getAct_cost());
 		ext.setAct_name(vo.getAct_name());
-		ext.setReserve_num(vo.getReserved_num());
+		ext.setReserved_num(vo.getReserved_num());
+		ext.setReserve_num(vo.getReserve_num());
 		ext.setAct_cost(vo.getAct_cost());
-		//ext.setExpiry_date(vo.getExpiryDate());
+		if(!StringUtil.isEmpty(vo.getExpiryDate())){
+			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd");
+			ext.setExpiry_date(create_time);
+		}
+		
 		
 		return ext;
 		

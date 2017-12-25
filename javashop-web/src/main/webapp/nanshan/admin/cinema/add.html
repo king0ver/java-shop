@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
 <div class="main">
     <!--表单区域  -->
-	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data" style="padding-top:40px;padding-bottom:40px">
 	    
   		<div class="layui-form-item">
     		<label class="layui-form-label" style="width:150px">影片时间表标题：</label>
@@ -53,7 +53,7 @@
 	  		</div>
   		</div>
   		<div class="layui-form-item" style="float:right;margin-right:30px">
-	  		<a class="layui-btn" onclick="addPanel();">增加记录</a>			
+	  		<a class="layui-btn" onclick="addMoviePanel();">增加记录</a>			
 	    </div>
 	   
   		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
@@ -93,23 +93,24 @@ function getPanel(id,time,price){
 		'</div>'+
 		  '<label class="layui-form-label" style="width:60px" ></label>'+
 		'<div class="layui-input-inline">'+
-		 ' <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: \'YYYY-MM-DD\'})" style="width:100%;height:38px;" value='+time+' />'+
+		 ' <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: \'YYYY-MM-DD\'})" style="width:100%;height:38px;" value='+time+' >'+
 		'</div>'+
 		  '<label class="layui-form-label" style="width:70px"></label>'+
 		'<div class="layui-input-inline">'+
   			'<input type="text"  name="cinamePrice"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" value='+price+'>'+
 		'</div>'+
 		     '<div class="layui-input-inline">'+
-	         ' <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>'+
+	         ' <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delMoviePanel(this);"><i class="layui-icon">&#xe640;</i></a>'+
 		 '</div>'+
 		'</div>'
 		return html;
 }
-function addPanel(){
+
+function addMoviePanel(){
 	$("#contentPanel").append(getPanel('','',''))
 }
 
-function delPanel(obj){
+function delMoviePanel(obj){
 	$(obj).parent().parent().remove();
 }
 
@@ -140,16 +141,17 @@ function getCinemaContent(){
 function initPanel(){
 	var desc='${(vo.content)!''}';
 	if(desc!=""){
-		desc=JSON.parse(desc)
-	}
-	var con=desc.content;
-	if(con.length>0){
-		var html="";
-		for(var i=0;i<con.length;i++){
-			html=html+getPanel(con[i].articleId,con[i].cinameTime,con[i].cinamePrice);
+		desc=JSON.parse(desc);
+		var con=desc.content;
+		if(con.length>0){
+			var html="";
+			for(var i=0;i<con.length;i++){
+				html=html+getPanel(con[i].articleId,con[i].cinameTime,con[i].cinamePrice);
+			}
+			$("#contentPanel").html(html)
 		}
-		$("#contentPanel").html(html)
 	}
+	
 }
 initPanel();
 layui.use(['form', 'layedit', 'laydate'], function(){
@@ -166,7 +168,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
    			url:ctx+"/admin/article/cinema-edit.do?cat_id=${catId}&id=3",
    			type:"post",
    			dataType:"json",
-   			data:{"content":content,"content_id":${vo.content_id}},
+   			data:{"content":content,"content_id":${(vo.content_id)!'0'}},
    			success:function(data){
    				if(data.result==1){	
    					$.Loading.success(data.message);

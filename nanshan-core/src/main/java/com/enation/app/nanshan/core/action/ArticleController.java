@@ -20,12 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
 import com.enation.app.nanshan.constant.DefaultArticleIdEnum;
 import com.enation.app.nanshan.core.model.Spec;
 import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ISpecManager;
 import com.enation.app.nanshan.model.ArtSpecRel;
+import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
@@ -104,8 +106,8 @@ public class ArticleController extends GridController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list-json")
-	public GridJsonResult listJson(long catId) {	
-		Page page = this.articleManager.queryArticleList(null, this.getPage(), this.getPageSize());
+	public GridJsonResult listJson(ArticleQueryParam p) {		
+		Page page = this.articleManager.queryArticleList(p, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);
 	}
 	

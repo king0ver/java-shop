@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.enation.app.nanshan.model.ArticleCat;
+import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.database.Page;
 
@@ -11,7 +12,7 @@ public interface IArticleManager {
 	
 	public void addArticle(NanShanArticleVo nanShanArticleVo);
 	
-	public Page queryArticleList(NanShanArticleVo nanShanArticleVo,int page,int pageSize);
+	public Page queryArticleList(ArticleQueryParam param,int page,int pageSize);
 	
 	public NanShanArticleVo queryArticleById(int id); 
 	

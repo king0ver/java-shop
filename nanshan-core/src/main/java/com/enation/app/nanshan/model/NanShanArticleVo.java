@@ -40,11 +40,15 @@ public class NanShanArticleVo implements Serializable  {
 	private String act_cost;
 	private String act_address;
 	
-	
-	
-	
+	private String catIds;
 	
 
+	public String getCatIds() {
+		return catIds;
+	}
+	public void setCatIds(String catIds) {
+		this.catIds = catIds;
+	}
 	public int getReserve_num() {
 		return reserve_num;
 	}

@@ -57,7 +57,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
    			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}",
    			type:"post",
    			dataType:"json",
-   			data:{"content":content,"cat_id":${catId},"content_id":${vo.content_id}},
+   			data:{"content":content,"cat_id":${catId},"content_id":${(vo.content_id)!''}},
    			
    			success:function(data){
    				if(data.result==1){	

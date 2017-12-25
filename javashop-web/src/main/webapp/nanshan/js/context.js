@@ -95,6 +95,7 @@ function getContext(){
 	   var contextHtml="";
 	   for(var i=0;i<context.length;i++){
 		 var type=context[i].type;
+		 if(context[i].content==""||context[i].content==undefined) continue;
 	   	if(type=="text"){
 	   		contextHtml=contextHtml+getText(context[i].content)
 	   	}else if(type=="img"){
@@ -131,6 +132,24 @@ function getContext(){
 		});
 		return chk_value;
 	}
+  
+  function delImg(){
+		 layer.confirm('确认要删除吗？', {
+			  btn: ['删除','取消'] //按钮
+			  ,area:['80px','150px']
+			}, function(){
+				$("#exhImg").html("");
+				$("#picUrl").val("");
+			  	 layer.msg({
+				    time: 20000
+				 }); 
+			}, function(){
+			    layer.msg({
+				    time: 20000
+				}); 
+			});
+	};
+
 
  
  

@@ -70,9 +70,6 @@
             <th>分类名称</th>
             <th>名称</th>
             <th>创建时间</th>
-            <th>链接</th>
-            <th>状态</th>
-            <th>图片</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -100,7 +97,7 @@ $(function(){
 	    ajax: {
 	        //指定数据源
 	        type:"post",
-	        url: '${ctx}/admin/article/list-json.do?catId=${catId}',
+	        url: '${ctx}/admin/article/list-json.do?parentId=37',
 	    },
 	    columns: [ //定义列
 	        {data: "id"},
@@ -113,15 +110,6 @@ $(function(){
 	        		return getFormatDateByLong(data.create_time, "yyyy-MM-dd");
 	        	}
 	       	}},
-	        {data: "url"},
-	        {data: "is_del"},
-	        {data: null,"render": function(data, type, row) {
-	        	if(data.pic_url==null){
-	        		return " ";
-	        	}else{
-	        		return "<img style='width:50px;height:50px' src="+data.pic_url+">";
-	        	}
-	       	}},      
 	        {data: null,"render": function(data, type, row) {
 	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/admin/article/edit.do?catId=${catId}&id="+data.id+"')\">修改</a>"
 	        			+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger'  onclick='del("+data.id +")'>删除</a>";		
@@ -149,13 +137,13 @@ $(function(){
 			return ;
 		}
 		var options = {
-				url : '${ctx}/article/newsbulletin/del.do?id='+id+'&ajax=yes',
+				url : '${ctx}/admin/article/del.do?id='+id+'&ajax=yes',
 				type : "POST",
 				dataType : 'json',
 				success : function(result) {
 					if(result.result==1){
 						$.Loading.success(result.message);
-						table.ajax.url(ctx+"/article/newsbulletin/list-json.do").load();
+						table.ajax.url(ctx+"/admin/article/list-json.do?parentId=37").load();
 					}
 					if(result.result==0){
 						$.Loading.error(result.message);
