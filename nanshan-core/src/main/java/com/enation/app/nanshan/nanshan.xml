@@ -64,6 +64,22 @@
 		<field><name>article_id</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>specval_id</name><type>int</type><size>10</size><option>00</option></field>
 	</action>
+	
+		<action>
+		<command>create</command>
+		<table>es_nanshan_article_ext</table>
+		<field><name>id</name><type>int</type><size>10</size><option>11</option></field>
+		<field><name>article_id</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>reserve_num</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>reserved_num</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>expiry_date</name><type>long</type><size>10</size><option>00</option></field>
+		<field><name>act_name</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>act_cost</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>act_address</name><type>varchar</type><size>255</size><option>00</option></field>
+	</action>
+	
+	
+	
 
 
 </dbsolution>
