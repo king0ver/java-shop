@@ -56,7 +56,6 @@
 	  			</div>
 				
 			</fieldset>
-			<input type="hidden" id="contentInfo" name="content"/>
   		</div>
   		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
   			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
@@ -116,7 +115,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
    				if(data.result==1){	
    					$.Loading.success(data.message);
    					parent.layer.close(index); //再执行关闭        
-   					parent.table.ajax.url(ctx+"/admin/article/list-json.do?catId=${catId}").load();
+   					parent.table.ajax.url(ctx+"/admin/article/list-json.do?parentId=37").load();
    				}
    			}
    		};
