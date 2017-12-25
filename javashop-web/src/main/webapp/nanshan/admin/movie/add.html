@@ -1,10 +1,12 @@
 <#include '/admin/sonheader.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
 <style>
 .layui-form-pane .layui-input:focus, .layui-form-pane .layui-textarea:focus
 	{
 	border-radius: 2px;
 	border-color: #01AAED !important;
 }
+form{margin-bottom:0px;}
 </style>
 <div class="main">
    	<!--表单区域  -->
@@ -27,13 +29,11 @@
   		</div>
   		<div class="layui-form-item">
     		<label class="layui-form-label">电影主图：</label>
-    		<div class="layui-upload">
-				<button type="button" class="layui-btn" id="test1">上传图片</button>
-			  	<div class="layui-upload-list">
-			    	<img class="layui-upload-img" id="demo1">
-			    	<p id="demoText"></p>
-			  	</div>
+    		<input type="hidden" name="pic_url" id="picUrl">
+			<div class="layui-input-inline" style="width:120px;">
+				<input name="file" class="layui-upload-file" id="movieImgUploadBtn" type="file">	
 			</div>
+			<div id="movieImg" class="layui-inline"></div>
   		</div>
   		<div class="layui-form-item" style="width:400px;">
     		<label class="layui-form-label">电影时长：</label>
@@ -44,7 +44,7 @@
   		<div class="layui-form-item" style="width:400px;">
     		<label class="layui-form-label">放映时间：</label>
     		<div class="layui-input-inline">
-		        <input class="layui-input" id="test5" name="movieTime" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+		        <input class="layui-input" id="test5" name="movieTime" placeholder="yyyy-MM-dd HH:mm:ss" type="text" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
 		    </div>
   		</div>
   		<div class="layui-form-item" style="width:400px;">
@@ -63,28 +63,10 @@
     		<label class="layui-form-label">电影详情：</label>
     		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;width: 640px;">
 				<legend>影片花絮</legend>
-				<div class="layui-form-item">
-					<a class="layui-btn" onclick="return addImg();">增加图片</a>
-					<a class="layui-btn" onclick="return getFilmImg();">1</a>
-	  			</div>
-				 <div id="film" class="layui-form-item">
-				  	<div id="filmImg" class="layui-inline">
-					  	<div class="layui-inline">
-							<img name="img" src="http://localhost:8081/static/img.jpg"  width="112" height="112" />	
-					    </div>
-					    <div class="layui-inline">
-					      <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
-					    </div>
-				  	</div>
-				    <div id="filmImg" class="layui-inline">
-						<div class="layui-inline">
-							<img name="img" src="http://localhost:8081/static/img.jpg"  width="112" height="112" />	
-					    </div>
-					    <div class="layui-inline">
-					      <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
-					    </div>
-				  	</div>
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="filmImgUploadBtn" type="file">	
 				</div>
+				 <div id="film" class="layui-form-item"></div>
 			</fieldset>
 			<input type="hidden" name="filmTidbits" id="filmTidbits">
   		</div>
@@ -98,36 +80,77 @@
 
 var index = parent.layer.getFrameIndex(window.name);
 
-function checkLength(){
-	if($("#rolememo").val().length>100){
-		$("#rolememo").val($("#rolememo").val().substring(0,100));
-	}
-}
-
-
-layui.use(['form', 'layedit', 'laydate'], function(){
-	var form = layui.form(),
-    layedit = layui.layedit,
-    laydate = layui.laydate;
+$(function(){
 	
-	form.on('submit(save_info)', function(data){
-		$("#filmTidbits").val(JSON.stringify(getFilmImg()));
-    	var options = {
-   			url:ctx+"/core/admin/movie/add_save.do",
-   			type:"post",
-   			dataType:"json",
-   			success:function(data){
-   				if(data.result==1){	
-   					$.Loading.success(data.message);
-   					parent.layer.close(index); //再执行关闭  
-   					parent.table.ajax.url(ctx+"/core/admin/movie/list-json.do").load();
-   				}
-   			}
-   		};
-   		$("#addForm").ajaxSubmit(options);
-       return false;
-    });
+	layui.use(['form', 'layedit', 'laydate','upload'], function(){
+		var form = layui.form(),
+	    layedit = layui.layedit,
+	    laydate = layui.laydate;
+		
+		layui.upload({
+		    url: '/core/admin/nanshan/upload.do'
+		    ,elem: '#movieImgUploadBtn' 
+		    ,method: 'POST'
+		    ,success: function(res){
+		    	$("#movieImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+		    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>");
+		    	$("#picUrl").val(res.url);
+		    }
+		});
+		
+		layui.upload({
+		    url: '/core/admin/nanshan/upload.do'
+			    ,elem: '#filmImgUploadBtn' 
+			    ,method: 'POST'
+			    ,success: function(res){
+			    	$("#film").append("<div id='filmImg' class='layui-inline'>"+
+			    			"<div class='layui-inline'>"+
+			    				"<img name='img' src='"+res.url+"'  width='112' height='112' />"+
+			    	    	"</div>"+
+			    	    	"<div class='layui-inline'>"+
+			    	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+			    	    	"</div>"+
+			      		"</div>");
+			    }
+			});
+		
+		form.on('submit(save_info)', function(data){
+			$("#filmTidbits").val(JSON.stringify(getFilmImg()));
+	    	var options = {
+	   			url:ctx+"/core/admin/movie/add_save.do",
+	   			type:"post",
+	   			dataType:"json",
+	   			success:function(data){
+	   				if(data.result==1){	
+	   					$.Loading.success(data.message);
+	   					parent.layer.close(index); //再执行关闭  
+	   					parent.table.ajax.url(ctx+"/core/admin/movie/list-json.do").load();
+	   				}
+	   			}
+	   		};
+	   		$("#addForm").ajaxSubmit(options);
+	       return false;
+	    });
+	});
 });
+
+
+function delImg(){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#movieImg").html("");
+			$("#picUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
 
 function getFilmImg(){
 	var divContext = $("#film #filmImg");
@@ -143,33 +166,5 @@ function getFilmImg(){
 	return jsonList;
 }
 
-
-function addImg(){
-	$("#film").append("<div id='filmImg' class='layui-inline'>"+
-			"<div class='layui-inline'>"+
-				"<img name='img' src='http://localhost:8081/static/img.jpg'  width='112' height='112' />"+
-	    	"</div>"+
-	    	"<div class='layui-inline'>"+
-	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
-	    	"</div>"+
-  		"</div>");
-}
-
-
-function delButton(k){
-	 layer.confirm('确认要删除吗？', {
-		  btn: ['删除','取消'] //按钮
-		  ,area:['80px','150px']
-		}, function(){
-			$(k).parent().parent().remove();
-		  	 layer.msg({
-			    time: 20000
-			 }); 
-		}, function(){
-		    layer.msg({
-			    time: 20000
-			}); 
-		});
-};
 
 </script>

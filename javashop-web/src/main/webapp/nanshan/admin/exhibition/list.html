@@ -1,4 +1,5 @@
 <#include '/admin/header.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
 <div  class="admin-main">
    <div>
         <!--按钮操作区域  -->
@@ -51,8 +52,12 @@ $(function(){
 	        {data: "title"},
 	        {data: "create_time"},
 	        {data: "url"},
-	        {data: "is_del"},
-	        {data: "pic_url"},	      
+	        {data: function(obj){
+	        	return convertState(obj.is_del);
+	        }},
+	        {data: function(obj){
+	        	return convertDate(obj.create_time)
+	        }},		      
 	        {data: null,"render": function(data, type, row) {
 	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick='edit("+data["id"]+")'>修改</a>"+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger' onclick='del("+data["id"]+")'>删除</a>";		//获取值:data["brand_id"]	
 	       	}}
@@ -89,29 +94,37 @@ $(function(){
 	     });
 	}
 
-
 	function del(id){
-		if(!confirm("确认删除此文章吗！")){	
-			return ;
-		}
-		var options = {
-				url : '${ctx}/article/newsbulletin/del.do?id='+id+'&ajax=yes',
-				type : "POST",
-				dataType : 'json',
-				success : function(result) {
-					if(result.result==1){
-						$.Loading.success(result.message);
-						table.ajax.url(ctx+"/article/newsbulletin/list-json.do").load();
+		layer.confirm('确认要删除吗？', {
+			  btn: ['删除','取消'] //按钮
+			  ,area:['80px','150px']
+		}, function(){
+			var options = {
+					url : '${ctx}/core/admin/exhibition/delete.do?id='+id,
+					type : "POST",
+					dataType : 'json',
+					success : function(result) {
+						if(result.result==1){
+							$.Loading.success(result.message);
+							table.ajax.url(ctx+"/core/admin/exhibition/list-json.do").load();
+						}
+						if(result.result==0){
+							$.Loading.error(result.message);
+						}
+					},
+					error : function(e) {
+						$.Loading.error("出现错误 ，请重试");
 					}
-					if(result.result==0){
-						$.Loading.error(result.message);
-					}
-				},
-				error : function(e) {
-					$.Loading.error("出现错误 ，请重试");
-				}
-		};
-		$('#modelForm').ajaxSubmit(options);
+			};
+			$('#modelForm').ajaxSubmit(options);
+			layer.msg({
+				    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
 	}
 </script>
 
