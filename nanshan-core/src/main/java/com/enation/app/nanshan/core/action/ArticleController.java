@@ -326,6 +326,8 @@ public class ArticleController extends GridController {
 	@RequestMapping(value = "cinema-edit")
 	public JsonResult cinemaEdit(NanShanArticleVo nanShanArticleVo) {
 		try {
+			/*nanShanArticleVo.setId(DefaultArticleIdEnum.CINEMA4D.getId());
+			System.out.println(DefaultArticleIdEnum.CINEMA4D.getId());*/
 			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
@@ -340,14 +342,21 @@ public class ArticleController extends GridController {
 	
 	@RequestMapping(value = "cinema4d")
 	public ModelAndView fourDcinema(int catId) {
-		int id=DefaultArticleIdEnum.CINEMA4D.getId();
-		NanShanArticleVo   vo=this.articleManager.queryArticleById(id);
 		ModelAndView view=new ModelAndView();
-		view.setViewName("/nanshan/admin/cinema/cinema4d");
-		view.addObject("ctx",ctx);	
-		view.addObject("vo",vo);
-		view.addObject("catId",catId);	
-		return view;
+		try {
+			int id=DefaultArticleIdEnum.CINEMA4D.getId();
+			NanShanArticleVo   vo=this.articleManager.queryArticleById(id);
+			
+			view.setViewName("/nanshan/admin/cinema/cinema4d");
+			view.addObject("ctx",ctx);	
+			view.addObject("vo",vo);
+			view.addObject("catId",catId);	
+			return view;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return view;
+		}
+		
 	}
 	
 	

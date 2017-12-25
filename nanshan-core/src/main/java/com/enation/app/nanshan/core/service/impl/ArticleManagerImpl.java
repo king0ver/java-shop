@@ -19,6 +19,7 @@ import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
+import com.enation.app.nanshan.util.EnumUtil;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
 import com.enation.framework.database.data.IDataOperation;
@@ -55,12 +56,15 @@ public class ArticleManagerImpl implements IArticleManager  {
 		NanShanClob nanShanClob=new NanShanClob();
 		nanShanClob.setContent(nanShanArticleVo.getContent());
 		nanShanClob.setCategory(nanShanArticleVo.getCat_id());
+		nanShanClob.setId(nanShanArticleVo.getId());
 		this.daoSupport.insert("es_nanshan_clob", nanShanClob);
 		int clobId=this.daoSupport.getLastId("es_nanshan_clob");
 		nanShanArticle.setContent(clobId);
+		
+		
 		this.daoSupport.insert("es_nanshan_article", nanShanArticle);
-		int articleId=this.daoSupport.getLastId("es_nanshan_article");
-		nanShanArticleVo.setId(articleId);
+		if(!EnumUtil.isInclude(nanShanArticleVo.getId()))
+		nanShanArticleVo.setId(this.daoSupport.getLastId("es_nanshan_article"));
 		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
 			ArticleExt articleExt=this.covertArticleExt(nanShanArticleVo);
 			this.insertArtcleExt(articleExt);
@@ -92,7 +96,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 
 	@Override
 	public NanShanArticleVo queryArticleById(int id) {
-		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,c.id as content_id,e.reserve_num,e.reserved_num,e.act_name,e.act_cost,e.act_address,e.expiry_date  from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t,es_nanshan_article_ext e  where   a.cat_id=t.cat_id and a.content=c.id and a.id=e.article_id  and a.id=?";
+		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,c.id as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
 
@@ -111,10 +115,12 @@ public class ArticleManagerImpl implements IArticleManager  {
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
 		this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
 		this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
-		ArticleExt articleExt=new ArticleExt();
-		articleExt=this.covertArticleExt(nanShanArticleVo);
-		this.updateArticle(nanShanArticleVo);
-		this.updateArtcleExt(articleExt);
+		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
+			ArticleExt articleExt=new ArticleExt();
+			articleExt=this.covertArticleExt(nanShanArticleVo);
+			this.updateArtcleExt(articleExt);
+		}
+		
 	}
 
 	@Override
