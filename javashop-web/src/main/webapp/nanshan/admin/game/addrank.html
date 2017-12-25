@@ -1,0 +1,132 @@
+<#include '/admin/sonheader.html' >
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<style >
+  .layui-input{
+    width: 75%;
+  }
+</style>
+<script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
+<div class="main" style="padding-top:20px">
+    <!--表单区域  -->
+	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+	   <div id="gameRank">
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">游戏排行1：</label>
+	    		<div class="layui-input-inline">
+	      			<input type="text" name="rank1" id="uri" maxlength="100" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入游戏id">
+	    		</div>
+	    		<div class="layui-input-inline">
+		    	          <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>
+		    	</div> 
+	  		</div>
+  	   </div>
+  		
+  		<div class="layui-form-item" style="margin-left:110px">
+	  		<a class="layui-btn" onclick="addPanel();">增加记录</a>			
+	    </div>
+  		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
+  		</div>
+  	</form>
+</div>
+<script>
+var index = parent.layer.getFrameIndex(window.name);
+$(function(){
+	initMovieRand();
+
+	
+})
+
+
+function checkLength(){
+	if($("#rolememo").val().length>100){
+		$("#rolememo").val($("#rolememo").val().substring(0,100));
+	}
+}
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+	var form = layui.form(),
+    layedit = layui.layedit,
+    laydate = layui.laydate;
+    
+	form.on('submit(save_uri)', function(data){
+		 var content=getRankList()
+		content=JSON.stringify(content);
+		 var cat_id='${catId}';
+    	 var options = {
+   			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}",
+   			type:"post",
+   			dataType:"json",
+   			data:{"content":content,"cat_id":${catId},"content_id":${vo.content_id}},
+   			
+   			success:function(data){
+   				if(data.result==1){	
+   					$.Loading.success(data.message);
+   					parent.layer.close(index); //再执行关闭        
+   					parent.table.ajax.url(ctx+"/admin/article/gamerank.do?catId=${catId}").load();
+   				}
+   			}
+   		}; 
+   		$("#addUriForm").ajaxSubmit(options);
+        return false;
+    });
+   
+});
+
+function getRankList(){
+	var content=[];
+	$("input[name*='rank']").each(function(){
+		content.push($(this).val())
+	   }
+	)
+	return content;
+}
+
+
+function  getMovieHtml(index,value){
+	var html='<div class="layui-form-item">'+
+	'<label class="layui-form-label">游戏排行'+index+'：</label>'+
+	'<div class="layui-input-inline">'+
+			'<input type="text" name="rank" id="uri" maxlength="100" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入游戏id" value='+value+'>'+
+	'</div>'+
+	'<div class="layui-input-inline">'+
+	          '<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>'+
+	'</div>'+ 
+	'</div>'
+	return html;
+}
+function addPanel(){
+	var index=$("#gameRank .layui-form-item").length+1;
+	var html=getMovieHtml(index,'');
+	$("#gameRank").append(html);
+	
+}
+
+function delPanel(obj){
+	$(this).parent().parent().remove();
+}
+
+function initMovieRand(){
+	var desc='${(vo.content)!''}';
+	if(desc!=""){
+		desc=JSON.parse(desc)
+	}
+	var html="";
+	if(desc.length>0){
+		for(var i=0;i<desc.length;i++)
+		{
+			var index=i+1
+			html=html+getMovieHtml(index,desc[i])
+		}
+		$("#gameRank").html(html);
+		
+	}
+}
+
+
+
+
+
+
+
+</script>
