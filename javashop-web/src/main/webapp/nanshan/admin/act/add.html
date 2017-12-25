@@ -58,7 +58,7 @@
 	  		<div class="layui-form-item">
 	    		<label class="layui-form-label">活动对象：</label>
 	    		<div class="layui-input-block">
-	    		<input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		<input type="text" name="act_name"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	    		</div>
 	  		</div>
 	  		<div class="layui-form-item">
@@ -69,6 +69,12 @@
 	  		</div>
 	  		<div class="layui-form-item">
 	    		<label class="layui-form-label">活动地址：</label>
+	    		<div class="layui-input-block">
+	    		   <input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">可预约人数：</label>
 	    		<div class="layui-input-block">
 	    		   <input type="text" name=""  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	    		</div>
@@ -101,7 +107,7 @@ function checkLength(){
 		$("#rolememo").val($("#rolememo").val().substring(0,100));
 	}
 }
-layui.use(['form', 'layedit', 'laydate'，'upload'], function(){
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
     laydate = layui.laydate;
