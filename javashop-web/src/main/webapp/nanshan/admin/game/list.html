@@ -15,7 +15,7 @@
     <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
         <thead>
           <tr>
-            <th>体验馆名称</th>
+            <th>游戏名称</th>
             <th>图片</th>
             <th>详情链接</th>
             <th>分类名称</th>
@@ -48,6 +48,7 @@ $(function(){
 	        url: '${ctx}/core/admin/game/list-json.do',
 	    },
 	    columns: [ //定义列
+	        {data:	"id"},
 	        {data: "title"},
 	        {data: function(obj){
 	        	return convertImg(obj.pic_url);

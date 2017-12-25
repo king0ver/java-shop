@@ -15,12 +15,13 @@
     <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
         <thead>
           <tr>
+          	<th>展示展览ID</th>
+          	<th>展示展览名称</th>
             <th>分类名称</th>
-            <th>展示展览名称</th>
-            <th>创建时间</th>
+            <th>图片</th>
             <th>链接</th>
             <th>状态</th>
-            <th>图片</th>
+            <th>创建时间</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -48,15 +49,18 @@ $(function(){
 	        url: '${ctx}/core/admin/exhibition/list-json.do',
 	    },
 	    columns: [ //定义列
-	        {data: "cat_name"},
+	        {data:	"id"},
 	        {data: "title"},
-	        {data: "create_time"},
+	        {data: "cat_name"},
+	        {data: function(obj){
+	        	return convertDate(obj.create_time)
+	        }},	
 	        {data: "url"},
 	        {data: function(obj){
 	        	return convertState(obj.is_del);
 	        }},
 	        {data: function(obj){
-	        	return convertDate(obj.create_time)
+	        	return convertImg(obj.pic_url);
 	        }},		      
 	        {data: null,"render": function(data, type, row) {
 	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick='edit("+data["id"]+")'>修改</a>"+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger' onclick='del("+data["id"]+")'>删除</a>";		//获取值:data["brand_id"]	
@@ -74,7 +78,7 @@ $(function(){
 	            offset: '10px',//弹框位置
 	            shadeClose:false,//黑色背景是否可以点击关闭
 	            content:"${ctx}/core/admin/exhibition/add.do",//内容的URL
-	            area:['800px','750px'],//弹框大小
+	            area:['800px','700px'],//弹框大小
 	            scrollbar: false//是否允许浏览器出现滚动条
 	        });
 		});
@@ -89,7 +93,7 @@ $(function(){
 	         shade: [0.3, '#000'],//黑色背景
 	         shadeClose:false,//黑色背景是否可以点击关闭
 	         content:ctx+"/core/admin/exhibition/edit.do?id="+id,//内容的URL
-	         area:['800px','750px'],//弹框大小
+	         area:['800px','700px'],//弹框大小
 	         scrollbar: false//是否允许浏览器出现滚动条
 	     });
 	}
