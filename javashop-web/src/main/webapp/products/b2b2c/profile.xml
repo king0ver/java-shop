@@ -245,6 +245,9 @@
 			<menu text="基础数据">
 				<menu text="文章属性管理" url="/core/admin/spec/list.do" />
 			</menu>
+			<menu text="服务导览">
+				<menu text="服务设施" url="/core/admin/service/edit.do" />
+			</menu>
 			<menu text="关于我们">
 
 			</menu>

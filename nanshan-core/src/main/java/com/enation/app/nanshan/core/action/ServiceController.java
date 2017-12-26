@@ -1,11 +1,11 @@
 package com.enation.app.nanshan.core.action;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import net.sf.json.JSONArray;
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,25 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.enation.app.nanshan.core.model.Spec;
-import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
-import com.enation.app.nanshan.core.service.ISpecManager;
 import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
-import com.enation.eop.resource.IThemeUriManager;
-import com.enation.eop.resource.model.AdminUser;
-import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.GridController;
-import com.enation.framework.action.GridJsonResult;
 import com.enation.framework.action.JsonResult;
-import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
-import com.qq.connect.utils.json.JSONObject;
 
 /**
- * 服务管理实现
+ * 服务管理
  * @author LiJM
  *
  */
@@ -43,7 +34,7 @@ public class ServiceController extends GridController{
 	
 	@Autowired
 	private IArticleManager  articleManager;
-	
+
 	@Autowired
 	private ICatManager catManager;
 	
@@ -55,17 +46,24 @@ public class ServiceController extends GridController{
 	@RequestMapping(value="/edit")
 	public ModelAndView edit(Integer catId){
 		ModelAndView view = new ModelAndView();
-		List<ArticleCat> catList = catManager.queryCatChildrenInfoByCatIds("1");
+		List<ArticleCat> catList = catManager.queryCatChildrenInfoByCatIds("46");
+		List<NanShanArticleVo> list = new ArrayList<NanShanArticleVo>();
 		if(null == catId){
 			if(catList != null && catList.size()>0){
 				Long articleCatId = catList.get(0).getCat_id();
-				List<NanShanArticleVo> list = articleManager.queryArticleByCatId(articleCatId.intValue());
-				if(list!=null && list.size()>0){
-					view.addObject("data",list.get(0));
-				}else{
-					view.addObject("data", new NanShanArticleVo());
-				}
+				list = articleManager.queryArticleByCatId(articleCatId.intValue());
 			}
+		}else{
+			list = articleManager.queryArticleByCatId(catId);
+		}
+		if(list!=null && list.size()>0){
+			view.addObject("data",list.get(0));
+		}else{
+			NanShanArticleVo articleVo = new NanShanArticleVo();
+			if(catId != null){
+				articleVo.setCat_id(catId);
+			}
+			view.addObject("data", articleVo);
 		}
 		view.addObject("catList", catList);
 		view.setViewName("/nanshan/admin/service/page");
@@ -81,13 +79,22 @@ public class ServiceController extends GridController{
 	 */
 	@ResponseBody
 	@RequestMapping(value="/save-edit")
-	public JsonResult saveEdit(NanShanArticleVo articleVo){
+	public JsonResult saveEdit(NanShanArticleVo articleVo,HttpServletRequest request){
 		//保存修改
 		try{
-	        this.articleManager.updateArticle(articleVo);
-			return JsonResultUtil.getSuccessJson("修改成功");
+			String address = request.getParameter("address");
+			JSONObject json = new JSONObject();
+			json.put("address",address);
+			json.put("content", articleVo.getContent());
+			articleVo.setContent(json.toString());
+			if(articleVo.getId()>0){
+				articleManager.updateArticle(articleVo);
+			}else{
+				articleManager.addArticle(articleVo);
+			}
+			return JsonResultUtil.getSuccessJson("操作成功");
 		}catch(Exception e){
-			return JsonResultUtil.getErrorJson("修改失败:"+e.getMessage());
+			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
 		}		
 	}
 	
