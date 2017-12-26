@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements IArticleService {
 		if(catId == null){
 			return null;
 		}
-		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url imgUrl,esns.summary,t.reserve_num reserveNum,t.reserved_num reservedNum,t.expiry_date expiryDate,t.act_name actName,t.act_cost actCost,t.act_address actAddress from es_nanshan_article esns left join es_nanshan_article_ext t on esns.id=t.article_id  where 1=1  ";
+		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url imgUrl,esns.summary,esns.create_time createTime,t.reserve_num reserveNum,t.reserved_num reservedNum,t.expiry_date expiryDate,t.act_name actName,t.act_cost actCost,t.act_address actAddress from es_nanshan_article esns left join es_nanshan_article_ext t on esns.id=t.article_id  where 1=1  ";
 		if(StringUtils.isNotBlank(specValIds)){
 			sql+= " EXISTS ( select 1 from es_nanshan_article_rel esnsar where " +
 				"esns.id = esnsar.article_id and esnsar.specval_id in ("+specValIds+") ) ";
@@ -54,7 +54,7 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url imgUrl,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
 		sql.append("from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ");
 		sql.append(" where a.is_del = 0 and a.id= ?");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, articleId);
@@ -66,7 +66,7 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setTitle(articleInfo.getTitle());
 		articleVo.setSummary(articleInfo.getSummary());
 		articleVo.setUrl(articleInfo.getUrl());
-		articleVo.setDateTime(DateUtil.toString(articleInfo.getCreate_time(), null));
+		articleVo.setCreateTime(articleInfo.getCreate_time());
 		articleVo.setImgUrl(articleInfo.getPic_url());
 		if(StringUtils.isNotBlank(articleInfo.getContent())){
 			if(articleInfo.getContent().startsWith("[")){
@@ -83,7 +83,7 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setActCost(articleInfo.getAct_cost());
 		articleVo.setReserveNum(articleInfo.getReserve_num());
 		articleVo.setReservedNum(articleInfo.getReserved_num());
-		articleVo.setDateTime(articleInfo.getExpiryDate());
+		articleVo.setExpiryDate(articleInfo.getExpiryDate());
 		
 		return articleVo;
 	}

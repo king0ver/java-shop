@@ -1,5 +1,7 @@
 package com.enation.app.nanshan.model;
 
+import io.swagger.models.auth.In;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,9 +35,9 @@ public class NanShanArticleVo implements Serializable  {
 	private String specValIds;
 	
 	
-	private int reserve_num;
-	private int reserved_num;
-	private String  expiryDate;
+	private Integer reserve_num;
+	private Integer reserved_num;
+	private Long  expiryDate;
 	private String act_name;
 	private String act_cost;
 	private String act_address;
@@ -49,22 +51,22 @@ public class NanShanArticleVo implements Serializable  {
 	public void setCatIds(String catIds) {
 		this.catIds = catIds;
 	}
-	public int getReserve_num() {
+	public Integer getReserve_num() {
 		return reserve_num;
 	}
-	public void setReserve_num(int reserve_num) {
+	public void setReserve_num(Integer reserve_num) {
 		this.reserve_num = reserve_num;
 	}
-	public int getReserved_num() {
+	public Integer getReserved_num() {
 		return reserved_num;
 	}
-	public void setReserved_num(int reserved_num) {
+	public void setReserved_num(Integer reserved_num) {
 		this.reserved_num = reserved_num;
 	}
-	public String getExpiryDate() {
+	public Long getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(String expiryDate) {
+	public void setExpiryDate(Long expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	public String getAct_name() {

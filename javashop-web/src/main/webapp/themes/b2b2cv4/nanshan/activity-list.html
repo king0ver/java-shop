@@ -1,24 +1,44 @@
 
 <#assign articleListPageTag = newTag("articleListPageTag") />
 <#assign article = articleListPageTag() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
 <#include 'common/thirdCat.html'/>
 <div class="sectionBG">
     <#include 'common/navigator.html'/>
-    <#if article.items?? && article.items?size gt 0>
-        <ul class="activity-img-list">
-            <#list article.items as item>
-                <li>
-                    <a href="${item.url}}">
-                        <img src="${item.imgUrl}">
+    <div class="content">
+        <div class="game-title">所有活动（共有${article.webPage.totalCount}个活动）</div>
+        <div class="icon-btns-box">
+            <img src="${file_path}/nanshan/css/images/row-active.jpg">
+            <img src="${file_path}/nanshan/css/images/array.jpg">
+        </div>
+        <div class="item-lt">
+            <#if article.items?? && article.items?size gt 0>
+                <ul class="activity-lists">
+                    <#list article.items as item>
+                        <li class="row">
+                            <div class="lt-img">
+                                <img src="${item.imgUrl!''}">
+                            </div>
+                            <div class="rt-txt">
+                                <div class="reservation-btn">预约</div>
+                                <div class="content-title">${item.title!''}</div>
+                                <ul class="content-list">
+                                    <li><span>时间截止</span>：<@dateformat time='${item.expirydate}' pattern='yyyy-MM-dd'/></li>
+                                    <li><span>活动对象</span>: ${item.actname!''}</li>
+                                    <li><span>活动费用</span>: ${item.actcost!''}</li>
+                                    <li><span>活动地址</span>：${item.actaddress!''}</li>
+                                </ul>
+                                <p class="text-indent">${item.summary!''} </p>
+                            </div>
+                        </li>
+                    </#list>
+                </ul>
+            </#if>
+        </div>
 
-                        <div class="title">${item.summary}</div>
-                    </a>
-                </li>
-            </#list>
-        </ul>
-    </#if>
+    </div>
     <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
 </div>
 <#include 'common/footer.html'/>

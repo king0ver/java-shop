@@ -1,5 +1,6 @@
 package com.enation.app.nanshan.vo;
 
+import io.swagger.models.auth.In;
 import net.sf.json.JSONObject;
 
 import java.io.Serializable;
@@ -37,7 +38,7 @@ public class ArticleVo implements Serializable {
 	/**
 	 * 时间
 	 */
-	private String dateTime;
+	private long createTime;
 	/**
 	 * 文件内容
 	 */
@@ -46,9 +47,9 @@ public class ArticleVo implements Serializable {
 	
 	
 	
-	private int reserveNum; //可预约人数
-	private int reservedNum; //已预约人数
-	private long expiryDate; //截止时间
+	private Integer reserveNum; //可预约人数
+	private Integer reservedNum; //已预约人数
+	private Long expiryDate; //截止时间
 	private String  actName;//  活动名称
 	private String actCost;//活动费用
 	private String actAddress;//活动地址
@@ -100,22 +101,25 @@ public class ArticleVo implements Serializable {
 	public void setContent(JSONObject content) {
 		this.content = content;
 	}
-	public String getDateTime() {
-		return dateTime;
+
+	public long getCreateTime() {
+		return createTime;
 	}
-	public void setDateTime(String dateTime) {
-		this.dateTime = dateTime;
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
 	}
-	public int getReserveNum() {
+
+	public Integer getReserveNum() {
 		return reserveNum;
 	}
-	public void setReserveNum(int reserveNum) {
+	public void setReserveNum(Integer reserveNum) {
 		this.reserveNum = reserveNum;
 	}
-	public int getReservedNum() {
+	public Integer getReservedNum() {
 		return reservedNum;
 	}
-	public void setReservedNum(int reservedNum) {
+	public void setReservedNum(Integer reservedNum) {
 		this.reservedNum = reservedNum;
 	}
 
@@ -138,10 +142,10 @@ public class ArticleVo implements Serializable {
 	public void setActCost(String actCost) {
 		this.actCost = actCost;
 	}
-	public long getExpiryDate() {
+	public Long getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(long expiryDate) {
+	public void setExpiryDate(Long expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	

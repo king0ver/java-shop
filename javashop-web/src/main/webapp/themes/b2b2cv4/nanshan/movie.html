@@ -1,0 +1,40 @@
+
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/detail.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+<div class="section-content">
+    <#include 'common/navigator.html'/>
+    <ul class="item-detail">
+        <li class="img">
+            <img src="${article.item.imgUrl!''}">
+        </li>
+        <li class="txt">
+            <div class="content-title">${article.item.title}</div>
+            <#if article.item.content?? >
+                <ul class="content-list">
+                    <li>时长：${article.item.content.movieTimeLength}</li>
+                    <li>${article.item.content.movieTime}</li>
+                    <li>放映地点：${article.item.content.movieAddr}</li>
+                    <li>影片介绍：</li>
+                </ul>
+                <p>${article.item.content.movieIntroduce} </p>
+            </#if>
+        </li>
+    </ul>
+
+    <!-- 影片花絮 -->
+    <div class="highlights-box">
+        <div class="list-title">影片花絮</div>
+        <#if article.item.content?? && article.item.content.filmTidbits?size gt 0 >
+            <ul>
+                <#list article.item.content.filmTidbits as bit>
+                    <li><img src="${bit.content}"></li>
+                </#list>
+            </ul>
+        </#if>
+    </div>
+</div>
+<#include 'common/footer.html'/>

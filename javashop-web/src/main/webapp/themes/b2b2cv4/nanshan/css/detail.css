@@ -1,0 +1,40 @@
+@import "common.css";
+
+.item-detail{
+    height: 590px;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
+.item-detail .img,.item-detail .txt{
+    float: left;
+}
+.item-detail .txt{
+    width: 750px;
+    margin: 0 20px;
+}
+.content-title{
+    margin: 35px auto;
+    font-size: 29px;
+}
+.content-list li{
+    height: 36px;
+    line-height: 36px;
+    font-size: 20px;
+}
+.item-detail p{
+    font-size: 16px;
+    text-indent: 2em;
+}
+.list-title{
+    font-size: 32px;
+    margin: 30px auto;
+}
+.highlights-box ul{
+    overflow: hidden;
+}
+.highlights-box li{
+    float: left;
+}
+.highlights-box li:not(:last-child){
+    margin-right: 27px;
+}
