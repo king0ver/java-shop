@@ -276,14 +276,21 @@ public class ArticleController extends GridController {
 	
 	@RequestMapping(value = "gamerank")
 	public ModelAndView gameRank(int catId) {
-		int id=2;
-		NanShanArticleVo    vo=this.articleManager.queryArticleById(id);
 		ModelAndView view=new ModelAndView();
-		view.setViewName("/nanshan/admin/game/addrank");
-		view.addObject("ctx",ctx);	
-		view.addObject("vo",vo);	
-		view.addObject("catId",catId);	
-		return view;
+		try {
+			int id=2;
+			NanShanArticleVo    vo=this.articleManager.queryArticleById(id);
+			
+			view.setViewName("/nanshan/admin/game/addrank");
+			view.addObject("ctx",ctx);	
+			view.addObject("vo",vo);	
+			view.addObject("catId",catId);	
+			return view;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return view;
+		}
+		
 	}
 	
 	
@@ -301,8 +308,9 @@ public class ArticleController extends GridController {
 			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
+			}else{
+				this.articleManager.updateArticle(nanShanArticleVo);	
 			}
-			this.articleManager.updateArticle(nanShanArticleVo);
 			return JsonResultUtil.getSuccessJson("添加更改游戏排行成功");		
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
@@ -330,8 +338,10 @@ public class ArticleController extends GridController {
 			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
+			}else{
+				this.articleManager.updateArticle(nanShanArticleVo);
 			}
-			this.articleManager.updateArticle(nanShanArticleVo);
+			
 			return JsonResultUtil.getSuccessJson("操作成功");		
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
