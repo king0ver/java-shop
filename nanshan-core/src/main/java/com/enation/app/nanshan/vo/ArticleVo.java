@@ -1,6 +1,5 @@
 package com.enation.app.nanshan.vo;
 
-import io.swagger.models.auth.In;
 import net.sf.json.JSONObject;
 
 import java.io.Serializable;
@@ -38,7 +37,7 @@ public class ArticleVo implements Serializable {
 	/**
 	 * 时间
 	 */
-	private long createTime;
+	private String dateTime;
 	/**
 	 * 文件内容
 	 */
@@ -47,13 +46,15 @@ public class ArticleVo implements Serializable {
 	
 	
 	
-	private Integer reserveNum; //可预约人数
-	private Integer reservedNum; //已预约人数
-	private Long expiryDate; //截止时间
+	private int reserveNum; //可预约人数
+	private int reservedNum; //已预约人数
+	private long expiryDate; //截止时间
 	private String  actName;//  活动名称
 	private String actCost;//活动费用
 	private String actAddress;//活动地址
 
+
+	private List<ArticleVo>  articleList;
 
 
 	
@@ -101,25 +102,22 @@ public class ArticleVo implements Serializable {
 	public void setContent(JSONObject content) {
 		this.content = content;
 	}
-
-	public long getCreateTime() {
-		return createTime;
+	public String getDateTime() {
+		return dateTime;
 	}
-
-	public void setCreateTime(long createTime) {
-		this.createTime = createTime;
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
-
-	public Integer getReserveNum() {
+	public int getReserveNum() {
 		return reserveNum;
 	}
-	public void setReserveNum(Integer reserveNum) {
+	public void setReserveNum(int reserveNum) {
 		this.reserveNum = reserveNum;
 	}
-	public Integer getReservedNum() {
+	public int getReservedNum() {
 		return reservedNum;
 	}
-	public void setReservedNum(Integer reservedNum) {
+	public void setReservedNum(int reservedNum) {
 		this.reservedNum = reservedNum;
 	}
 
@@ -142,12 +140,20 @@ public class ArticleVo implements Serializable {
 	public void setActCost(String actCost) {
 		this.actCost = actCost;
 	}
-	public Long getExpiryDate() {
+	public long getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(Long expiryDate) {
+	public void setExpiryDate(long expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-	
+	public List<ArticleVo> getArticleList() {
+		return articleList;
+	}
+	public void setArticleList(List<ArticleVo> articleList) {
+		this.articleList = articleList;
+	}
+
+
+
 	
 }

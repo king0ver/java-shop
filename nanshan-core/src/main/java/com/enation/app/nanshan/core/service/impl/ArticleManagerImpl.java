@@ -61,18 +61,14 @@ public class ArticleManagerImpl implements IArticleManager  {
 		this.daoSupport.insert("es_nanshan_clob", nanShanClob);
 		int clobId=this.daoSupport.getLastId("es_nanshan_clob");
 		nanShanArticle.setContent(clobId);
-		
-		if(EnumUtil.isInclude(nanShanArticleVo.getId())){
-			nanShanArticle.setId(nanShanArticleVo.getId());
-		}
 		this.daoSupport.insert("es_nanshan_article", nanShanArticle);
-	    if(!EnumUtil.isInclude(nanShanArticleVo.getId())){
-			nanShanArticleVo.setId(this.daoSupport.getLastId("es_nanshan_article"));
-		}
-		
+		nanShanArticleVo.setId(this.daoSupport.getLastId("es_nanshan_article"));
 		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
 			ArticleExt articleExt=this.covertArticleExt(nanShanArticleVo);
 			this.insertArtcleExt(articleExt);
+		}
+		if(!StringUtil.isEmpty(nanShanArticleVo.getSpecValIds())){
+			this.addArtSpecRel(nanShanArticleVo.getSpecValIds(),nanShanArticleVo.getId());
 		}
 	}
 
@@ -209,14 +205,14 @@ public class ArticleManagerImpl implements IArticleManager  {
 					artSpecRel=new ArtSpecRel();
 					artSpecRel.setArticle_id(artId);
 					artSpecRel.setSpecval_id(Integer.valueOf(string));
-					this.addArtSpeRel(artSpecRel);
+					this.addSpecRel(artSpecRel);
 				}
 			}
 		 }	
 	}
 	
 	
-	public void addArtSpeRel(ArtSpecRel artSpecRel) {
+	public void addSpecRel(ArtSpecRel artSpecRel) {
 		this.daoSupport.insert("es_nanshan_article_rel", artSpecRel);
 		
 	}
@@ -242,6 +238,12 @@ public class ArticleManagerImpl implements IArticleManager  {
 		}
        
 	  return map;
+	}
+
+	@Override
+	public NanShanArticleVo queryArticleByCatId(int id) {
+		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
+		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
 
 	

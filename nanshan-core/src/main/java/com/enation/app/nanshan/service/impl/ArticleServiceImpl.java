@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements IArticleService {
 		if(catId == null){
 			return null;
 		}
-		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url imgUrl,esns.summary,esns.create_time createTime,t.reserve_num reserveNum,t.reserved_num reservedNum,t.expiry_date expiryDate,t.act_name actName,t.act_cost actCost,t.act_address actAddress from es_nanshan_article esns left join es_nanshan_article_ext t on esns.id=t.article_id  where 1=1  ";
+		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.pic_url imgUrl,esns.summary,t.reserve_num reserveNum,t.reserved_num reservedNum,t.expiry_date expiryDate,t.act_name actName,t.act_cost actCost,t.act_address actAddress from es_nanshan_article esns left join es_nanshan_article_ext t on esns.id=t.article_id  where 1=1  ";
 		if(StringUtils.isNotBlank(specValIds)){
 			sql+= " EXISTS ( select 1 from es_nanshan_article_rel esnsar where " +
 				"esns.id = esnsar.article_id and esnsar.specval_id in ("+specValIds+") ) ";
@@ -54,7 +54,7 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url imgUrl,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
 		sql.append("from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ");
 		sql.append(" where a.is_del = 0 and a.id= ?");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, articleId);
@@ -66,7 +66,7 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setTitle(articleInfo.getTitle());
 		articleVo.setSummary(articleInfo.getSummary());
 		articleVo.setUrl(articleInfo.getUrl());
-		articleVo.setCreateTime(articleInfo.getCreate_time());
+		articleVo.setDateTime(DateUtil.toString(articleInfo.getCreate_time(), null));
 		articleVo.setImgUrl(articleInfo.getPic_url());
 		if(StringUtils.isNotBlank(articleInfo.getContent())){
 			if(articleInfo.getContent().startsWith("[")){
@@ -76,6 +76,13 @@ public class ArticleServiceImpl implements IArticleService {
 			}else{
 				JSONObject articleInfoContent = JSONObject.fromObject(articleInfo.getContent());
 				articleVo.setContent(articleInfoContent);
+				if(articleInfoContent.containsKey("articleIds")){
+					JSONArray ar=articleInfoContent.getJSONArray("articleIds");
+					if(ar!=null){
+						articleVo.setArticleList(this.queryArticleList(ar));
+					}
+
+				}
 			}
 		}
 		articleVo.setActAddress(articleInfo.getAct_address());
@@ -83,8 +90,18 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setActCost(articleInfo.getAct_cost());
 		articleVo.setReserveNum(articleInfo.getReserve_num());
 		articleVo.setReservedNum(articleInfo.getReserved_num());
-		articleVo.setExpiryDate(articleInfo.getExpiryDate());
+		articleVo.setDateTime(articleInfo.getExpiryDate());
 		
 		return articleVo;
+	}
+
+	private List<ArticleVo> queryArticleList(JSONArray ids){
+	   List<ArticleVo> list=new ArrayList<ArticleVo>();
+       for (Object id : ids) {
+    	   ArticleVo articleVo=this.daoSupport.queryForObject("select id,title,cat_id catId,url,create_time dateTime,summary,pic_url imgUrl from es_nanshan_article where is_del=0 and id=?", ArticleVo.class, id.toString());
+    	   list.add(articleVo);
+	   }
+	   return list;
+
 	}
 }

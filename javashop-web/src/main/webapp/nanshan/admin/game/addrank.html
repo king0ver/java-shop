@@ -51,13 +51,14 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     
 	form.on('submit(save_uri)', function(data){
 		 var content=getRankList()
-		content=JSON.stringify(content);
+		
+		 content='{"articleIds":'+JSON.stringify(content)+'}'
 		 var cat_id='${catId}';
     	 var options = {
-   			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}",
+   			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}&id=${(vo.id)!'0'}",
    			type:"post",
    			dataType:"json",
-   			data:{"content":content,"cat_id":${catId},"content_id":${(vo.content_id)!''}},
+   			data:{"content":content,"cat_id":${catId},"content_id":${(vo.content_id)!'0'}},
    			
    			success:function(data){
    				if(data.result==1){	
@@ -103,24 +104,25 @@ function addPanel(){
 }
 
 function delPanel(obj){
-	$(this).parent().parent().remove();
+	$(obj).parent().parent().remove();
 }
 
 function initMovieRand(){
 	var desc='${(vo.content)!''}';
 	if(desc!=""){
-		desc=JSON.parse(desc)
-	}
-	var html="";
-	if(desc.length>0){
-		for(var i=0;i<desc.length;i++)
-		{
-			var index=i+1
-			html=html+getMovieHtml(index,desc[i])
+		desc=JSON.parse(desc);
+		var articleIds=desc.articleIds;
+		var html="";
+		if(articleIds!=undefined&&articleIds.length>0){
+			for(var i=0;i<articleIds.length;i++)
+			{
+				var index=i+1
+				html=html+getMovieHtml(index,articleIds[i])
+			}
+			$("#gameRank").html(html);
 		}
-		$("#gameRank").html(html);
-		
 	}
+	
 }
 
 

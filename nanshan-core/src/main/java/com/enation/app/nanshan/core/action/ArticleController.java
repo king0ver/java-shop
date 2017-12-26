@@ -278,9 +278,7 @@ public class ArticleController extends GridController {
 	public ModelAndView gameRank(int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
-			int id=2;
-			NanShanArticleVo    vo=this.articleManager.queryArticleById(id);
-			
+			NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
 			view.setViewName("/nanshan/admin/game/addrank");
 			view.addObject("ctx",ctx);	
 			view.addObject("vo",vo);	
@@ -304,8 +302,7 @@ public class ArticleController extends GridController {
 	@RequestMapping("/add_edit_rank")
 	public JsonResult addEditRank(NanShanArticleVo nanShanArticleVo){
 		try {
-			nanShanArticleVo.setId(2);
-			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
+			NanShanArticleVo vo= this.articleManager.queryArticleByCatId(nanShanArticleVo.getCat_id());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
 			}else{
@@ -321,8 +318,7 @@ public class ArticleController extends GridController {
 	
 	@RequestMapping(value = "cinema-time")
 	public ModelAndView movie(int catId) {
-		int id=DefaultArticleIdEnum.MOVIETIME.getId();
-		NanShanArticleVo   vo=this.articleManager.queryArticleById(id);
+		NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/cinema/add");
 		view.addObject("ctx",ctx);	
@@ -335,13 +331,12 @@ public class ArticleController extends GridController {
 	@RequestMapping(value = "cinema-edit")
 	public JsonResult cinemaEdit(NanShanArticleVo nanShanArticleVo) {
 		try {
-			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
+			NanShanArticleVo vo= this.articleManager.queryArticleByCatId(nanShanArticleVo.getCat_id());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
 			}else{
 				this.articleManager.updateArticle(nanShanArticleVo);
 			}
-			
 			return JsonResultUtil.getSuccessJson("操作成功");		
 		} catch (RuntimeException e) {
 			e.printStackTrace();			
@@ -353,9 +348,7 @@ public class ArticleController extends GridController {
 	public ModelAndView fourDcinema(int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
-			int id=DefaultArticleIdEnum.CINEMA4D.getId();
-			NanShanArticleVo   vo=this.articleManager.queryArticleById(id);
-			
+			NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
 			view.setViewName("/nanshan/admin/cinema/cinema4d");
 			view.addObject("ctx",ctx);	
 			view.addObject("vo",vo);
