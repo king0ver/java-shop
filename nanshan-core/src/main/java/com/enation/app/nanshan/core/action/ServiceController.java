@@ -38,7 +38,7 @@ import com.qq.connect.utils.json.JSONObject;
  */
 @Controller 
 @Scope("prototype")
-@RequestMapping("/core/admin/spec")
+@RequestMapping("/core/admin/service")
 public class ServiceController extends GridController{
 	
 	@Autowired
