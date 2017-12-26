@@ -1,5 +1,6 @@
 package com.enation.app.nanshan.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url imgUrl,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url imgUrl,c.content ,IFNULL(t.reserve_num,0) reserve_num,ifnull(t.reserved_num,0) reserved_num,ifnull(t.expiry_date,0)  expiryDate,ifnull(t.act_name,0) act_name, t.act_cost ,t.act_address ");
 		sql.append("from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ");
 		sql.append(" where a.is_del = 0 and a.id= ?");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, articleId);
@@ -76,6 +77,13 @@ public class ArticleServiceImpl implements IArticleService {
 			}else{
 				JSONObject articleInfoContent = JSONObject.fromObject(articleInfo.getContent());
 				articleVo.setContent(articleInfoContent);
+				if(articleInfoContent.containsKey("articleIds")){
+					JSONArray ar=articleInfoContent.getJSONArray("articleIds");
+					if(ar!=null){
+						articleVo.setArticleList(this.queryArticleList(ar));		
+					}
+					
+				}
 			}
 		}
 		articleVo.setActAddress(articleInfo.getAct_address());
@@ -86,5 +94,15 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setDateTime(articleInfo.getExpiryDate());
 		
 		return articleVo;
+	}
+	
+	private List<ArticleVo> queryArticleList(JSONArray ids){
+	   List<ArticleVo> list=new ArrayList<ArticleVo>();
+       for (Object id : ids) {
+    	   ArticleVo articleVo=this.daoSupport.queryForObject("select id,title,cat_id catId,url,create_time dateTime,summary,pic_url imgUrl from es_nanshan_article where is_del=0 and id=?", ArticleVo.class, id.toString());
+    	   list.add(articleVo);
+	   }
+	   return list;
+		
 	}
 }

@@ -3,6 +3,7 @@ package com.enation.app.nanshan.vo;
 import net.sf.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 文章信息
@@ -42,10 +43,6 @@ public class ArticleVo implements Serializable {
 	 * 文件内容
 	 */
 	private JSONObject content;
-	
-	
-	
-	
 	private int reserveNum; //可预约人数
 	private int reservedNum; //已预约人数
 	private long expiryDate; //截止时间
@@ -53,6 +50,8 @@ public class ArticleVo implements Serializable {
 	private String actCost;//活动费用
 	private String actAddress;//活动地址
 
+	
+	private List<ArticleVo>  articleList;
 
 
 	
@@ -144,6 +143,14 @@ public class ArticleVo implements Serializable {
 	public void setExpiryDate(long expiryDate) {
 		this.expiryDate = expiryDate;
 	}
+	public List<ArticleVo> getArticleList() {
+		return articleList;
+	}
+	public void setArticleList(List<ArticleVo> articleList) {
+		this.articleList = articleList;
+	}
+	
+	
 	
 	
 }

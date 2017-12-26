@@ -41,7 +41,7 @@
 	    		</div>
 	    		  <label class="layui-form-label" style="width:60px" ></label>
 	    		<div class="layui-input-inline">
-	      			<input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" value=''/>
+	      			<input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm'})" style="width:100%;height:38px;" value=''/>
 	    		</div>
 	    		  <label class="layui-form-label" style="width:70px"></label>
 	    		<div class="layui-input-inline">
@@ -71,7 +71,7 @@
     		</div>
     		  <label class="layui-form-label" style="width:60px" ></label>
     		<div class="layui-input-inline">
-    		  <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" value=''/>
+    		  <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm'})" style="width:100%;height:38px;" value=''/>
     		</div>
     		  <label class="layui-form-label" style="width:70px"></label>
     		<div class="layui-input-inline">
@@ -94,7 +94,7 @@ function getPanel(id,time,price){
 		'</div>'+
 		  '<label class="layui-form-label" style="width:60px" ></label>'+
 		'<div class="layui-input-inline">'+
-		 ' <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: \'YYYY-MM-DD\'})" style="width:100%;height:38px;" value='+time+' >'+
+		 ' <input class="layui-input" name="cinameTime" placeholder="时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: \'YYYY-MM-DD hh:mm\'})" style="width:100%;height:38px;" value='+time+' >'+
 		'</div>'+
 		  '<label class="layui-form-label" style="width:70px"></label>'+
 		'<div class="layui-input-inline">'+
@@ -124,6 +124,7 @@ function checkLength(){
 
 function getCinemaContent(){
 	var content=[];
+	var articleIds=[]
 	$("#contentPanel div[name='contentPanel']").each(function(){
 	      var articleId=$(this).find("input[name='articleId']").val();
 	      var cinameTime=$(this).find("input[name='cinameTime']").val()	;      
@@ -133,10 +134,14 @@ function getCinemaContent(){
 	      obj.cinameTime=cinameTime;
 	      obj.cinamePrice=cinamePrice;
 	      content.push(obj)
+	      articleIds.push(articleId)
 	      
 	   }
 	)
-	return content;
+	var o=new Object();
+	o.content=content;
+	o.articleIds=articleIds;
+	return o
 }
 function initPanel(){
 	var desc='${(vo.content)!''}';
@@ -163,7 +168,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 		
 		
 		var content=JSON.stringify(getCinemaContent());
-		var content='{"content":'+content+'}';
     	var options = {
    			url:ctx+"/admin/article/cinema-edit.do?cat_id=${catId}&id=3",
    			type:"post",
