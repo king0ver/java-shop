@@ -139,7 +139,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 		var pic_url=$("img[name='pic_url']").attr("src");
 		var content='{"content":'+content+',"articleIds":'+recMovie+'}';
     	var options = {
-   			url:ctx+"/admin/article/cinema-edit.do?cat_id=11&id=4&content_id=${(vo.content_id)!'0'}",
+   			url:ctx+"/admin/article/cinema-edit.do?cat_id=11&id=${(vo.id)!'0'}&content_id=${(vo.content_id)!'0'}",
    			type:"post",
    			dataType:"json",
    			data:{"content":content,"pic_url":pic_url},

@@ -55,7 +55,7 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 		 content='{"articleIds":'+JSON.stringify(content)+'}'
 		 var cat_id='${catId}';
     	 var options = {
-   			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}",
+   			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}&id=${(vo.id)!'0'}",
    			type:"post",
    			dataType:"json",
    			data:{"content":content,"cat_id":${catId},"content_id":${(vo.content_id)!'0'}},
