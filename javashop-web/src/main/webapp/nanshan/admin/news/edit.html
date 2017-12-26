@@ -8,7 +8,7 @@
 }
   form{margin-bottom:0px;}
 </style>
-<script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
+<script type="text/javascript" src="${ctx}/nanshan/js/context.js?v=2"></script>
 <div class="main">
 	<!--表单区域  -->
 	<div class="main-top">
@@ -54,11 +54,12 @@
 				<div class="layui-form-item">
 	    			<a class="layui-btn" onclick="add();">增加段落</a>
 	    			<div class="layui-input-inline" style="width:120px;">
-						<input name="file" class="layui-upload-file" id="exhInfoImgUploadBtn" type="file">	
+							<input name="file" class="layui-upload-file" id="exhInfoImgUploadBtn" type="file">	
 					</div>
 	  			</div>
 				
 			</fieldset>
+			
   		</div>
 			<div class="layui-form-item">
 				<div class="layui-layer-btn layui-layer-btn-"
@@ -75,9 +76,12 @@
 var table;
 
 var index = parent.layer.getFrameIndex(window.name);
-var desc='${data.content}';
-var context=$.parseJSON(desc).content;
-initContextHtml(context);
+var desc='${(data.content)!''}';
+if(desc!=''&&desc.match("^\{(.+:.+,*){1,}\}$")){
+	var context=$.parseJSON(desc).content;
+	initContextHtml(context);	
+}
+
 
 layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var form = layui.form()
