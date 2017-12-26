@@ -10,9 +10,9 @@
         <ul class="movie-img-list">
             <#list article.items as item>
                 <li>
-                    <a href="${item.url}}">
-                        <img src="${item.imgUrl}">
-                        <div class="title">${item.summary}</div>
+                    <a href="${item.url!''}">
+                        <img src="${item.imgUrl!''}">
+                        <div class="title">${item.summary!''}</div>
                     </a>
                 </li>
             </#list>

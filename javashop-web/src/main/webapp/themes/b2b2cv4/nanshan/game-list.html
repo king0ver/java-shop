@@ -10,8 +10,8 @@
         <ul class="game-lists">
             <#list article.items as item>
                 <li>
-                    <a href="${item.url}}">
-                        <img src="${item.imgUrl}">
+                    <a href="${item.url!''}">
+                        <img src="${item.imgUrl!''}">
 
                         <div class="txt">${item.summary}</div>
                     </a>

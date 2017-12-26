@@ -94,7 +94,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     layedit = layui.layedit,
     laydate = layui.laydate;
 	
-/* 	layui.upload({
+ 	layui.upload({
 	    url: '/core/admin/nanshan/upload.do'
 	    ,elem: '#exhImgUploadBtn' 
 	    ,method: 'POST'
@@ -120,7 +120,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 		    	  	"</div>");
 		    }
 		});
-	 */
+
 	form.on('submit(save_info)', function(data){
 		$("#contentInfo").val(JSON.stringify(getContext()));
     	var options = {

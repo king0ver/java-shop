@@ -52,16 +52,16 @@ $(function(){
 	        {data:	"id"},
 	        {data: "title"},
 	        {data: "cat_name"},
-	        {data: function(obj){
-	        	return convertDate(obj.create_time)
-	        }},	
+			{data: function(obj){
+				return convertImg(obj.pic_url);
+			}},
 	        {data: "url"},
 	        {data: function(obj){
 	        	return convertState(obj.is_del);
 	        }},
-	        {data: function(obj){
-	        	return convertImg(obj.pic_url);
-	        }},		      
+			{data: function(obj){
+				return convertDate(obj.create_time)
+			}},
 	        {data: null,"render": function(data, type, row) {
 	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick='edit("+data["id"]+")'>修改</a>"+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger' onclick='del("+data["id"]+")'>删除</a>";		//获取值:data["brand_id"]	
 	       	}}
