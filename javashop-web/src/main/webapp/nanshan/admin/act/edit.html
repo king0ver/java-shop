@@ -82,8 +82,8 @@
 		    		</div>
 		  		</div>
 		  		<div class="layui-form-item">
-		    		<label class="layui-form-label">可预约人数：</label>
-		    		<div class="layui-input-block">
+		    		<label class="layui-form-label" style="width:120px">可预约人数：</label>
+		    		<div class="layui-input-inline">
 		    		   <input type="text" name="reserve_num" value="${(data.reserve_num)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 		    		</div>
 		  		</div>
@@ -117,17 +117,13 @@
 <script>
 var table;
 var desc='${(data.content)!''}';
-var context=$.parseJSON(desc).content;
-
 var specIds='${data.specValIds!''}'
-
-
-initContextHtml(context);
+if(desc!=''&&desc.match("^\{(.+:.+,*){1,}\}$")){
+	var context=$.parseJSON(desc).content;
+	initContextHtml(context);	
+}
 initSpecId(specIds);
-
-
 var index = parent.layer.getFrameIndex(window.name);
-
 layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var form = layui.form()
         ,layer = layui.layer
