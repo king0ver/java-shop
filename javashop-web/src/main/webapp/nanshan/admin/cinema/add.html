@@ -4,6 +4,7 @@
   .layui-input{
     width: 75%;
   }
+ 
 </style>
 <script type="text/javascript" src="${ctx}/nanshan/js/context.js"></script>
 <div class="main">
@@ -11,18 +12,18 @@
 	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data" style="padding-top:40px;padding-bottom:40px">
 	    
   		<div class="layui-form-item">
-    		<label class="layui-form-label" style="width:150px">影片时间表标题：</label>
+    		<label class="layui-form-label " style="width:150px">影片时间表标题：</label>
     		<div class="layui-input-block">
       			<input type="text" name="title" id="uri" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" value="${(vo.title)!''}">
     		</div>
   		</div>
   		
   		<div class="layui-form-item">
-    		<label class="layui-form-label">影片ID</label>
-    		<div class="layui-input-inline">
+    		<label class="layui-form-label" >影片ID</label>
+    		<div class="layui-input-inline" >
     		<input style="visibility:hidden" type="text"  id="uri" maxlength="60" dataType="string" autocomplete="off" class="layui-input">
     		</div>
-    		<label class="layui-form-label">时间</label>
+    		<label class="layui-form-label" >时间</label>
     		<div class="layui-input-inline">
     		<input style="visibility:hidden" type="text"  id="uri" maxlength="60" dataType="string"  autocomplete="off" class="layui-input">
     		</div>
@@ -123,7 +124,6 @@ function checkLength(){
 
 function getCinemaContent(){
 	var content=[];
-	
 	$("#contentPanel div[name='contentPanel']").each(function(){
 	      var articleId=$(this).find("input[name='articleId']").val();
 	      var cinameTime=$(this).find("input[name='cinameTime']").val()	;      

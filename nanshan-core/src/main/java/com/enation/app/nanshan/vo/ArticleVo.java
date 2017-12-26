@@ -42,6 +42,17 @@ public class ArticleVo implements Serializable {
 	 * 文件内容
 	 */
 	private JSONObject content;
+	
+	
+	
+	
+	private int reserveNum; //可预约人数
+	private int reservedNum; //已预约人数
+	private long expiryDate; //截止时间
+	private String  actName;//  活动名称
+	private String actCost;//活动费用
+	private String actAddress;//活动地址
+
 
 
 	
@@ -95,5 +106,44 @@ public class ArticleVo implements Serializable {
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
+	public int getReserveNum() {
+		return reserveNum;
+	}
+	public void setReserveNum(int reserveNum) {
+		this.reserveNum = reserveNum;
+	}
+	public int getReservedNum() {
+		return reservedNum;
+	}
+	public void setReservedNum(int reservedNum) {
+		this.reservedNum = reservedNum;
+	}
+
+	public String getActName() {
+		return actName;
+	}
+	public void setActName(String actName) {
+		this.actName = actName;
+	}
+	
+	public String getActAddress() {
+		return actAddress;
+	}
+	public void setActAddress(String actAddress) {
+		this.actAddress = actAddress;
+	}
+	public String getActCost() {
+		return actCost;
+	}
+	public void setActCost(String actCost) {
+		this.actCost = actCost;
+	}
+	public long getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(long expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	
 	
 }

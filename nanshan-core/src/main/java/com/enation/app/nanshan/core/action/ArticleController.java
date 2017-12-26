@@ -327,8 +327,6 @@ public class ArticleController extends GridController {
 	@RequestMapping(value = "cinema-edit")
 	public JsonResult cinemaEdit(NanShanArticleVo nanShanArticleVo) {
 		try {
-			/*nanShanArticleVo.setId(DefaultArticleIdEnum.CINEMA4D.getId());
-			System.out.println(DefaultArticleIdEnum.CINEMA4D.getId());*/
 			NanShanArticleVo vo= this.articleManager.queryArticleById(nanShanArticleVo.getId());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
