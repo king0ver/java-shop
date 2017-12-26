@@ -26,5 +26,12 @@ public interface IArticleManager {
 	public Page queryArticleListByConiditon(Map<String, Object> params,int page,int pageSize);
 
 	public List<ArticleCat> getCats(int id);
+
+	/**
+	 * 通过分类ID查询信息
+	 * @param intValue
+	 * @return
+	 */
+	public List<NanShanArticleVo> queryArticleByCatId(int intValue);
 	
 }

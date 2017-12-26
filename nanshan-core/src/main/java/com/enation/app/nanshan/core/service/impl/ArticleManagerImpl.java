@@ -126,5 +126,21 @@ public class ArticleManagerImpl implements IArticleManager  {
 		return list;
 	}
 
+	/**
+	 *  通过分类ID查询信息
+	 * @param intValue
+	 * @return
+	 * @see com.enation.app.nanshan.core.service.IArticleManager#queryArticleByCatId(int)
+	 */
+	@Override
+	public List<NanShanArticleVo> queryArticleByCatId(int catId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.content content_id,a.summary,a.pic_url,a.is_del,c.content,t.cat_name ");
+		sql.append("from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t ");
+		sql.append(" where a.cat_id=t.cat_id and a.content=c.id and a.cat_id = ?");
+		return daoSupport.queryForList(sql.toString(), NanShanArticleVo.class, catId);
+	}
+
 
 }
