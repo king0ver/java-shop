@@ -249,7 +249,20 @@ body{
 .header_link {float:right; padding-top:15px;}
 .header_link a {margin-right:3px; -moz-transition:all 0.4s ease 0s; -webkit-transition:all 0.4s ease 0s; -ms-transition:all 0.4s ease 0s; transition:all 0.4s ease 0s;}
 .header_link a:hover {color:#000; text-decoration:underline;}
-
+.header_link .chazhao {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background: url(img/fada2.png) center center no-repeat;
+    background-size: 15px 15px;
+    vertical-align: middle;
+}
+.header_link .shu{
+	border-right: 1px solid #333;
+	height: 10px;
+	display: inline-block;
+	margin-right: 5px;
+}s
 /*Header - end*/
 /*Footer - start*/
 .footer {width:100%; overflow:hidden;text-align:center; padding:25px 0 10px 0;border-top:1px solid #d7d7d7 ;margin-top: 80px;}
@@ -330,11 +343,13 @@ body{
 	color: #333;
 }
 /*Footer - end*/
-.page {
-	/*margin: 20px 10px 0px 0px;*/
-	display: inline;
-}
 
+.page {
+	float: right;
+	height: 50px;
+	/*margin: 20px 10px 0px 0px;*/
+	/*display: inline;*/
+}
 .page span {
 	background-color: #fafafa;
 	border: 1px solid #e6e6e6;
