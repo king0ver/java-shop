@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.enation.app.nanshan.model.ArticleCat;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.model.ArtSpecRel;
+import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.ArticleExt;
 import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
-import com.enation.app.nanshan.util.EnumUtil;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
 import com.enation.framework.database.data.IDataOperation;
-import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.StringUtil;
 
 /**  
@@ -90,7 +87,6 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtil.isEmpty(param.getParentId())){
 			sql.append(" and t.parent_id="+param.getParentId());
 		}
-		
 		Page webpage = this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 		return webpage;
 	}
@@ -98,7 +94,30 @@ public class ArticleManagerImpl implements IArticleManager  {
 	@Override
 	public NanShanArticleVo queryArticleById(int id) {
 		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.id=?";
-		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
+		NanShanArticleVo nanShanArticleVo = this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
+		//查询文章关联的属性值信息
+		querySpecValInfo(nanShanArticleVo);
+		return nanShanArticleVo;
+	}
+
+	/**
+	 * 查询文章关联的属性值信息
+	 * @param nanShanArticleVo
+	 */
+	private void querySpecValInfo(NanShanArticleVo nanShanArticleVo) {
+		int articleId = nanShanArticleVo.getId();
+		String sql= "select t.article_id,t.specval_id from es_nanshan_article_rel t where t.article_id = ?";
+		List<ArtSpecRel> arrSpecRelList = this.daoSupport.queryForList(sql, ArtSpecRel.class, articleId);
+		if(arrSpecRelList !=null && arrSpecRelList.size()>0){
+			String specValIds = "";
+			for (ArtSpecRel artSpecRel : arrSpecRelList) {
+				specValIds += artSpecRel.getSpecval_id()+",";
+			}
+			if(StringUtils.isNotEmpty(specValIds)){
+				specValIds = specValIds.substring(0,specValIds.length()-1);
+			}
+			nanShanArticleVo.setSpecValIds(specValIds);
+		}
 	}
 
 	@Override

@@ -33,7 +33,7 @@ form{margin-bottom:0px;}
 									<div class="layui-input-block">
 										<#list specValList as specVal>
 											<#if specVal.spec_id == spec.spec_id>
-						    					<input name="specValId" title="${specVal.specval_name}" type="checkbox">
+						    					<input name="specValId" value="${specVal.specval_id}" title="${specVal.specval_name}" type="checkbox">
 						    				</#if>
 										</#list>
 									</div>
@@ -69,7 +69,7 @@ form{margin-bottom:0px;}
     		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
 				<legend>编辑区</legend>
 				<div class="layui-form-item">
-	    			<a class="layui-btn" onclick="add();">增加段落</a>
+	    			<a class="layui-btn" onclick="getCheckBoxVal();">增加段落</a>
 	    			<div class="layui-input-inline" style="width:120px;">
 						<input name="file" class="layui-upload-file" id="gameInfoImgUploadBtn" type="file">	
 					</div>
@@ -77,6 +77,7 @@ form{margin-bottom:0px;}
 				<div id="article"></div>
 			</fieldset>
 			<input type="hidden" id="contentInfo" name="content"/>
+			<input type="hidden" id="specValIds" name="specValIds">
   		</div>
   		<div class="layui-layer-btn layui-layer-btn" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
   			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_info">保存</a>
@@ -105,6 +106,18 @@ function getContext(){
 	}
 	return jsonList;
 }
+
+function getCheckBoxVal(){
+	var chk_value="";
+	$("input[name='specValId']:checked").each(function(){
+		chk_value +=$(this).val()+",";
+	});
+	if(chk_value!=''){
+		chk_value = chk_value.substring(0,chk_value.length-1);
+	}
+	return chk_value;
+}
+
 
 
 layui.use(['form', 'layedit', 'laydate','upload'], function(){
@@ -141,6 +154,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	
 	form.on('submit(save_info)', function(data){
 		$("#contentInfo").val(JSON.stringify(getContext()));
+		$("#specValIds").val(getCheckBoxVal());
     	var options = {
    			url:ctx+"/core/admin/game/add_save.do",
    			type:"post",

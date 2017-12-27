@@ -31,14 +31,27 @@ form{margin-bottom:0px;}
 			  		<div class="layui-collapse" style="width:600px;margin-left: 30px;">
 						<div class="layui-colla-item">
 							<h2 class="layui-colla-title">基础属性</h2>
-							<div class='layui-colla-content'>
+							<div class="layui-colla-content
+							<#if data.specValIds??>
+								layui-show
+							</#if>
+							">
 								<#list specList as spec>
 									<div class="layui-form-item">
 										<label class="layui-form-label">${spec.spec_name}</label>
 										<div class="layui-input-block">
 											<#list specValList as specVal>
 												<#if specVal.spec_id == spec.spec_id>
-							    					<input name="specValId" title="${specVal.specval_name}" type="checkbox">
+							    					<input name="specValId" 
+							    					<#if data.specValIds??>
+							    						<#list data.specValIds?split(',') as specValIdStr>
+							    							 <#assign specValId = specValIdStr?number/>
+													         <#if specVal.specval_id == specValId >
+													         	checked='checked'
+													         </#if>
+													    </#list> 
+							    					</#if>
+							    					 value="${specVal.specval_id}" title="${specVal.specval_name}" type="checkbox">
 							    				</#if>
 											</#list>
 										</div>
@@ -114,6 +127,7 @@ form{margin-bottom:0px;}
 				</fieldset>
 				<input type="hidden" name="content_id" value="${data.content_id}">
 				<input type="hidden" id="contentInfo" name="content"/>
+				<input type="hidden" id="specValIds" name="specValIds">
   			</div>
   			
 			<div class="layui-form-item">
@@ -127,8 +141,18 @@ form{margin-bottom:0px;}
 
 <!--js区域  -->
 <script>
-var table;
 var index = parent.layer.getFrameIndex(window.name);
+
+function getCheckBoxVal(){
+	var chk_value="";
+	$("input[name='specValId']:checked").each(function(){
+		chk_value +=$(this).val()+",";
+	});
+	if(chk_value!=''){
+		chk_value = chk_value.substring(0,chk_value.length-1);
+	}
+	return chk_value;
+}
 
 layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var form = layui.form()
@@ -166,6 +190,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     
 	form.on('submit(editModel)', function(data){
 		$("#contentInfo").val(JSON.stringify(getContext()));
+		$("#specValIds").val(getCheckBoxVal());
 		var options = {
 	   			url:ctx+"/core/admin/game/save-edit.do",
 	   			type:"post",
