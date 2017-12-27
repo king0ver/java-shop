@@ -23,19 +23,18 @@
             </div>
         </li>
     </ul>
-    <div class="movie-box">
-        <!-- 推荐电影 -->
-        <div class="recommended-movie-box">
-            <div class="recommended-movie">推荐电影</div>
-            <ul class="movie-img-list">
-                <#if article.item.articleList?size gt 0>
-                    <#list article.item.articleList as article>
-                        <li><img src="${article.imgUrl!''}"></li>
-                    </#list>
-                </#if>
-            </ul>
-        </div>
-
+</div>
+<div class="movie-box">
+    <!-- 推荐电影 -->
+    <div class="recommended-movie-box">
+        <div class="recommended-movie">推荐电影</div>
+        <ul class="movie-img-list">
+            <#if article.item.articleList?size gt 0>
+                <#list article.item.articleList as article>
+                    <li><img src="${article.imgUrl!''}"></li>
+                </#list>
+            </#if>
+        </ul>
     </div>
 
 </div>

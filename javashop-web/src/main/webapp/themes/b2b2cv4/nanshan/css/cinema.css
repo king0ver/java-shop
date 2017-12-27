@@ -26,12 +26,14 @@
     line-height: 33px
 }
 .imgs{
-    width: 478px;
-    height: 499px;
+    width: 448px;
+    height: 481px;
     background: #73B2DF;
+    padding:23px 18px
 }
 .imgs img{
-    margin: 30px 18px;
+    width:448px;
+    height:481px;
 }
 .section-content{
     margin-bottom: 48px;

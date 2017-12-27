@@ -1,11 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<#assign headerTag = newTag("headerTag") />
+<#assign file_path = ctx + themes_path />
+<#assign header = headerTag() />
 
-<#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag() />
-<#include 'common/header.html'/>
-<#include 'common/thirdCat.html'/>
-<div class="section-content clearfix">
-    <#include 'common/navigator.html'/>
-    <#include 'selection-condition.html'/>
-    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+<#assign nCatTag = newTag("nCatTag") />
+<#assign ncat = nCatTag() />
+<#assign indexPageTag = newTag("indexPageTag") />
+<#assign article = indexPageTag('{"catId":0}') />
+
+<#if title??>
+    <title>${title}-${header.title}</title>
+    <#else/>
+    <title>${header.title}</title>
+</#if>
+<#if keywords??>
+    <meta name="keywords" content="${keywords!''}"/>
+    <#else/>
+    <meta name="keywords" content="${header.keywords!''}"/>
+</#if>
+<#if description??>
+    <meta name="description" content="${description!''}"/>
+    <#else/>
+    <meta name="description" content="${header.description!''}"/>
+</#if>
+<!-- <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/> ie11 不能正常传递 值 的bug解决-->
+<#-- 判断IE，并使IE9以下支持html5标签 -->
+    <!--[if lt IE 9]> <script type="text/javascript" src="${file_path}/js/html5.js"></script> <![endif]-->
+
+    <script type="text/javascript">
+        var member = "${member!''}";
+        var loginDialog;
+        var ctx = "${ctx}";
+        var app_path = "${ctx}";
+        var ctxPath = '${file_path}/';
+    </script>
+<link href="${ctx}/statics/images/favicon.ico" rel="shortcut icon">
+<link href="${file_path}/nanshan/css/index.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${file_path}/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="${file_path}/nanshan/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="${file_path}/nanshan/js/catNav.js"></script>
+
+<style type="text/css">
+    @font-face {
+        font-family: 'icomoon';
+        src: url('${ctx}/statics/e_tools/fonts/icomoon.eot?b1br7i');
+        src: url('${ctx}/statics/e_tools/fonts/icomoon.eot?#iefixb1br7i')
+        format('embedded-opentype'), url('${ctx}/statics/e_tools/fonts/icomoon.woff?b1br7i')
+        format('woff'), url('${ctx}/statics/e_tools/fonts/icomoon.ttf?b1br7i')
+        format('truetype'), url('${ctx}/statics/e_tools/fonts/icomoon.svg?b1br7i#icomoon')
+        format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    .icomoon {
+        font-family: icomoon
+    }
+</style>
+
+</head>
+<body>
+<div class="sliperContent">
+    <div id="slideBox" class="slideBox">
+        <div class="hd">
+            <ul></ul>
+        </div>
+        <div class="bd">
+            <ul>
+                <li><a href="" target="_blank"><img src="${file_path}/nanshan/css/images/1.jpg"></a></li>
+                <li><a href="" target="_blank"><img src="${file_path}/nanshan/css/images/1.jpg"></a></li>
+                <li><a href="" target="_blank"><img src="${file_path}/nanshan/css/images/1.jpg"></a></li>
+            </ul>
+        </div>
+    </div>
 </div>
+<!--Header - start-->
+<div class="Header">
+    <div class="headerWrap">
+        <p class="header_link"><a href="#this">登录</a> <span class="shu"></span><a href="#this">注册</a> <a
+                href="#this"></a><span class="chazhao"></span></p>
+        <p class="tel">欢迎来到南山科技馆！</p>
+
+    </div>
+</div>
+<div class="navCss">
+    <div class="navWrap">
+        <div class="logo">
+            <img src="${file_path}/nanshan/css/images/logo.png">
+        </div>
+        <div class="fr">
+            <div class="navList">
+                <#if ncat?size gt 0>
+                    <#list ncat as cat >
+                        <#if article?? && article.firstCat?? && article.firstCat == cat.id >
+                            <div class="item selected">
+                                <#else/>
+                                <div class="item">
+                        </#if>
+                        <a href="${cat.pcUrl!''}">${cat.name}</a>
+                        <#if cat.leafs?? && cat.leafs?size gt 0>
+                            <div class="itmeList">
+                                <#list cat.leafs as leaf>
+                                    <div><a href="${leaf.pcUrl!''}">${leaf.name}</a></div>
+                                </#list>
+                            </div>
+                        </#if>
+            </div>
+            </#list>
+            </#if>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="mainContent">
+    <div class="activety">
+        <div style="position: relative;height: 50px;">
+            <div class="login_content">
+                <div>活动资讯</div>
+            </div>
+        </div>
+        <div class="actNav">
+            <div>活动回顾</div>
+            <div class="actNavTxt">活动回顾</div>
+            <div>活动回顾</div>
+        </div>
+
+        <div id="slideBox2" class="slideBox2">
+
+            <div class="bd">
+                <ul>
+                    <li class="poster-item" >
+                        <div class="actImg">
+                            <img src="${file_path}/nanshan/css/images/1.jpg"/>
+                        </div>
+                        <div class="actTxt">
+                            <div class="actTxtTitle">还是多好就萨克的哈溅射孔</div>
+                            <div class="actTxtList">大花洒几开都哈溅射孔等哈手机宽带哈手机宽带哈市将扩大红烧鸡块大好时机点卡升级的卡仕达静安寺客户端静安寺开号</div>
+                        </div>
+                    </li>
+                    <li class="poster-item" id="1">
+                        <div class="actImg">
+                            <img src="${file_path}/nanshan/css/images/1.jpg"/>
+                        </div>
+                        <div class="actTxt">
+                            <div class="actTxtTitle">还是多好就萨克的哈溅射孔</div>
+                            <div class="actTxtList">大花洒几开都哈溅射孔等哈手机宽带哈手机宽带哈市将扩大红烧鸡块大好时机点卡升级的卡仕达静安寺客户端静安寺开号</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <a class="prev" href="javascript:void(0)"></a>
+            <a class="next" href="javascript:void(0)"></a>
+        </div>
+
+    </div>
+    <div class="activety">
+        <div style="position: relative;height: 50px;">
+            <div class="login_content">
+                <div>展示展览</div>
+            </div>
+        </div>
+        <div class="zhans clearfix">
+            <div class="zhansLeft">
+                <img src="css/img/4.jpg" width="100%" height="100%">
+                <span> 常设展览</span>
+            </div>
+            <div class="zhansRight ">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <div class="activety">
+        <div style="position: relative;height: 50px;">
+            <div class="login_content">
+                <div>参观指南</div>
+            </div>
+        </div>
+        <div class="changuan clearfix">
+            <div class="f1">
+                开馆时间
+            </div>
+            <div class="f2">
+                开馆时间
+            </div>
+            <div class="f3">
+                开馆时间
+            </div>
+            <div class="f4">
+                开馆时间
+            </div>
+            <div class="f5">
+                开馆时间
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(".slideBox").slide({titCell:".hd ul",mainCell:".bd ul",autoPage:true,effect:"left",autoPlay:true});
+    jQuery(".slideBox2").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:false});
+
+</script>
 <#include 'common/footer.html'/>

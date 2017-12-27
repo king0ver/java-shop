@@ -3,8 +3,8 @@
     <action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
-		<fields>cat_id,cat_name,parent_id,is_del</fields>
-		<values>0,'首页',-1,0</values>
+		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
+		<values>0,'首页',-1,0,'/nanshan/index.html','/nanshan/index.html'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -82,7 +82,7 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>13,'影片预告',8,0,'/nanshan/move-list.html?catId=13','/nanshan/move-list.html?catId=13'</values>
+		<values>13,'影片预告',8,0,'/nanshan/movie-list.html?catId=13','/nanshan/movie-list.html?catId=13'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -137,7 +137,7 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>22,'仿真体验馆',2,0,'/nanshan/experience-list?catId=27','/nanshan/experience-list?catId=27'</values>
+		<values>22,'仿真体验馆',2,0,'/nanshan/experience-list.html?catId=27','/nanshan/experience-list?catId=27'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -161,13 +161,13 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>27,'消防安全体验馆',22,0,'/nanshan/experience-list?catId=27','/nanshan/experience-list?catId=27'</values>
+		<values>27,'消防安全体验馆',22,0,'/nanshan/experience-list.html?catId=27','/nanshan/experience-list?catId=27'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>28,'交通安全体验馆',22,0,'/nanshan/experience-list?catId=28','/nanshan/experience-list?catId=28'</values>
+		<values>28,'交通安全体验馆',22,0,'/nanshan/experience-list.html?catId=28','/nanshan/experience-list?catId=28'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -179,13 +179,13 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>30,'建筑施工体验馆',22,0,'/nanshan/experience-list?catId=30','/nanshan/experience-list?catId=30'</values>
+		<values>30,'建筑施工体验馆',22,0,'/nanshan/experience-list.html?catId=30','/nanshan/experience-list?catId=30'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>31,'工业安全体验馆',22,0,'/nanshan/experience-list?catId=31','/nanshan/experience-list?catId=31'</values>
+		<values>31,'工业安全体验馆',22,0,'/nanshan/experience-list.html?catId=31','/nanshan/experience-list?catId=31'</values>
 	</action>
 	<action>
 		<command>insert</command>

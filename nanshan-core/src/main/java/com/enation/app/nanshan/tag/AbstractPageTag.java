@@ -23,12 +23,18 @@ public abstract class AbstractPageTag extends BaseFreeMarkerTag{
 
         NCatVo nCatVo = iCatManager.getCatTree();
 
-        NCatVo cur = findNCatVo(nCatVo.getLeafs(), Long.parseLong(catId));
+        NCatVo cur;
+        if(catId.equals(String.valueOf(nCatVo.getId()))){
+            cur = nCatVo;
+        }else{
+            cur = findNCatVo(nCatVo.getLeafs(), Long.parseLong(catId));
+        }
 
         result.put("curCat", cur);
-        result.put("siblings", cur.getParent().getLeafs());
-        result.put("parentCat",cur.getParent());
-
+        if(cur.getParent() != null){
+            result.put("siblings", cur.getParent().getLeafs());
+            result.put("parentCat",cur.getParent());
+        }
     }
 
     /**
