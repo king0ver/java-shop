@@ -19,7 +19,7 @@ public class ActReserveServiceImpl implements IActReserveService  {
 	public void reserveAct(ActReserveVo actReserveVo) {
 		NActReserve NActReserve=new NActReserve();
 		NActReserve.setArticle_id(actReserveVo.getArticleId());
-		NActReserve.setAct_time(actReserveVo.getActTime().getTime());
+		NActReserve.setAct_time(actReserveVo.getActTime().getTime()/1000);
 		NActReserve.setEmail(actReserveVo.getEmail());
 		NActReserve.setMember_name(actReserveVo.getMemberName());
 		NActReserve.setAge(actReserveVo.getAge());
