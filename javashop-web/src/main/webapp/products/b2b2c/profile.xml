@@ -245,6 +245,12 @@
 			<menu text="基础数据">
 				<menu text="基础数据管理" url="/core/admin/spec/list.do" />
 			</menu>
+			<menu text="预约管理 ">
+				<menu text="预约列表" url="/admin/reserve/list.do" />
+			</menu>
+			<menu text="服务导览 ">
+				<menu text="推荐路线" url="/admin/article/route.do?catId=52" />
+			</menu>
 			<menu text="关于我们">
 				<menu text="组件管理" url="/core/admin/component/list.do" />
 			</menu>
