@@ -1,0 +1,286 @@
+<#include '/admin/sonheader.html' >
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<style >
+  .layui-input{
+    width: 75%;
+  }
+  form{margin-bottom:0px;}
+</style>
+<script type="text/javascript" src="${ctx}/nanshan/js/context.js?V=1"></script>
+<div class="main" style="padding-top:30px">
+    <!--表单区域  -->
+	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+	   
+  		 <div class="layui-form-item">
+    		<label class="layui-form-label">分类：</label>
+    		<div class="layui-input-inline">
+      			<select name="cat_id" id="cats" lay-filter="cat_id">
+      			  <option value='0'>请选择分类</option>      			      
+	      			<#list cats as cat>
+	                    <option value="${cat.cat_id}" 
+	                            <#if cat.cat_id == vo.cat_id>
+	      			     			selected='selected'
+	      			     		</#if> 
+	      			     		>${cat.cat_name}</option>
+	                </#list>
+      			</select>
+    		</div>
+  		</div>
+  	<div class="layui-form-item">
+    		<label class="layui-form-label" style="width:150px">推荐线路总览图：</label>
+    		<input type="hidden" name="pic_url" >
+			<div class="layui-input-inline" style="width:120px;">
+				<input name="file" class="layui-upload-file" id="picUrl" type="file">	
+			</div>
+			<div  class="layui-inline">
+			   <#if (vo.pic_url)??>
+						<img src="${(vo.pic_url)!''}" width='130' height='130' />
+						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delImg(this);"><i class='layui-icon'>&#xe640;</i></a>
+				</#if>
+			</div>
+  	</div>
+  	<div class="layui-form-item">
+  	<fieldset id="addPanel" style="margin-top: 30px;padding-left:20px;padding-top:10px">
+  	      <legend>编辑区</legend>
+  	      <fieldset class="layui-elem-field site-demo-button" style="margin-top: 10px;padding-left:20px;padding-top:10px">
+			 <div class="layui-form-item">
+	    		<label class="layui-form-label">楼层</label>
+				<div class="layui-input-inline">
+					<input type="text" name="floor" class="layui-input">	
+				</div>
+				<label class="layui-form-label">主题</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="name">	
+				</div>
+			</div>
+			<div class="layui-form-item" style="magin-top:10px">
+				<label class="layui-form-label">图片：</label>
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="test2" type="file">	
+				</div>
+				<div class="routeImg" class="layui-inline"></div>
+			</div>
+		  <div class="layui-form-item" style="margin-left:110px">
+	  		  <a class="layui-btn" onclick="addPanel();">增加记录</a>	
+	  		  <a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delPanel(this);'>删除记录</a>
+	     </div>
+	     </fieldset>
+      </fieldset>
+      </div>
+  		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
+  		</div>
+  	</form>
+</div>
+<script>
+
+var catId=${RequestParameters['catId']};
+function checkLength(){
+	if($("#rolememo").val().length>100){
+		$("#rolememo").val($("#rolememo").val().substring(0,100));
+	}
+}
+
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
+	var form = layui.form(),
+    layedit = layui.layedit,
+    laydate = layui.laydate;
+	
+	layui.upload({
+	    url: ctx+'/core/admin/nanshan/upload.do'
+	    ,method: 'POST'
+	    ,success: function(res,con){
+	    	handleImg(res,con)
+	    }
+	});
+	
+	form.on('select(cat_id)', function(data,con){
+		var label=data.elem[data.elem.selectedIndex].text;
+		if(data.value!=''){
+		newTab('分类：'+label,ctx+'/admin/article/route.do?catId='+catId+'&cat_id='+data.value)}
+		
+	});
+	
+	form.on('submit(save_uri)', function(data){
+		var value=$("select[name='cat_id']").val();
+		
+		if(value==0){
+			$.Loading.errorMessage("请选择分类",'2');
+			return false
+		}
+		var content=JSON.stringify(getRouteContext());
+    	var options = {
+   			url:ctx+"/admin/article/cinema-edit.do?id=${(vo.id)!'0'}&content_id=${(vo.content_id)!'0'}",
+   			type:"post",
+   			dataType:"json",
+   			data:{"content":content},
+   			success:function(data){
+   				if(data.result==1){	
+   					$.Loading.success(data.message);
+   					 parent.layer.close(index); //再执行关闭        
+   					parent.table.ajax.url(ctx+"/admin/article/cinema4d.do.do?catId="+catId).load(); 
+   				}
+   			}
+   		};
+   		$("#addUriForm").ajaxSubmit(options);
+       return false;
+    });
+   
+});
+
+function getRouteContext(){
+	
+	var content=[];
+	$("#addPanel fieldset").each(function(){
+		var obj=new Object()
+		var floor=$(this).find("input[name='floor']").val();
+		var name=$(this).find("input[name='name']").val();
+		var imgs=[];
+		$(this).find(".routeImg").children("img").each(function(){
+			imgs.push($(this).attr("src"))
+		})
+		obj.index=floor;
+		obj.name=name;
+		obj.imgs=imgs
+		content.push(obj)
+		
+	})
+	return content;
+}
+function  getRouteHtml(index,name,imgs){
+	var imgHtml="";
+	if(imgs!=''&&imgs.length>0){
+		for(var i=0;i<imgs.length;i++){
+			imgHtml=imgHtml+getRouteImgUrl(imgs[i])
+		}
+	}
+	var html='<fieldset class="layui-elem-field site-demo-button" style="margin-top: 10px;padding-left:20px;padding-top:10px">'+
+	 '<div class="layui-form-item">'+
+		'<label class="layui-form-label">楼层</label>'+
+		'<div class="layui-input-inline">'+
+			'<input type="text" name="floor" class="layui-input" value='+index+'>'+	
+		'</div>'+
+		'<label class="layui-form-label">主题</label>'+
+		'<div class="layui-input-inline">'+
+			'<input type="text" name="name" class="layui-input" value='+name+'>'+	
+		'</div>'+
+	'</div>'+
+	'<div class="layui-form-item" style="magin-top:10px">'+
+		'<label class="layui-form-label">图片：</label>'+
+		'<div class="layui-input-inline" style="width:120px;">'+
+			'<input name="file" class="layui-upload-file" id="test2" type="file">'+	
+		'</div>'+
+		'<div class="routeImg" class="layui-inline">'+imgHtml+'</div>'+
+	'</div>'+
+	'<div class="layui-form-item" style="margin-left:110px">'+
+	  '<a class="layui-btn" onclick="addPanel();">增加记录</a>	'+
+	  '<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);">删除记录</a>'+
+    '</div>'+
+   '</fieldset>'
+	return html;
+}
+function addPanel(){
+	var html=getRouteHtml("","","");
+	$("#addPanel").append(html);
+	layui.use(['form', 'layedit', 'laydate','upload'], function(){
+		var form = layui.form(),
+	    layedit = layui.layedit,
+	    laydate = layui.laydate;
+		
+		layui.upload({
+		    url: '/core/admin/nanshan/upload.do'
+		    ,method: 'POST'
+		    ,success: function(res,con){
+		    	handleImg(res,con)
+		    }
+		});
+	});
+}
+
+function delPanel(obj){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$(obj).parent().parent().remove();
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+	
+}
+
+function getRouteImgUrl(src){
+	var html="<img src='"+src+"' width='130' height='130' style='margin-right:5px;margin-left:10px' />"+
+	"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg(this);'><i class='layui-icon'>&#xe640;</i></a>";
+	return html
+}
+function handleImg(res,con){
+	var html=getRouteImgUrl(res.url);
+	if($(con).attr("id")=="picUrl"){
+		 $("input[name='pic_url']").val(res.url);
+		 $(con).parent().parent().parent().next().html(html);
+	}
+	else{
+		$(con).parent().parent().parent().next().append(html);
+	}
+   
+}
+function initMovieContext(){
+	  var desc='${(vo.content)!''}';
+	 var html="";
+	if(desc!=""){
+		var content=$.parseJSON(desc);
+		if(content.length>0){
+			for(var i=0;i<content.length;i++){
+				
+				html=html+getRouteHtml(content[i].index,content[i].name,content[i].imgs)
+			}
+		}
+		$("#addPanel").html(html)
+	} 
+}
+initMovieContext();
+
+function delImg(obj){
+	
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			 $(obj).prev().remove();
+			 $(obj).remove();
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+
+function upload(obj){
+	 var pic = $("#imgUploadBtn")[0];
+     var fd = new FormData();
+     fd.append('file', pic);
+     $.ajax({
+         url:"/core/admin/nanshan/upload.do",
+         type:"post",
+         // Form数据
+         data: fd,
+         cache: false,
+         contentType: false,
+         processData: false,
+         success:function(data){
+             alert("成功");
+         }
+     });
+}
+
+</script>
+

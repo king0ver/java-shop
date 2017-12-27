@@ -77,20 +77,6 @@ public class ArticleController extends GridController {
 			return JsonResultUtil.getErrorJson("添加文章失败");
 		}
 	}
-	/**
-	 * 返回所有子分类
-	 * @param parentid
-	 * @return
-	 */
-	@ApiOperation(value = "查询南山分类列表")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "parentid", value = "父id，顶级为0", required = true, dataType = "int", paramType = "query"), })
-	@RequestMapping(value = "/cat/{parentid}/children", method = RequestMethod.GET)
-	public List list(@PathVariable Integer parentid,String format) {
-			//List list = this.categoryManager.list(parentid,format);
-		List list = null;
-		return list;
-	}
 	
 	@RequestMapping(value="/list")
 	public ModelAndView list(long catId) {
@@ -110,10 +96,6 @@ public class ArticleController extends GridController {
 		Page page = this.articleManager.queryArticleList(p, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);
 	}
-	
-
-
-
 	/** 
 	* @param 
 	* @Description: 添加页面
@@ -274,6 +256,14 @@ public class ArticleController extends GridController {
 	
 	
 	
+	/** 
+	* @param @param catId
+	* @param @return
+	* @Description: 游戏排行
+	* @author luyanfen  
+	* @date 2017年12月27日 上午10:10:15
+	*  
+	*/ 
 	@RequestMapping(value = "gamerank")
 	public ModelAndView gameRank(int catId) {
 		ModelAndView view=new ModelAndView();
@@ -316,6 +306,14 @@ public class ArticleController extends GridController {
 	}
 	
 	
+	/** 
+	* @param @param catId 
+	* @param @return
+	* @Description: 影片拍片
+	* @author luyanfen  
+	* @date 2017年12月27日 上午10:09:35
+	*  
+	*/ 
 	@RequestMapping(value = "cinema-time")
 	public ModelAndView movie(int catId) {
 		NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
@@ -344,6 +342,14 @@ public class ArticleController extends GridController {
 		}
 	}
 	
+	/** 
+	* @param @param catId
+	* @param @return
+	* @Description: 4D影院
+	* @author luyanfen  
+	* @date 2017年12月27日 上午10:09:00
+	*  
+	*/ 
 	@RequestMapping(value = "cinema4d")
 	public ModelAndView fourDcinema(int catId) {
 		ModelAndView view=new ModelAndView();
@@ -358,7 +364,40 @@ public class ArticleController extends GridController {
 			e.printStackTrace();
 			return view;
 		}
-		
+	}
+	
+	
+	 
+	/** 
+	* @param @param catId
+	* @param @return
+	* @Description:推荐路线 
+	* @author luyanfen  
+	* @date 2017年12月27日 上午10:11:45
+	*  
+	*/ 
+	@RequestMapping(value="route")
+	public ModelAndView recroute(int catId,NanShanArticleVo nanShanArticleVo) {
+		ModelAndView view=new ModelAndView();
+		try {
+			
+			NanShanArticleVo   vo=new NanShanArticleVo();
+			if(nanShanArticleVo.getCat_id()!=0){
+				vo=this.articleManager.queryArticleByCatId(Integer.valueOf(nanShanArticleVo.getCat_id()));
+			}
+			view.setViewName("/nanshan/admin/guide/navroute");
+			view.addObject("ctx",ctx);	
+			if(vo==null){
+				vo=new NanShanArticleVo();
+				vo.setCat_id(nanShanArticleVo.getCat_id());
+			}
+			view.addObject("vo",vo);	
+			view.addObject("cats",this.articleManager.getCats(catId));
+			return view;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return view;
+		}
 	}
 	
 	
