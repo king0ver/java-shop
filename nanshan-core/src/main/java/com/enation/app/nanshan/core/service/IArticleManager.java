@@ -6,6 +6,7 @@ import java.util.Map;
 import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
+import com.enation.app.nanshan.model.ReserveQueryParam;
 import com.enation.framework.database.Page;
 
 public interface IArticleManager {
@@ -27,5 +28,9 @@ public interface IArticleManager {
 	public Page queryArticleListByConiditon(Map<String, Object> params,int page,int pageSize);
 
 	public List<ArticleCat> getCats(int id);
+	
+	public NanShanArticleVo queryArticleByCatId(int id);
+	
+	public Page queryReserveList(ReserveQueryParam param,int page,int pageSize);
 	
 }

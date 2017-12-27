@@ -20,6 +20,7 @@ import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
+import com.enation.app.nanshan.model.ReserveQueryParam;
 import com.enation.app.nanshan.util.EnumUtil;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
@@ -247,6 +248,23 @@ public class ArticleManagerImpl implements IArticleManager  {
 	public NanShanArticleVo queryArticleByCatId(int id) {
 		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
+	}
+
+	@Override
+	public Page queryReserveList(ReserveQueryParam param, int page, int pageSize) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select t.article_id,title,t.act_time,t.member_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
+		
+		if(StringUtils.isNotBlank(param.getArticleName())){
+				sql.append(" and title like '%"+param.getArticleName()+"%'");
+		}
+		if(StringUtils.isNotBlank(param.getMemberName())){
+			sql.append(" and t.member_name like '%"+param.getMemberName()+"%'");
+	    }
+		if(StringUtils.isNotBlank(param.getArticleId())){
+				sql.append(" and t.article_id="+param.getArticleId());
+		}
+		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
 
 	

@@ -1,0 +1,67 @@
+<#include '/admin/header.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
+<div  class="admin-main">
+  
+    
+   <!--表格区域  -->
+   <form id="modelForm">
+    <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        <thead>
+          <tr>
+            <th>活动ID</th>
+            <th>活动名称</th>
+            <th>活动时间</th>
+            <th>参与成员</th>
+            <th>年龄</th>
+            <th>电话</th>
+            <th>email</th>
+          </tr>
+        </thead>
+    </table>
+   </form>
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+$(function(){
+	
+	table = $('#modeldata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/admin/reserve/list-json.do',
+	    },
+	    columns: [ //定义列
+	        {data: "article_id"},
+	        {data: "title"},
+	        {data: null,"render": function(data, type, row) {
+	        	if(data.act_time==null){
+	        		return " ";
+	        	}else{
+	        		return getFormatDateByLong(data.act_time, "yyyy-MM-dd hh:mm:ss");
+	        	}
+	       	}},
+	        {data: "member_name"},
+	        {data: "age"},
+	        {data: "phone_number"},
+	        {data: "email"}
+	       
+	     ]
+	});
+})
+
+	
+
+	
+</script>
+
+<#include '/admin/footer.html' >
