@@ -34,7 +34,10 @@ public interface IArticleManager {
 	public List<NanShanArticleVo> queryArticleByCatId(int catId);
 
 	NanShanArticleVo queryArticleVoByCatId(int catId);
-	
+
 	public List<ArticleCat> getCats(int id);
+
+
+	public Page queryReserveList(ReserveQueryParam param,int page,int pageSize);
 
 }
