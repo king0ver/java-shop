@@ -25,4 +25,11 @@ public interface IArticleService {
 	 * @return
 	 */
 	public ArticleVo queryArticleInfoById(Integer articleId);
+
+	/**
+	 * 通过分类ID查询文章信息
+	 * @param catId
+	 * @return
+	 */
+	public ArticleVo queryArticleInfoByCatId(Integer catId);
 }

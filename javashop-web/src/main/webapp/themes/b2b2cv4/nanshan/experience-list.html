@@ -1,0 +1,24 @@
+
+<#assign articleListPageTag = newTag("articleListPageTag") />
+<#assign article = articleListPageTag() />
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+<div class="section-content">
+    <#include 'common/navigator.html'/>
+    <#if article.items?? && article.items?size gt 0>
+        <ul class="xfdetail-lists">
+            <#list article.items as item>
+                <li>
+                    <img src="${item.imgUrl!''}">
+                    <h3>${item.title!''}</h3>
+                    <div class="txt">${item.summary!''}</div>
+                    <a href="${item.url!''}" class="btn">查看详情</a>
+                </li>
+            </#list>
+        </ul>
+    </#if>
+
+    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+</div>
+<#include 'common/footer.html'/>

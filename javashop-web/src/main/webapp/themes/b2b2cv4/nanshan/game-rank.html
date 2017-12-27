@@ -1,11 +1,27 @@
 
-<#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag() />
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage('{"catId":25}') />
 <#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
 <#include 'common/thirdCat.html'/>
 <div class="section-content">
     <#include 'common/navigator.html'/>
-    <#include 'selection-condition.html'/>
-    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+    <div class="title-bgGame">
+        游戏排行榜
+    </div>
+    <div class="tableGame">
+        <#if article.item.articleList?size gt 0>
+            <#list article.item.articleList as game>
+                <ul class="row">
+                    <li><i>NO.${game_index + 1}</i></li>
+                    <li><img src="${game.imgUrl}"/></li>
+                    <li>
+                        <div class="rowTitle">${game.title}</div>
+                        <div class="rowTxt">${game.summary}</div>
+                    </li>
+                </ul>
+            </#list>
+        </#if>
+    </div>
 </div>
 <#include 'common/footer.html'/>

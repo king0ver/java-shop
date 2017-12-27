@@ -32,6 +32,8 @@ public interface IArticleManager {
 	 * @return
 	 */
 	public List<NanShanArticleVo> queryArticleByCatId(int catId);
+
+	NanShanArticleVo queryArticleVoByCatId(int catId);
 	
 	public List<ArticleCat> getCats(int id);
 

@@ -1,0 +1,21 @@
+@import "common.css";
+/* 开馆时间 */
+
+.txt-content{
+    width: 1200px;
+    height: 542px;
+    background: #fff;
+    margin-bottom: 60px;
+}
+.txt-content .list li{
+    padding: 7px;
+}
+
+.txt-content .content-title{
+    padding: 34px;
+    font-size: 30px;
+}
+
+.txt-content .list{
+    margin-left: 70px;
+}

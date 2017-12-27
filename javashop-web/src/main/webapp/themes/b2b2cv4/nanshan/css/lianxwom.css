@@ -1,0 +1,48 @@
+@import "common.css";
+/* 交通指南 */
+
+.txt-content{
+    width: 1142px;
+    height: 100%;
+    background: #fff;
+    margin-bottom: 60px;
+    padding: 11px 20px 11px 38px;
+
+}
+.txt-content .route-list{
+    width: 1088px;
+    height: 407px;
+    padding-bottom: 67px;
+}
+.txt-content .route-list li{
+    padding: 2px;
+    text-indent: 2em;
+}
+.txt-content .route-list .li-title{
+    font-size: 20px;
+}
+.txt-content .content-title{
+    padding: 24px 0 29px;
+    font-size: 30px;
+}
+
+.txt-content .time-list {
+    margin-left: 70px;
+    font-size: 16px;
+}
+.txt-content .time-list .li-title{
+    font-size: 20px;
+}
+
+.map{
+    margin: 0 22px 36px 2px;
+}
+
+
+
+
+
+
+
+
+

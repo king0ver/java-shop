@@ -1,11 +1,42 @@
 
-<#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag() />
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage('{"catId":11}') />
 <#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/cinema.css" rel="stylesheet" type="text/css">
 <#include 'common/thirdCat.html'/>
 <div class="section-content">
     <#include 'common/navigator.html'/>
-    <#include 'selection-condition.html'/>
-    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+    <ul class="item-content">
+        <li class="txt">
+            <div class="content-title">${article.item.title!''}</div>
+            <#if article.item.content?size gt 0 && article.item.content.content?size gt 0>
+                <#list article.item.content.content as content>
+                    <#if content.type == 'text'>
+                        <p>${content.content!''}</p>
+                    </#if>
+                </#list>
+            </#if>
+        </li>
+        <li class="img">
+            <div class="imgs">
+                <img src="${article.item.imgUrl!''}">
+            </div>
+        </li>
+    </ul>
+    <div class="movie-box">
+        <!-- 推荐电影 -->
+        <div class="recommended-movie-box">
+            <div class="recommended-movie">推荐电影</div>
+            <ul class="movie-img-list">
+                <#if article.item.articleList?size gt 0>
+                    <#list article.item.articleList as article>
+                        <li><img src="${article.imgUrl!''}"></li>
+                    </#list>
+                </#if>
+            </ul>
+        </div>
+
+    </div>
+
 </div>
 <#include 'common/footer.html'/>

@@ -278,7 +278,7 @@ public class ArticleController extends GridController {
 	public ModelAndView gameRank(int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
-			NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
+			NanShanArticleVo   vo=this.articleManager.queryArticleVoByCatId(catId);
 			view.setViewName("/nanshan/admin/game/addrank");
 			view.addObject("ctx",ctx);	
 			view.addObject("vo",vo);	
@@ -302,7 +302,7 @@ public class ArticleController extends GridController {
 	@RequestMapping("/add_edit_rank")
 	public JsonResult addEditRank(NanShanArticleVo nanShanArticleVo){
 		try {
-			NanShanArticleVo vo= this.articleManager.queryArticleByCatId(nanShanArticleVo.getCat_id());
+			NanShanArticleVo vo= this.articleManager.queryArticleVoByCatId(nanShanArticleVo.getCat_id());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
 			}else{
@@ -318,7 +318,7 @@ public class ArticleController extends GridController {
 	
 	@RequestMapping(value = "cinema-time")
 	public ModelAndView movie(int catId) {
-		NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
+		NanShanArticleVo   vo=this.articleManager.queryArticleVoByCatId(catId);
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/cinema/add");
 		view.addObject("ctx",ctx);	
@@ -331,7 +331,7 @@ public class ArticleController extends GridController {
 	@RequestMapping(value = "cinema-edit")
 	public JsonResult cinemaEdit(NanShanArticleVo nanShanArticleVo) {
 		try {
-			NanShanArticleVo vo= this.articleManager.queryArticleByCatId(nanShanArticleVo.getCat_id());
+			NanShanArticleVo vo= this.articleManager.queryArticleVoByCatId(nanShanArticleVo.getCat_id());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
 			}else{
@@ -348,7 +348,7 @@ public class ArticleController extends GridController {
 	public ModelAndView fourDcinema(int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
-			NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
+			NanShanArticleVo   vo=this.articleManager.queryArticleVoByCatId(catId);
 			view.setViewName("/nanshan/admin/cinema/cinema4d");
 			view.addObject("ctx",ctx);	
 			view.addObject("vo",vo);

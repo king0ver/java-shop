@@ -1,0 +1,68 @@
+@import "common.css";
+
+.title-bg{
+    width: 674px;
+    height: 133px;
+    line-height: 144px;
+    background: url('img/row-table-title.png') no-repeat;
+    text-align: center;
+    font-size: 32px;
+    color: #3C97EE;
+    margin: auto;
+}
+.table{
+    overflow: hidden;
+    width: 800px;
+    margin: auto;
+}
+.table .header{
+    width: 800px;
+    height: 70px;
+    background: #f7f7f7;
+    line-height: 70px;
+    color: #333;
+    font-size: 24px;
+    margin: auto;
+}
+.table li{
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+.table .row {
+    overflow: hidden;
+    padding: 46px 0 40px 0;
+    font-size: 19px;
+    border-bottom: 1px solid #ccc;
+}
+/*.table .row li:not(:eq(2)){
+    line-height: 124px;
+}*/
+.table .row i{
+    font-size: 22px;
+    font-style:italic;
+}
+.mark-red{
+    color: red;
+}
+
+/* 加载中 */
+.loading{
+    text-align: center;
+    margin: 65px 0 170px;
+}
+.loading .txt{
+    font-size: 12px;
+    margin-top: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+

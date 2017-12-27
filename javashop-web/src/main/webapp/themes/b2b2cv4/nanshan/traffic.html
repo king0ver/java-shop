@@ -1,0 +1,28 @@
+<#assign articlePage = newTag("articleStaticPage") />
+<#assign article = articlePage('{"catId":52}') />
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/traffic-guide.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+<div class="section-content">
+    <#include 'common/navigator.html'/>
+    <div class="txt-content">
+        <div class="content-title">交通指南</div>
+        <div class="map">
+            <img src="${file_path}/nanshan/css/images/map.jpg">
+        </div>
+        <ul class="route-list">
+            <li>中国科技馆新馆位于北京市朝阳区北辰东路5号，奥林匹克公园中心区东北部，鸟巢正北1公里。</li>
+            <li class="li-title">1．公交线路：</li>
+            <li>（1）乘坐328、379、419、484、617、628、751、913路、运通110路到“洼里南口”站，向北步行约6分钟到达中国科学技术馆西门（最近）；</li>
+            <li>（2）乘坐328、379、419、425、484、518、628、630、695、751、617、913、949、运通110路到“豹房”站，向西再向北步行，约10分钟到达中国科学技术馆东门 （稍近）；</li>
+            <li>（3）乘坐466、630、653、758、984、985路、快速公交3线路、快速公交3（区间）、快速公交3（支线）到“慧忠北里”站，向北再向西步行，约10分钟到达中国科学技术馆东门（稍远）；</li>
+            <li>（4）乘坐108、124、379、415、417、419、426、518、538、653、758、984、985、特11路到“大屯南”站，向北再向西北步行，约13分钟到达中国科学技术馆东门（远）。</li>
+            <li class="li-title">2．地铁线路：</li>
+            <li>（1）乘坐地铁8号线到“奥林匹克公园”站出东北口，向北再向东步行约13分钟；</li>
+            <li>（2）乘坐地铁8号线到“森林公园南门站”出东南口，向南再向东步行约10分钟；</li>
+            <li>（3）乘坐地铁5号线到“大屯路东”站出A1口，换乘538路到“北辰东路”站，向北直行约12分钟到达中国科学技术馆东门。</li>
+            <li>温馨提示：因公交线路存在不定期更改的因素，建议您在出行前再核实一下乘车路线。</li>
+        </ul>
+    </div>
+</div>
+<#include 'common/footer.html'/>

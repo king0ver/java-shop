@@ -6,7 +6,9 @@ import com.enation.app.nanshan.vo.NCatVo;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.taglib.BaseFreeMarkerTag;
 import freemarker.template.TemplateModelException;
+import io.swagger.models.auth.In;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,16 +32,14 @@ public class ArticlePageTag extends AbstractPageTag {
 
         Map<String, Object> map = new HashMap<>();
 
-        String articleId;
+        ArticleVo articleVo = null;
 
-        if(map.containsKey("id")){
-            articleId = map.get("id").toString();
-        }else{
-            HttpServletRequest request  = ThreadContextHolder.getHttpRequest();
-            articleId = request.getParameter("id");
+        String articleId = ThreadContextHolder.getHttpRequest().getParameter("id");
+        if(StringUtils.isNotBlank(articleId)){
+            articleVo = articleService.queryArticleInfoById(Integer.parseInt(articleId));
+        }else if(params.containsKey("catId")){
+            articleVo = articleService.queryArticleInfoByCatId(Integer.parseInt(params.get("catId").toString()));
         }
-
-        ArticleVo articleVo = articleService.queryArticleInfoById(Integer.parseInt(articleId));
 
 
         handlePageCat(map, String.valueOf(articleVo.getCatId()));
