@@ -229,7 +229,6 @@
 		<menu text="南山" type="app" url="" icon="/adminthemes/new/images/menu_07.gif">
 			<menu text="展示展览">
 				<menu text="展示展览管理" url="/core/admin/exhibition/list.do" />
-				<menu text="科学影城" url="" />
 				<menu text="放映时间表" url="/admin/article/cinema-time.do?catId=12" />
 				<menu text="四维影院" url="/admin/article/cinema4d.do?catId=11" />
 				<menu text="影片管理" url="/core/admin/movie/list.do" />

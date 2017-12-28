@@ -12,17 +12,20 @@
             <ul class="detail-lists clearfix">
                 <#list article.items as item>
                     <li>
-                        <div class="lt-num">
-                            <span class="num"><@dateformat time='${item.createTime}' pattern='dd'/></span>
-                            <div class="date"><@dateformat time='${item.createTime}' pattern='yyyy-MM'/></div>
-                        </div>
-                        <div class="rt-txt">
-                            <div class="rt-title">${item.title!''}</div>
-                            <p>
-                                ${item.summary!''}
-                            </p>
-                        </div>
+                        <a href="/nanshan/news.html?id=${item.id}">
+                            <div class="lt-num">
+                                <span class="num"><@dateformat time='${item.createTime}' pattern='dd'/></span>
+                                <div class="date"><@dateformat time='${item.createTime}' pattern='yyyy-MM'/></div>
+                            </div>
+                            <div class="rt-txt">
+                                <div class="rt-title">${item.title!''}</div>
+                                <p>
+                                    ${item.summary!''}
+                                </p>
+                            </div>
+                        </a>
                     </li>
+
                 </#list>
             </ul>
         </#if>

@@ -20,20 +20,22 @@
                 <ul class="activity-lists">
                     <#list article.items as item>
                         <li class="row">
-                            <div class="lt-img">
-                                <img src="${item.imgUrl!''}">
-                            </div>
-                            <div class="rt-txt">
-                                <div class="reservation-btn">预约</div>
-                                <div class="content-title">${item.title!''}</div>
-                                <ul class="content-list">
-                                    <li><span>时间截止</span>：<@dateformat time='${item.expirydate}' pattern='yyyy-MM-dd'/></li>
-                                    <li><span>活动对象</span>: ${item.actname!''}</li>
-                                    <li><span>活动费用</span>: ${item.actcost!''}</li>
-                                    <li><span>活动地址</span>：${item.actaddress!''}</li>
-                                </ul>
-                                <p class="text-indent">${item.summary!''} </p>
-                            </div>
+                            <a href="/nanshan/activity.html?id=${item.id}">
+                                <div class="lt-img">
+                                    <img src="${item.imgUrl!''}">
+                                </div>
+                                <div class="rt-txt">
+                                    <div class="reservation-btn">预约</div>
+                                    <div class="content-title">${item.title!''}</div>
+                                    <ul class="content-list">
+                                        <li><span>时间截止</span>：<@dateformat time='${item.expirydate}' pattern='yyyy-MM-dd'/></li>
+                                        <li><span>活动对象</span>: ${item.actname!''}</li>
+                                        <li><span>活动费用</span>: ${item.actcost!''}</li>
+                                        <li><span>活动地址</span>：${item.actaddress!''}</li>
+                                    </ul>
+                                    <p class="text-indent">${item.summary!''} </p>
+                                </div>
+                            </a>
                         </li>
                     </#list>
                 </ul>

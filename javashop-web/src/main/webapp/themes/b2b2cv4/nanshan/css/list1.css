@@ -26,6 +26,13 @@
 }
 .xfdetail-lists .txt{
     padding: 0 30px;
+        padding: 0 30px;
+    width: 310px;
+    height: 50px;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 .xfdetail-lists .btn{
     display: inline-block;
@@ -126,6 +133,7 @@
 .game-item-rt .hot-game-title{
     font-size: 20px;
     margin: 14px 0;
+    
 }
 .game-item-rt li{
     margin: 10px 2px
@@ -139,9 +147,18 @@
 .game-item-rt .game-name{
     font-size: 16px;
 }
+.game-item-rt ul li img{
+	width: 90px;
+	height: 90px;
+}
 .game-item-rt .game-detail{
      color: #7d7d7d;
-
+ 	width: 168px;
+    height: 50px;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 
 /* 活动列表 背景灰色 */
@@ -351,6 +368,7 @@
     float: left;
     width: 25%;
     text-align: center;
+    
 }
 .table .row {
     overflow: hidden;
@@ -435,6 +453,12 @@
 	margin-top: 30px;
 	color: #7d7d7d;
 	font-size: 16px;
+	width: 620px;
+	height: 100px;
+	 display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
 }
 /*新闻公告*/
 .item-content .detail-lists{
@@ -471,7 +495,12 @@
 }
 .detail-lists .rt-txt p{
     width: 730px;
-    padding: 15px 2px;
+    height: 128px;
+    margin-top: 15px;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
 }
 .item-content .rt-txt{
     padding: 7px 8px 7px 42px;
@@ -551,8 +580,12 @@
 }
 .activity-lists .content-list ,
 .activity-lists p{
-    padding: 6px 0;
+   
     font-size: 17px;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 /* 预约按钮 */
 .reservation-btn{

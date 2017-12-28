@@ -1,0 +1,80 @@
+@import "common.css";
+/* 服务设施 */
+
+.icon-content{
+    width: 1200px;
+    height: 542px;
+    background: #fff;
+}
+.icon-content .list{
+    overflow: hidden;
+    padding: 10px;
+}
+.icon-content li{
+    float: left;
+    width: 98px;
+    height: 130px;
+    text-align: center;
+    padding: 20px 68px;
+}
+.icon-content li .desc{
+    padding: 10px 0;
+    font-size: 20px;
+}
+.icon-content li img{
+    padding: 10px 0
+}
+
+/* 设备简介 */
+.equipment-introduction{
+    width: 998px;
+    height: 775px;
+    background: #fff;
+    margin-top: 40px;
+    padding: 0 101px;
+}
+.equipment-introduction .title{
+    text-align: center;
+}
+.equipment-introduction .title .equipment-name{
+    font-size: 36px;
+    font-weight: bold;
+    padding: 35px 0 18px;
+}
+.equipment-introduction .title .position-desc{
+    font-size: 20px;
+    margin-left: 11px;
+    color: #1173d1;
+}
+.equipment-introduction .content-title{
+    margin: 37px 0 20px;
+    font-size: 20px;
+}
+.equipment-introduction .txt{
+    width: 1008px;
+    height: 64px;
+    font-size: 16px;
+}
+.equipment-introduction .img{
+    margin: 30px auto 37px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

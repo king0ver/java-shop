@@ -1,0 +1,91 @@
+
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/detail.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+
+<div class="section-content">
+    <#include 'common/navigator.html'/>
+    <div><img src="css/img/banner.jpg"></div>
+    <!--
+        作者：offline
+        时间：2017-12-23
+        描述：最新灾情活动
+    -->
+    <div class="activity-detail">
+        <h3>《灾难警报》活动</h3>
+        <div class="detailInfo clearfix">
+            <ul class="content-list">
+                <li><span>活动对象</span>：12-60岁</li>
+                <li><span>活动时间</span>：2017-12-12</li>
+                <li><span>活动地址</span>：广东省深圳华侨城地铁站附近南山科技馆</li>
+                <li><span>注意事项</span>：
+                    <ul class="precautions">
+                        <li>在以下活动时间，至科技馆3楼宇航天地展区，即可参与科学列车活动。
+                        <li>活动时间：每周三、周五</li>
+                        <li>第一场：11:00-11:30</li>
+                        <li>第二场：14:00-14:30</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="yuyue">
+                <img src="css/img/yuyue.jpg" />
+            </div>
+        </div>
+
+
+        <h4>活动介绍</h4>
+        <p class="text-indent">
+            017年11月1日，法国拉斯科洞穴壁画复原展在上海科技馆二楼特展厅开幕。法国拉斯科洞穴壁画是举世闻名的旧石器时代洞穴壁画，1979年入选联合国教科文组织世界文化遗产名录。本次展览是拉斯科洞穴3号巡展首次登陆中国。展览将于2018年2月28日落幕。
+        </p>
+        <p class="text-indent">
+            开幕式上，上海科技馆馆长王小明和法国多尔多涅省议会主席杰米纳•皮埃罗（Germinal Peiro）先后致辞，上海市科学技术委员会科普处处长曹宏明与法国驻上海总领事馆文化领事费保罗共同为展览揭幕，开幕式由上海科技馆副馆长缪文靖主持。
+        </p>
+        <p class="text-indent">
+            该展览以洞穴传奇的历史为主线，通过5组真实大小的复制洞壁、4个栩栩如生的克罗马农人雕像、17段生动有趣的影像等，结合互动游戏和珍贵照片，引领观众走进拉斯科世界，与2万年前的洞穴古人面对面，欣赏人类最早的艺术壮举，了解科学家、史前人类学家和艺术家研究、保护并复制这些珍贵壁画的过程。展览通过科学与艺术的结合，带领观众领略不朽的史前艺术，身临其境地感受克罗马农人的真实生活。
+        </p>
+    </div>
+    <!-- 活动预约 -->
+    <div class="bgColorShadow" style="display: none;"></div>
+    <div class="activity-reservation" style="display: none;">
+        <div class="item-title"><img src="css/img/gt.png">&nbsp;活动预约</div>
+        <form id="reservation">
+            <ul class="form-list">
+                <li>
+                    <label for="date">参加活动日期</label>
+                    <input name="yyEnd" type="text" class="Wdate" />
+                </li>
+                <div id="member">
+                    <div class="row">
+                        <label for="uname"><span class="error">※</span>参加成员</label>
+                        <input id="uname" type="text" placeholder="姓名">
+                    </div>
+                    <div class="row">
+                        <label for="age"><span class="error">※</span>年龄</label>
+                        <input id="age" type="text" placeholder="年龄">
+                    </div>
+                </div>
+                <li>
+                    <label for="phone"><span class="error">※</span>联系电话</label>
+                    <input id="phone" type="text" placeholder="13161623451">
+                </li>
+                <li>
+                    <label for="email"><span class="error">※</span>电子邮件</label>
+                    <input id="email" type="text" placeholder="电子邮件">
+                </li>
+            </ul>
+
+
+            <div class="btn-box">
+                <input type="button" id="submit-btn" value="提交">
+            </div>
+            <p class="tip-txt">
+                提示:活动开始前可进入"个人中心-我的预约"取消预约
+            </p>
+        </form>
+
+    </div>
+</div>
+<#include 'common/footer.html'/>

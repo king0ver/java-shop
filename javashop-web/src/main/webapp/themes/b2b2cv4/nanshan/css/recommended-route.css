@@ -1,0 +1,125 @@
+@import "common.css";
+/* 推荐路线 */
+
+.crumbs, .banner{
+    width: 1200px;
+    margin: auto;
+}
+.banner-box{
+    width: 100%;
+    background: #f8f09d;
+}
+.banner{
+    text-align: center;
+}
+.section-content{
+    overflow: hidden;
+}
+.floor {
+    float: left;
+    margin: 15px 0;
+}
+
+/*首先，我们要创建一个容器class*/
+.floor ul {
+    margin-left: 60px;
+    border-left: 2px solid #626262;
+    margin-top: 0;
+}
+
+/*利用ul标签的特性，设置外边框左移25px，左边边框是2px粗的实心线，颜色一般要浅一点*/
+.floor ul li {
+    width: 100%;
+    margin-left: -36px;
+    line-height: 20px;
+    font-weight: normal;
+    margin-top: 98px;
+}
+
+.floor ul li b {
+    width: 58px;
+    margin: 0 5px;
+    height: 58px;
+    background: #626262;
+    color: #fff;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    display: inline-block;
+}
+.floor ul li:last-child b{
+    margin-bottom: -6px;
+}
+.section-content ul li b {
+    font-size: 24px;
+    line-height: 58px;
+    text-align: center;
+    color: #fff;
+}
+.floor ul li .active  {
+    background: #f8f09d;
+}
+
+
+
+
+.floor-content {
+    float: left;
+    margin: 15px 0;
+    margin-left: 100px;
+}
+
+.floor-content .box {
+    margin-left: 25px;
+    border-left: 2px solid #f8f09d;
+    padding: 94px 0
+}
+
+.floor-content ul li {
+    margin-left: -36px;
+    line-height: 20px;
+    font-weight: normal;
+}
+.floor-content .img-row{
+    overflow: hidden;
+    margin-left: 84px;
+    margin-bottom: 84px;
+}
+.floor-content .img-row li{
+    float: left;
+
+}
+.floor-content .box .line{
+    display: inline-block;
+    border-top: 1px solid #d0d0d0;
+    padding-bottom: 26px;
+    width: calc(100% - 178px)
+}
+
+.floor-content ul li b {
+    width: 58px;
+    height: 58px;
+    background: #f8f09d;
+    margin: 5px;
+    color: #fff;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.floor-content ul li span {
+    padding-left: 17px;
+    font-size: 20px;
+    line-height: 50px;
+    color: #555;
+    display: inline-block;
+    margin-right: 5px;
+    height: 60px;
+    vertical-align: text-bottom;
+}
+
+
+
+    

@@ -39,6 +39,9 @@ public class ArticlePageTag extends AbstractPageTag {
             articleVo = articleService.queryArticleInfoById(Integer.parseInt(articleId));
         }else if(params.containsKey("catId")){
             articleVo = articleService.queryArticleInfoByCatId(Integer.parseInt(params.get("catId").toString()));
+        }else if(StringUtils.isNotBlank(ThreadContextHolder.getHttpRequest().getParameter("catId"))){
+            articleVo = articleService.queryArticleInfoByCatId(Integer.parseInt(
+                    ThreadContextHolder.getHttpRequest().getParameter("catId")));
         }
 
 
