@@ -383,7 +383,7 @@ public class ArticleController extends GridController {
 			
 			NanShanArticleVo   vo=new NanShanArticleVo();
 			if(nanShanArticleVo.getCat_id()!=0){
-				vo=this.articleManager.queryArticleByCatId(Integer.valueOf(nanShanArticleVo.getCat_id()));
+				vo=this.articleManager.queryArticleVoByCatId(Integer.valueOf(nanShanArticleVo.getCat_id()));
 			}
 			view.setViewName("/nanshan/admin/guide/navroute");
 			view.addObject("ctx",ctx);	

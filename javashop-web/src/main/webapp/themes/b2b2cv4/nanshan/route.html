@@ -1,0 +1,45 @@
+
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/announcement-detail.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+<div class="main">
+    <#include 'common/navigator.html'/>
+    <div class="banner-box">
+        <div class="banner">
+            <img src="css/img/banner.jpg">
+        </div>
+    </div>
+
+    <div class="section-content">
+
+        <div class="floor-content">
+            <ul class="box">
+                <li><b>2F</b><span>生物万象</span><p class="line"></p>
+                    <ul class="img-row">
+                        <li><img src="css/img/route-pic1.jpg"></li>
+                        <li><img src="css/img/route-pic2.jpg"></li>
+                        <li><img src="css/img/route-pic3.jpg"></li>
+                    </ul>
+                </li>
+                <li><b>3F</b><span>余杭天地</span><p class="line"></p>
+                    <ul class="img-row">
+                        <li><img src="css/img/route-pic4.jpg"></li>
+                        <li><img src="css/img/route-pic5.jpg"></li>
+                        <li><img src="css/img/route-pic6.jpg"></li>
+                    </ul>
+                </li>
+                <li><b>1F</b><span>冰雪天地</span><p class="line"></p>
+                    <ul class="img-row">
+                        <li><img src="css/img/route-pic7.jpg"></li>
+                        <li><img src="css/img/route-pic8.jpg"></li>
+                        <li><img src="css/img/route-pic9.jpg"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+</div>
+<#include 'common/footer.html'/>

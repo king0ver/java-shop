@@ -79,12 +79,33 @@
 <!--Header - start-->
 <div class="Header">
     <div class="headerWrap">
-        <p class="header_link"><a href="#this">登录</a> <span class="shu"></span><a href="#this">注册</a> <a
-                href="#this"></a><span class="chazhao"></span></p>
+        <#if member??>
+            <p class="header_link"><i style="cursor:default">您好,&nbsp;&nbsp;</i><a href="#this">${member.name}</a>
+                <span class="shu"></span><a id="logout" href="javascript:void(0);">退出</a></p>
+            <#else>
+                <p class="header_link"><a href="${ctx}/store/login.html">登录</a> <span class="shu"></span><a href="${ctx}/member/register/fill_mobile.html">注册</a> <a
+                        href="#this"></a><span class="chazhao"></span></p>
+        </#if>
         <p class="tel">欢迎来到南山科技馆！</p>
-
     </div>
 </div>
+<#if member??>
+    <script type="text/javascript">
+        $("#logout").click(function(){
+            $.ajax({
+                url:"${ctx}/api/shop/member/logout.do",
+                dataType:"json",
+                success:function(result){
+                    location.href = "${ctx}/nanshan/index.html";
+                },
+                error:function(){
+                    $.alert("出错了:(");
+                }
+            });
+            return false;
+        });
+    </script>
+</#if>
 <div class="navCss">
     <div class="navWrap">
         <div class="logo">

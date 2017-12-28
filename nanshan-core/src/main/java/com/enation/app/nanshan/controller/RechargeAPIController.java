@@ -7,6 +7,7 @@ import com.enation.app.shop.payment.model.enums.ClientType;
 import com.enation.app.shop.trade.controllor.front.TradeController;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.JsonResult;
+import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.util.JsonResultUtil;
 import com.enation.framework.util.StringUtil;
 import io.swagger.annotations.Api;
@@ -43,7 +44,7 @@ public class RechargeAPIController {
     public JsonResult create(String gameAccount, int points){
 
         String client_type;
-        if(TradeController.isWap()){
+        if(isWap()){
             client_type = ClientType.WAP.name();
         }else{
             client_type = ClientType.PC.name();
@@ -69,6 +70,22 @@ public class RechargeAPIController {
 
     }
 
-
+    /**
+     * 判断是否是wap访问
+     * @param header
+     * @return 是否是wap
+     */
+    public static boolean isWap(){
+        String header = ThreadContextHolder.getHttpRequest().getHeader("User-Agent");
+        boolean flag = false;
+        String[] keywords = { "Android", "iPhone", "iPod", "iPad", "Windows Phone", "MQQBrowser","Mobile" };
+        for (String s : keywords) {
+            if(header.contains(s)){
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
 
 }
