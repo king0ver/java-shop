@@ -1,25 +1,19 @@
 package com.enation.app.nanshan.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.enation.app.nanshan.model.NanShanArticleVo;
+import com.enation.app.nanshan.service.IArticleService;
+import com.enation.app.nanshan.vo.ArticleVo;
+import com.enation.eop.sdk.utils.DateUtil;
+import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.enation.app.nanshan.model.ArticleExt;
-import com.enation.app.nanshan.model.NanShanArticleVo;
-import com.enation.app.nanshan.service.IArticleService;
-import com.enation.app.nanshan.vo.ArticleVo;
-import com.enation.framework.database.IDaoSupport;
-import com.enation.framework.util.DateUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 文章服务实现
@@ -55,7 +49,7 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url imgUrl,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
 		sql.append("from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ");
 		sql.append(" where a.is_del = 0 and a.id= ?");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, articleId);
@@ -130,7 +124,9 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setActCost(articleInfo.getAct_cost());
 		articleVo.setReserveNum(articleInfo.getReserve_num());
 		articleVo.setReservedNum(articleInfo.getReserved_num());
-		articleVo.setExpiryDate(articleInfo.getExpiryDate());
+		if(StringUtils.isNotBlank(articleInfo.getExpiryDate())){
+			articleVo.setExpiryDate(Long.parseLong(articleInfo.getExpiryDate()));
+		}
 
 		return articleVo;
 	}

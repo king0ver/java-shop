@@ -37,7 +37,7 @@ public class NanShanArticleVo implements Serializable  {
 	
 	private Integer reserve_num;
 	private Integer reserved_num;
-	private Long  expiryDate;
+	private String  expiryDate;
 	private String act_name;
 	private String act_cost;
 	private String act_address;
@@ -63,10 +63,10 @@ public class NanShanArticleVo implements Serializable  {
 	public void setReserved_num(Integer reserved_num) {
 		this.reserved_num = reserved_num;
 	}
-	public Long getExpiryDate() {
+	public String getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(Long expiryDate) {
+	public void setExpiryDate(String expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	public String getAct_name() {
