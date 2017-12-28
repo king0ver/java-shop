@@ -94,7 +94,7 @@ public class GameController extends GridController{
 			}
 		}
 		//查询(游戏)分类
-		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("21");
+		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("33,36");
 		view.addObject("catList", catList);
 		view.setViewName("/nanshan/admin/game/add");
 		return view;
@@ -164,7 +164,7 @@ public class GameController extends GridController{
 			}
 		}
 		//查询(游戏)分类
-		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("21");
+		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("33,36");
 		view.addObject("catList", catList);
 		view.setViewName("/nanshan/admin/game/edit");
 		view.addObject("data",this.articleManager.queryArticleById(id));

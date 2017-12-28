@@ -20,7 +20,6 @@ import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticle;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.app.nanshan.model.NanShanClob;
-import com.enation.app.nanshan.model.ReserveQueryParam;
 import com.enation.app.nanshan.util.EnumUtil;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
@@ -78,7 +77,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		StringBuffer sql = new StringBuffer();
         
 		sql.append(
-				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id ");
+				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id and a.is_del<>1");
 		if(!StringUtil.isEmpty(param.getCatId())){
 			sql.append(" and a.cat_id in ("+param.getCatId()+")");
 		}
@@ -86,7 +85,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 			sql.append(" and a.id="+param.getArticleId());
 		}
 		if(!StringUtil.isEmpty(param.getArticleName())){
-			sql.append(" and a.title like '%"+param.getArticleName()+"%'");
+			sql.append(" and a.titile like %"+param.getArticleName()+"%");
 		}
 		if(!StringUtil.isEmpty(param.getParentId())){
 			sql.append(" and t.parent_id="+param.getParentId());
@@ -122,7 +121,9 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtils.isEmpty(nanShanArticleVo.getPic_url())) articleFields.put("pic_url", nanShanArticleVo.getPic_url());
 		this.delArtSpeRel(nanShanArticleVo.getId());
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
-		this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
+		if(articleFields.size()>0){
+			this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
+		}
 		this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
 		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
 			ArticleExt articleExt=new ArticleExt();
@@ -193,12 +194,10 @@ public class ArticleManagerImpl implements IArticleManager  {
 		ext.setAct_address(vo.getAct_address());
 		ext.setAct_cost(vo.getAct_cost());
 		ext.setAct_name(vo.getAct_name());
+		ext.setReserved_num(vo.getReserved_num());
 		ext.setReserve_num(vo.getReserve_num());
 		ext.setAct_cost(vo.getAct_cost());
-		if(!StringUtil.isEmpty(vo.getExpiryDate())){
-			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd");
-			ext.setExpiry_date(create_time);
-		}
+		ext.setExpiry_date(vo.getExpiryDate());
 		return ext;
 		
 	}
@@ -261,7 +260,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 	public Page queryReserveList(ReserveQueryParam param, int page, int pageSize) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select t.article_id,title,t.act_time,t.member_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
-		
+
 		if(StringUtils.isNotBlank(param.getArticleName())){
 				sql.append(" and title like '%"+param.getArticleName()+"%'");
 		}
@@ -286,9 +285,5 @@ public class ArticleManagerImpl implements IArticleManager  {
 		sql.append("from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t ");
 		sql.append(" where a.cat_id=t.cat_id and a.content=c.id and t.cat_id = ?");
 		return daoSupport.queryForList(sql.toString(),NanShanArticleVo.class,catId);
-}
-
-	
-
-
+	}
 }

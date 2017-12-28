@@ -1,10 +1,10 @@
 package com.enation.app.nanshan.core.action;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +16,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
-import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
+import com.google.gson.JsonObject;
 
 /**
- * 服务管理
- * @author LiJM
- *
+ * 首页服务
+ * @author jianjianming
+ * @version $Id: HomePageController.java,v 0.1 2017年12月28日 上午10:30:20$
  */
 @Controller 
 @Scope("prototype")
-@RequestMapping("/core/admin/service")
-public class ServiceController extends GridController{
+@RequestMapping("/core/admin/home")
+public class HomePageController extends GridController{
 	
 	@Autowired
 	private IArticleManager  articleManager;
@@ -47,35 +47,21 @@ public class ServiceController extends GridController{
 	@RequestMapping(value="/edit")
 	public ModelAndView edit(Integer catId){
 		ModelAndView view = new ModelAndView();
-		List<ArticleCat> catList = catManager.queryCatChildrenInfoByCatIds("46");
-		List<NanShanArticleVo> list = new ArrayList<NanShanArticleVo>();
-		if(null == catId){
-			if(catList != null && catList.size()>0){
-				Long articleCatId = catList.get(0).getCat_id();
-				list = articleManager.queryArticleByCatId(articleCatId.intValue());
-			}
-		}else{
-			list = articleManager.queryArticleByCatId(catId);
-		}
-		if(list!=null && list.size()>0){
+		List<NanShanArticleVo> list = articleManager.queryArticleByCatId(catId);
+		if(list != null && list.size()>0){
 			view.addObject("data",list.get(0));
 		}else{
-			NanShanArticleVo articleVo = new NanShanArticleVo();
-			if(catId != null){
-				articleVo.setCat_id(catId);
-			}
-			view.addObject("data", articleVo);
+			list.add(new NanShanArticleVo());
+			view.addObject("data",list.get(0));
 		}
-		view.addObject("catList", catList);
-		view.setViewName("/nanshan/admin/service/page");
+		view.setViewName("/nanshan/admin/home/page");
 		return view;
 	}
-	
+
 	/**
 	 * 修改
-	 * @param spec
-	 * @param specValName
-	 * @param spec
+	 * @param articleVo
+	 * @param request
 	 * @return
 	 */
 	@ResponseBody
@@ -83,10 +69,26 @@ public class ServiceController extends GridController{
 	public JsonResult saveEdit(NanShanArticleVo articleVo,HttpServletRequest request){
 		//保存修改
 		try{
-			String address = request.getParameter("address");
+			JSONArray jsonArray = new JSONArray();
+			String[] imgUrl = request.getParameterValues("imgUrl");
+			String[] pageUrl = request.getParameterValues("pageUrl");
+			if(pageUrl!=null && pageUrl.length>0){
+				for (int i = 0; i < pageUrl.length; i++) {
+					JSONObject json = new JSONObject();
+					json.put("index", i);
+					json.put("imgUrl", imgUrl[i]);
+					json.put("pageUrl",pageUrl[i]);
+					jsonArray.add(json);
+				}
+			}
 			JSONObject json = new JSONObject();
-			json.put("address",address);
-			json.put("content", articleVo.getContent());
+			String routineImgUrl = request.getParameter("routineImgUrl");
+			String temporaryImgUrl = request.getParameter("temporaryImgUrl");
+			String scienceImgUrl = request.getParameter("scienceImgUrl");
+			json.put("routineImgUrl", routineImgUrl);
+			json.put("temporaryImgUrl", temporaryImgUrl);
+			json.put("scienceImgUrl", scienceImgUrl);
+			json.put("imgs", jsonArray);
 			articleVo.setContent(json.toString());
 			if(articleVo.getId()>0){
 				articleManager.updateArticle(articleVo);
