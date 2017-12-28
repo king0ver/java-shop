@@ -132,14 +132,15 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtils.isEmpty(nanShanArticleVo.getPic_url())) articleFields.put("pic_url", nanShanArticleVo.getPic_url());
 		this.delArtSpeRel(nanShanArticleVo.getId());
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
-		this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
+		if(articleFields.size()>0){
+			this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
+		}
 		this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
 		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
 			ArticleExt articleExt=new ArticleExt();
 			articleExt=this.covertArticleExt(nanShanArticleVo);
 			this.updateArtcleExt(articleExt);
 		}
-		
 	}
 
 	@Override
@@ -276,7 +277,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 	public List<NanShanArticleVo> queryArticleByCatId(int catId) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name ");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.content content_id,a.is_del,c.content,t.cat_name ");
 		sql.append("from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t ");
 		sql.append(" where a.cat_id=t.cat_id and a.content=c.id and t.cat_id = ?");
 		return daoSupport.queryForList(sql.toString(),NanShanArticleVo.class,catId);
