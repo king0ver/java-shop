@@ -1,8 +1,43 @@
 <#include '/admin/header.html' >
 <script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
+<style type="text/css">
+	.table_search button{
+		margin-top: 0px!important;
+	}
+	.table_search{
+		width:700px;
+	}
+	
+
+</style>
 <div  class="admin-main">
   
-    
+     <!--按钮操作区域  -->
+        <div class="table_control">
+            <!--搜索区域  -->
+            <div class="table_search">
+				<input type="text" name="keyword" placeholder="请输入活动名称关键字" id="searchbtn">
+				<div id="templist" style="display: none">
+					<form class="layui-form">
+						<div class="form-group">
+							<label for="contain">活动ID：</label>
+							<input class="form-control" type="text" id="articleId"/>
+						</div>
+						<div class="form-group">
+							<label for="contain">活动名称：</label>
+							<input class="form-control" type="text" id="articleName"/>
+						</div>
+						<div class="form-group">
+							<label for="contain">参与成员：</label>
+							<input class="form-control" type="text" id="memberName"/>
+						</div>
+						
+						
+					</form>
+				</div>
+			</div>
+			
+		</div> 
    <!--表格区域  -->
    <form id="modelForm">
     <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
@@ -25,7 +60,25 @@
 <script>
 var table;
 $(function(){
-	
+	 var cent = $("#templist").html();
+	 $("#searchbtn").searchBox({
+    	  content: cent,
+    	  keywordSearch: function () {
+              var keyword = $("input[name='keyword']").val();
+              var param = "&articleName=" + keyword;
+              var url = table.ajax.url("${ctx}/admin/reserve/list-json.do?" + param);
+              url.load();
+          },
+          formSearch   : function () {
+              var articleName = $("#articleName").val();
+              var articleId = $("#articleId").val();
+              var memberName=$("#memberName").val();
+              var param = "&articleName=" + articleName + "&articleId=" + articleId+"&memberName="+memberName;
+              var url = table.ajax.url("${ctx}/admin/reserve/list-json.do?" + param);
+              url.load();
+          }
+        
+    });
 	table = $('#modeldata').DataTable({
 		"language": {
 			"url":ctx + "/zh_CN.txt"

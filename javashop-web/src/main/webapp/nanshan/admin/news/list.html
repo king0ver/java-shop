@@ -1,64 +1,46 @@
 
 <#include '/admin/header.html' >
+<style type="text/css">
+	.table_search button{
+		margin-top: 0px!important;
+	}
+	.table_search{
+		width:700px;
+	}
+	
+
+</style>
 <div  class="admin-main">
    <div>
-        <!--提示区域  -->
-       <!--  <div class="page_explain">
-            <h2>操作提示</h2>
-            <ul>
-                <li><span>.</span>在新增文章的时候，需要先建立文章模型，文章模型主要可以更好的对文章进行分类，以便于同一类型文章在不同页面输出时的统一性及复用性</li>
-                <li><span>.</span>建立好文章模型之后，请到开发者-页面管理-文章管理中添加此模板模型并添加此模型下的文章。</li>
-            </ul>
-        </div> -->
+      
         <!--按钮操作区域  -->
         <div class="table_control">
-            <div class="table_opera">
-                <button type="button" id="add_model_button" class="layui-btn layui-btn-primary "  title="添加"  ><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
-              <!--   <button type="button" class="layui-btn layui-btn-primary " title="提示" id="explain"><i class="icon iconfont icon-tishi1"></i></button> -->
+              <div class="table_opera">
+                <button type="button" id="add_spec_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
             </div>
-
-        </div>
-       <!--  <div class="table_search">
-				<input type="text" name="keyword" placeholder="请输入商品关键字" id="searchbtn">
+            <!--搜索区域  -->
+            <div class="table_search">
+				<input type="text" name="keyword" placeholder="请输入标题关键字" id="searchbtn">
 				<div id="templist" style="display: none">
 					<form class="layui-form">
 						<div class="form-group">
+							<label for="contain">ID：</label>
+							<input class="form-control" type="text" id="articleId"/>
+						</div>
+						<div class="form-group">
 							<label for="contain">标题：</label>
-							<input class="form-control" type="text" id="goods_name" name="goods_name"/>
+							<input class="form-control" type="text" id="articleName"/>
 						</div>
-						<div class="form-group">
-							<label for="contain">分类：</label>
-							<input class="form-control" type="text" id="goods_num" name="goods_num"/>
-						</div>
-						<div class="form-group">
-							<label>店铺名称：</label>
-							<input class="form-control" type="text" id="seller_name" name="seller_name"/>
-						</div>
-						<div class="form-group">
-							<label for="">商品类别：</label>
-							<div class="layui-form-item">
-								<div class="layui-input-inline" style="width: 140px">
-									<select name="select_cat-1" lay-filter="select_cat" lay-search>
-										<option value=" ">请选择</option>
-									</select>
-								</div>
-								<div class="layui-input-inline" style="width: 140px">
-									<select name="select_cat-2" lay-filter="select_cat" lay-search>
-										<option value=" ">请选择</option>
-									</select>
-								</div>
-								<div class="layui-input-inline" style="width: 140px">
-									<select name="select_cat-3" lay-filter="select_cat" lay-search>
-										<option value=" ">请选择</option>
-									</select>
-								</div>
-							</div>
-							<input class="form-control" type="hidden" id="cat_id" name="cat_id" value=""/>
-						</div>
+						
+						
 					</form>
 				</div>
 			</div>
-		</div> -->
+			
+		</div> 
+
+      
+         
     </div>
     
    <!--表格区域  -->
@@ -84,6 +66,24 @@
 var table;
 
 $(function(){
+	 var cent = $("#templist").html();
+	 $("#searchbtn").searchBox({
+    	  content: cent,
+    	  keywordSearch: function () {
+              var keyword = $("input[name='keyword']").val();
+              var param = "&articleName=" + keyword;
+              var url = table.ajax.url("${ctx}/admin/article/list-json.do?parentId=37 " + param);
+              url.load();
+          },
+          formSearch   : function () {
+              var articleName = $("#articleName").val();
+              var articleId = $("#articleId").val();
+              var param = "&articleName=" + articleName + "&articleId=" + articleId;
+              var url = table.ajax.url("${ctx}/admin/article/list-json.do?parentId=37" + param);
+              url.load();
+          }
+        
+    });
 	
 	table = $('#modeldata').DataTable({
 		"language": {
