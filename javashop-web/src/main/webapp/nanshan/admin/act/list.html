@@ -1,5 +1,6 @@
 
 <#include '/admin/header.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
 <style type="text/css">
 	.table_search button{
 		margin-top: 0px!important;
@@ -31,6 +32,21 @@
 							<label for="contain">标题：</label>
 							<input class="form-control" type="text" id="articleName"/>
 						</div>
+						<div class="form-group">
+			      			<select name="cat_id" id="isDel">
+			      			    <option value="">状态</option>
+			                    <option value="0">有效</option>
+			                    <option value="1">已删除</option>
+			      			</select>
+    		            </div>
+    		            <div class="form-group" >
+    		                 <label for="contain">开始时间：</label>
+      			             <input class="layui-input" placeholder="开始时间" id="startDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+    		             <div class="form-group" >
+    		                 <label for="contain">结束时间：</label>
+      			             <input class="layui-input" placeholder="结束时间" id="endDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
 						
 						
 					</form>
@@ -49,6 +65,7 @@
             <th>分类名称</th>
             <th>名称</th>
             <th>创建时间</th>
+             <th>状态</th>
             <th>图片</th>
             <th>操作</th>
           </tr>
@@ -76,7 +93,10 @@ $(function(){
           formSearch   : function () {
               var articleName = $("#articleName").val();
               var articleId = $("#articleId").val();
-              var param = "&articleName=" + articleName + "&articleId=" + articleId;
+              var startDate=$("#startDate").val();
+              var endDate=$("#endDate").val();
+              var isDel=$("#isDel").val();
+              var param = "&articleName=" + articleName + "&articleId=" + articleId+"&isDel="+isDel+"&startDate="+startDate+"&endDate="+endDate;
               var url = table.ajax.url("${ctx}/admin/article/list-json.do?catId=38,39" + param);
               url.load();
           }
@@ -105,9 +125,12 @@ $(function(){
 	        	if(data.create_time==null){
 	        		return " ";
 	        	}else{
-	        		return getFormatDateByLong(data.create_time, "yyyy-MM-dd");
+	        		return getFormatDateByLong(data.create_time, "yyyy-MM-dd hh:mm:ss");
 	        	}
 	       	}},
+	        {data: function(obj){
+	        	return convertState(obj.is_del);
+	        }},
 	        {data: null,"render": function(data, type, row) {
 	        	if(data.pic_url==null){
 	        		return " ";

@@ -37,7 +37,7 @@
 			<div class="layui-form-item">
 	    		<label class="layui-form-label">创建时间：</label>
 	    		<div class="layui-input-inline" >
-	      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" style="width:100%;height:38px;" value='<@dateformat time='${data.create_time}' pattern='yyyy-MM-dd'/>' />
+	      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" value='<@dateformat time='${data.create_time}' pattern='yyyy-MM-dd hh:mm:ss'/>' />
 	    		</div>
   		    </div>
 			<div class="layui-form-item">

@@ -1,5 +1,6 @@
 
 <#include '/admin/header.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
 <style type="text/css">
 	.table_search button{
 		margin-top: 0px!important;
@@ -16,7 +17,7 @@
         <!--按钮操作区域  -->
         <div class="table_control">
               <div class="table_opera">
-                <button type="button" id="add_spec_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+                <button type="button" id="add_model_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
             </div>
             <!--搜索区域  -->
             <div class="table_search">
@@ -31,6 +32,22 @@
 							<label for="contain">标题：</label>
 							<input class="form-control" type="text" id="articleName"/>
 						</div>
+						<div class="form-group">
+			      			<select name="cat_id" id="isDel">
+			      			    <option value="">状态</option>
+			                    <option value="0">有效</option>
+			                    <option value="1">已删除</option>
+			      			</select>
+    		            </div>
+    		            <div class="form-group" >
+    		                 <label for="contain">开始时间：</label>
+      			             <input class="layui-input" placeholder="开始时间" id="startDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+    		             <div class="form-group" >
+    		                 <label for="contain">结束时间：</label>
+      			             <input class="layui-input" placeholder="结束时间" id="endDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+						
 						
 						
 					</form>
@@ -52,6 +69,7 @@
             <th>分类名称</th>
             <th>名称</th>
             <th>创建时间</th>
+            <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -78,7 +96,10 @@ $(function(){
           formSearch   : function () {
               var articleName = $("#articleName").val();
               var articleId = $("#articleId").val();
-              var param = "&articleName=" + articleName + "&articleId=" + articleId;
+              var isDel=$("#isDel").val();
+              var startDate=$("#startDate").val();
+              var endDate=$("#endDate").val();
+              var param = "&articleName=" + articleName + "&articleId=" + articleId+"&isDel="+isDel+"&startDate="+startDate+"&endDate="+endDate;
               var url = table.ajax.url("${ctx}/admin/article/list-json.do?parentId=37" + param);
               url.load();
           }
@@ -107,9 +128,12 @@ $(function(){
 	        	if(data.create_time==null){
 	        		return " ";
 	        	}else{
-	        		return getFormatDateByLong(data.create_time, "yyyy-MM-dd");
+	        		return getFormatDateByLong(data.create_time, "yyyy-MM-dd hh:mm:ss");
 	        	}
 	       	}},
+	        {data: function(obj){
+	        	return convertState(obj.is_del);
+	        }},
 	        {data: null,"render": function(data, type, row) {
 	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/admin/article/edit.do?catId=${catId!'0'}&id="+data.id+"')\">修改</a>"
 	        			+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger'  onclick='del("+data.id +")'>删除</a>";		

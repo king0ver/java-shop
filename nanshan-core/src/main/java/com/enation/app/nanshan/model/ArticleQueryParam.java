@@ -8,10 +8,17 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel
 public class ArticleQueryParam implements Serializable{
 
-    private String catId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String catId;
     private String articleName;
     private String articleId;
     private String parentId;
+    private String isDel;
+    private String startDate;
+    private String endDate;
     
 	public String getParentId() {
 		return parentId;
@@ -37,6 +44,25 @@ public class ArticleQueryParam implements Serializable{
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
+	public String getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	
 	
     
 	
