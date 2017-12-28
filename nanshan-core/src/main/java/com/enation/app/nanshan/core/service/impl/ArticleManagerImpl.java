@@ -78,7 +78,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		StringBuffer sql = new StringBuffer();
         
 		sql.append(
-				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id and a.is_del<>1");
+				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id ");
 		if(!StringUtil.isEmpty(param.getCatId())){
 			sql.append(" and a.cat_id in ("+param.getCatId()+")");
 		}
@@ -91,7 +91,15 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtil.isEmpty(param.getParentId())){
 			sql.append(" and t.parent_id="+param.getParentId());
 		}
-		
+		if(!StringUtil.isEmpty(param.getIsDel())){
+			sql.append(" and a.is_del="+param.getIsDel());
+		}
+		if(!StringUtil.isEmpty(param.getStartDate())){
+			sql.append(" and a.create_time>="+DateUtil.getDateline(param.getStartDate(), "yyyy-MM-dd hh:mm:ss"));
+		};
+		if(!StringUtil.isEmpty(param.getEndDate())){
+			sql.append(" and a.create_time<="+DateUtil.getDateline(param.getEndDate(), "yyyy-MM-dd hh:mm:ss"));
+		};
 		Page webpage = this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 		return webpage;
 	}
@@ -245,7 +253,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 	}
 
 	@Override
-	public NanShanArticleVo queryArticleByCatId(int id) {
+	public NanShanArticleVo queryArtByCatId(int id) {
 		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
@@ -267,7 +275,20 @@ public class ArticleManagerImpl implements IArticleManager  {
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
 
-	
+	/*
+	 * 通过分类查询信息
+	 * @see com.enation.app.nanshan.core.service.IArticleManager#queryArticleByCatId(int)
+	 */
+	@Override
+	public List<NanShanArticleVo> queryArticleByCatId(int catId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("select");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.content content_id,a.is_del,c.content,t.cat_name ");
+		sql.append("from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t ");
+		sql.append(" where a.cat_id=t.cat_id and a.content=c.id and t.cat_id = ?");
+		return daoSupport.queryForList(sql.toString(),NanShanArticleVo.class,catId);
+}
+
 	
 
 

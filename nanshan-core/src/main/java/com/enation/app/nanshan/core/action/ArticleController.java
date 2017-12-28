@@ -1,8 +1,6 @@
 package com.enation.app.nanshan.core.action;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,21 +10,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
 
 
-import com.enation.app.nanshan.constant.DefaultArticleIdEnum;
 import com.enation.app.nanshan.core.model.Spec;
 import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ISpecManager;
-import com.enation.app.nanshan.model.ArtSpecRel;
 import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
@@ -67,7 +61,7 @@ public class ArticleController extends GridController {
 	public JsonResult add(NanShanArticleVo nanShanArticleVo,String createTime){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd");
+				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd hh:mm:ss");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
 			this.articleManager.addArticle(nanShanArticleVo);
@@ -142,7 +136,7 @@ public class ArticleController extends GridController {
 	public JsonResult saveEdit(NanShanArticleVo nanShanArticleVo,String createTime ){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd");
+				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd hh:mm:ss");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
             this.articleManager.updateArticle(nanShanArticleVo);
@@ -268,7 +262,7 @@ public class ArticleController extends GridController {
 	public ModelAndView gameRank(int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
-			NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
+			NanShanArticleVo   vo=this.articleManager.queryArtByCatId(catId);
 			view.setViewName("/nanshan/admin/game/addrank");
 			view.addObject("ctx",ctx);	
 			view.addObject("vo",vo);	
@@ -292,7 +286,7 @@ public class ArticleController extends GridController {
 	@RequestMapping("/add_edit_rank")
 	public JsonResult addEditRank(NanShanArticleVo nanShanArticleVo){
 		try {
-			NanShanArticleVo vo= this.articleManager.queryArticleByCatId(nanShanArticleVo.getCat_id());
+			NanShanArticleVo vo= this.articleManager.queryArtByCatId(nanShanArticleVo.getCat_id());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
 			}else{
@@ -316,7 +310,7 @@ public class ArticleController extends GridController {
 	*/ 
 	@RequestMapping(value = "cinema-time")
 	public ModelAndView movie(int catId) {
-		NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
+		NanShanArticleVo   vo=this.articleManager.queryArtByCatId(catId);
 		ModelAndView view=new ModelAndView();
 		view.setViewName("/nanshan/admin/cinema/add");
 		view.addObject("ctx",ctx);	
@@ -329,7 +323,7 @@ public class ArticleController extends GridController {
 	@RequestMapping(value = "cinema-edit")
 	public JsonResult cinemaEdit(NanShanArticleVo nanShanArticleVo) {
 		try {
-			NanShanArticleVo vo= this.articleManager.queryArticleByCatId(nanShanArticleVo.getCat_id());
+			NanShanArticleVo vo= this.articleManager.queryArtByCatId(nanShanArticleVo.getCat_id());
 			if(vo==null){
 				this.articleManager.addArticle(nanShanArticleVo);
 			}else{
@@ -354,7 +348,7 @@ public class ArticleController extends GridController {
 	public ModelAndView fourDcinema(int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
-			NanShanArticleVo   vo=this.articleManager.queryArticleByCatId(catId);
+			NanShanArticleVo   vo=this.articleManager.queryArtByCatId(catId);
 			view.setViewName("/nanshan/admin/cinema/cinema4d");
 			view.addObject("ctx",ctx);	
 			view.addObject("vo",vo);
@@ -383,7 +377,7 @@ public class ArticleController extends GridController {
 			
 			NanShanArticleVo   vo=new NanShanArticleVo();
 			if(nanShanArticleVo.getCat_id()!=0){
-				vo=this.articleManager.queryArticleByCatId(Integer.valueOf(nanShanArticleVo.getCat_id()));
+				vo=this.articleManager.queryArtByCatId(Integer.valueOf(nanShanArticleVo.getCat_id()));
 			}
 			view.setViewName("/nanshan/admin/guide/navroute");
 			view.addObject("ctx",ctx);	
