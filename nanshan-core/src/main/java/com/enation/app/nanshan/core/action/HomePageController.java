@@ -19,7 +19,9 @@ import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.JsonResult;
+import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
+import com.google.gson.JsonObject;
 
 /**
  * 首页服务
@@ -79,10 +81,19 @@ public class HomePageController extends GridController{
 					jsonArray.add(json);
 				}
 			}
-			articleVo.setContent(jsonArray.toString());
+			JSONObject json = new JSONObject();
+			String routineImgUrl = request.getParameter("routineImgUrl");
+			String temporaryImgUrl = request.getParameter("temporaryImgUrl");
+			String scienceImgUrl = request.getParameter("scienceImgUrl");
+			json.put("routineImgUrl", routineImgUrl);
+			json.put("temporaryImgUrl", temporaryImgUrl);
+			json.put("scienceImgUrl", scienceImgUrl);
+			json.put("imgs", jsonArray);
+			articleVo.setContent(json.toString());
 			if(articleVo.getId()>0){
 				articleManager.updateArticle(articleVo);
 			}else{
+				articleVo.setCreate_time(DateUtil.getDateline());
 				articleManager.addArticle(articleVo);
 			}
 			return JsonResultUtil.getSuccessJson("操作成功");

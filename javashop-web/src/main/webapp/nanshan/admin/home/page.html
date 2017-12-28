@@ -25,26 +25,75 @@ form{margin-bottom:0px;}
 		<div id="article">
 			<#if data.content??>
 				<#assign dataInfo = data.content?eval/>
-				<#list dataInfo as json>
-					<fieldset class="layui-elem-field">
-		    		    <div class="layui-inline">
-		    				<img name="img" src="${json.imgUrl}"  width="180" height="150" />
-		    				<input type="hidden" name="imgUrl" value="${json.imgUrl}" />
-		    	    	</div>
-		    	    	<div class="layui-inline">
-							<input type="text" name="pageUrl" value="${json.pageUrl}" placeholder="请输入页面url" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
-	    	    		</div>
-		    	    	<div class="layui-inline">
-		    	      		<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
-		    	    	</div>
-		    	    </fieldset>
-				</#list>
+				<#if dataInfo.imgs??>
+					<#list dataInfo.imgs as json>
+						<fieldset class="layui-elem-field">
+			    		    <div class="layui-inline">
+			    				<img name="img" src="${json.imgUrl}"  width="180" height="150" />
+			    				<input type="hidden" name="imgUrl" value="${json.imgUrl}" />
+			    	    	</div>
+			    	    	<div class="layui-inline">
+								<input type="text" name="pageUrl" value="${json.pageUrl}" placeholder="请输入页面url" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    	    		</div>
+			    	    	<div class="layui-inline">
+			    	      		<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delButton(this);"><i class="layui-icon">&#xe640;</i></a>
+			    	    	</div>
+			    	    </fieldset>
+					</#list>
+				</#if>
 			</#if>
 		</div>
 		<input type="hidden" name="id" value="${data.id}" />
 		<input type="hidden" name="content_id" value="${data.content_id}">
   	</div>
-  			
+  	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  		<legend>展示展览</legend>
+	</fieldset>
+	<div class="layui-form-item">
+   		<label class="layui-form-label">常设展览：</label>
+		<div class="layui-input-inline" style="width:120px;">
+			<input name="file" class="layui-upload-file" id="routineImgUploadBtn" type="file">
+			<input id="routineImgUrl" name="routineImgUrl" value="<#if data.content??> ${dataInfo.routineImgUrl} </#if>" type="hidden">
+		</div>
+		<div id="routineImg" class="layui-inline">
+			<#if data.content??>
+				<#if dataInfo.routineImgUrl != "">
+					<img src="${dataInfo.routineImgUrl}" width="130" height="130" />
+	    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delRoutineImg();"><i class="layui-icon">&#xe640;</i></a>
+				</#if>
+			</#if>
+		</div>
+  	</div>
+  	<div class="layui-form-item">
+   		<label class="layui-form-label">临时展览：</label>
+		<div class="layui-input-inline" style="width:120px;">
+			<input name="file" class="layui-upload-file" id="temporaryImgUploadBtn" type="file">
+			<input id="temporaryImgUrl" name="temporaryImgUrl" value="<#if data.content??> ${dataInfo.temporaryImgUrl} </#if>" type="hidden">
+		</div>
+		<div id="temporaryImg" class="layui-inline">
+			<#if data.content??>
+				<#if dataInfo.temporaryImgUrl != "">
+					<img src="${dataInfo.temporaryImgUrl}" width="130" height="130" />
+	    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delTemporaryImg();"><i class="layui-icon">&#xe640;</i></a>
+				</#if>
+			</#if>
+		</div>
+  	</div>
+  	<div class="layui-form-item">
+   		<label class="layui-form-label">科学展览：</label>
+		<div class="layui-input-inline" style="width:120px;">
+			<input name="file" class="layui-upload-file" id="scienceImgUploadBtn" type="file">
+			<input id="scienceImgUrl" name="scienceImgUrl" value="<#if data.content??> ${dataInfo.scienceImgUrl} </#if>" type="hidden">
+		</div>
+		<div id="scienceImg" class="layui-inline">
+			<#if data.content??>
+				<#if dataInfo.scienceImgUrl != "">
+					<img src="${dataInfo.scienceImgUrl}" width="130" height="130" />
+	    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delScienceImg();"><i class="layui-icon">&#xe640;</i></a>
+				</#if>
+			</#if>
+		</div>
+  	</div>
 	<div class="layui-form-item" >
 	    <div class="layui-inline">
 			<a class="layui-btn" type="submit" lay-submit="" lay-filter="save_info">保存提交</a>	
@@ -58,6 +107,36 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     layedit = layui.layedit,
     laydate = layui.laydate;	
 	
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#routineImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#routineImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delRoutineImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#routineImgUrl").val(res.url);
+	    }
+	});
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#temporaryImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#temporaryImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delTemporaryImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#temporaryImgUrl").val(res.url);
+	    }
+	});
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#scienceImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#scienceImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delScienceImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#scienceImgUrl").val(res.url);
+	    }
+	});
 	layui.upload({
 	    url: '/core/admin/nanshan/upload.do'
 		    ,elem: '#serviceInfoImgUploadBtn' 
@@ -99,13 +178,45 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 
 
 
-function delImg(){
+function delRoutineImg(){
 	 layer.confirm('确认要删除吗？', {
 		  btn: ['删除','取消'] //按钮
 		  ,area:['80px','150px']
 		}, function(){
-			$("#expImg").html("");
-			$("#picUrl").val("");
+			$("#routineImg").html("");
+			$("#routineImgUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+function delTemporaryImg(){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#temporaryImg").html("");
+			$("#temporaryImgUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+function delScienceImg(){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#scienceImg").html("");
+			$("#scienceImgUrl").val("");
 		  	 layer.msg({
 			    time: 20000
 			 }); 

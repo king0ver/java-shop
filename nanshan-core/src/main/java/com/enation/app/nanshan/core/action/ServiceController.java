@@ -20,6 +20,7 @@ import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.JsonResult;
+import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
 
 /**
@@ -90,6 +91,7 @@ public class ServiceController extends GridController{
 			if(articleVo.getId()>0){
 				articleManager.updateArticle(articleVo);
 			}else{
+				articleVo.setCreate_time(DateUtil.getDateline());
 				articleManager.addArticle(articleVo);
 			}
 			return JsonResultUtil.getSuccessJson("操作成功");
