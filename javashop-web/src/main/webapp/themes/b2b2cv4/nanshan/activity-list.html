@@ -4,7 +4,11 @@
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
-<#include 'common/thirdCat.html'/>
+    <div class="nav-bar">
+        <div class="nav-content">
+            <div class="nav-title">${article.curCat.name!''}</div>
+        </div>
+    </div>
 <div class="content-bg">
     <div class="section-content clearfix" >
     <#include 'common/navigator.html'/>

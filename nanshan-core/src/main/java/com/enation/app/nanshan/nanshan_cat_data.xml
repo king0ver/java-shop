@@ -142,8 +142,8 @@
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
-		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>24,'推荐区',21,0,'/nanshan/game-list.html?catId=24','/nanshan/game-list.html?catId=24'</values>
+		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url,spec_id</fields>
+		<values>24,'推荐区',21,0,'/nanshan/game-list.html?catId=24','/nanshan/game-list.html?catId=24','1;2;3'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -154,8 +154,8 @@
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
-		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>26,'游戏列表',21,0,'/nanshan/game-list.html?catId=26','/nanshan/game-list.html?catId=26'</values>
+		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url,spec_id</fields>
+		<values>26,'游戏列表',21,0,'/nanshan/game-list.html?catId=26','/nanshan/game-list.html?catId=26','1;2;3'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -235,7 +235,7 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>44,'推荐路线',5,0,'/nanshan/','/nanshan/'</values>
+		<values>44,'推荐路线',5,0,'/nanshan/route.html?catId=47','/nanshan/route.html?catId=47'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -254,31 +254,31 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>47,'成年人',44,0,'/nanshan/','/nanshan/'</values>
+		<values>47,'成年人',44,0,'/nanshan/route.html?catId=47','/nanshan/route.html?catId=47'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>48,'青少年',44,0,'/nanshan/','/nanshan/'</values>
+		<values>48,'青少年',44,0,'/nanshan/route.html?catId=48','/nanshan/route.html?catId=48'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>49,'中老年',44,0,'/nanshan/','/nanshan/'</values>
+		<values>49,'中老年',44,0,'/nanshan/route.html?catId=49','/nanshan/route.html?catId=49'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>50,'家庭（十岁以下儿童）',44,0,'/nanshan/','/nanshan/'</values>
+		<values>50,'家庭（十岁以下儿童）',44,0,'/nanshan/route.html?catId=50','/nanshan/route.html?catId=50'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>51,'开馆时间',45,0,'/nanshan/','/nanshan/'</values>
+		<values>51,'开馆时间',45,0,'/nanshan/open-time.html','/nanshan/open-time.html'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -369,78 +369,84 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>67,'服务中心',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>67,'服务中心',46,0,'/nanshan/facility.html?catId=67','/nanshan/facility.html?catId=67'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>68,'休息区域',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>68,'休息区域',46,0,'/nanshan/facility.html?catId=68','/nanshan/facility.html?catId=68'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>69,'饮水机',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>69,'饮水机',46,0,'/nanshan/facility.html?catId=69','/nanshan/facility.html?catId=69'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>70,'洗手间',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>70,'洗手间',46,0,'/nanshan/facility.html?catId=70','/nanshan/facility.html?catId=70'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>71,'科普商店',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>71,'科普商店',46,0,'/nanshan/facility.html?catId=71','/nanshan/facility.html?catId=71'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>72,'导览手册',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>72,'导览手册',46,0,'/nanshan/facility.html?catId=72','/nanshan/facility.html?catId=72'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>73,'讲解服务',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>73,'讲解服务',46,0,'/nanshan/facility.html?catId=73','/nanshan/facility.html?catId=73'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>74,'停车指南',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>74,'停车指南',46,0,'/nanshan/facility.html?catId=74','/nanshan/facility.html?catId=74'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>75,'无障碍设施',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>75,'无障碍设施',46,0,'/nanshan/facility.html?catId=75','/nanshan/facility.html?catId=75'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>76,'母婴室',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>76,'母婴室',46,0,'/nanshan/facility.html?catId=76','/nanshan/facility.html?catId=76'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>77,'失误招领',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>77,'失误招领',46,0,'/nanshan/facility.html?catId=77','/nanshan/facility.html?catId=77'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>78,'物品寄存',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>78,'物品寄存',46,0,'/nanshan/facility.html?catId=78','/nanshan/facility.html?catId=78'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>79,'医务室/AED',46,0,'/nanshan/facility.html','/nanshan/facility.html'</values>
+		<values>79,'医务室/AED',46,0,'/nanshan/facility.html?catId=79','/nanshan/facility.html?catId=79'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_article_category</table>
+		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
+		<values>80,'参加指数',45,0,'',''</values>
 	</action>
 </dbsolution>

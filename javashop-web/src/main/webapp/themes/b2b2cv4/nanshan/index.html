@@ -161,21 +161,27 @@
         <div id="certify">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide ">
-                        <img src="css/img/certify01.png"  />
-                        <p class="title">谁说的就是</p>
-                        <p class="textList">的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始</p>
-                    </div>
-                    <div class="swiper-slide ">
-                        <img src="css/img/certify01.png"  />
-                        <p class="title">谁说的就是</p>
-                        <p class="textList">的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始</p>
-                    </div>
-                    <div class="swiper-slide ">
-                        <img src="css/img/certify01.png"  />
-                        <p class="title">谁说的就是</p>
-                        <p class="textList">的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始</p>
-                    </div>
+                    <#if article.news??>
+                        <div class="swiper-slide ">
+                            <img src="${article.news.imgUrl}"  />
+                            <p class="title">${article.news.title}</p>
+                            <p class="textList">${article.news.summary}</p>
+                        </div>
+                    </#if>
+                    <#if article.activeBack??>
+                        <div class="swiper-slide ">
+                            <img src="${article.activeBack.imgUrl}"  />
+                            <p class="title">${article.activeBack.title}</p>
+                            <p class="textList">${article.activeBack.summary}</p>
+                        </div>
+                    </#if>
+                    <#if article.activeNew??>
+                        <div class="swiper-slide ">
+                            <img src="${article.activeNew.imgUrl}"  />
+                            <p class="title">${article.activeNew.title}</p>
+                            <p class="textList">${article.activeNew.summary}</p>
+                        </div>
+                    </#if>
                 </div>
 
             </div>
@@ -291,34 +297,34 @@
         </div>
         <div class="changuan clearfix">
             <div class="f1">
-                开馆时间
-            </div>
-            <div class="f2">
-                开馆时间
+                <a href="/nanshan/open-time.html">开馆时间</a>
             </div>
             <div class="f3">
-                开馆时间
+                <a href="">参加指数</a>
+            </div>
+            <div class="f2">
+                <a href="">交通指南</a>
             </div>
             <div class="f4">
-                开馆时间
+                <a href="">温馨提示</a>
             </div>
             <div class="f5">
-                开馆时间
+                <a href="">安全须知</a>
             </div>
         </div>
     </div>
     <div class="rightNav loutinav">
         <div class="rightNavList" data-scrolltop="0">
-            <span class="rightNavName ">当前</span>
+            <span class="rightNavName ">首页</span>
         </div>
         <div class="rightNavList"  data-scrolltop="1">
-            <span  class="rightNavName">当前</span>
+            <span  class="rightNavName">活动资讯</span>
         </div>
         <div class="rightNavList"  data-scrolltop="2">
-            <span  class="rightNavName ">当前</span>
+            <span  class="rightNavName ">展示展览</span>
         </div>
         <div class="rightNavList"  data-scrolltop="3">
-            <span  class="rightNavName ">当前</span>
+            <span  class="rightNavName ">参观指南</span>
         </div>
     </div>
 <#include 'common/footer.html'/>

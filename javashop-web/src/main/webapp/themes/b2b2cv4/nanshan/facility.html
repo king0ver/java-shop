@@ -42,7 +42,9 @@
         <div class="equipment-introduction">
             <div class="title">
                 <div class="equipment-name">${article.item.title}</div>
-                <div class="position-desc"><img src="${file_path}/nanshan/css/images/position.png">${article.item.content.address}</div>
+                <#if article.item.content.address??>
+                    <div class="position-desc"><img src="${file_path}/nanshan/css/images/position.png">${article.item.content.address}</div>
+                </#if>
             </div>
             <div class="content-title">设施简介</div>
             <#if article.item.content?size gt 0 >

@@ -44,6 +44,11 @@ public class NanshanApp extends App {
          * 初始化分类数据
          */
         this.doInstall("file:com/enation/app/nanshan/nanshan_cat_data.xml");
+
+        /**
+         * 初始化属性项数据
+         */
+        this.doInstall("file:com/enation/app/nanshan/nanshan_spec_data.xml");
     }
 
     @Override

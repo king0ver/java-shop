@@ -227,6 +227,9 @@
 		</menu>
 
 		<menu text="南山" type="app" url="" icon="/adminthemes/new/images/menu_07.gif">
+			<menu text="首页管理">
+				<menu text="官网首页管理" url="/core/admin/home/edit.do?catId=0" />
+			</menu>
 			<menu text="展示展览">
 				<menu text="展示展览管理" url="/core/admin/exhibition/list.do" />
 				<menu text="放映时间表" url="/admin/article/cinema-time.do?catId=12" />
@@ -241,10 +244,6 @@
 			<menu text="活动资讯">
 				<menu text="新闻公告" url="/admin/article/list.do?catId=37" />
 				<menu text="活动管理" url="/admin/article/act/list.do?catId=38" />
-				
-			</menu>
-			<menu text="基础数据">
-				<menu text="基础数据管理" url="/core/admin/spec/list.do" />
 			</menu>
 			<menu text="预约管理 ">
 				<menu text="预约列表" url="/admin/reserve/list.do" />

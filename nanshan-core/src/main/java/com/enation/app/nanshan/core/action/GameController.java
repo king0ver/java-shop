@@ -114,6 +114,7 @@ public class GameController extends GridController{
 			}
 			if(StringUtils.isNotEmpty(specIds.toString())){
 				specIds = specIds.substring(0,specIds.length()-1);
+				specIds = specIds.replaceAll(";",",");
 			}
 		}
 		return specIds;

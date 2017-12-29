@@ -188,7 +188,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		ext.setAct_address(vo.getAct_address());
 		ext.setAct_cost(vo.getAct_cost());
 		ext.setAct_name(vo.getAct_name());
-		ext.setReserved_num(vo.getReserved_num());
+
 		ext.setReserve_num(vo.getReserve_num());
 		ext.setAct_cost(vo.getAct_cost());
 		if(!StringUtil.isEmpty(vo.getExpiryDate())){

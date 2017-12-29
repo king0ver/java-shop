@@ -76,7 +76,7 @@
 		<command>insert</command>
 		<table>es_nanshan_specval</table>
 		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
-		<values>9,2,'儿童',0,1514452601,'admin'</values>
+		<values>16,2,'儿童',0,1514452601,'admin'</values>
 	</action>
 	<action>
 		<command>insert</command>

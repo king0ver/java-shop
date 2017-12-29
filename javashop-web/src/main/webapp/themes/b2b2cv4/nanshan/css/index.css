@@ -152,7 +152,7 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	display: inline-block;
 	width: 15px;
 	height: 15px;
-	background: url(img/2.png) center center no-repeat;
+	background: url(images/2.png) center center no-repeat;
 	background-size:15px 15px;
 	vertical-align: middle;
 }
@@ -169,7 +169,7 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	display: inline-block;
 	width: 15px;
 	height: 15px;
-	background: url(img/fada2.png) center center no-repeat;
+	background: url(images/fada2.png) center center no-repeat;
 	background-size:15px 15px;
 	vertical-align: middle;
 }
@@ -285,6 +285,9 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	width: 110px;
 	float: left;
 }
+   .footerRight>div:nth-child(1), .footerLeft>div:nth-child(1) {
+    font-size: 18px;
+}
 .footerMi{
 	width: 100px;
 	height: 120px;
@@ -311,7 +314,7 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 .footerRight2{
 	width: 130px;
 	height: 150px;
-	background: url(imagesg/erweima.png) top center no-repeat;
+	background: url(images/erweima.png) top center no-repeat;
 	background-size:115px 115px;
 	display: inline-block;
 	line-height: 265px;
@@ -345,7 +348,7 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 .sidenav_dl {overflow:hidden; margin-top:31px; line-height:30px; border-top:1px solid #e5e5e5; padding:29px 0 0 95px;}
 .sidenav_dl dt {overflow:hidden; margin-bottom:2px;}
 .sidenav_dl dd a {font-size:12px; color:#999; display:inline-block;}
-.sidenav_dl dd a i {display:inline-block; vertical-align:middle; width:4px; height:4px; background:url(img/icons.png) -2px -2px no-repeat;}
+.sidenav_dl dd a i {display:inline-block; vertical-align:middle; width:4px; height:4px; background:url(images/icons.png) -2px -2px no-repeat;}
 .sidenav_dl dd a:hover , .sidenav_dl dd a.select {color:#333;}
 .sidenav_dl dd a:hover i , .sidenav_dl dd a.select i {background-position:-10px -2px;}
 /*sideBar - end*/
@@ -520,11 +523,15 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
   }
   .zhans .zhansLeft{
   	width: 599px;
-  	height: 600px;
+  	height: 597px;
   	margin-right: 1px;
   	float: left;
   	position: relative;
   }
+   .zhans .zhansLeft img{
+   		width: 599px;
+  	height: 597px;
+   }
   .zhans .zhansLeft span{
   
   	width: 599px;
@@ -561,24 +568,25 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
    		line-height: 310px;
    		font-weight: bold;
    }
+
    .changuan .f1{
-   	background: url(img/f1.png) no-repeat top center;
+   	background: url(images/f1.png) no-repeat top center;
    	background-size:120px 120px ;
    }
    .changuan .f2{
-   	background: url(img/f2.png) no-repeat top center;
+   	background: url(images/f2.png) no-repeat top center;
    	background-size:120px 120px ;
    }
    .changuan .f3{
-   	background: url(img/f3.png) no-repeat top center;
+   	background: url(images/f3.png) no-repeat top center;
    	background-size:120px 120px ;
    }
    .changuan .f4{
-   	background: url(img/f4.png) no-repeat top center;
+   	background: url(images/f4.png) no-repeat top center;
    	background-size:120px 120px ;
    }
    .changuan .f5{
-   	background: url(img/f5.png) no-repeat top center;
+   	background: url(images/f5.png) no-repeat top center;
    	background-size:120px 120px ;
    }
    .sanjiaoL{
@@ -609,7 +617,10 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
  	background: #0075d0;position: relative;margin-top: 1px;font-size: 18px;color: #fff;line-height: 298px;text-align: center;
  } 
  .zhansRight div:nth-child(2){
- 	background: #53b504;position: relative;margin-top: 1px;font-size: 18px;color: #fff;line-height: 298px;text-align: center;
+ 	background: #53b504;position: relative;font-size: 18px;color: #fff;line-height: 298px;text-align: center;
+ } 
+  .zhansRight div:nth-child(4){
+ margin-top: 1px;
  }  
 #certify {
 	position: relative;
@@ -766,6 +777,14 @@ font-size: 18px;
 }
 .activeNav span{
 	display: block;
+}
+#banner .swiper-slide a{
+	width: 100%;
+	height: 650px;
+}
+#banner .swiper-slide img{
+	width: 100%;
+	height: 650px;
 }
 
 
