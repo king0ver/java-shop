@@ -68,7 +68,7 @@ public class ArticleServiceImpl implements IArticleService {
 		sql.append("select");
 		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
 		sql.append("from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ");
-		sql.append(" where a.is_del = 0 and a.cat_id= ? limit 1");
+		sql.append(" where a.is_del = 0 and a.cat_id= ?  order by a.create_time desc limit 1");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, catId);
 		if(articleInfo == null){
 			return null;

@@ -9,7 +9,7 @@
 <#assign nCatTag = newTag("nCatTag") />
 <#assign ncat = nCatTag() />
 <#assign indexPageTag = newTag("indexPageTag") />
-<#assign article = indexPageTag('{"catId":0}') />
+<#assign article = indexPageTag() />
 
 <#if title??>
     <title>${title}-${header.title}</title>
@@ -38,9 +38,11 @@
         var ctxPath = '${file_path}/';
     </script>
 <link href="${ctx}/statics/images/favicon.ico" rel="shortcut icon">
+<link href="${file_path}/nanshan/css/swiper.min.css" rel="stylesheet" type="text/css">
 <link href="${file_path}/nanshan/css/index.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${file_path}/js/jquery-1.8.3.min.js" ></script>
-<script type="text/javascript" src="${file_path}/nanshan/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="${file_path}/nanshan/js/swiper.min.js" ></script>
+<script type="text/javascript" src="${file_path}/nanshan/js/index.js" ></script>
 <script type="text/javascript" src="${file_path}/nanshan/js/catNav.js"></script>
 
 <style type="text/css">
@@ -62,18 +64,16 @@
 
 </head>
 <body>
-<div id="banner">
+<div id="banner" class="louti">
     <div class="swiper-container2">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="css/img/1.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="css/img/pcbanner2.png" />
-            </div>
-            <div class="swiper-slide">
-                <img src="css/img/1.jpg" />
-            </div>
+            <#if article.item.content.imgs?size gt 0>
+                <#list  article.item.content.imgs as img>
+                    <div class="swiper-slide">
+                        <a href="${img.pageUrl!''}"><img src="${img.imgUrl!''}"/></a>
+                    </div>
+                </#list>
+            </#if>
         </div>
 
     </div>
@@ -155,15 +155,9 @@
     <div class="activety">
         <div style="position: relative;height: 60px;">
             <div class="login_content">
-                <div>活动资讯</div>
+                <div class="louti">活动资讯</div>
             </div>
         </div>
-        <div class="actNav">
-            <div>活动回顾</div>
-            <div class="actNavTxt">活动回顾</div>
-            <div>活动回顾</div>
-        </div>
-
         <div id="certify">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
@@ -182,12 +176,11 @@
                         <p class="title">谁说的就是</p>
                         <p class="textList">的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始</p>
                     </div>
-                    <div class="swiper-slide ">
-                        <img src="css/img/certify01.png"  />
-                        <p class="title">谁说的就是</p>
-                        <p class="textList">的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始的圣诞节开始倒计时客户端紧身裤到货时间肯定会三季度开始阶段考试等级考试倒计时客户端就是客户的介绍客户端就开始</p>
-                    </div>
                 </div>
+
+            </div>
+            <div class="swiper-pagination">
+
 
             </div>
             <div class="swiper-button-prev"></div>
@@ -207,7 +200,19 @@
                 },
                 pagination: {
                     el: '#certify .swiper-pagination',
-                    //clickable :true,
+                    clickable :true,
+
+                    renderBullet: function (index, className) {
+                        var actName='';
+                        if(index==0){
+                            actName='新闻中心'
+                        }else if(index==1){
+                            actName='活动回顾'
+                        }else{
+                            actName='最新活动'
+                        }
+                        return '<span class="' + className + '">' + actName + '</span>';
+                    },
                 },
                 on: {
                     progress: function(progress) {
@@ -244,22 +249,36 @@
     <div class="activety">
         <div style="position: relative;height: 70px;">
             <div class="login_content">
-                <div>展示展览</div>
+                <div class="louti">展示展览</div>
             </div>
         </div>
         <div class="zhans clearfix">
             <div class="zhansLeft">
-                <img src="css/img/4.jpg" width="100%" height="100%">
+                <img src="${article.item.content.routineImgUrl}">
                 <span> 常设展览</span>
             </div>
             <div class="zhansRight ">
-                <div style="background: blue;position: relative;">
-                    <span class="sanjiaoR"></span>
+                <div>
+                    <img src="${article.item.content.temporaryImgUrl!''}">
                 </div>
-                <div></div>
-                <div style="margin-top: 1px;"></div>
-                <div  style="background: green;position: relative;margin-top: 1px;">
-                    <span class="sanjiaoL"></span>
+
+                    <div>
+                        <a href="/nanshan/exhibition-list.html?catId=14">
+                        <span class="sanjiaoR"></span>
+                        临时展览
+                            </a>
+                    </div>
+
+
+                    <div style="margin-top: 1px;">
+                        <a href="/nanshan/cinema.html">
+                        <span class="sanjiaoL"></span>
+                        科学影城
+                            </a>
+                    </div>
+
+                <div>
+                    <img src="${article.item.content.scienceImgUrl!''}">
                 </div>
             </div>
         </div>
@@ -267,7 +286,7 @@
     <div class="activety">
         <div style="position: relative;height: 70px;">
             <div class="login_content">
-                <div>参观指南</div>
+                <div class="louti">参观指南</div>
             </div>
         </div>
         <div class="changuan clearfix">
@@ -288,18 +307,18 @@
             </div>
         </div>
     </div>
-    <div class="rightNav">
+    <div class="rightNav loutinav">
         <div class="rightNavList" data-scrolltop="0">
-            <span>当前</span>
+            <span class="rightNavName ">当前</span>
         </div>
-        <div class="rightNavList"  data-scrolltop="500">
-            <span>当前</span>
+        <div class="rightNavList"  data-scrolltop="1">
+            <span  class="rightNavName">当前</span>
         </div>
-        <div class="rightNavList"  data-scrolltop="1100">
-            <span>当前</span>
+        <div class="rightNavList"  data-scrolltop="2">
+            <span  class="rightNavName ">当前</span>
         </div>
-        <div class="rightNavList"  data-scrolltop="1800">
-            <span>当前</span>
+        <div class="rightNavList"  data-scrolltop="3">
+            <span  class="rightNavName ">当前</span>
         </div>
     </div>
 <#include 'common/footer.html'/>

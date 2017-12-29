@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.enation.app.nanshan.model.ArticleCat;
+import com.enation.app.nanshan.model.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.enation.app.nanshan.core.service.IArticleManager;
-import com.enation.app.nanshan.model.ArtSpecRel;
-import com.enation.app.nanshan.model.ArticleExt;
-import com.enation.app.nanshan.model.ArticleQueryParam;
-import com.enation.app.nanshan.model.NanShanArticle;
-import com.enation.app.nanshan.model.NanShanArticleVo;
-import com.enation.app.nanshan.model.NanShanClob;
 import com.enation.app.nanshan.util.EnumUtil;
 import com.enation.framework.database.IDaoSupport;
 import com.enation.framework.database.Page;
@@ -197,7 +191,10 @@ public class ArticleManagerImpl implements IArticleManager  {
 		ext.setReserved_num(vo.getReserved_num());
 		ext.setReserve_num(vo.getReserve_num());
 		ext.setAct_cost(vo.getAct_cost());
-		ext.setExpiry_date(vo.getExpiryDate());
+		if(!StringUtil.isEmpty(vo.getExpiryDate())){
+			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd");
+			ext.setExpiry_date(create_time);
+		}
 		return ext;
 		
 	}

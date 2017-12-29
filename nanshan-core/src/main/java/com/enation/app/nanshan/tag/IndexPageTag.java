@@ -25,9 +25,17 @@ public class IndexPageTag extends AbstractPageTag {
 
         Map<String, Object> map = new HashMap<>();
 
-        String catId  = params.get("catId").toString();
+        ArticleVo articleVo = articleService.queryArticleInfoByCatId(0);
 
-        handlePageCat(map, catId);
+        ArticleVo news = articleService.queryArticleInfoByCatId(37);
+        ArticleVo activeBack = articleService.queryArticleInfoByCatId(39);
+        ArticleVo activeNew = articleService.queryArticleInfoByCatId(38);
+
+
+        map.put("item", articleVo);
+        map.put("news", news);
+        map.put("activeBack", activeBack);
+        map.put("activeNew", activeNew);
 
         return map;
     }
