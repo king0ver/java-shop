@@ -3,7 +3,7 @@
 	<action>
 		<command>create</command>
 		<table>nanshan_article_category</table>
-		<field><name>cat_id</name><type>int</type><size>10</size><option>10</option></field>
+		<field><name>cat_id</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>cat_name</name><type>varchar</type><size>60</size><option>00</option></field>
 		<field><name>article_url</name><type>varchar</type><size>255</size><option>00</option></field>
 		<field><name>pc_url</name><type>varchar</type><size>255</size><option>00</option></field>
@@ -89,7 +89,7 @@
 		<field><name>member_id</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>activity_time</name><type>long</type><size>255</size><option>00</option></field>
 		<field><name>attend_name</name><type>varchar</type><size>255</size><option>00</option></field>
-		<field><name>age</name><type>varchar</type><size>1</size><option>00</option></field>
+		<field><name>age</name><type>varchar</type><size>5</size><option>00</option></field>
 		<field><name>phone_number</name><type>varchar</type><size>255</size><option>00</option></field>
 		<field><name>email</name><type>varchar</type><size>255</size><option>00</option></field>
 	</action>

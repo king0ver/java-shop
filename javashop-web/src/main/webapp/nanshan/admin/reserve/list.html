@@ -45,8 +45,9 @@
           <tr>
             <th>活动ID</th>
             <th>活动名称</th>
-            <th>活动时间</th>
+            <th>参与成员ID</th>
             <th>参与成员</th>
+            <th>活动时间</th>
             <th>年龄</th>
             <th>电话</th>
             <th>email</th>
@@ -96,14 +97,16 @@ $(function(){
 	    columns: [ //定义列
 	        {data: "article_id"},
 	        {data: "title"},
+	        {data: "member_id"},
+	        {data: "attend_name"},
 	        {data: null,"render": function(data, type, row) {
 	        	if(data.act_time==null){
 	        		return " ";
 	        	}else{
-	        		return getFormatDateByLong(data.act_time, "yyyy-MM-dd hh:mm:ss");
+	        		return getFormatDateByLong(data.activity_time, "yyyy-MM-dd hh:mm:ss");
 	        	}
 	       	}},
-	        {data: "member_name"},
+	       
 	        {data: "age"},
 	        {data: "phone_number"},
 	        {data: "email"}
