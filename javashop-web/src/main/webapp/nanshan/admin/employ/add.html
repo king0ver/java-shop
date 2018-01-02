@@ -92,7 +92,6 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 		obj.jobRes=getContext();
 		obj.jobReq=getJobReqText();
 		var content=JSON.stringify(obj);
-		alert(content)
     	var options = {
    			url:ctx+"/admin/article/add_save.do?catId=${catId}",
    			type:"post",
