@@ -64,7 +64,7 @@ public class GameController extends GridController{
 	@RequestMapping(value="/list-json")
 	public GridJsonResult listJson(){
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("catIds","21");//父分类为(游戏)下的数据
+		params.put("catParentIds","21");//父分类为(游戏)下的数据
 		Page page = this.articleManager.queryArticleListByConiditon(params, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);
 	}
@@ -94,7 +94,7 @@ public class GameController extends GridController{
 			}
 		}
 		//查询(游戏)分类
-		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("33,36");
+		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("24,26");
 		view.addObject("catList", catList);
 		view.setViewName("/nanshan/admin/game/add");
 		return view;

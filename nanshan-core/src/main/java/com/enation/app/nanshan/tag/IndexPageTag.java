@@ -2,6 +2,7 @@ package com.enation.app.nanshan.tag;
 
 import com.enation.app.nanshan.service.IArticleService;
 import com.enation.app.nanshan.vo.ArticleVo;
+import com.enation.framework.database.data.IDataOperation;
 import freemarker.template.TemplateModelException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -16,6 +17,9 @@ import java.util.Map;
  */
 @Component("indexPageTag")
 public class IndexPageTag extends AbstractPageTag {
+
+    @Autowired
+    private IDataOperation dataOperation;
 
     @Autowired
     private IArticleService articleService;
@@ -48,24 +52,26 @@ public class IndexPageTag extends AbstractPageTag {
      */
     private String getNewImageUrl(ArticleVo articleVo){
 
-       JSONObject content = articleVo.getContent();
+       if(articleVo != null){
 
-       if(content != null){
-           JSONArray array =  content.getJSONArray("content");
+           JSONObject content = articleVo.getContent();
 
-           if(array != null && array.size() > 0){
+           if(content != null){
+               JSONArray array =  content.getJSONArray("content");
 
-               for(int i = 0; i < array.size(); i++){
-                   JSONObject object =  array.getJSONObject(0);
+               if(array != null && array.size() > 0){
 
-                   String type = object.getString("type");
-                   if("img".equals(type)){
-                       return object.getString("content");
+                   for(int i = 0; i < array.size(); i++){
+                       JSONObject object =  array.getJSONObject(0);
+
+                       String type = object.getString("type");
+                       if("img".equals(type)){
+                           return object.getString("content");
+                       }
                    }
                }
            }
        }
-
        return "/nanshan/css/images/news_default.jpg";
 
     }

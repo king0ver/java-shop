@@ -23,13 +23,13 @@
         $("a[data-id]").click(function(){
             var url = location.href;
             var prams = url.substring(url.indexOf("?")+1).split("&");
-            url = url.substr(0,url.indexOf("?"));
+            url = url.substr(0,url.indexOf("?")) + "?a=1";
 
             for(var n in prams){
                 var tmp = prams[n].split("=")[0];
 
-                if(tmp != "page" && tmp != "specs"){
-                    url += prams[n];
+                if(tmp != "page" && tmp != "specs" && tmp!="a"){
+                    url += "&" + prams[n];
                 }
             }
 

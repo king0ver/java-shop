@@ -111,7 +111,7 @@ input:-webkit-autofill {
 
 html,body {outline:none; min-width:1200px; width:100%; font-family:'PingFang sc','Helvetica Neue','Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif; font-size:14px; line-height:26px; color:#fff;}
 img,input,textarea,button,select {border:0; font-family:'PingFang sc','Helvetica Neue','Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif;}
-a {text-decoration:none; display:inline-block;color: #fff;}
+a {text-decoration:none; display:inline-block;}
 input[type="button"],input[type="submit"],button {cursor:pointer;}
 
 
@@ -147,6 +147,9 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	height: 10px;
 	display: inline-block;
 	margin-right: 5px;
+}
+.header_link a{
+	color:#fff;
 }
 .Header .header_link  .chazhao{
 	display: inline-block;
@@ -193,7 +196,9 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
     position: relative;
     
 }
-
+.navCss a{
+	color:#fff
+}
 .navCss .navWrap .logo{
 	float: left;
 	margin-top:22.5px ;
@@ -274,11 +279,12 @@ input[type="button"],input[type="submit"],button {cursor:pointer;}
 	margin-top: 30px;
 }
 .footer .footerRight{
-	width: 550px;
+	width: 450px;
 	margin-top: 30px;
+	margin-left: 100px;
 }
 .footer .footerLeft div{
-	width: 110px;
+	width: 130px;
 	float: left;
 }
 .footer .footerRight div{

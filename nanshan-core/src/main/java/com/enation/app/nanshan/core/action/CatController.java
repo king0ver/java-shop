@@ -49,23 +49,5 @@ public class CatController {
 			return JsonResultUtil.getErrorJson("初始化分类失败");
 		}
 	}
-	
-	/** 
-	* @Description:活动预约 
-	* @author luyanfen  
-	* @date 2017年12月18日 下午8:04:04
-	*  
-	*/ 
-	@ResponseBody
-	@RequestMapping("/reserve")
-	public JsonResult reserve(@RequestBody NanShanActReserve anShanActReserve){
-		try {
-			this.catManager.reserve(anShanActReserve);
-			return JsonResultUtil.getSuccessJson("预约成功");
-		} catch (RuntimeException e) {
-			e.printStackTrace();			
-			return JsonResultUtil.getErrorJson("预约失败，请联系客服处理");
-		}
-	}
 
 }

@@ -279,11 +279,12 @@ body{
 	margin-top: 30px;
 }
 .footer .footerRight{
-	width: 550px;
+	width: 450px;
 	margin-top: 30px;
+	margin-left: 60px;
 }
 .footer .footerLeft div{
-	width: 110px;
+	width: 130px;
 	float: left;
 }
 .footer .footerRight div{
@@ -291,9 +292,9 @@ body{
 	float: left;
 }
 .footerMi{
-	width: 100px;
+	width: 140px;
 	height: 120px;
-	background: url(img/logo2.png) no-repeat top center;
+	background: url(images/logo2.png) no-repeat top center;
 	background-size:95px 80px;
 	line-height: 200px;
 	font-weight: bold;
@@ -306,7 +307,7 @@ body{
 .footerLeft2{
 	width: 130px;
 	height: 150px;
-	background: url(img/erweima.png) top center no-repeat;
+	background: url(images/erweima.png) top center no-repeat;
 	background-size:115px 115px;
 	display: inline-block;
 	margin-right: 20px;
@@ -316,7 +317,7 @@ body{
 .footerRight2{
 	width: 130px;
 	height: 150px;
-	background: url(img/erweima.png) top center no-repeat;
+	background: url(images/erweima.png) top center no-repeat;
 	background-size:115px 115px;
 	display: inline-block;
 	line-height: 265px;

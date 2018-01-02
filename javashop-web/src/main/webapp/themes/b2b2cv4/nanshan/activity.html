@@ -4,23 +4,8 @@
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${file_path}/nanshan/js/appoint.js"></script>
 <#include 'common/thirdCat.html'/>
-<script>
-    $(function(){
-        $('.yuyue').on('click',function(){
-            $('.bgColorShadow').show()
-            $('.activity-reservation').animate({"right":"0px"},400).show()
-        })
-        $('.item-title').on('click',function(){
-            $('.bgColorShadow').hide()
-            $('.activity-reservation').animate({"right":"-549px"},400)
-        })
-        $('.Wdate').on('click',function(){
-            WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})
-
-        })
-    });
-</script>
 
 <div class="section-content">
     <#include 'common/navigator.html'/>
@@ -38,9 +23,12 @@
                 <li><span>活动时间</span>：<@dateformat time='${article.item.expiryDate}' pattern='yyyy-MM-dd'/></li>
                 <li><span>活动地址</span>：${article.item.actAddress}</li>
             </ul>
-            <div class="yuyue">
-                <img src="${file_path}/nanshan/css/images/yuyue.jpg" />
-            </div>
+            <#if article.item.catId = 38>
+                <div class="yuyue">
+                    <img src="${file_path}/nanshan/css/images/yuyue.jpg" />
+                </div>
+            </#if>
+
         </div>
 
 
@@ -48,11 +36,11 @@
         <#if article.item.content?size gt 0 >
             <#list article.item.content['content'] as content>
                 <#if content.type == 'text'>
-                    <p class="text-indent">${content.content}</p>
+                    <p class="text-indent">${content.content!''}</p>
                 </#if>
                 <#if content.type == 'img'>
                     <div class="img">
-                        <img src="${content.content}">
+                        <img src="${content.content!''}">
                     </div>
                 </#if>
             </#list>
@@ -61,12 +49,14 @@
     <!-- 活动预约 -->
     <div class="bgColorShadow" style="display: none;"></div>
     <div class="activity-reservation" style="display: none;">
-        <div class="item-title"><img src="${file_path}/nanshan/css/images/gt.png">&nbsp;活动预约</div>
+        <div class="item-title">
+            <img src="${file_path}/nanshan/css/images/gt.png">&nbsp;活动预约</div>
         <form id="reservation">
             <ul class="form-list">
                 <li>
                     <label for="date">参加活动日期</label>
                     <input name="yyEnd" type="text" class="Wdate" />
+                    <input id="activityId" type="hidden" value="${article.item.id}" />
                 </li>
                 <div id="member">
                     <div class="row">

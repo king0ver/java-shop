@@ -18,6 +18,24 @@
 		<fields>spec_id,spec_name,creation_time,operator</fields>
 		<values>3,'收费情况',1514452601,'admin'</values>
 	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_spec</table>
+		<fields>spec_id,spec_name,creation_time,operator</fields>
+		<values>4,'面向人群',1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_spec</table>
+		<fields>spec_id,spec_name,creation_time,operator</fields>
+		<values>5,'活动品牌',1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_spec</table>
+		<fields>spec_id,spec_name,creation_time,operator</fields>
+		<values>6,'活动类型',1514452601,'admin'</values>
+	</action>
 	
 	<action>
 		<command>insert</command>
@@ -65,18 +83,12 @@
 		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
 		<values>8,1,'体育',0,1514452601,'admin'</values>
 	</action>
+
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_specval</table>
 		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
-		<values>9,1,'体育',0,1514452601,'admin'</values>
-	</action>
-	
-	<action>
-		<command>insert</command>
-		<table>es_nanshan_specval</table>
-		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
-		<values>16,2,'儿童',0,1514452601,'admin'</values>
+		<values>9,2,'儿童',0,1514452601,'admin'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -115,4 +127,140 @@
 		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
 		<values>15,3,'充值',0,1514452601,'admin'</values>
 	</action>
+
+
+
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>16,4,'幼儿园中班~小学一年级',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>17,4,'一年级以上学生',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>18,4,'三年级以上学生',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>19,4,'三~四年级以上学生',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>20,4,'三~七年级以上学生',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>21,4,'三~九年级以上学生',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>22,4,'在线中学生',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>23,4,'三年级以上亲子及成人观众',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>24,4,'成人观众',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>25,4,'所有观众',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>26,5,'科学列车',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>27,5,'科学小讲台',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>28,5,'达人帮你逛',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>29,5,'STEAM科技馆奇妙日',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>30,5,'科迷工作坊',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>31,5,'安捷伦科学实验室',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>32,5,'趣玩编程',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>33,5,'创新大赛',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>34,6,'比赛',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>35,5,'表演',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>36,5,'讲座',0,1514452601,'admin'</values>
+	</action>
+	<action>
+		<command>insert</command>
+		<table>es_nanshan_specval</table>
+		<fields>specval_id,spec_id,specval_name,is_valid,creation_time,operator</fields>
+		<values>37,5,'课程',0,1514452601,'admin'</values>
+	</action>
+
 </dbsolution>

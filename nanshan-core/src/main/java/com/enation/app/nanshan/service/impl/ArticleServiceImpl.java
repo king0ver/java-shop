@@ -33,7 +33,7 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		String sql = "select esns.id,esns.title,esns.cat_id catId,esns.url,esns.create_time createTime,esns.pic_url imgUrl,esns.summary,t.reserve_num reserveNum,t.reserved_num reservedNum,t.expiry_date expiryDate,t.act_name actName,t.act_cost actCost,t.act_address actAddress from es_nanshan_article esns left join es_nanshan_article_ext t on esns.id=t.article_id  where 1=1  ";
 		if(StringUtils.isNotBlank(specValIds)){
-			sql+= " EXISTS ( select 1 from es_nanshan_article_rel esnsar where " +
+			sql+= " and EXISTS ( select 1 from es_nanshan_article_rel esnsar where " +
 				"esns.id = esnsar.article_id and esnsar.specval_id in ("+specValIds+") ) ";
 		}
 		sql += " and esns.is_del = 0 and esns.cat_id = "+ catId;

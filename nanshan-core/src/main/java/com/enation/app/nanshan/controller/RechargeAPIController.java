@@ -55,6 +55,10 @@ public class RechargeAPIController {
 
             Member member  = UserConext.getCurrentMember();
 
+            if(member == null){
+                return JsonResultUtil.getErrorJson("用户未登录!");
+            }
+
             rechargeVo = rechargeService.create(gameAccount, points, client_type,
                     member.getMember_id(), member.getName());
 
@@ -72,7 +76,6 @@ public class RechargeAPIController {
 
     /**
      * 判断是否是wap访问
-     * @param header
      * @return 是否是wap
      */
     public static boolean isWap(){

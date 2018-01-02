@@ -49,7 +49,7 @@ public class SpecServiceImpl implements ISpecService {
 				logger.info("通过分类ID查询基础属性信息没有发现关联基础属性,catId="+catId);
 				return null;
 			}
-			String specSql = "select * from es_nanshan_spec where spec_id in ("+cat.getSpec_id()+")";
+			String specSql = "select * from es_nanshan_spec where spec_id in ("+cat.getSpec_id().replaceAll(";",",")+")";
 			List<Spec> specInfoList  = daoSupport.queryForList(specSql, Spec.class);
 			if(specInfoList != null && specInfoList.size() > 0){
 				String specIdStr = "";

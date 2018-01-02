@@ -149,7 +149,7 @@ function initPanel(){
 	if(desc!=""){
 		desc=JSON.parse(desc);
 		var con=desc.content;
-		if(con.length>0){
+		if(!!con && con.length>0){
 			var html="";
 			for(var i=0;i<con.length;i++){
 				html=html+getPanel(con[i].articleId,con[i].cinameTime,con[i].cinamePrice);

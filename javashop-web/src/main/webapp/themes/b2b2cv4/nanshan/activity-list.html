@@ -12,42 +12,95 @@
 <div class="content-bg">
     <div class="section-content clearfix" >
     <#include 'common/navigator.html'/>
+     <#include 'common/selection-condition.html'/>
     <div class="content">
         <div class="game-title">所有活动（共有${article.webPage.totalCount}个活动）</div>
-        <div class="icon-btns-box">
-            <img src="${file_path}/nanshan/css/images/row-active.jpg">
-            <img src="${file_path}/nanshan/css/images/array.jpg">
-        </div>
-
-        <div class="item-lt">
+        <#if blockview??>
             <#if article.items?? && article.items?size gt 0>
-                <ul class="activity-lists">
+                <ul class="activity-img-list">
+                    <div class="icon-btns-box">
+                        <img src="${file_path}/nanshan/css/images/row.png" dis-type="row" dis-cur="array">
+                        <img src="${file_path}/nanshan/css/images/array-active.png" dis-type="array" dis-cur="array">
+                    </div>
                     <#list article.items as item>
-                        <li class="row">
+                        <li>
                             <a href="/nanshan/activity.html?id=${item.id}">
-                                <div class="lt-img">
-                                    <img src="${item.imgUrl!''}">
-                                </div>
-                                <div class="rt-txt">
-                                    <div class="reservation-btn">预约</div>
-                                    <div class="content-title">${item.title!''}</div>
-                                    <ul class="content-list">
-                                        <li><span>时间截止</span>：<@dateformat time='${item.expirydate}' pattern='yyyy-MM-dd'/></li>
-                                        <li><span>活动对象</span>: ${item.actname!''}</li>
-                                        <li><span>活动费用</span>: ${item.actcost!''}</li>
-                                        <li><span>活动地址</span>：${item.actaddress!''}</li>
-                                    </ul>
-                                    <p class="text-indent">${item.summary!''} </p>
-                                </div>
+                                <img src="${item.imgUrl!''}">
+                                <div class="title">${item.title!''}</div>
                             </a>
                         </li>
                     </#list>
                 </ul>
             </#if>
-        </div>
+        <#else>
+            <div class="item-lt">
+                <div class="icon-btns-box">
+                    <img src="${file_path}/nanshan/css/images/row-active.jpg" dis-type="row" dis-cur="row">
+                    <img src="${file_path}/nanshan/css/images/array.jpg" dis-type="array" dis-cur="row">
+                </div>
+                <#if article.items?? && article.items?size gt 0>
+                    <ul class="activity-lists">
+                        <#list article.items as item>
+                            <li class="row">
+                                <a href="/nanshan/activity.html?id=${item.id}">
+                                    <div class="lt-img">
+                                        <img src="${item.imgUrl!''}">
+                                    </div>
+                                    <div class="rt-txt">
+                                        <#if article.curCat.id == 38>
+                                            <div class="reservation-btn">预约</div>
+                                        <#else>
+                                            <div class="reservation-btn reservation-gray">预约</div>
+                                        </#if>
 
+                                        <div class="content-title">${item.title!''}</div>
+                                        <ul class="content-list">
+                                            <li><span>时间截止</span>：<#if item.expirydate??><@dateformat time='${item.expirydate}' pattern='yyyy-MM-dd'/></#if></li>
+                                            <li><span>活动对象</span>: ${item.actname!''}</li>
+                                            <li><span>活动费用</span>: ${item.actcost!''}</li>
+                                            <li><span>活动地址</span>：${item.actaddress!''}</li>
+                                        </ul>
+                                        <p class="text-indent">${item.summary!''} </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </#list>
+                    </ul>
+                </#if>
+            </div>
+        </#if>
     </div>
     <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+    <script type="text/javascript">
+        $("img[dis-type]").click(function(){
+            var $this = $(this);
+            var distype = $this.attr("dis-type");
+            var curtype = $this.attr("dis-cur");
+
+            if(distype == curtype){
+                return ;
+            }
+
+            var url = location.href;
+            var prams = url.substring(url.indexOf("?")+1).split("&");
+            url = url.substr(0,url.indexOf("?"))+"?a=1";
+
+            for(var n in prams){
+                var tmp = prams[n].split("=")[0];
+
+                if(tmp != "blockview" && tmp != "a"){
+                    url += "&" + prams[n];
+                }
+            }
+
+            if(distype == "array"){
+                url += "&blockview"
+            }
+            location.href = url;
+        });
+
+
+    </script>
 </div>
 </div>
 <#include 'common/footer.html'/>

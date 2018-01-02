@@ -46,6 +46,8 @@ public class ArticleListPageTag extends AbstractPageTag{
         map.put("webPage", webPage);
         map.put("items", webPage.getResult());
 
+        map.put("blockview", ThreadContextHolder.getHttpRequest().getParameter("blockview"));
+
         return map;
     }
 

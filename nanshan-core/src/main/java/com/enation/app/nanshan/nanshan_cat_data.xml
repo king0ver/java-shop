@@ -173,7 +173,7 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>29,'家居安全体验馆',22,0,'/nanshan/experience-list?catId=29','/nanshan/experience-list?catId=29'</values>
+		<values>29,'家居安全体验馆',22,0,'/nanshan/experience-list.html?catId=29','/nanshan/experience-list?catId=29'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -345,7 +345,7 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>63,'组织结构',59,0,'/nanshan/','/nanshan/'</values>
+		<values>63,'组织结构',59,0,'/nanshan/organization.html','/nanshan/organization.html'</values>
 	</action>
 	<action>
 		<command>insert</command>
@@ -447,6 +447,6 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>80,'参加指数',45,0,'',''</values>
+		<values>80,'参观指数',45,0,'/nanshan/visit-index.html','/nanshan/visit-index.html'</values>
 	</action>
 </dbsolution>

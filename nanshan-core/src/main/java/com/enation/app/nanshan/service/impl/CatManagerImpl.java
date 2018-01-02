@@ -51,7 +51,8 @@ public class CatManagerImpl implements ICatManager  {
 		}
 		String xmlFile = "file:com/enation/app/nanshan/nanshan_cat_data.xml";		
 		dataOperation.imported(xmlFile);
-	
+
+		cache.remove(NanShanCommonConstant.NANSHANCATCACHENAME);
 	}
 
 	

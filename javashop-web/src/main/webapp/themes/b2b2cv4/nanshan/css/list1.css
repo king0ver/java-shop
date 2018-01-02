@@ -302,38 +302,7 @@
     height: 100%;
     background: #f8f8f8;
 }
-/*筛选*/
-.change-game-boxAll{
-    border: 1px solid #c3c3c3;
-    border-bottom: 2px solid #c3c3c3;
-    padding: 10px 0 15px 26px;
-}
-.g-type .type-title{
-    height: 50px;
-    display: inline-block;
-    vertical-align: bottom;
-}
-.g-type{
-    padding: 12px 0;
-}
-.g-type .title{
-    display: inline-block;
-}
-.g-type a{
-    color: #333;
-    height: 22px;
-    line-height: 22px;
-    display: inline-block;
-    text-align: center;
-    padding: 0 9px;
-}
-.g-type a:hover{
-    cursor: pointer
-}
-.g-type .g-active{
-    background: #ec664d;
-    color: #fff;
-}
+
 .type-box{
     width: 860px;
     height: 55px;
@@ -523,6 +492,48 @@
     line-height: 16px;
 }
 
+
+
+/*筛选*/
+.change-game-boxAll{
+    border: 1px solid #c3c3c3;
+    border-bottom: 2px solid #c3c3c3;
+    padding: 10px 0 15px 26px;
+}
+.g-type .type-title{
+    height: 40px;
+    line-height: 37px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+/* 游戏列表 */
+.change-game-box{
+    border: 1px solid #c3c3c3;
+    padding: 10px 0 15px 26px;
+    margin-bottom: 30px;
+}
+.g-type{
+    line-height: 34px;
+}
+.g-type .title{
+    display: inline-block;
+}
+.g-type a{
+    color: #333;
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    text-align: center;
+    padding: 0 9px;
+}
+.g-type a:hover{
+    cursor: pointer
+}
+.g-type .g-active{
+    background: #3375c3;
+    color: #fff;
+}
 .change-game-box a{
     margin: 10px;
 }
@@ -544,7 +555,7 @@
 .icon-btns-box{
     display: inline-block;
     text-align: right;
-    width: 856px;
+    width: 1200px;
     padding: 43px 0 36px;
 }
 .icon-btns-box img{
@@ -598,7 +609,9 @@
     right: 42px;
     top: 37px;
 }
-
+.reservation-gray{
+    background: grey;
+}
 
 /* 2-1-1 最新活动 */
 
