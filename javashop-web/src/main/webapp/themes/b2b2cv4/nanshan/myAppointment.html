@@ -1,0 +1,35 @@
+
+<#assign articleListPageTag = newTag("articleListPageTag") />
+<#assign article = articleListPageTag() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+<div class="section-content clearfix">
+    <#include 'common/navigator.html'/>
+    <div class="item-content">
+        <#if article.items?? && article.items?size gt 0>
+            <ul class="detail-lists clearfix">
+                <#list article.items as item>
+                    <li>
+                        <a href="/nanshan/news.html?id=${item.id}">
+                            <div class="lt-num">
+                                <span class="num"><@dateformat time='${item.createTime}' pattern='dd'/></span>
+                                <div class="date"><@dateformat time='${item.createTime}' pattern='yyyy-MM'/></div>
+                            </div>
+                            <div class="rt-txt">
+                                <div class="rt-title">${item.title!''}</div>
+                                <p>
+                                    ${item.summary!''}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+
+                </#list>
+            </ul>
+        </#if>
+    </div>
+    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+</div>
+<#include 'common/footer.html'/>
