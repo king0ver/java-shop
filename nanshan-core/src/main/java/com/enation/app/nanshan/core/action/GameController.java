@@ -76,7 +76,7 @@ public class GameController extends GridController{
 	@RequestMapping(value="/add")
 	public ModelAndView add(){
 		ModelAndView view = new ModelAndView();
-		String specIds = getCatIsContainSpecIds("21");
+		String specIds = getCatIsContainSpecIds("24,26");
 		if(StringUtils.isNotBlank(specIds)){
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("specId", specIds);
@@ -147,7 +147,7 @@ public class GameController extends GridController{
 	@RequestMapping(value = "/edit")
 	public ModelAndView edit(int id) {
 		ModelAndView view=new ModelAndView();
-		String specIds = getCatIsContainSpecIds("21");
+		String specIds = getCatIsContainSpecIds("24,26");
 		if(StringUtils.isNotBlank(specIds)){
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("specId", specIds);
@@ -165,10 +165,10 @@ public class GameController extends GridController{
 			}
 		}
 		//查询(游戏)分类
-		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("33,36");
+		List<ArticleCat> catList = catManager.queryCatInfoByCatIds("24,26");
 		view.addObject("catList", catList);
-		view.setViewName("/nanshan/admin/game/edit");
 		view.addObject("data",this.articleManager.queryArticleById(id));
+		view.setViewName("/nanshan/admin/game/edit");
 		return view;
 	}
 	
