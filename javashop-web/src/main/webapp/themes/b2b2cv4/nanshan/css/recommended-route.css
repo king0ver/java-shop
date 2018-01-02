@@ -28,7 +28,7 @@
 }
 
 /*利用ul标签的特性，设置外边框左移25px，左边边框是2px粗的实心线，颜色一般要浅一点*/
-.floor ul li {
+.floor>ul>.boxLi {
     width: 100%;
     margin-left: -36px;
     line-height: 20px;
@@ -64,9 +64,8 @@
 
 
 .floor-content {
-    float: left;
+    float: right;
     margin: 15px 0;
-    margin-left: 100px;
 }
 
 .floor-content .box {
@@ -75,7 +74,7 @@
     padding: 94px 0
 }
 
-.floor-content ul li {
+.floor-content ul .boxLi {
     margin-left: -36px;
     line-height: 20px;
     font-weight: normal;
@@ -87,7 +86,12 @@
 }
 .floor-content .img-row li{
     float: left;
+    margin-right: 10px;
 
+}
+.floor-content .img-row li img{
+width: 300px;
+height: 240px;
 }
 .floor-content .box .line{
     display: inline-block;

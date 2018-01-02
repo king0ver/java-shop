@@ -91,3 +91,8 @@
 	.borderRed{
 		border: 1px solid red !important;
 	}
+	#gameAccount{
+	    border: 1px solid #000;
+    	padding-left: 5px;
+    	height: 30px;
+	}

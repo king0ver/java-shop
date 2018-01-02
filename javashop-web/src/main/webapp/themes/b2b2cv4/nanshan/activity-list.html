@@ -4,6 +4,7 @@
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${file_path}/nanshan/js/appoint.js"></script>
     <div class="nav-bar">
         <div class="nav-content">
             <div class="nav-title">${article.curCat.name!''}</div>
@@ -48,7 +49,7 @@
                                     </div>
                                     <div class="rt-txt">
                                         <#if article.curCat.id == 38>
-                                            <div class="reservation-btn">预约</div>
+                                            <div class="reservation-btn" reservation-id="${item.id}">预约</div>
                                         <#else>
                                             <div class="reservation-btn reservation-gray">预约</div>
                                         </#if>
@@ -102,5 +103,6 @@
 
     </script>
 </div>
+
 </div>
 <#include 'common/footer.html'/>

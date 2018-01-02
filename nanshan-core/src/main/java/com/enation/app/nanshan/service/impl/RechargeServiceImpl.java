@@ -38,8 +38,14 @@ public class RechargeServiceImpl implements RechargeService {
 
        rechargeVo.setRecharge_sn(tradeSnCreator.generateRechargeSn());
 
-        iDaoSupport.insert("es_recharge", rechargeVo);
+        iDaoSupport.insert("es_nanshan_recharge_record", rechargeVo);
 
         return rechargeVo;
+    }
+
+    @Override
+    public RechargeVo queryRechargeVoBySn(String rechargeSn) {
+        String sql = "select * from es_nanshan_recharge_record t where t.recharge_sn = ? limit 1";
+        return iDaoSupport.queryForObject(sql,RechargeVo.class, rechargeSn);
     }
 }

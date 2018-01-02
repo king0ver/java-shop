@@ -89,7 +89,7 @@ public class CatManagerImpl implements ICatManager  {
 
 	@Override
 	public void reserve(NanShanActReserve NanShanActReserve) {
-		this.daoSupport.insert("nanshan_act_reserve", NanShanActReserve);		
+		this.daoSupport.insert("es_nanshan_act_reserve", NanShanActReserve);
 	}
 
 

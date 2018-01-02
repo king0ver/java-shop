@@ -45,6 +45,106 @@
     font-size: 16px;
     margin:10px auto 22px;
 }
+
+/*人才招聘*/
+.title-bg{
+    width: 674px;
+    height: 133px;
+    line-height: 144px;
+    background: url('img/row-table-title.png') no-repeat;
+    text-align: center;
+    font-size: 32px;
+    color: #3C97EE;
+    margin: auto;
+}
+.rencaitable{
+    overflow: hidden;
+
+    margin: auto;
+}
+.rencaitable .header{
+    height: 40px;
+    background: #f7f7f7;
+    line-height: 40px;
+    color: #333;
+    font-size: 14px;
+    margin: auto;
+}
+.row-table-title .rencaitable li{
+    float: left;
+    width: 23%;
+    padding-left: 2%;
+}
+.zpdetail{
+	padding-left: 2%;
+	padding-bottom: 30px;
+	color: #b299a5;
+}
+.row-table-title .rencaitable .row {
+    overflow: hidden;
+    padding: 30px 0 10px 0;
+    font-size: 14px;
+}
+.yuyue-table-title .rencaitable .row {
+    overflow: hidden;
+    padding: 10px 0 10px 0;
+    font-size: 14px;
+}
+
+.row-table-title .tableList{
+	border-bottom:1px dashed #f1f1f1;
+}
+.yuyue-table-title .tableList{
+	border-bottom:1px solid #dcdcdc;
+}
+
+.yuyue-table-title .rencaitable li{
+	text-align: center;
+}
+.yuyue-table-title .rencaitable .row li{
+	height: 50px;
+	line-height: 50px;
+}
+ .yuyue-table-title .rencaitable .row li:nth-child(1){
+   
+    	line-height: 25px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+.yuyue-table-title .rencaitable li:nth-child(1){
+    float: left;
+   width: 18%;
+  
+}
+.yuyue-table-title .rencaitable li:nth-child(2){
+    float: left;
+     width: 18%;
+   
+}
+.yuyue-table-title .rencaitable li:nth-child(3){
+    float: left;
+    width: 18%;
+    
+}
+ 
+ .yuyue-table-title .rencaitable .row li:nth-child(4){
+   
+    	line-height: 25px;
+   
+}
+.yuyue-table-title .rencaitable li:nth-child(4){
+    float: left;
+     width: 18%;
+    
+   
+}
+.yuyue-table-title .rencaitable li:nth-child(5){
+    float: left;
+     width: 18%;
+  
+}
 /*消防图片平铺影片预告*/
 .recommended-movie{
     margin: 49px 0 37px;
@@ -767,4 +867,28 @@
 .dn{
     display: none;
 }
+/*招贤纳士*/
+.content-title1{
+		     padding: 25px 0 5px 34px;
+   			 font-size: 18px;
+   			 color: #333;
+	}
+	.content-txtList{
+		   padding: 0px 0 5px 34px;
+   			 font-size: 12px;
+	}
+	.lxBtn{
+		width: 100px;
+		height: 30px;
+		text-align: center;
+		line-height: 30px;
+	
+		background: #0186ed;
+		margin-left: 34px;
+		font-size:12px ;
+		margin-top: 20px;
+	}
+	.lxBtn a{
+			color: #fff;
+	}
 

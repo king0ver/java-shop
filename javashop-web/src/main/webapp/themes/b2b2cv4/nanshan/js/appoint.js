@@ -33,8 +33,13 @@ $(function(){
 		$.post("/activity-operation/appoint.do",{activity_id:activityId,activity_time:endTime,member_name: uname,
 			member_age:age, phone_number:phone, email: email},function(data){
 
-
-
+			if(data.result == 1){
+				alert("预约成功!");
+			}if(data.result == 0 && data.message == "not login") {
+				alert("您还未登录系统!");
+			}else{
+				alert("预约异常!");
+			}
 		},"json")
 
 	});
@@ -45,6 +50,11 @@ $(function(){
 	$('.item-title').on('click',function(){
 		$('.bgColorShadow').hide()
 		$('.activity-reservation').animate({"right":"-549px"},400)
+	});
+	$("div[reservation-id]").on('click',function(){
+		$("#activityId").val($(this).attr("reservation-id"));
+		$('.bgColorShadow').show()
+		$('.activity-reservation').animate({"right":"0px"},400).show();
 	})
 	$('.Wdate').on('click',function(){
 		WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})

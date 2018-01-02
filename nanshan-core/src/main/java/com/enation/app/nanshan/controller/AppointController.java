@@ -5,6 +5,7 @@ import com.enation.app.nanshan.model.NanShanActReserve;
 import com.enation.app.nanshan.service.ICatManager;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.JsonResult;
+import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
 import com.enation.framework.util.StringUtil;
 import io.swagger.annotations.Api;
@@ -13,7 +14,10 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by yulong on 18/1/1.
@@ -34,17 +38,28 @@ public class AppointController {
     })
     @ResponseBody
     @PostMapping(value="/appoint")
-    public JsonResult create(@RequestBody NanShanActReserve actReserve){
+    public JsonResult create(int activity_id, String activity_time, String member_name,
+                             String member_age, String phone_number, String email){
 
         try {
 
             Member member  = UserConext.getCurrentMember();
 
             if(member == null){
-                return JsonResultUtil.getErrorJson("用户未登录!");
+                return JsonResultUtil.getErrorJson("not login");
             }
 
-            catManager.reserve(actReserve);
+            NanShanActReserve reserve = new NanShanActReserve();
+            reserve.setActivity_time(DateUtil.getDateline(activity_time));
+            reserve.setAttend_name(member_name);
+            reserve.setAge(member_age);
+            reserve.setPhone_number(phone_number);
+            reserve.setEmail(email);
+
+            reserve.setMember_id(member.getMember_id());
+
+
+           catManager.reserve(reserve);
 
         } catch (Exception e) {
             if (!StringUtil.isEmpty(e.getMessage())) {

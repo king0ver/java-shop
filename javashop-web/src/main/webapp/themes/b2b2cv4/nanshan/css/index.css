@@ -702,7 +702,7 @@ font-size: 18px;
 }
 #banner{
 		width:100%;
-		height:650px;
+		height:700px;
 		overflow:hidden;
 		position:relative;}
     #banner .swiper-container {
@@ -790,7 +790,7 @@ font-size: 18px;
 }
 #banner .swiper-slide img{
 	width: 100%;
-	height: 650px;
+	height: auto;
 }
 
 
