@@ -254,7 +254,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 
 	@Override
 	public NanShanArticleVo queryArtByCatId(int id) {
-		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,a.work_palce,a.job_cat,a.dept_name,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
+		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,a.work_place,a.job_cat,a.dept_name,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
 
