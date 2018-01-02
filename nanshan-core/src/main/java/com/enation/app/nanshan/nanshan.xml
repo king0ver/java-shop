@@ -25,6 +25,9 @@
 		<field><name>pic_url</name><type>varchar</type><size>255</size><option>00</option></field>
 		<field><name>is_del</name><type>int</type><size>1</size><option>00</option></field>
 		<field><name>content</name><type>int</type><size>10</size><option>00</option></field>
+		<field><name>work_place</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>job_cat</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>dept_name</name><type>varchar</type><size>255</size><option>00</option></field>
 	</action>
 
 	<action>

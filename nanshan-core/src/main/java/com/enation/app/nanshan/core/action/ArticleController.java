@@ -55,7 +55,7 @@ public class ArticleController extends GridController {
 	public JsonResult add(NanShanArticleVo nanShanArticleVo,String createTime){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd");
+				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd hh:mm:ss");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
 			this.articleManager.addArticle(nanShanArticleVo);
@@ -130,7 +130,7 @@ public class ArticleController extends GridController {
 	public JsonResult saveEdit(NanShanArticleVo nanShanArticleVo,String createTime ){
 		try {
 			if(!StringUtil.isEmpty(createTime)){
-				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd");
+				long create_time = DateUtil.getDateline(createTime, "yyyy-MM-dd hh:mm:ss");
 				nanShanArticleVo.setCreate_time(create_time);
 			}
             this.articleManager.updateArticle(nanShanArticleVo);
@@ -388,12 +388,63 @@ public class ArticleController extends GridController {
 		}
 	}
 	
+	/** 
+	* @param @param catId
+	* @param @return
+	* @Description: 人才招聘页面
+	* @author luyanfen  
+	* @date 2017年12月27日 上午10:09:00
+	*  
+	*/ 
+	@RequestMapping(value = "employ")
+	public ModelAndView employ(int catId) {
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/employ/list");
+		view.addObject("ctx",ctx);
+		view.addObject("catId",catId);
+		return view;
+	}
 	
+
+	/** 
+	* @param @param catId
+	* @param @return
+	* @Description: 
+	* @author luyanfen  
+	* @date 2018年1月2日 下午2:55:33
+	*  
+	*/ 
+	@RequestMapping(value = "/employ/add")
+	public ModelAndView addEmploy(int catId) {
+		ModelAndView view=new ModelAndView();
+		view.setViewName("/nanshan/admin/employ/add");
+		view.addObject("ctx",ctx);
+		view.addObject("catId",catId);
+		return view;
+	}
 	
-	
-	
-	
-	
-	
+
+	/** 
+	* @param @param id
+	* @param @param catId
+	* @param @return
+	* @Description: 
+	* @author luyanfen  
+	* @date 2018年1月2日 下午2:57:13
+	*  
+	*/ 
+	@RequestMapping(value = "/employ/edit")
+	public ModelAndView editEmploy(int id,int catId) {
+		ModelAndView view=new ModelAndView();
+		try {
+			view.setViewName("/nanshan/admin/employ/edit");
+			view.addObject("ctx",ctx);
+			view.addObject("data",this.articleManager.queryArticleById(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return view;
+		
+	}
 
 }

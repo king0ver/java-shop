@@ -48,7 +48,9 @@ public class ArticleManagerImpl implements IArticleManager  {
 		nanShanArticle.setPic_url(nanShanArticleVo.getPic_url());
 		nanShanArticle.setTitle(nanShanArticleVo.getTitle());
 		nanShanArticle.setUrl(nanShanArticleVo.getUrl());
-		
+		nanShanArticle.setWork_place(nanShanArticleVo.getWork_place());
+		nanShanArticle.setJob_cat(nanShanArticleVo.getJob_cat());
+		nanShanArticle.setDept_name(nanShanArticleVo.getDept_name());
 		NanShanClob nanShanClob=new NanShanClob();
 		nanShanClob.setContent(nanShanArticleVo.getContent());
 		nanShanClob.setCategory(nanShanArticleVo.getCat_id());
@@ -71,7 +73,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		StringBuffer sql = new StringBuffer();
         
 		sql.append(
-				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id and a.is_del<>1");
+				"select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,a.work_place,a.job_cat,a.dept_name,c.content,t.cat_name from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t where a.cat_id=t.cat_id and a.content=c.id ");
 		if(!StringUtil.isEmpty(param.getCatId())){
 			sql.append(" and a.cat_id in ("+param.getCatId()+")");
 		}
@@ -79,7 +81,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 			sql.append(" and a.id="+param.getArticleId());
 		}
 		if(!StringUtil.isEmpty(param.getArticleName())){
-			sql.append(" and a.titile like %"+param.getArticleName()+"%");
+			sql.append(" and a.title like '%"+param.getArticleName()+"%'");
 		}
 		if(!StringUtil.isEmpty(param.getParentId())){
 			sql.append(" and t.parent_id="+param.getParentId());
@@ -99,7 +101,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 
 	@Override
 	public NanShanArticleVo queryArticleById(int id) {
-		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate,(select group_concat(l.specval_id) from es_nanshan_article_rel l where l.article_id = a.id group by l.article_id) specValIds from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id where    a.id=?";
+		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,a.work_place,a.job_cat,a.dept_name,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate,(select group_concat(l.specval_id) from es_nanshan_article_rel l where l.article_id = a.id group by l.article_id) specValIds from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id where    a.id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
 
@@ -113,6 +115,9 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(nanShanArticleVo.getCreate_time()>0) articleFields.put("create_time", nanShanArticleVo.getCreate_time());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getContent())) clobFields.put("content", nanShanArticleVo.getContent());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getPic_url())) articleFields.put("pic_url", nanShanArticleVo.getPic_url());
+		if(!StringUtils.isEmpty(nanShanArticleVo.getJob_cat())) articleFields.put("job_cat", nanShanArticleVo.getJob_cat());
+		if(!StringUtils.isEmpty(nanShanArticleVo.getDept_name())) articleFields.put("dept_name", nanShanArticleVo.getDept_name());
+		if(!StringUtils.isEmpty(nanShanArticleVo.getWork_place())) articleFields.put("work_place", nanShanArticleVo.getWork_place());
 		this.delArtSpeRel(nanShanArticleVo.getId());
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
 		if(articleFields.size()>0){
@@ -249,7 +254,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 
 	@Override
 	public NanShanArticleVo queryArtByCatId(int id) {
-		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
+		String sql ="select a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,a.is_del,a.work_place,a.job_cat,a.dept_name,c.content,t.cat_name,ifnull(c.id,0) as content_id,IFNULL(e.reserve_num,0) reserve_num,IFNULL(e.reserved_num,0) reserved_num,e.act_name,IFNULL(e.act_cost,0) act_cost,e.act_address,ifnull(e.expiry_date,0) expiryDate  from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id LEFT JOIN es_nanshan_article_category t on a.cat_id=t.cat_id LEFT JOIN es_nanshan_article_ext e on a.id=e.article_id  where    a.cat_id=?";
 		return this.daoSupport.queryForObject(sql, NanShanArticleVo.class, id);
 	}
 

@@ -252,6 +252,9 @@
 				<menu text="推荐路线" url="/admin/article/route.do?catId=44" />
 				<menu text="服务设施" url="/core/admin/service/edit.do" />
 			</menu>
+			<menu text="招贤纳士">
+				<menu text="人才招聘" url="/admin/article/employ.do?catId=65" />
+			</menu>
 			<menu text="基础数据">
 				<menu text="文章属性管理" url="/core/admin/spec/list.do" />
 			</menu>
