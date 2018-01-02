@@ -44,6 +44,11 @@ public class NanShanArticleVo implements Serializable  {
 	
 	private String catIds;
 	
+	
+	private String work_place;//工作地点
+	private String job_cat;//职位类别
+	private String dept_name;//部门名称
+	
 
 	public String getCatIds() {
 		return catIds;
@@ -160,6 +165,26 @@ public class NanShanArticleVo implements Serializable  {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public String getWork_place() {
+		return work_place;
+	}
+	public void setWork_place(String work_place) {
+		this.work_place = work_place;
+	}
+	public String getJob_cat() {
+		return job_cat;
+	}
+	public void setJob_cat(String job_cat) {
+		this.job_cat = job_cat;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	
 	
 	
 	

@@ -1,0 +1,185 @@
+
+<#include '/admin/header.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
+<style type="text/css">
+	.table_search button{
+		margin-top: 0px!important;
+	}
+	.table_search{
+		width:700px;
+	}
+	
+
+</style>
+<div  class="admin-main">
+   <div>
+      
+        <!--按钮操作区域  -->
+        <div class="table_control">
+              <div class="table_opera">
+                <button type="button" id="add_model_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+            </div>
+            <!--搜索区域  -->
+            <div class="table_search">
+				<input type="text" name="keyword" placeholder="请输入职位名称关键字" id="searchbtn">
+				<div id="templist" style="display: none">
+					<form class="layui-form">
+						<div class="form-group">
+							<label for="contain">ID：</label>
+							<input class="form-control" type="text" id="articleId"/>
+						</div>
+						<div class="form-group">
+							<label for="contain">职位名称：</label>
+							<input class="form-control" type="text" id="articleName"/>
+						</div>
+						<div class="form-group">
+			      			<select name="cat_id" id="isDel">
+			      			    <option value="">状态</option>
+			                    <option value="0">有效</option>
+			                    <option value="1">已删除</option>
+			      			</select>
+    		            </div>
+    		            <div class="form-group" >
+    		                 <label for="contain">开始时间：</label>
+      			             <input class="layui-input" placeholder="开始时间" id="startDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+    		             <div class="form-group" >
+    		                 <label for="contain">结束时间：</label>
+      			             <input class="layui-input" placeholder="结束时间" id="endDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+					</form>
+				</div>
+			</div>
+			
+		</div> 
+
+      
+         
+    </div>
+    
+   <!--表格区域  -->
+   <form id="modelForm">
+    <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>职位名称</th>
+            <th>工作地点</th>
+            <th>职位类别</th>
+            <th>部门名称</th>
+            <th>创建时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+    </table>
+    <!--传值等操作  -->
+    <div id="addBrand" ></div>
+   </form>
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+
+$(function(){
+	 var cent = $("#templist").html();
+	 $("#searchbtn").searchBox({
+    	  content: cent,
+    	  keywordSearch: function () {
+              var keyword = $("input[name='keyword']").val();
+              var param = "&articleName=" + keyword;
+              var url = table.ajax.url("${ctx}/admin/article/list-json.do?catId=65 " + param);
+              url.load();
+          },
+          formSearch   : function () {
+              var articleName = $("#articleName").val();
+              var articleId = $("#articleId").val();
+              var isDel=$("#isDel").val();
+              var startDate=$("#startDate").val();
+              var endDate=$("#endDate").val();
+              var param = "&articleName=" + articleName + "&articleId=" + articleId+"&isDel="+isDel+"&startDate="+startDate+"&endDate="+endDate;
+              var url = table.ajax.url("${ctx}/admin/article/list-json.do?catId=65" + param);
+              url.load();
+          }
+        
+    });
+	
+	table = $('#modeldata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/admin/article/list-json.do?catId=65',
+	    },
+	    columns: [ //定义列
+	        {data: "id"},
+	        {data: "title"},
+	        {data: "work_place"},
+	        {data: "job_cat"},
+	        {data: "dept_name"},
+	        {data: null,"render": function(data, type, row) {
+	        	if(data.create_time==null){
+	        		return " ";
+	        	}else{
+	        		return getFormatDateByLong(data.create_time, "yyyy-MM-dd hh:mm:ss");
+	        	}
+	       	}},
+	        {data: function(obj){
+	        	return convertState(obj.is_del);
+	        }},
+	        {data: null,"render": function(data, type, row) {
+	        	return "<a class='layui-btn layui-btn-small layui-btn-normal' onclick=\"newTab('查看"+data.title+"','${ctx}/admin/article/employ/edit.do?catId=${catId!'0'}&id="+data.id+"')\">修改</a>"
+	        			+"&nbsp"+"<a class='layui-btn layui-btn-small layui-btn-danger'  onclick='del("+data.id +")'>删除</a>";		
+	       	}}
+	     ]
+	});
+	
+
+  $("#add_model_button").click(function(){
+	   	 layer.open({
+	            title:"添加招聘信息",//标题
+	            maxmin :true,//右上角可否放大缩小
+	            type:2,//弹框的类型
+	            shade: [0.3, '#000'],//黑色背景
+	            offset: '10px',//弹框位置
+	            shadeClose:false,//黑色背景是否可以点击关闭
+	            content:"${ctx}/admin/article/employ/add.do?catId=${catId}",//内容的URL
+	            area:['750px','750px'],//弹框大小
+	            scrollbar: false//是否允许浏览器出现滚动条
+	        });
+		}); 
+});
+	function del(id){
+		if(!confirm("确认删除此招聘信息吗！")){	
+			return ;
+		}
+		var options = {
+				url : '${ctx}/admin/article/del.do?id='+id+'&ajax=yes',
+				type : "POST",
+				dataType : 'json',
+				success : function(result) {
+					if(result.result==1){
+						$.Loading.success(result.message);
+						table.ajax.url(ctx+"/admin/article/list-json.do?parentId=37").load();
+					}
+					if(result.result==0){
+						$.Loading.error(result.message);
+					}
+				},
+				error : function(e) {
+					$.Loading.error("出现错误 ，请重试");
+				}
+		};
+		$('#modelForm').ajaxSubmit(options);
+	}
+</script>
+
+<#include '/admin/footer.html' >

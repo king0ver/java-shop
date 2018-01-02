@@ -1,0 +1,134 @@
+<#include '/admin/sonheader.html' >
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<style >
+  .layui-input{
+    width: 75%;
+  }
+      form{margin-bottom:0px;}
+</style>
+<script type="text/javascript" src="${ctx}/nanshan/js/context.js?v=1"></script>
+<div class="main">
+    <!--表单区域  -->
+	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
+	   
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">招聘名称：</label>
+    		<div class="layui-input-inline">
+    		    <input  name="cat_id"  maxlength="60" type='hidden' value="${catId}">
+      			<input type="text" name="title"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">工作地点：</label>
+    		<div class="layui-input-inline">
+    		<input type="text" name="work_place"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  			<div class="layui-form-item">
+    		<label class="layui-form-label">职位类别：</label>
+    		<div class="layui-input-inline">
+    		   <input type="text" name="job_cat"  maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  			<div class="layui-form-item">
+    		<label class="layui-form-label">部门名称：</label>
+    		<div class="layui-input-inline">
+    		    <input type="text" name="dept_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">创建时间：</label>
+    		<div class="layui-input-inline" >
+      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		</div>
+  		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">招聘摘要：</label>
+    		<div class="layui-input-block">
+    		    <textarea name="summary" id="summary" style="height:100px" placeholder="请输入内容" class="layui-textarea"></textarea>
+    		</div>
+  		</div>
+	    <div class="layui-form-item">
+    		<label class="layui-form-label">岗位职责：</label>
+    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+				<legend>编辑区</legend>
+				<div id="article"></div>
+				<div class="layui-form-item">
+	    			<a class="layui-btn" onclick="add();">增加段落</a>
+	  			</div>
+			</fieldset>
+  		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">岗位要求：</label>
+    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+				<legend>编辑区</legend>
+				<div id="jopReq"></div>
+				<div class="layui-form-item" style='padding-bottom:30px'>
+	    			<a class="layui-btn" onclick="addJobReq();">增加段落</a>
+	  			</div>
+			</fieldset>
+  		</div>
+  		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
+  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
+  		</div>
+  	</form>
+</div>
+<script>
+var index = parent.layer.getFrameIndex(window.name);
+
+function checkLength(){
+	if($("#rolememo").val().length>100){
+		$("#rolememo").val($("#rolememo").val().substring(0,100));
+	}
+}
+
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
+	var form = layui.form(),
+    layedit = layui.layedit,
+    laydate = layui.laydate;
+	form.on('submit(save_uri)', function(data){
+		console.log(JSON.stringify(getContext()));
+		var obj=new Object();
+		obj.jobRes=getContext();
+		obj.jobReq=getJobReqText();
+		var content=JSON.stringify(obj);
+		alert(content)
+    	var options = {
+   			url:ctx+"/admin/article/add_save.do?catId=${catId}",
+   			type:"post",
+   			dataType:"json",
+   			data:{"content":content},
+   			success:function(data){
+   				if(data.result==1){	
+   					$.Loading.success(data.message);
+   					parent.layer.close(index); //再执行关闭        
+   					parent.table.ajax.url(ctx+"/admin/article/list-json.do?catId=65").load();
+   				}
+   			}
+   		};
+   		$("#addUriForm").ajaxSubmit(options);
+       return false;
+    });
+   
+});
+function addJobReq(){
+	$("#jopReq").append(getText(''))
+}
+
+function getJobReqText(){
+	var divContext = $("#jopReq .layui-form-item");
+	var jsonList = new Array();
+	for(var i=0;i<divContext.length;i++){
+		var articleContext = null;
+		var content = $(divContext[i]).children();
+		articleContext = content.find("#content").val();
+		if(articleContext!=''){
+			jsonList.push({"index":i,"type":"text","content":articleContext}); 
+		}
+		
+	}
+	return jsonList;
+}
+
+
+</script>

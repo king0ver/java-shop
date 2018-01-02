@@ -1,0 +1,207 @@
+<#include '/admin/sonheader.html' >
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<style>
+.layui-form-pane .layui-input:focus, .layui-form-pane .layui-textarea:focus
+	{
+	border-radius: 2px;
+	border-color: #01AAED !important;
+}
+  form{margin-bottom:0px;}
+</style>
+<script type="text/javascript" src="${ctx}/nanshan/js/context.js?v=2"></script>
+<div class="main">
+	<!--表单区域  -->
+	<div class="main-top">
+		<form id="addmodelForm" class="layui-form layui-form-pane" action=""
+			enctype="multipart/form-data" style="padding-top: 10px">
+			<div class="layui-form-item">
+				<label class="layui-form-label">招聘名称：</label>
+	    		<div class="layui-input-block">
+	    		    <input name="id" type='hidden'  value="${data.id}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		    <input name="cat_id" type='hidden'  value="65" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		    <input name="content_id" type='hidden'  value="${data.content_id}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	      			<input type="text" name="title" id="uri" value="${data.title!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+			</div>
+
+			<div class="layui-form-item">
+	    		<label class="layui-form-label">工作地点：</label>
+	    		<div class="layui-input-inline">
+	    		<input type="text" name="work_place" value="${(data.work_place)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">职位类别：</label>
+	    		<div class="layui-input-inline">
+	    		   <input type="text" name="job_cat"  value="${(data.job_cat)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">部门名称：</label>
+	    		<div class="layui-input-inline">
+	    		    <input type="text" name="dept_name" value="${(data.dept_name)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">创建时间：</label>
+	    		<div class="layui-input-inline" >
+	      			<input class="layui-input" placeholder="创建时间" name="createTime" lay-verify="required" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"  style="width:100%;height:38px;" value='<@dateformat time='${data.create_time}' pattern='yyyy-MM-dd hh:mm:ss'/>' />
+	    		</div>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">招聘摘要：</label>
+	    		<div class="layui-input-block">
+	    		    <textarea name="summary" id="summary" style="height:100px" placeholder="请输入内容" class="layui-textarea" >${(data.summary)!''}</textarea>
+	    		</div>
+	  		</div>
+		    <div class="layui-form-item">
+	    		<label class="layui-form-label">岗位职责：</label>
+	    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+					<legend>编辑区</legend>
+					<div id="article"></div>
+					<div class="layui-form-item">
+		    			<a class="layui-btn" onclick="add();">增加段落</a>
+		  			</div>
+				</fieldset>
+	  		</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">岗位要求：</label>
+	    		<fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+					<legend>编辑区</legend>
+					<div id="jobReq">
+					</div>
+					<div class="layui-form-item" style='padding-bottom:30px'>
+		    			<a class="layui-btn" onclick="addJobReq();">增加段落</a>
+		  			</div>
+				</fieldset>
+	  		</div>
+			<div class="layui-form-item">
+				<div class="layui-layer-btn layui-layer-btn-"
+					style="padding: 8px 12px; z-index: 1000;">
+					<a class="layui-layer-btn0" type="submit" lay-submit=""	lay-filter="editModel">保存</a>
+				</div>
+			</div>
+		</form>
+	</div>	
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+
+var index = parent.layer.getFrameIndex(window.name);
+
+
+
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
+    var form = layui.form()
+        ,layer = layui.layer
+        ,layedit = layui.layedit
+        ,laydate = layui.laydate;
+	form.on('submit(save_uri)', function(data){
+		var obj=new Object();
+		obj.jobRes=getContext();
+		obj.jobReq=getJobReqText();
+		var content=JSON.stringify(obj);
+    	var options = {
+   			url:ctx+"/admin/article/add_save.do?catId=65",
+   			type:"post",
+   			dataType:"json",
+   			data:{"content":content},
+   			success:function(data){
+   				if(data.result==1){	
+   					$.Loading.success(data.message);
+   					parent.layer.close(index); //再执行关闭        
+   					parent.table.ajax.url(ctx+"/admin/article/list-json.do?catId=65").load();
+   				}
+   			}
+   		};
+   		$("#addUriForm").ajaxSubmit(options);
+       return false;
+    });
+form.on('submit(editModel)', function(data){
+	var obj=new Object();
+	obj.jobRes=getContext();
+	obj.jobReq=getJobReqText();
+	var content=JSON.stringify(obj);
+	var options = {
+		url : ctx+"/admin/article/save-edit.do",
+		type : "POST",
+		dataType : 'json',
+		data:{"content":content},
+		success : function(result) {
+			if (result.result == 1) {
+				$.Loading.success(result.message);
+				
+			}
+			if (result.result == 0) {
+				$.Loading.error(result.message);
+			}
+		},
+		error : function(e) {
+			$.Loading.error("出现错误 ，请重试");
+		}
+	};
+	$("#addmodelForm").ajaxSubmit(options);
+	
+	return false;
+});
+
+});
+
+//修改字段弹框
+	 function edit(fieldid){
+		 var modelid=$("#modelid").val();
+	　　	 layer.open({
+	            title:"修改字段",//标题
+	            maxmin :true,//右上角可否放大缩小
+	            type:2,//弹框的类型
+	            shade: [0.3, '#000'],//黑色背景
+	            offset: '10px',//弹框位置
+	            shadeClose:false,//黑色背景是否可以点击关闭
+	            content:'${ctx}/cms/admin/field/edit.do?modelid='+modelid+'&fieldid='+fieldid+'&ajax=yes',//内容的URL
+	            area:['700px','450px'],//弹框大小
+	            scrollbar: true//是否允许浏览器出现滚动条
+	        });
+	 }
+	
+	 function addJobReq(){
+			$("#jobReq").append(getText(''))
+	 }
+	function getJobReqText(){
+			var divContext = $("#jobReq .layui-form-item");
+			var jsonList = new Array();
+			for(var i=0;i<divContext.length;i++){
+				var articleContext = null;
+				var content = $(divContext[i]).children();
+				articleContext = content.find("#content").val();
+				if(articleContext!=''){
+					jsonList.push({"index":i,"type":"text","content":articleContext}); 
+				}
+				
+			}
+			return jsonList;
+	 }
+	 function initJobReq(jobReq){
+		 var jobReqHtml="";
+		 if(jobReq.length>0){
+			 for(var i=0;i<jobReq.length;i++){
+				 if(jobReq[i].content!=''){
+					 jobReqHtml=jobReqHtml+getText(jobReq[i].content) 
+				 }
+			 }
+		 }
+		 $("#jobReq").append(jobReqHtml)
+	 }
+	 var desc='${(data.content)!''}';
+	 if(desc!=''){
+	 	desc=desc.replace(/\n/g,"\\\\n").replace(/\r/g,"\\\\r")
+	 	var jobRes=$.parseJSON(desc).jobRes;
+	 	var jobReq=$.parseJSON(desc).jobReq;
+	 	if(jobRes.length>0) initContextHtml(jobRes);
+	 	if(jobReq.length>0) initJobReq(jobReq);
+	 }
+
+
+</script>
+<#include '/admin/footer.html' >
