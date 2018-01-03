@@ -132,10 +132,6 @@ public class FacadePageParser  {
 			uri = uri.substring(0, uri.indexOf('?'));
 		}
 
-		if (uri.equals("/") || uri.equals("")) {
-			uri = "/nanshan/index.html";
-		}
-
 		//如果是目录，带上/index.html
 		if(!uri.endsWith(".html")){
 			if(uri.endsWith("/")){

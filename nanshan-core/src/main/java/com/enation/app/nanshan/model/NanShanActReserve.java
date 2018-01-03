@@ -9,6 +9,7 @@ public class NanShanActReserve {
 	private String phone_number;
 	private String email;
 	private int member_id;
+	private int is_del;
 
 
 	public int getMember_id() {
@@ -59,6 +60,14 @@ public class NanShanActReserve {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getIs_del() {
+		return is_del;
+	}
+
+	public void setIs_del(int is_del) {
+		this.is_del = is_del;
 	}
 	
 	

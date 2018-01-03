@@ -28,11 +28,25 @@
 							<input class="form-control" type="text" id="articleName"/>
 						</div>
 						<div class="form-group">
+							<label for="contain">参与成员ID：</label>
+							<input class="form-control" type="text" id="memberId"/>
+						</div>
+						<div class="form-group">
 							<label for="contain">参与成员：</label>
 							<input class="form-control" type="text" id="memberName"/>
 						</div>
-						
-						
+						<div class="form-group">
+							<label for="contain">电话号码：</label>
+							<input class="form-control" type="text" id="phoneNumber"/>
+						</div>
+						<div class="form-group">
+							<label for="contain">预约状态：</label>
+							<select id="isDel">
+							    <option value="" >请选择</option>
+							    <option value="0" >已预约</option>
+							    <option value="1" >已取消</option>
+							</select>
+						</div>
 					</form>
 				</div>
 			</div>
@@ -45,11 +59,13 @@
           <tr>
             <th>活动ID</th>
             <th>活动名称</th>
-            <th>活动时间</th>
+            <th>参与成员ID</th>
             <th>参与成员</th>
+            <th>活动时间</th>
             <th>年龄</th>
             <th>电话</th>
             <th>email</th>
+            <th>预约状态</th>
           </tr>
         </thead>
     </table>
@@ -73,7 +89,10 @@ $(function(){
               var articleName = $("#articleName").val();
               var articleId = $("#articleId").val();
               var memberName=$("#memberName").val();
-              var param = "&articleName=" + articleName + "&articleId=" + articleId+"&memberName="+memberName;
+              var memberId=$("#memberId").val();
+              var isDel=$("#isDel").val();
+              var phoneNumber=$("#phoneNumber").val();
+              var param ="isDel="+isDel+"&memberId="+memberId+"&phoneNumber="+phoneNumber+"&articleName=" + articleName + "&articleId=" + articleId+"&memberName="+memberName;
               var url = table.ajax.url("${ctx}/admin/reserve/list-json.do?" + param);
               url.load();
           }
@@ -96,17 +115,26 @@ $(function(){
 	    columns: [ //定义列
 	        {data: "article_id"},
 	        {data: "title"},
+	        {data: "member_id"},
+	        {data: "attend_name"},
 	        {data: null,"render": function(data, type, row) {
 	        	if(data.act_time==null){
 	        		return " ";
 	        	}else{
-	        		return getFormatDateByLong(data.act_time, "yyyy-MM-dd hh:mm:ss");
+	        		return getFormatDateByLong(data.activity_time, "yyyy-MM-dd hh:mm:ss");
 	        	}
 	       	}},
-	        {data: "member_name"},
+	       
 	        {data: "age"},
 	        {data: "phone_number"},
-	        {data: "email"}
+	        {data: "email"},
+	        {data: null,"render": function(data, type, row) {
+	        	if(data.is_del==0){
+	        		return "已预约";
+	        	}else{
+	        		return "已取消";
+	        	}
+	       	}}
 	       
 	     ]
 	});

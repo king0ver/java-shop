@@ -261,17 +261,30 @@ public class ArticleManagerImpl implements IArticleManager  {
 	@Override
 	public Page queryReserveList(ReserveQueryParam param, int page, int pageSize) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t.article_id,title,t.act_time,t.member_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
+		sql.append("select t.article_id,title,t.member_id,t.is_del,t.activity_time,t.attend_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
 
 		if(StringUtils.isNotBlank(param.getArticleName())){
 				sql.append(" and title like '%"+param.getArticleName()+"%'");
 		}
 		if(StringUtils.isNotBlank(param.getMemberName())){
-			sql.append(" and t.member_name like '%"+param.getMemberName()+"%'");
+			sql.append(" and t.attend_name like '%"+param.getMemberName()+"%'");
 	    }
 		if(StringUtils.isNotBlank(param.getArticleId())){
 				sql.append(" and t.article_id="+param.getArticleId());
 		}
+		if(StringUtils.isNotBlank(param.getMemberId())){
+			sql.append(" and t.member_id="+param.getMemberId());
+	    }
+		if(StringUtils.isNotBlank(param.getEmail())){
+			sql.append(" and t.email="+param.getEmail());
+			
+	    }
+		if(StringUtils.isNotBlank(param.getPhoneNumber())){
+			sql.append(" and t.phone_number="+param.getPhoneNumber());
+	    }
+		if(StringUtils.isNotBlank(param.getIsDel())){
+			sql.append(" and t.is_del="+param.getIsDel());
+	    }
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
 
