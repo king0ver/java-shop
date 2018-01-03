@@ -84,7 +84,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 			sql.append(" and a.title like '%"+param.getArticleName()+"%'");
 		}
 		if(!StringUtil.isEmpty(param.getParentId())){
-			sql.append(" and t.parent_id in ("+param.getParentId()+")");
+			sql.append(" and t.parent_id="+param.getParentId());
 		}
 		if(!StringUtil.isEmpty(param.getIsDel())){
 			sql.append(" and a.is_del="+param.getIsDel());
@@ -261,13 +261,13 @@ public class ArticleManagerImpl implements IArticleManager  {
 	@Override
 	public Page queryReserveList(ReserveQueryParam param, int page, int pageSize) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t.article_id,t.member_id,title,t.activity_time,t.attend_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
+		sql.append("select t.article_id,title,t.act_time,t.member_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
 
 		if(StringUtils.isNotBlank(param.getArticleName())){
 				sql.append(" and title like '%"+param.getArticleName()+"%'");
 		}
 		if(StringUtils.isNotBlank(param.getMemberName())){
-			sql.append(" and t.attend_name like '%"+param.getMemberName()+"%'");
+			sql.append(" and t.member_name like '%"+param.getMemberName()+"%'");
 	    }
 		if(StringUtils.isNotBlank(param.getArticleId())){
 				sql.append(" and t.article_id="+param.getArticleId());
