@@ -108,7 +108,7 @@ input:-webkit-autofill {
 }
 html,body {outline:none; background-color:#fff; min-width:1200px; width:100%; font-family:'PingFang sc','Helvetica Neue','Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif; font-size:14px; line-height:26px; color:#707070;}
 img,input,textarea,button,select {border:0; font-family:'PingFang sc','Helvetica Neue','Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif;}
-a {text-decoration:none; display:inline-block;}
+a {text-decoration:none;}
 input[type="button"],input[type="submit"],button {cursor:pointer;}
 body{
     color: #333;
