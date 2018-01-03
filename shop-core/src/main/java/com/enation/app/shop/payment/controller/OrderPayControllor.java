@@ -83,7 +83,7 @@ public class OrderPayControllor {
 
 	})
 	@ResponseBody
-	@RequestMapping(value="/order/{recharge_sn}", produces = MediaType.TEXT_HTML_VALUE,method=RequestMethod.GET)
+	@RequestMapping(value="/recharge/{recharge_sn}", produces = MediaType.TEXT_HTML_VALUE,method=RequestMethod.GET)
 	public String payRecharge(@NotNull(message="充值sn不能为空") @PathVariable(name="recharge_sn")  String recharge_sn, Integer payment_method_id,String pay_mode,
 						   String client_type){
 		//默认值为normal

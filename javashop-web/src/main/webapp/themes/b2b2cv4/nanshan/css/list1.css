@@ -40,7 +40,7 @@
     height: 46px;
     text-align: center;
     line-height: 46px;
-    background: #ddd;
+    background: #0075d0;
     color: #fff;
     font-size: 16px;
     margin:10px auto 22px;
@@ -602,9 +602,16 @@
 }
 .g-type .type-title{
     height: 40px;
+    float: left;
+    text-align: right;
     line-height: 37px;
     display: inline-block;
     vertical-align: bottom;
+}
+
+.g-type .type-content{
+    float: left;
+    width: 1000px;
 }
 
 /* 游戏列表 */
@@ -892,3 +899,6 @@
 			color: #fff;
 	}
 
+div.img{
+    text-align: center;
+}

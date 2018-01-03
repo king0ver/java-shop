@@ -32,6 +32,7 @@ public class RechargeServiceImpl implements RechargeService {
         rechargeVo.setClient_type(clientType);
         rechargeVo.setMember_id(memberId);
         rechargeVo.setPoints(points);
+        rechargeVo.setPrice((double)points);
         rechargeVo.setMember_name(memberName);
         rechargeVo.setOrder_status(OrderStatus.NEW.description());
         rechargeVo.setCreate_time(System.currentTimeMillis());

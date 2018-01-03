@@ -251,6 +251,7 @@
 			<menu text="服务导览 ">
 				<menu text="推荐路线" url="/admin/article/route.do?catId=44" />
 				<menu text="服务设施" url="/core/admin/service/edit.do" />
+				<menu text="参观指数" url="/core/admin/partake/edit.do" />
 			</menu>
 			<menu text="招贤纳士">
 				<menu text="人才招聘" url="/admin/article/employ.do?catId=65" />

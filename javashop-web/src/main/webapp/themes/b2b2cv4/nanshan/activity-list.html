@@ -13,7 +13,7 @@
 <div class="content-bg">
     <div class="section-content clearfix" >
     <#include 'common/navigator.html'/>
-     <#include 'common/selection-condition.html'/>
+    <#include 'common/selection-condition.html'/>
     <div class="content">
         <div class="game-title">所有活动（共有${article.webPage.totalCount}个活动）</div>
         <#if blockview??>
@@ -60,8 +60,8 @@
                                             <li><span>活动对象</span>: ${item.actname!''}</li>
                                             <li><span>活动费用</span>: ${item.actcost!''}</li>
                                             <li><span>活动地址</span>：${item.actaddress!''}</li>
+                                            <li><span>活动介绍</span>：${item.summary!''}</li>
                                         </ul>
-                                        <p class="text-indent">${item.summary!''} </p>
                                     </div>
                                 </a>
                             </li>

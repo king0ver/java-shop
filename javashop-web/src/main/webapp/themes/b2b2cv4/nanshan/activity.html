@@ -36,12 +36,16 @@
         <#if article.item.content?size gt 0 >
             <#list article.item.content['content'] as content>
                 <#if content.type == 'text'>
-                    <p class="text-indent">${content.content!''}</p>
+                    <p class="text-indent" data-type="text">${content.content!''}</p>
                 </#if>
                 <#if content.type == 'img'>
-                    <div class="img">
-                        <img src="${content.content!''}">
-                    </div>
+                    <#if content_index == 0 || article.item.content['content'][content_index-1].type=='img'>
+                        <div class="img" data-type="image" data-image="${content.content!''}">
+                    </#if>
+                    <img src="${content.content!''}" />
+                    <#if !content_has_next || article.item.content['content'][content_index+1].type!='img'>
+                        </div>
+                    </#if>
                 </#if>
             </#list>
         </#if>

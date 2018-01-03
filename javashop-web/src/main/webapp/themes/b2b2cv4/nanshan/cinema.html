@@ -31,7 +31,7 @@
         <ul class="movie-img-list">
             <#if article.item.articleList?size gt 0>
                 <#list article.item.articleList as article>
-                    <li><img src="${article.imgUrl!''}"></li>
+                    <li><a href="/nanshan/movie.html?id=${article.id}"><img src="${article.imgUrl!''}"></a></li>
                 </#list>
             </#if>
         </ul>

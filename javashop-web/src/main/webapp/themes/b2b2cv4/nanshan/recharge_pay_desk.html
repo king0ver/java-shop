@@ -176,7 +176,7 @@
 				var payid =  $(".cashier-pay-list li.alipay").attr("payid");
 				$(".wechat-pay").hide();
 				//支付方式切换显示
-				$(".alipay_qrcode").attr("src","${ctx}/order-pay/order/${ordersn}.do?payment_method_id="+payid+"&pay_mode=qr&client_type=PC");
+				$(".alipay_qrcode").attr("src","${ctx}/order-pay/recharge/${rechargeOrder.item.recharge_sn}.do?payment_method_id="+payid+"&pay_mode=qr&client_type=PC");
 				$(".pay-wait").hide();
 				$(".alipay_qrcode").show();
 				$(".paybtn").hide();
@@ -184,7 +184,7 @@
 			}else if(payWay == "wechat"){
 				var payid =  $(".cashier-pay-list li.selected").attr("payid");
 				$(".alipay-pay").hide();
-				$(".wechat_qrcode").attr("src","${ctx}/order-pay/order/${ordersn}.do?payment_method_id="+payid+"&pay_mode=qr&client_type=PC");
+				$(".wechat_qrcode").attr("src","${ctx}/order-pay/recharge/${rechargeOrder.item.recharge_sn}.do?payment_method_id="+payid+"&pay_mode=qr&client_type=PC");
 				$(".pay-wait").hide();
 				$(".wechat_qrcode").show();
 				$(".paybtn").hide();
@@ -202,40 +202,13 @@
 		$(".alipay-pay a").click(function(){
 			var payid =  $(".cashier-pay-list li.alipay").attr("payid");
 			//打开新窗口跳转支付
-			window.open('${ctx}/order-pay/order/${ordersn}.do?payment_method_id='+payid+'&client_type=PC'); 
+			window.open('${ctx}/order-pay/recharge/${rechargeOrder.item.recharge_sn}.do?payment_method_id='+payid+'&client_type=PC');
 			$(".show-mask-box").show();
 			$(".pay-mask").show();
 			$(".bank-pay ul li").removeClass("selected");
 			$(this).addClass("selected");
 		})
-		
-		//选中支付方式立即支付
-		$(".bank-pay ul li a").click(function(){
-			var pluginId =  $(".cashier-pay-list li.selected").attr("pluginid");
-			
-			if(pluginId==null){
-				alert("请选择支付方式");
-				return false;
-			}
-			
-			if(pluginId=="alipayDirectPlugin" && pluginId=="weixinPayPlugin"){
-				return false;
-			}
-			var payid =  $(".cashier-pay-list li.selected").attr("payid");
-			//打开新窗口跳转支付
-			window.open('${ctx}/api/b2b2c/store-payment-api/pay.do?orderid=${order.order_id}&paymentid='+payid); 
-			
-			$(".show-mask-box").show();
-			$(".pay-mask").show();
-			$(".bank-pay ul li").removeClass("selected");
-			$(this).addClass("selected");
-			
-			$('body,html').animate({
-                scrollTop: 0
-            },
-            300);
-            return false;
-		})
+
 		
 		
 		//关闭遮罩

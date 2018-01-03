@@ -105,7 +105,7 @@ public class OrderPayManager implements IOrderPayManager {
 	@Override
 	public String payRecharge(String rechange_sn, Integer payment_method_id,String pay_mode,String client_type){
 
-		PayBill bill = this.daoSupport.queryForObject("select recharge_id as order_id , recharge_sn as trade_sn, price order_price from es_recharge  where recharge_sn=?",
+		PayBill bill = this.daoSupport.queryForObject("select recharge_id as order_id , recharge_sn as trade_sn, price order_price from es_nanshan_recharge_record  where recharge_sn=?",
 				PayBill.class, rechange_sn);
 
 		if(bill==null){

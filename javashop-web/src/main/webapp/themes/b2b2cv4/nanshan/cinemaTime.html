@@ -19,18 +19,20 @@
             </ul>
             <#if article.item.content?size gt 0 && article.item.content.content?size gt 0>
                 <#list article.item.content.content as content>
-                    <ul class="row">
-                        <li class="mark-red"><i>${content_index + 1}</i></li>
-                        <#if article.item.articleList?size gt 0>
-                            <#list article.item.articleList as tmp>
-                                <#if content.articleId = tmp.id?string>
-                                    <li>${tmp.title}</li>
-                                </#if>
-                            </#list>
-                        </#if>
-                        <li class="mark-red"><em>${content.cinameTime?substring(5,10)}</em><br><span>${content.cinameTime?substring(11,16)}</span></li>
-                        <li><span class="mark-red">${content.cinamePrice}元</span>/张</li>
-                    </ul>
+                    <a href="/nanshan/movie.html?id=${content.articleId}">
+                        <ul class="row">
+                            <li class="mark-red"><i>${content_index + 1}</i></li>
+                            <#if article.item.articleList?size gt 0>
+                                <#list article.item.articleList as tmp>
+                                    <#if content.articleId = tmp.id?string>
+                                        <li>${tmp.title}</li>
+                                    </#if>
+                                </#list>
+                            </#if>
+                            <li class="mark-red"><em>${content.cinameTime?substring(5,10)}</em><br><span>${content.cinameTime?substring(11,16)}</span></li>
+                            <li><span class="mark-red">${content.cinamePrice}元</span>/张</li>
+                        </ul>
+                    </a>
                 </#list>
             </#if>
         </div>

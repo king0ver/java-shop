@@ -308,7 +308,7 @@
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
 		<fields>cat_id,cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>57,'我的预约',6,0,'/nanshan/','/nanshan/'</values>
+		<values>57,'我的预约',6,0,'/nanshan/myAppointment.html','/nanshan/myAppointment.html'</values>
 	</action>
 
 	<action>

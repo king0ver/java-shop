@@ -1,6 +1,7 @@
 package com.enation.app.nanshan.tag;
 
 import com.enation.app.nanshan.service.IArticleService;
+import com.enation.app.nanshan.service.ICatManager;
 import com.enation.app.nanshan.vo.ArticleVo;
 import com.enation.framework.context.webcontext.ThreadContextHolder;
 import com.enation.framework.database.Page;
@@ -16,11 +17,11 @@ import java.util.Map;
 /**
  * Created by yulong on 17/12/21.
  */
-@Component("articleListPageTag")
+@Component("myAppointListPageTag")
 public class MyAppointListPageTag extends AbstractPageTag{
 
     @Autowired
-    private IArticleService articleService;
+    private ICatManager catManager;
 
     @Override
     protected Object exec(Map params) throws TemplateModelException {
@@ -32,19 +33,16 @@ public class MyAppointListPageTag extends AbstractPageTag{
             catId = params.get("catId").toString();
         }
 
-        String specs  = request.getParameter("specs");
-
         handlePageCat(map, catId);
 
         int pageNo = getPage();
 
-        Page<ArticleVo> webPage =articleService.querySpecInfoByCatId(Integer.parseInt(catId),
-                specs, pageNo, getPageSize());
 
+/*
         webPage.setCurrentPageNo(pageNo);
 
         map.put("webPage", webPage);
-        map.put("items", webPage.getResult());
+        map.put("items", webPage.getResult());*/
 
         map.put("blockview", ThreadContextHolder.getHttpRequest().getParameter("blockview"));
 

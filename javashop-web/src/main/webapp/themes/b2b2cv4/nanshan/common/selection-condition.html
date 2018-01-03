@@ -3,18 +3,19 @@
 <ul class="change-game-box">
     <#if selection.specVos?? && selection.specVos?size gt 0>
         <#list selection.specVos as spec>
-            <li class="g-type type-list">
+            <li class="g-type type-list clearfix">
                 <div class="title type-title">${spec.name}：</div>
-
-                <#if spec.specValVos?size gt 0>
-                    <#list spec.specValVos as specVal>
-                         <#if specVal.selected?string("true","flase") == "true">
-                             <a class="type-name g-active" data-id="${specVal.id}">${specVal.name}</a>
-                          <#else/>
-                             <a class="type-name" data-id="${specVal.id}">${specVal.name}</a>
-                         </#if>
-                    </#list>
-                </#if>
+                <div class="type-content">
+                    <#if spec.specValVos?size gt 0>
+                        <#list spec.specValVos as specVal>
+                             <#if specVal.selected?string("true","flase") == "true">
+                                 <a class="type-name g-active" data-id="${specVal.id}">${specVal.name}</a>
+                              <#else/>
+                                 <a class="type-name" data-id="${specVal.id}">${specVal.name}</a>
+                             </#if>
+                        </#list>
+                    </#if>
+                </div>
         </#list>
     </#if>
 </ul>

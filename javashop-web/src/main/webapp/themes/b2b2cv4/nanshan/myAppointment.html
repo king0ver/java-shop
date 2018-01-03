@@ -1,6 +1,6 @@
 
 <#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag() />
+<#assign article = articleListPageTag('{"catId":57}') />
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">

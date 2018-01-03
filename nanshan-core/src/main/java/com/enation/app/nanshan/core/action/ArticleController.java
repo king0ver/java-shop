@@ -3,7 +3,9 @@ package com.enation.app.nanshan.core.action;
 import com.enation.app.nanshan.core.model.Spec;
 import com.enation.app.nanshan.core.model.SpecVal;
 import com.enation.app.nanshan.core.service.IArticleManager;
+import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.core.service.ISpecManager;
+import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
@@ -14,6 +16,7 @@ import com.enation.framework.database.Page;
 import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
 import com.enation.framework.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -42,6 +45,8 @@ public class ArticleController extends GridController {
 	IArticleManager  articleManager;
 	@Autowired
 	ISpecManager specManager;
+	@Autowired
+	ICatManager catManager;
 	
 
 	/** 
@@ -165,6 +170,7 @@ public class ArticleController extends GridController {
 		view.addObject("ctx",ctx);
 		view.addObject("catId",catId);
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("specId", getCatIsContainSpecIds("38"));
 		List<Spec> specList = specManager.list(map);
 		List<Integer> specIdList = new ArrayList<Integer>();
 		for (Spec spec : specList) {
@@ -204,10 +210,15 @@ public class ArticleController extends GridController {
 	public ModelAndView  actEdit(int id,int catId) {
 		ModelAndView view=new ModelAndView();
 		try {
+
+			NanShanArticleVo nanShanArticleVo = this.articleManager.queryArticleById(id);
+
 			view.setViewName("/nanshan/admin/act/edit");
 			view.addObject("ctx",ctx);
-			view.addObject("data",this.articleManager.queryArticleById(id));
+			view.addObject("data", nanShanArticleVo);
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("specId", getCatIsContainSpecIds("38"));
+
 			List<Spec> specList = specManager.list(map);
 			List<Integer> specIdList = new ArrayList<Integer>();
 			for (Spec spec : specList) {
@@ -445,6 +456,27 @@ public class ArticleController extends GridController {
 		}
 		return view;
 		
+	}
+
+
+	/**
+	 * 查询分类是否包含基础属性
+	 * @param catIds
+	 * @return
+	 */
+	private String getCatIsContainSpecIds(String catIds) {
+		String specIds = "";
+		List<ArticleCat> catList = catManager.queryCatInfoByCatIds(catIds);
+		if(catList!=null && catList.size()>0){
+			for (ArticleCat articleCat : catList) {
+				specIds += articleCat.getSpec_id()+",";
+			}
+			if(StringUtils.isNotEmpty(specIds.toString())){
+				specIds = specIds.substring(0,specIds.length()-1);
+				specIds = specIds.replaceAll(";",",");
+			}
+		}
+		return specIds;
 	}
 
 }
