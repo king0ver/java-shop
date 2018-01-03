@@ -84,7 +84,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 			sql.append(" and a.title like '%"+param.getArticleName()+"%'");
 		}
 		if(!StringUtil.isEmpty(param.getParentId())){
-			sql.append(" and t.parent_id="+param.getParentId());
+			sql.append(" and t.parent_id in ("+param.getParentId()+")");
 		}
 		if(!StringUtil.isEmpty(param.getIsDel())){
 			sql.append(" and a.is_del="+param.getIsDel());
