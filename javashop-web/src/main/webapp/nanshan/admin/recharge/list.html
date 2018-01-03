@@ -1,0 +1,74 @@
+<#include '/admin/header.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
+<div  class="admin-main">
+   <div>
+        <!--按钮操作区域  -->
+        <!-- <div class="table_control">
+            <div class="table_opera">
+                <button type="button" id="add_model_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
+            </div>
+        </div> -->
+    </div>
+    
+    
+   <!--表格区域  -->
+   <form id="modelForm">
+    <table id="modeldata" class="layui-table site-table table-hover" width="100%" lay-skin="line">
+        <thead>
+          <tr>
+          	<th>充值编号</th>
+            <th>会员ID</th>
+            <th>会员名称</th>
+            <th>点卷</th>
+            <th>游戏账户</th>
+            <th>价格</th>
+            <th>订单状态</th>
+            <th>支付状态</th>
+            <th>支付类型</th>
+            <th>创建时间</th>
+            <th>充值订单号</th>
+            <th>支付时间</th>
+          </tr>
+        </thead>
+    </table>
+   </form>
+</div>
+
+<!--js区域  -->
+<script>
+var table;
+$(function(){
+	
+	table = $('#modeldata').DataTable({
+		"language": {
+			"url":ctx + "/zh_CN.txt"
+	    },
+	    "processing": true,
+	    "serverSide": true,
+	    "ordering": false,
+	    "searching": false,
+	    "lengthChange": false,
+	    ajax: {
+	        //指定数据源
+	        type:"post",
+	        url: '${ctx}/core/admin/recharge/list-json.do',
+	    },
+	    columns: [ //定义列
+	        {data: "rechargesn"},
+	        {data: "memberid"},
+	        {data: "membername"},
+	        {data: "points"},
+	        {data: "gameaccount"},
+	        {data: "price"},
+	        {data: "orderstatus"},
+	        {data: "paystatus"},
+	        {data: "paymenttype"},
+	        {data: "creationtime"}, 
+	        {data: "payorderno"}, 
+	        {data: "paymenttime"}
+	     ]
+	});
+});
+</script>
+
+<#include '/admin/footer.html' >
