@@ -92,6 +92,7 @@
 		<field><name>age</name><type>varchar</type><size>5</size><option>00</option></field>
 		<field><name>phone_number</name><type>varchar</type><size>255</size><option>00</option></field>
 		<field><name>email</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>is_del</name><type>int</type><size>2</size><option>00</option></field>
 	</action>
 
 	<action>

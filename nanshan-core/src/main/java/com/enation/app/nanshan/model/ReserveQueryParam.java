@@ -16,6 +16,11 @@ public class ReserveQueryParam implements Serializable{
     private String articleName;
     private String articleId;
     private String memberName;
+    private String isDel;
+    private String memberId;
+    private String phoneNumber;
+    private String email;
+    
 	
 	public String getArticleName() {
 		return articleName;
@@ -34,6 +39,31 @@ public class ReserveQueryParam implements Serializable{
 	}
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
+	}
+	public String getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
     
 	

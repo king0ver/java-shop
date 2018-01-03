@@ -1,17 +1,20 @@
 package com.enation.app.nanshan.controller;
 
 import com.enation.app.base.core.model.Member;
+import com.enation.app.nanshan.model.ArticleExt;
 import com.enation.app.nanshan.model.NanShanActReserve;
-import com.enation.app.nanshan.service.ICatManager;
+import com.enation.app.nanshan.service.IActReserveService;
 import com.enation.eop.sdk.context.UserConext;
 import com.enation.framework.action.JsonResult;
 import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
 import com.enation.framework.util.StringUtil;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppointController {
 
     @Autowired
-    private ICatManager catManager;
+    private IActReserveService actReserveService;
 
     @ApiOperation(value="活动预约", notes="活动预约")
     @ApiImplicitParams({
@@ -48,18 +51,22 @@ public class AppointController {
             if(member == null){
                 return JsonResultUtil.getErrorJson("not login");
             }
-
+            ArticleExt ext= actReserveService.queryArticleExt(activity_id);
+            if(ext==null){
+            	 return JsonResultUtil.getErrorJson("预约活动不存在");
+            }
+            if(ext.getReserved_num()>=ext.getReserve_num()){
+            	 return JsonResultUtil.getErrorJson("预约人数已满");
+            }
             NanShanActReserve reserve = new NanShanActReserve();
             reserve.setActivity_time(DateUtil.getDateline(activity_time));
             reserve.setAttend_name(member_name);
             reserve.setAge(member_age);
             reserve.setPhone_number(phone_number);
             reserve.setEmail(email);
-
             reserve.setMember_id(member.getMember_id());
 
-
-           catManager.reserve(reserve);
+            actReserveService.reserve(reserve);
 
         } catch (Exception e) {
             if (!StringUtil.isEmpty(e.getMessage())) {
@@ -69,6 +76,32 @@ public class AppointController {
         }
         return JsonResultUtil.getSuccessJson("预约成功!");
 
+
+    }
+    
+    @ResponseBody
+    @PostMapping(value="/cancel-appoint")
+    public JsonResult cancel(int activity_id,Integer memberId){
+
+        try {
+            Member member  = UserConext.getCurrentMember();
+            if(member == null){
+                return JsonResultUtil.getErrorJson("not login");
+            }
+            NanShanActReserve reserve = new NanShanActReserve();
+            if(memberId==null){
+            	  reserve.setMember_id(member.getMember_id());	
+            }
+            reserve.setMember_id(memberId);
+            reserve.setActivity_id(activity_id);
+            actReserveService.cancelReserve(reserve);
+        } catch (Exception e) {
+            if (!StringUtil.isEmpty(e.getMessage())) {
+                return JsonResultUtil.getErrorJson(e.getMessage());
+            }
+            return JsonResultUtil.getErrorJson("取消预约失败");
+        }
+        return JsonResultUtil.getSuccessJson("取消预约成功!");
 
     }
 
