@@ -54,6 +54,20 @@ public class ArticleVo implements Serializable {
 	private String actCost;//活动费用
 	private String actAddress;//活动地址
 
+	/**
+	 * 工作地点
+	 */
+	private String workPlace;
+	
+	/**
+	 * 职位类别
+	 */
+	private String jobCat;
+	
+	/**
+	 * 部门名称
+	 */
+	private String deptName;
 
 	private List<ArticleVo>  articleList;
 
@@ -156,8 +170,24 @@ public class ArticleVo implements Serializable {
 	public void setArticleList(List<ArticleVo> articleList) {
 		this.articleList = articleList;
 	}
-
-
+	public String getWorkPlace() {
+		return workPlace;
+	}
+	public void setWorkPlace(String workPlace) {
+		this.workPlace = workPlace;
+	}
+	public String getJobCat() {
+		return jobCat;
+	}
+	public void setJobCat(String jobCat) {
+		this.jobCat = jobCat;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 
 	
 }
