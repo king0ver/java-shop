@@ -17,6 +17,10 @@ public class NanShanArticle implements Serializable {
 	private String pic_url; //图片链接
 	private int is_del; //是否删除
 	private int content; //内容id		
+	private String work_place;//工作地点
+	private String job_cat;//职位类别
+	private String dept_name;//部门名称
+	
 	
 	public int getId() {
 		return id;
@@ -73,6 +77,28 @@ public class NanShanArticle implements Serializable {
 	public void setContent(int content) {
 		this.content = content;
 	}
+
+
+	public String getJob_cat() {
+		return job_cat;
+	}
+	public void setJob_cat(String job_cat) {
+		this.job_cat = job_cat;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	public String getWork_place() {
+		return work_place;
+	}
+	public void setWork_place(String work_place) {
+		this.work_place = work_place;
+	}
+	
+	
 	
 	
 

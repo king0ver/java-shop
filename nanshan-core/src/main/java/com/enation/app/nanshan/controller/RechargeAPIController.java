@@ -56,7 +56,7 @@ public class RechargeAPIController {
             Member member  = UserConext.getCurrentMember();
 
             if(member == null){
-                return JsonResultUtil.getErrorJson("用户未登录!");
+                return JsonResultUtil.getErrorJson("not login");
             }
 
             rechargeVo = rechargeService.create(gameAccount, points, client_type,

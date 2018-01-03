@@ -12,4 +12,11 @@ public interface RechargeService {
      * @return
      */
     RechargeVo create(String gameAccount, int points, String clientType, int memberId, String memberName);
+
+    /**
+     * 根据编号查询充值订单
+     * @param rechargeSn
+     * @return
+     */
+    RechargeVo queryRechargeVoBySn(String rechargeSn);
 }
