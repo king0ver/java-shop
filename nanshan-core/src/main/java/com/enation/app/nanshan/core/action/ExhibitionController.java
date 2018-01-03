@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.ArticleCat;
+import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
@@ -55,8 +58,13 @@ public class ExhibitionController extends GridController{
 	@ResponseBody
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/list-json")
-	public GridJsonResult listJson(String keyword){
+	public GridJsonResult listJson(ArticleQueryParam  param){
 		Map<String, Object> params = new HashMap<String, Object>();
+		if(StringUtils.isNoneBlank(param.getArticleName())) params.put("title", param.getArticleName());
+		if(StringUtils.isNoneBlank(param.getArticleId())) params.put("id", param.getArticleId());
+		if(StringUtils.isNoneBlank(param.getIsDel())) params.put("is_del", param.getIsDel());
+		if(StringUtils.isNoneBlank(param.getStartDate())) params.put("startDate", param.getStartDate());
+		if(StringUtils.isNoneBlank(param.getEndDate())) params.put("endDate", param.getEndDate());
 		params.put("catParentIds","9,10");
 		Page page = this.articleManager.queryArticleListByConiditon(params, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);

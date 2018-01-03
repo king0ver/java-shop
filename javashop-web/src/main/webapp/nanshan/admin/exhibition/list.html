@@ -9,7 +9,7 @@
             </div>
             <!--搜索区域  -->
             <div class="table_search">
-				<input type="text" name="keyword" placeholder="请输入标题关键字" id="searchbtn">
+				<input type="text" name="keyword" placeholder="请输入展览名称关键字" id="searchbtn">
 				<div id="templist" style="display: none">
 					<form class="layui-form">
 						<div class="form-group">
@@ -17,7 +17,7 @@
 							<input class="form-control" type="text" id="articleId"/>
 						</div>
 						<div class="form-group">
-							<label for="contain">标题：</label>
+							<label for="contain">展览名称：</label>
 							<input class="form-control" type="text" id="articleName"/>
 						</div>
 						<div class="form-group">
@@ -35,7 +35,6 @@
     		                 <label for="contain">结束时间：</label>
       			             <input class="layui-input" placeholder="结束时间" id="endDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
     		             </div>
-						
 						
 					</form>
 				</div>
@@ -72,8 +71,8 @@ $(function(){
     	  content: cent,
     	  keywordSearch: function () {
               var keyword = $("input[name='keyword']").val();
-              var param = "&articleName=" + keyword;
-              var url = table.ajax.url("${ctx}/admin/article/list-json.do?catId=9,10 " + param);
+              var param = "articleName=" + keyword;
+              var url = table.ajax.url("${ctx}/core/admin/exhibition/list-json.do?" + param);
               url.load();
           },
           formSearch   : function () {
@@ -82,8 +81,8 @@ $(function(){
               var startDate=$("#startDate").val();
               var endDate=$("#endDate").val();
               var isDel=$("#isDel").val();
-              var param = "&articleName=" + articleName + "&articleId=" + articleId+"&isDel="+isDel+"&startDate="+startDate+"&endDate="+endDate;
-              var url = table.ajax.url("${ctx}/admin/article/list-json.do?catId=9,10" + param);
+              var param = "articleName=" + articleName + "&articleId=" + articleId+"&isDel="+isDel+"&startDate="+startDate+"&endDate="+endDate;
+              var url = table.ajax.url("${ctx}/core/admin/exhibition/list-json.do?" + param);
               url.load();
           }
         
