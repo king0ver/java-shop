@@ -1,0 +1,28 @@
+
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<#include 'common/thirdCat.html'/>
+<div class="section-content">
+    <#include 'common/navigator.html'/>
+    <div class="txt-content">
+        <div class="content-title1">${article.item.title!''}</div>
+        <p class="content-txtList">${article.item.deptName!''}</p>
+        <div class="content-title1">岗位职责</div>
+        <#if article.item.content?size gt 0 >
+            <#list article.item.content['jobRes'] as jobRes>
+                <p class="content-txtList">${jobRes.content}</p>
+            </#list>
+        </#if>
+        <div class="content-title1">岗位要求</div>
+        <#if article.item.content?size gt 0 >
+            <#list article.item.content['jobReq'] as jobReq>
+                <p class="content-txtList">${jobReq.content}</p>
+            </#list>
+        </#if>
+		<div class="lxBtn"><a href="联系我们.html">联系我们</a></div>
+	</div>
+</div>
+<#include 'common/footer.html'/>

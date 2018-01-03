@@ -1,0 +1,37 @@
+
+<#assign articleListPageTag = newTag("articleListPageTag") />
+<#assign article = articleListPageTag() />
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<div class="section-content clearfix">
+	<#include 'common/navigator.html'/>
+    <div class="row-table-title">
+        <div class="rencaitable">
+            <ul class="header">
+                <li>职位名称</li>
+                <li>工作地点</li>
+                <li>职位类别</li>
+                <li>部门名称</li>
+            </ul>
+            <#if article.items?? && article.items?size gt 0>
+            	<#list article.items as item>
+            		
+			            <div class="tableList">
+			            <a href="/nanshan/recruit.html?id=${item.id}">
+				            <ul class="row">
+				                <li><b style="font-weight: bold;">${item.title!''}</b></li>
+				                <li>${item.workPlace!''}</li>
+				                <li>${item.jobCat!''}</li>
+				                <li>${item.deptName!''}</li>
+				            </ul>
+				            <div class="zpdetail">${item.summary!''}</div>
+				             </a>
+			            </div>
+			       
+		        </#list>  
+            </#if>
+        </div>
+    </div>
+    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+</div>
+<#include 'common/footer.html'/>
