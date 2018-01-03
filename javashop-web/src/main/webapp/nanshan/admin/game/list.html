@@ -7,6 +7,40 @@
             <div class="table_opera">
                 <button type="button" id="add_model_button" class="layui-btn layui-btn-primary " title="添加"><i class="icon iconfont icon-llalbumshopselectorcreate"></i></button>
             </div>
+             <div class="table_search">
+				<input type="text" name="keyword" placeholder="请输入游戏名称关键字" id="searchbtn">
+				<div id="templist" style="display: none">
+					<form class="layui-form">
+						<div class="form-group">
+							<label for="contain">ID：</label>
+							<input class="form-control" type="text" id="articleId"/>
+						</div>
+						<div class="form-group">
+							<label for="contain">游戏名称：</label>
+							<input class="form-control" type="text" id="articleName"/>
+						</div>
+						<div class="form-group">
+			      			<select name="cat_id" id="isDel">
+			      			    <option value="">状态</option>
+			                    <option value="0">有效</option>
+			                    <option value="1">已删除</option>
+			      			</select>
+    		            </div>
+    		            <div class="form-group" >
+    		                 <label for="contain">开始时间：</label>
+      			             <input class="layui-input" placeholder="开始时间" id="startDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+    		             <div class="form-group" >
+    		                 <label for="contain">结束时间：</label>
+      			             <input class="layui-input" placeholder="结束时间" id="endDate"  onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="width:100%;height:38px;" />
+    		             </div>
+						
+						
+					</form>
+				</div>
+			</div>
+            
+            
         </div>
     </div>
     
@@ -33,7 +67,27 @@
 <script>
 var table;
 $(function(){
-	
+	 var cent = $("#templist").html();
+	 $("#searchbtn").searchBox({
+    	  content: cent,
+    	  keywordSearch: function () {
+              var keyword = $("input[name='keyword']").val();
+              var param = "articleName=" + keyword;
+              var url = table.ajax.url("${ctx}/core/admin/game/list-json.do?" + param);
+              url.load();
+          },
+          formSearch   : function () {
+              var articleName = $("#articleName").val();
+              var articleId = $("#articleId").val();
+              var startDate=$("#startDate").val();
+              var endDate=$("#endDate").val();
+              var isDel=$("#isDel").val();
+              var param = "articleName=" + articleName + "&articleId=" + articleId+"&isDel="+isDel+"&startDate="+startDate+"&endDate="+endDate;
+              var url = table.ajax.url("${ctx}/core/admin/game/list-json.do?" + param);
+              url.load();
+          }
+        
+    });
 	table = $('#modeldata').DataTable({
 		"language": {
 			"url":ctx + "/zh_CN.txt"

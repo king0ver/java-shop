@@ -165,6 +165,26 @@ public class ArticleManagerImpl implements IArticleManager  {
 				sql.append(" and t.cat_id in (").append(String.valueOf(params.get("catIds"))).append(") ");
 			}
 		}
+		if(params.containsKey("id")){
+			if(StringUtils.isNotBlank(String.valueOf(params.get("id")))){
+				sql.append(" and a.id="+String.valueOf(params.get("id")));
+			}
+		}
+		if(params.containsKey("title")){
+			if(StringUtils.isNotBlank(String.valueOf(params.get("title")))){
+				sql.append(" and  a.title like '%").append(String.valueOf(params.get("title"))).append("%' ");
+			}
+		}
+		if(params.containsKey("startDate")){
+			if(StringUtils.isNotBlank(String.valueOf(params.get("startDate")))){
+				sql.append(" and  a.create_time >=").append(DateUtil.getDateline(String.valueOf(params.get("startDate")), "yyyy-MM-dd hh:mm:ss"));
+			}
+		}
+		if(params.containsKey("endDate")){
+			if(StringUtils.isNotBlank(String.valueOf(params.get("endDate")))){
+				sql.append(" and a.create_time <=").append(DateUtil.getDateline(String.valueOf(params.get("endDate")), "yyyy-MM-dd hh:mm:ss"));
+			}
+		}
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
 
@@ -261,7 +281,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 	@Override
 	public Page queryReserveList(ReserveQueryParam param, int page, int pageSize) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select t.article_id,title,t.member_id,t.is_del,t.activity_time,t.attend_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.article_id=a.id");
+		sql.append("select t.activity_id,title,t.member_id,t.is_del,t.activity_time,t.attend_name,age,phone_number,email from es_nanshan_act_reserve t,es_nanshan_article a WHERE t.activity_id=a.id");
 
 		if(StringUtils.isNotBlank(param.getArticleName())){
 				sql.append(" and title like '%"+param.getArticleName()+"%'");
@@ -270,7 +290,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 			sql.append(" and t.attend_name like '%"+param.getMemberName()+"%'");
 	    }
 		if(StringUtils.isNotBlank(param.getArticleId())){
-				sql.append(" and t.article_id="+param.getArticleId());
+				sql.append(" and t.activity_id="+param.getArticleId());
 		}
 		if(StringUtils.isNotBlank(param.getMemberId())){
 			sql.append(" and t.member_id="+param.getMemberId());

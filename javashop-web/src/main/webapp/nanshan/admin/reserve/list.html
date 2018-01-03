@@ -43,7 +43,7 @@
 							<label for="contain">预约状态：</label>
 							<select id="isDel">
 							    <option value="" >请选择</option>
-							    <option value="0" >已预约</option>
+							    <option value="0" >预约成功</option>
 							    <option value="1" >已取消</option>
 							</select>
 						</div>
@@ -113,15 +113,15 @@ $(function(){
 	        url: '${ctx}/admin/reserve/list-json.do',
 	    },
 	    columns: [ //定义列
-	        {data: "article_id"},
+	        {data: "activity_id"},
 	        {data: "title"},
 	        {data: "member_id"},
 	        {data: "attend_name"},
 	        {data: null,"render": function(data, type, row) {
-	        	if(data.act_time==null){
+	        	if(data.activity_time==null){
 	        		return " ";
 	        	}else{
-	        		return getFormatDateByLong(data.activity_time, "yyyy-MM-dd hh:mm:ss");
+	        		return getFormatDateByLong(data.activity_time, "yyyy-MM-dd");
 	        	}
 	       	}},
 	       
@@ -130,7 +130,7 @@ $(function(){
 	        {data: "email"},
 	        {data: null,"render": function(data, type, row) {
 	        	if(data.is_del==0){
-	        		return "已预约";
+	        		return "预约成功";
 	        	}else{
 	        		return "已取消";
 	        	}

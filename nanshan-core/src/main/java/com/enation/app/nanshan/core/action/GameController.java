@@ -19,6 +19,7 @@ import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.core.service.ISpecManager;
 import com.enation.app.nanshan.model.ArticleCat;
+import com.enation.app.nanshan.model.ArticleQueryParam;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.GridJsonResult;
@@ -62,8 +63,13 @@ public class GameController extends GridController{
 	@ResponseBody
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value="/list-json")
-	public GridJsonResult listJson(){
+	public GridJsonResult listJson(ArticleQueryParam param){
 		Map<String, Object> params = new HashMap<String, Object>();
+		if(StringUtils.isNotBlank(param.getArticleName())) params.put("title", param.getArticleName());
+		if(StringUtils.isNotBlank(param.getArticleId())) params.put("id", param.getArticleId());
+		if(StringUtils.isNotBlank(param.getIsDel())) params.put("is_del", param.getIsDel());
+		if(StringUtils.isNotBlank(param.getStartDate())) params.put("startDate", param.getStartDate());
+		if(StringUtils.isNotBlank(param.getEndDate())) params.put("endDate", param.getEndDate());
 		params.put("catParentIds","21");//父分类为(游戏)下的数据
 		Page page = this.articleManager.queryArticleListByConiditon(params, this.getPage(), this.getPageSize());
 		return JsonResultUtil.getGridJson(page);
