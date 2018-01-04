@@ -1,0 +1,28 @@
+<#assign messageBgTag = newTag("messageBgTag") />
+<#assign article = messageBgTag() />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<div class="section-content clearfix">
+	<#include 'common/navigator.html'/>
+    <div class="xx-content">
+            <ul class="detail-lists">
+            	<#if article.items?? && article.items?size gt 0>
+            		<#list article.items as item>
+		                <li class="clearfix">
+		                    <div class="lt-num">
+		                        <span class="num"><#if item.send_time??><@dateformat time='${item.send_time}' pattern='yyyy-MM-dd'/></#if></span>
+		                        <div class="date">系统消息</div>
+		                    </div>
+		                    <div class="rt-txt">
+		                        <div class="rt-title">${item.msg_title!''}</div>
+		                        <p>${item.msg_content!''}</p>
+		                    </div>
+		                </li>
+					</#list>  
+				</#if>
+            </ul>
+        </div>
+    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+</div>
+<#include 'common/footer.html'/>
