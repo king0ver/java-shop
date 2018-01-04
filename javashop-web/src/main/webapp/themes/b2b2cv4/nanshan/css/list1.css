@@ -313,7 +313,7 @@
 }
 .activity-lists .content-list ,
 .activity-lists p{
-    padding-top: 6px;
+    padding: 6px 0;
     font-size: 17px;
 }
 
@@ -564,6 +564,7 @@
 }
 .detail-lists .rt-txt p{
     width: 730px;
+    height: 128px;
     margin-top: 15px;
      display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -603,14 +604,8 @@
 .g-type .type-title{
     height: 40px;
     line-height: 37px;
-    float: left;
     display: inline-block;
     vertical-align: bottom;
-}
-
-.g-type .type-content{
-    width: 1000px;
-    float: left;
 }
 
 /* 游戏列表 */
@@ -773,13 +768,13 @@
 }
 .detailInfo .yuyue{
 	width: 200px;
-	height: 100px;
+	height: 150px;
 	border-left: 1px solid #c7c7c7;
 	float: right;
 	
 }
 .detailInfo .yuyue img{
-	width: 75px;
+	width: 110px;
 	margin: 20px 40px;
 }
 
@@ -890,6 +885,7 @@
 		     padding: 25px 0 5px 34px;
    			 font-size: 18px;
    			 color: #333;
+   			 font-weight:bold;
 	}
 	.content-txtList{
 		   padding: 0px 0 5px 34px;
@@ -913,15 +909,16 @@
 		background: #fff;
 		padding: 15px 0;
 		margin-bottom: 20px;
+		border: 1px solid #ececec;
 	}
-	
+
 .xx-content  .lt-num, .xx-content  .rt-txt {
     float: left;
 }
 .xx-content .lt-num {
     padding: 20px 73px 14px 73px;
     border-right: 1px solid #ececec;
-  color: #dbdbdb; 
+  color: #dbdbdb;
 }
 .xx-content  .rt-title {
    font-weight: bold;
@@ -929,7 +926,7 @@
 }
 .xx-content .rt-txt {
     padding: 0px 8px 7px 42px;
-    
+
 }
 .xx-content .rt-txt p {
     width: 730px;
@@ -945,7 +942,8 @@
 .xx-content .txtColor{
 	color: #dd0302;
 }
+
 .js{
-    text-align: center;
-    padding: 100px 0;
+	text-align: center;
+	padding: 100px 0;
 }

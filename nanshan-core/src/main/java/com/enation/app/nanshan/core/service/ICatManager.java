@@ -24,4 +24,22 @@ public interface ICatManager{
 	 * @return
 	 */
 	public List<ArticleCat> queryCatChildrenInfoByCatIds(String catIds);
+	
+	
+	/** 
+	* @param 
+	* @Description:新增分类 
+	* @date 2018年1月4日 下午5:37:35
+	*  
+	*/ 
+	public void addCat(ArticleCat articleCat);
+	
+	/** 
+	* @param @param id
+	* @Description: 删除分类
+	* @date 2018年1月4日 下午7:15:30
+	*  
+	*/ 
+	public void delCat(int id);
+	
 }

@@ -17,8 +17,8 @@ form{margin-bottom:0px;}
 <form id="updateForm" class="layui-form" enctype="multipart/form-data" >
   	<div class="layui-form-item">
 		<label class="layui-form-label">设施分类:</label>
-		<div class="layui-input-block" style="width:300px;">
-   			<select name="cat_id" lay-filter="catId">
+		<div class="layui-input-inline" style="width:300px;">
+   			<select id="catId" name="cat_id" lay-filter="catId">
    			     <#list catList as cat>
 					<option onchange=""
 						<#if cat.cat_id == data.cat_id>
@@ -27,6 +27,13 @@ form{margin-bottom:0px;}
 				</#list>
    			</select>
   		</div>
+  		
+  		 <div class="layui-input-inline" style="width:100px;">
+		       <a id="addCatbtn" class="layui-btn" >添加分类</a>
+		  </div>
+		   <div class="layui-input-inline"  style="width:100px;">
+		       <a id="delCatbtn" class="layui-btn layui-btn-danger" onclick="delCat()" >删除分类</a>
+		  </div>
 	</div>
  	<div class="layui-form-item" style="width:400px;">
    		<label class="layui-form-label" style="padding:0px 0px 0px 10px;width:100px;">服务设施名称：</label>
@@ -37,7 +44,7 @@ form{margin-bottom:0px;}
 	</div>
   	<div class="layui-form-item" style="width:400px;">
    		<label class="layui-form-label">设施地址：</label>
-   		<div class="layui-input-block">
+   		<div class="layui-input-inline">
      		<input type="text" name="address"
      		<#if data.content??>
 				<#assign dataContent = data.content?eval/>
@@ -93,8 +100,95 @@ form{margin-bottom:0px;}
 	    </div>
  	 </div>
 </form>
-<script>
 
+<div id="addCat" style="padding-top:30px;display:none">
+    <div class="layui-form-item">
+		<label class="layui-form-label" style="padding:0px 0px 0px 20px;width:100px;">分类名称：</label>
+		<div class="layui-input-inline">
+		 <input id="catName" type="text" name="catName" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+	<div class="layui-form-item" style="margin-top:20px;">
+		    <div class="layui-input-block">
+		      	<a class="layui-btn"  lay-filter="addCat" style="margin-left:50px" onclick="addCat()" >保存</a>
+		    </div>
+	 	 </div>
+	</div>
+<script>
+$(function(){
+	  $("#addCatbtn").click(function(){
+		   	 layer.open({
+		            title:"添加分类",//标题
+		            maxmin :true,//右上角可否放大缩小
+		            type:1,//弹框的类型
+		            shade: [0.3, '#000'],//黑色背景
+		            offset: '10px',//弹框位置
+		            shadeClose:false,//黑色背景是否可以点击关闭
+		            content:$("#addCat"),//内容的URL
+		            area:['400px','300px'],//弹框大小
+		            scrollbar: false//是否允许浏览器出现滚动条
+		        });
+	}); 
+
+})
+function addCat(){
+	
+	var data=new Object();
+	data.parent_id=46;
+	data.cat_name=$("#catName").val();
+	var options = {
+			url : '/core/admin/service/add-cat.do',
+			type : "POST",
+			dataType : 'json',
+			data:data,
+			success : function(result) {
+				if(result.result==1){
+				    $.Loading.success(result.message);
+					window.location.reload();
+				}
+				if(result.result==0){
+					$.Loading.error(result.message);
+				}
+			},
+			error : function(e) {
+				$.Loading.error("出现错误 ，请重试");
+			},
+			end:function(){
+				 location.reload();
+			}
+	};
+	$('#addCat').ajaxSubmit(options);
+}
+
+function delCat(){
+	var id=$("#catId").val();
+	var text=$("#catId").find("option:selected").text();
+	if(id==""){
+		$.Loading.error("请先选择分类");
+		return;
+	}
+	if(!confirm("确认 要删分类:"+text)){	
+		return ;
+	}
+	var options = {
+			url : '/core/admin/service/del-cat.do?catId='+id+'&ajax=yes',
+			type : "POST",
+			dataType : 'json',
+			success : function(result) {
+				if(result.result==1){
+					$.Loading.success(result.message);
+					window.location.reload();
+				}
+				if(result.result==0){
+					$.Loading.error(result.message);
+				}
+			},
+			error : function(e) {
+				$.Loading.error("出现错误 ，请重试");
+			}
+	};
+	$('#updateForm').ajaxSubmit(options);
+}
 function getContext(){
 	var divContext = $("#article .layui-form-item");
 	var jsonList = new Array();

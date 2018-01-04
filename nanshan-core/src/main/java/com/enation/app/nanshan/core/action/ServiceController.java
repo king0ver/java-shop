@@ -100,4 +100,43 @@ public class ServiceController extends GridController{
 		}		
 	}
 	
+	
+	/**
+	 * 修改
+	 * @param spec
+	 * @param specValName
+	 * @param spec
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/add-cat")
+	public JsonResult saveCat(ArticleCat articleCat,HttpServletRequest request){
+		try{
+			articleCat.setParent_id(46);
+			catManager.addCat(articleCat);
+			return JsonResultUtil.getSuccessJson("操作成功");
+		}catch(Exception e){
+			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
+		}		
+	}
+	
+	
+	/**
+	 * 修改
+	 * @param spec
+	 * @param specValName
+	 * @param spec
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/del-cat")
+	public JsonResult saveCat(int catId,HttpServletRequest request){
+		try{
+			catManager.delCat(catId);
+			return JsonResultUtil.getSuccessJson("操作成功");
+		}catch(Exception e){
+			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
+		}		
+	}
+	
 }
