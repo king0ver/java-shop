@@ -9,7 +9,7 @@
     <#include 'common/navigator.html'/>
     <div class="txt-content">
         <div class="content-title1">${article.item.title!''}</div>
-        <p class="content-txtList">${article.item.deptName!''}</p>
+        <p class="content-txtList">${article.item.workPlace!''} &nbsp;&nbsp;${article.item.deptName!''}</p>
         <div class="content-title1">岗位职责</div>
         <#if article.item.content?size gt 0 >
             <#list article.item.content['jobRes'] as jobRes>
@@ -22,7 +22,7 @@
                 <p class="content-txtList">${jobReq.content}</p>
             </#list>
         </#if>
-		<div class="lxBtn"><a href="联系我们.html">联系我们</a></div>
+		<div class="lxBtn"><a href="/nanshan/contactus.html">联系我们</a></div>
 	</div>
 </div>
 <#include 'common/footer.html'/>

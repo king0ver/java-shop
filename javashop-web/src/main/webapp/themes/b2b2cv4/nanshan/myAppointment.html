@@ -1,35 +1,83 @@
+<#assign memberIsLoginTag=newTag("memberLoginCheckTag")/>
+<#assign isLogin=memberIsLoginTag("'login_url':'/store/login.html'")/>
 
-<#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag('{"catId":57}') />
+<#assign myAppointListPageTag = newTag("myAppointListPageTag") />
+<#assign article = myAppointListPageTag('{"catId":57}') />
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
 <#include 'common/thirdCat.html'/>
 <div class="section-content clearfix">
     <#include 'common/navigator.html'/>
-    <div class="item-content">
-        <#if article.items?? && article.items?size gt 0>
-            <ul class="detail-lists clearfix">
-                <#list article.items as item>
-                    <li>
-                        <a href="/nanshan/news.html?id=${item.id}">
-                            <div class="lt-num">
-                                <span class="num"><@dateformat time='${item.createTime}' pattern='dd'/></span>
-                                <div class="date"><@dateformat time='${item.createTime}' pattern='yyyy-MM'/></div>
-                            </div>
-                            <div class="rt-txt">
-                                <div class="rt-title">${item.title!''}</div>
-                                <p>
-                                    ${item.summary!''}
-                                </p>
-                            </div>
-                        </a>
-                    </li>
 
-                </#list>
+    <div class="yuyue-table-title">
+        <div class="rencaitable">
+            <ul class="header">
+                <li>预约信息</li>
+                <li>人数</li>
+                <li>活动时间</li>
+                <li>预约状态	</li>
+                <li>操作	</li>
             </ul>
-        </#if>
+            <div class="tableList">
+                <#if article.items ?? && article.items?size gt 0>
+                    <#list article.items as item>
+                        <ul class="row">
+
+                            <li>${item.activityname}</li>
+                            <li>1</li>
+                            <li><@dateformat time='${item.activitytime}' pattern='yyyy-MM-dd'/></li>
+                            <li>
+                                <#if item.isdel == 0>
+                                    <p>预约成功</p>
+                                    <#else>
+                                        <p>已取消</p>
+                                </#if>
+                                <p style="color: #67b0fd;"><a href="/nanshan/activity.html?id=${item.activityid}">查看活动详情</a></p>
+                            </li>
+                            <li>
+                                <#if item.isdel == 0>
+                                    <a href="javascript:void(0)" class="cancel" data-value="${item.activityid}">取消预约</a>
+                                    <#else>
+                                        无
+                                </#if>
+                            </li>
+                        </ul>
+                    </#list>
+                </#if>
+
+            </div>
+
+        </div>
+
     </div>
-    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+
+
+    <#if article.webPage??>
+        <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+    </#if>
 </div>
+<script type="text/javascript">
+    $("a.cancel").click(function(){
+        var activityId = $(this).attr("data-value");
+
+        if(confirm("确认要取消预约吗?")){
+            $.post("/activity-operation/cancel.do",{activity_id:activityId},function(data){
+
+                if(data.result == 1){
+                    alert("取消成功!");
+                    location.reload();
+                }if(data.result == 0 && data.message == "not login") {
+                    alert("您还未登录系统!");
+                    location.href ="/store/login.html";
+                }else{
+                    alert("预约异常!");
+                }
+
+
+            },"json");
+        }
+
+    });
+</script>
 <#include 'common/footer.html'/>

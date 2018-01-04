@@ -42,4 +42,11 @@ public interface IActReserveService {
 	 */
 	public Page<ActReserveVo> queryReserveListById(Integer userId,int pageNo, int pageSize);
 
+	/**
+	 * 查用户预约活动记录
+	 * @param memberId
+	 * @return
+     */
+	public NanShanActReserve queryReserveByMemberId(int memberId, int activityId);
+
 }

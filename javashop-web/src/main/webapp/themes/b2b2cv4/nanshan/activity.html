@@ -5,11 +5,12 @@
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${file_path}/nanshan/js/appoint.js"></script>
+
 <#include 'common/thirdCat.html'/>
 
 <div class="section-content">
     <#include 'common/navigator.html'/>
-    <div><img src="${article.item.imgUrl!''}"></div>
+    <div><img src="${article.item.imgUrl!''}" style="width: 1200px;height: 400px;"></div>
     <!--
         作者：offline
         时间：2017-12-23
@@ -24,7 +25,7 @@
                 <li><span>活动地址</span>：${article.item.actAddress}</li>
             </ul>
             <#if article.item.catId = 38>
-                <div class="yuyue">
+                <div class="yuyue" >
                     <img src="${file_path}/nanshan/css/images/yuyue.jpg" />
                 </div>
             </#if>
@@ -74,7 +75,7 @@
                 </div>
                 <li>
                     <label for="phone"><span class="error">※</span>联系电话</label>
-                    <input id="phone" type="text" placeholder="13161623451">
+                    <input id="phone" type="text" placeholder="手机号码">
                 </li>
                 <li>
                     <label for="email"><span class="error">※</span>电子邮件</label>

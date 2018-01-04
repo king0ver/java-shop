@@ -58,7 +58,15 @@ public class AppointController {
             if(ext.getReserved_num()>=ext.getReserve_num()){
             	 return JsonResultUtil.getErrorJson("预约人数已满");
             }
+
+            NanShanActReserve tmp = actReserveService.queryReserveByMemberId(member.getMember_id(), activity_id);
+            if(tmp != null){
+                return JsonResultUtil.getErrorJson("您已经预约该活动");
+            }
+
+
             NanShanActReserve reserve = new NanShanActReserve();
+            reserve.setActivity_id(activity_id);
             reserve.setActivity_time(DateUtil.getDateline(activity_time));
             reserve.setAttend_name(member_name);
             reserve.setAge(member_age);
@@ -80,8 +88,8 @@ public class AppointController {
     }
     
     @ResponseBody
-    @PostMapping(value="/cancel-appoint")
-    public JsonResult cancel(int activity_id,Integer memberId){
+    @PostMapping(value="/cancel")
+    public JsonResult cancel(int activity_id){
 
         try {
             Member member  = UserConext.getCurrentMember();
@@ -89,10 +97,8 @@ public class AppointController {
                 return JsonResultUtil.getErrorJson("not login");
             }
             NanShanActReserve reserve = new NanShanActReserve();
-            if(memberId==null){
-            	  reserve.setMember_id(member.getMember_id());	
-            }
-            reserve.setMember_id(memberId);
+
+            reserve.setMember_id(member.getMember_id());
             reserve.setActivity_id(activity_id);
             actReserveService.cancelReserve(reserve);
         } catch (Exception e) {
@@ -102,6 +108,29 @@ public class AppointController {
             return JsonResultUtil.getErrorJson("取消预约失败");
         }
         return JsonResultUtil.getSuccessJson("取消预约成功!");
+
+    }
+
+    @ResponseBody
+    @PostMapping(value="/isAppoint")
+    public JsonResult isAppoint(int activity_id){
+
+        try {
+            Member member  = UserConext.getCurrentMember();
+
+            if(member == null){
+                return JsonResultUtil.getErrorJson("not login");
+            }
+
+            NanShanActReserve tmp = actReserveService.queryReserveByMemberId(member.getMember_id(), activity_id);
+            if(tmp != null){
+                return JsonResultUtil.getErrorJson("您已经预约该活动");
+            }
+        } catch (Exception e) {
+            return JsonResultUtil.getSuccessJson("系统异常!");
+        }
+        return JsonResultUtil.getSuccessJson("已预约");
+
 
     }
 

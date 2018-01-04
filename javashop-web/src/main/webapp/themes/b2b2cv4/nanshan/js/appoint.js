@@ -35,17 +35,32 @@ $(function(){
 
 			if(data.result == 1){
 				alert("预约成功!");
+				location.href="/nanshan/myAppointment.html";
 			}if(data.result == 0 && data.message == "not login") {
 				alert("您还未登录系统!");
+				location.href ="/store/login.html";
 			}else{
-				alert("预约异常!");
+				alert(data.message);
 			}
 		},"json")
 
 	});
 	$('.yuyue').on('click',function(){
-		$('.bgColorShadow').show()
-		$('.activity-reservation').animate({"right":"0px"},400).show()
+
+		var activityId = $("#activityId").val();
+
+		$.post("/activity-operation/isAppoint.do",{activity_id:activityId},function(data){
+
+			if(data.result == 1){
+				$('.bgColorShadow').show();
+				$('.activity-reservation').animate({"right":"0px"},400).show()
+			}if(data.result == 0 && data.message == "not login") {
+				alert("您还未登录系统!");
+				location.href ="/store/login.html";
+			}else{
+				alert(data.message);
+			}
+		},"json");
 	})
 	$('.item-title').on('click',function(){
 		$('.bgColorShadow').hide()

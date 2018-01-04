@@ -214,6 +214,7 @@ body{
 	line-height: 40px;
 	height: 40px;
 	margin-top: 35px;
+	display: inline-block
 }
 .navCss .navWrap .fr .navList .item .itmeList{
 	position: absolute;

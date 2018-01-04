@@ -40,7 +40,7 @@
     height: 46px;
     text-align: center;
     line-height: 46px;
-    background: #0075d0;
+    background: #ddd;
     color: #fff;
     font-size: 16px;
     margin:10px auto 22px;
@@ -313,7 +313,7 @@
 }
 .activity-lists .content-list ,
 .activity-lists p{
-    padding: 6px 0;
+    padding-top: 6px;
     font-size: 17px;
 }
 
@@ -564,7 +564,6 @@
 }
 .detail-lists .rt-txt p{
     width: 730px;
-    height: 128px;
     margin-top: 15px;
      display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -585,6 +584,7 @@
     color: #1173d1;
     border-bottom: 1px solid #1173d1;
     line-height: 16px;
+        margin-top: 20px;
 }
 .detail-lists .article-source .a_txt{
     color: #333;
@@ -602,16 +602,15 @@
 }
 .g-type .type-title{
     height: 40px;
-    float: left;
-    text-align: right;
     line-height: 37px;
+    float: left;
     display: inline-block;
     vertical-align: bottom;
 }
 
 .g-type .type-content{
-    float: left;
     width: 1000px;
+    float: left;
 }
 
 /* 游戏列表 */
@@ -705,6 +704,18 @@
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+.activity-lists .actDetil span{
+	font-size: 17px;
+	float: left;
+}
+.activity-lists .actDetil span:nth-child(2){
+	font-size: 17px;
+	width: 640px;
+	    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
 /* 预约按钮 */
 .reservation-btn{
     display: inline-block;
@@ -762,13 +773,13 @@
 }
 .detailInfo .yuyue{
 	width: 200px;
-	height: 150px;
+	height: 100px;
 	border-left: 1px solid #c7c7c7;
 	float: right;
 	
 }
 .detailInfo .yuyue img{
-	width: 110px;
+	width: 75px;
 	margin: 20px 40px;
 }
 
@@ -879,7 +890,6 @@
 		     padding: 25px 0 5px 34px;
    			 font-size: 18px;
    			 color: #333;
-   			 font-weight:bold;
 	}
 	.content-txtList{
 		   padding: 0px 0 5px 34px;
@@ -899,7 +909,43 @@
 	.lxBtn a{
 			color: #fff;
 	}
-
-div.img{
+	.xx-content .detail-lists li{
+		background: #fff;
+		padding: 15px 0;
+		margin-bottom: 20px;
+	}
+	
+.xx-content  .lt-num, .xx-content  .rt-txt {
+    float: left;
+}
+.xx-content .lt-num {
+    padding: 20px 73px 14px 73px;
+    border-right: 1px solid #ececec;
+  color: #dbdbdb; 
+}
+.xx-content  .rt-title {
+   font-weight: bold;
+    padding: 7px 0;
+}
+.xx-content .rt-txt {
+    padding: 0px 8px 7px 42px;
+    
+}
+.xx-content .rt-txt p {
+    width: 730px;
+    margin-top: 0px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 12px;
+    color: #929292;
+        line-height: 18px;
+}
+.xx-content .txtColor{
+	color: #dd0302;
+}
+.js{
     text-align: center;
+    padding: 100px 0;
 }

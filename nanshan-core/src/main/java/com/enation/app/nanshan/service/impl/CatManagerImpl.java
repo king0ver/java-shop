@@ -89,11 +89,6 @@ public class CatManagerImpl implements ICatManager  {
 
 
 	@Override
-	public void reserve(NanShanActReserve NanShanActReserve) {
-		this.daoSupport.insert("es_nanshan_act_reserve", NanShanActReserve);
-		this.daoSupport.execute(" update es_nanshan_article_ext t set t.reserved_num=t.reserved_num+1 where t.article_id="+NanShanActReserve.getActivity_id());
-	}
-	@Override
 	public  NCatVo getCatTree(){
 		List<NCatVo> listTree= (List<NCatVo>)this.cache.get(NanShanCommonConstant.NANSHANCATCACHENAME);
 	    if(listTree==null||listTree.size()<1){
@@ -103,20 +98,6 @@ public class CatManagerImpl implements ICatManager  {
 			this.cache.put(NanShanCommonConstant.NANSHANCATCACHENAME,listTree);
 	    }
 		return listTree == null ? null : listTree.get(0);
-	}
-
-
-	@Override
-	public ArticleExt queryArticleExt(int activityId) {
-		ArticleExt ext=this.daoSupport.queryForObject("select reserve_num,reserved_num from es_nanshan_article_ext where article_id=?", ArticleExt.class, activityId);
-		return ext;
-	}
-
-
-	@Override
-	public void cancelReserve(NanShanActReserve NanShanActReserve) {
-		this.daoSupport.execute("update es_nanshan_act_reserve set is_del=1 where activity_id="+NanShanActReserve.getActivity_id()+" and member_id="+NanShanActReserve.getMember_id());
-		this.daoSupport.execute("update es_nanshan_article_ext t set reserved_num=reserved_num-1 where article_id="+NanShanActReserve.getActivity_id());
 	}
 
 }

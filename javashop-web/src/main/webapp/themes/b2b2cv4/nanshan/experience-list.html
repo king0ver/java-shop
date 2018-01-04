@@ -10,8 +10,10 @@
         <ul class="tiyan-img-list">
             <#list article.items as item>
                 <li>
-                    <img src="${item.imgUrl!''}">
-                    <div class="title">${item.title!''}</div>
+                    <a href="/nanshan/developing.html?id=${item.id}">
+                        <img src="${item.imgUrl!''}">
+                        <div class="title">${item.title!''}</div>
+                    </a>
                 </li>
             </#list>
         </ul>

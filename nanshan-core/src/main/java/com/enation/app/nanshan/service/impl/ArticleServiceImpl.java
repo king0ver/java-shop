@@ -54,9 +54,10 @@ public class ArticleServiceImpl implements IArticleService {
 		}
 		StringBuffer sql = new StringBuffer();
 		sql.append("select");
-		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address ");
-		sql.append("from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ");
-		sql.append(" where a.is_del = 0 and a.id= ?");
+		sql.append(" a.id,a.title,a.cat_id,a.url,a.create_time,a.summary,a.pic_url,c.content ,t.reserve_num,t.reserved_num,t.expiry_date expiryDate,t.act_name,t.act_cost ,t.act_address, ")
+		   .append(" a.work_place,a.job_cat,a.dept_name ")
+		   .append(" from es_nanshan_article a left join es_nanshan_clob c on a.content=c.id left join es_nanshan_article_ext t on a.id=t.article_id  ")
+		   .append(" where a.is_del = 0 and a.id= ?");
 		NanShanArticleVo articleInfo = daoSupport.queryForObject(sql.toString(),NanShanArticleVo.class, articleId);
 		if(articleInfo == null){
 			return null;
@@ -129,6 +130,9 @@ public class ArticleServiceImpl implements IArticleService {
 		articleVo.setActCost(articleInfo.getAct_cost());
 		articleVo.setReserveNum(articleInfo.getReserve_num());
 		articleVo.setReservedNum(articleInfo.getReserved_num());
+		articleVo.setWorkPlace(articleInfo.getWork_place());
+		articleVo.setJobCat(articleInfo.getJob_cat());
+		articleVo.setDeptName(articleInfo.getDept_name());
 		if(StringUtils.isNotBlank(articleInfo.getExpiryDate())){
 			articleVo.setExpiryDate(Long.parseLong(articleInfo.getExpiryDate()));
 		}
