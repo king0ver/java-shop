@@ -1,0 +1,88 @@
+<#include '/admin/sonheader.html' >
+<script type="text/javascript" src="${ctx}/nanshan/js/common.js"></script>
+<style>
+form{margin-bottom:0px;}
+</style>
+<html>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>组织结构</legend>
+</fieldset>
+
+<form id="updateForm" class="layui-form" enctype="multipart/form-data" >
+	<div class="layui-input-inline" style="width:120px;margin-bottom: 5px">
+		<input name="file" class="layui-upload-file" id="organizeImgUploadBtn" type="file">
+		<input id="organizeImgUrl" name="pic_url" value="<#if data.pic_url??> ${data.pic_url!''} </#if>" type="hidden">
+	</div>
+  	<div class="layui-form-item">
+  		<fieldset class="layui-elem-field" style="width:380px;height:200px;">
+			<div id="organizeImg" class="layui-inline">
+				<#if data.pic_url??>
+					<#if data.pic_url != "">
+						<img src="${data.pic_url}" width="250" height="200" />
+		    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delOrganizeImg();"><i class="layui-icon">&#xe640;</i></a>
+					</#if>
+				</#if>
+			</div>
+			<input type="hidden" name="id" value="${data.id}" />
+			<input type="hidden" name="cat_id" value="${data.cat_id}" />   
+		</fieldset>
+  	</div>
+	<div class="layui-form-item" >
+	    <div class="layui-inline">
+			<a class="layui-btn" type="submit" lay-submit="" lay-filter="save_info">保存提交</a>	
+		</div>
+ 	</div>
+</form>
+<script>
+
+layui.use(['form', 'layedit', 'laydate','upload'], function(){
+	var form = layui.form(),
+    layedit = layui.layedit,
+    laydate = layui.laydate;	
+	
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#organizeImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#organizeImg").html("<img src='"+res.url+"'  width='250' height='200' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delOrganizeImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#organizeImgUrl").val(res.url);
+	    }
+	});
+	
+	form.on('submit(save_info)', function(data){
+    	var options = {
+   			url:ctx+"/core/admin/organize/save-edit.do",
+   			type:"post",
+   			dataType:"json",
+   			success:function(data){
+   				$.Loading.success(data.message);
+   			}
+   		};
+   		$("#updateForm").ajaxSubmit(options);
+       return false;
+    });
+});
+
+
+
+function delOrganizeImg(){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#organizeImg").html("");
+			$("#organizeImgUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+</script>
+<#include '/admin/footer.html' >

@@ -123,7 +123,9 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(articleFields.size()>0){
 			this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
 		}
-		this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
+		if(nanShanArticleVo.getContent_id()>0){
+			this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
+		}
 		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
 			ArticleExt articleExt=new ArticleExt();
 			articleExt=this.covertArticleExt(nanShanArticleVo);
