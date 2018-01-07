@@ -1,0 +1,23 @@
+<#if !article?exists>
+	<#assign articleListPageTag = newTag("articleListPageTag") />
+	<#assign article = articleListPageTag() />
+</#if>
+
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#if article.items?size gt 0>
+	<ul class="contentList">
+		<#list article.items as item>
+			<li class="clearfix" style="border-bottom:1px solid #eee ;">
+				<div class="lt-num">
+                        <span class="num"><@dateformat time='${item.createTime}' pattern='dd'/></span>
+                </div>
+				<div class="rt-txt">
+                        <div class="rt-title">${item.title!''}</div>
+                        <p>
+                             ${item.summary!''}
+                        </p>
+                    </div>
+			</li>
+		</#list>
+	</ul>
+</#if>
