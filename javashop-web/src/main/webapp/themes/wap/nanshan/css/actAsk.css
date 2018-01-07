@@ -495,7 +495,8 @@ display:-webkit-box;
 	height: 100px;
 }
 .content .content-title{
-	padding: 5px 0;
+	font-weight: bold;
+	padding: 10px 0;
 	font-size: 18px;
 	color: #333;
 }
@@ -528,8 +529,10 @@ display:-webkit-box;
 	margin-left: 5px;
 }
 .content .contentTxt{
-	text-indent:20px;
-	line-height: 30px;
+	text-indent: 20px;
+    line-height: 30px;
+    font-size: 16px;
+	letter-spacing: 1px;
 }
 .content .contentImg,.content .contentImg img{
 	width: 100%;
@@ -577,6 +580,9 @@ display:-webkit-box;
 width: 100%;
 overflow: hidden;
 }
+.swiper-wrapper .swiper-slide{
+	float: left;
+}
 .swiper-container2{
 width: 80%;
 overflow: hidden;
@@ -589,7 +595,7 @@ overflow: hidden;
 .lsImgSwiper .swiper-slide{
 	width: 70px;
 	height: 50px;
-		border: 1px solid #000;
+	border: 1px solid #000;
 	border-radius: 5px;
 }
 .lsImgSwiper .swiper-slide img{

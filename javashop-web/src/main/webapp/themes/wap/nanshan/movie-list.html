@@ -16,17 +16,19 @@
 		</#if>
 	</div>
 </div>
-<div class="nav-Five">
+<div class="nav">
 	<#if article.siblings?size gt 0>
 		<#list article.siblings as cat>
 			<#if article.curCat.id == cat.id>
-				<div class="navList selectBlue">${cat.name}</div>
+				<div class="navList select">${cat.name}
+					<span></span>
+				</div>
 			<#else>
 				<div class="navList">${cat.name}</div>
 			</#if>
 		</#list>
 	</#if>
 </div>
-<#include 'exhibition-item.html'/>
+<#include 'movie-item.html'/>
 </body>
 </html>
