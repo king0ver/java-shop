@@ -26,16 +26,14 @@
 	<p class="contentTxt">${article.item.content.movieIntroduce}</p>
 </div>
 <div class="titleContent">影片花絮</div>
- <div class="imgSwiper">
-	<div class="swiper-container1">
-	    <div class="swiper-wrapper">
-			<#if article.item.content?? && article.item.content.filmTidbits?size gt 0 >
-	           <#list article.item.content.filmTidbits as bit>
-					<div class="swiper-slide">
-						<img src="${bit.content}">
-	      			</div>
-                </#list>
-           	</#if>
-		</div>
-	</div>
+<div class="contentImgList">
+  	<ul class="clearfix">
+  		<#if article.item.content?? && article.item.content.filmTidbits?size gt 0 >
+           <#list article.item.content.filmTidbits as bit>
+  				<li>
+					<img src="${bit.content}" />
+				</li>
+			</#list>
+		</#if>
+  	</ul>
   </div>

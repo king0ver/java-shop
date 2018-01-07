@@ -580,9 +580,6 @@ display:-webkit-box;
 width: 100%;
 overflow: hidden;
 }
-.swiper-wrapper .swiper-slide{
-	float: left;
-}
 .swiper-container2{
 width: 80%;
 overflow: hidden;
