@@ -67,7 +67,7 @@
                 if(data.result == 1){
                     alert("取消成功!");
                     location.reload();
-                }if(data.result == 0 && data.message == "not login") {
+                }else if(data.result == 0 && data.message == "not login") {
                     alert("您还未登录系统!");
                     location.href ="/store/login.html";
                 }else{

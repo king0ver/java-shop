@@ -36,7 +36,7 @@ $(function(){
 			if(data.result == 1){
 				alert("预约成功!");
 				location.href="/nanshan/myAppointment.html";
-			}if(data.result == 0 && data.message == "not login") {
+			}else if(data.result == 0 && data.message == "not login") {
 				alert("您还未登录系统!");
 				location.href ="/store/login.html";
 			}else{
@@ -54,7 +54,7 @@ $(function(){
 			if(data.result == 1){
 				$('.bgColorShadow').show();
 				$('.activity-reservation').animate({"right":"0px"},400).show()
-			}if(data.result == 0 && data.message == "not login") {
+			}else if(data.result == 0 && data.message == "not login") {
 				alert("您还未登录系统!");
 				location.href ="/store/login.html";
 			}else{
@@ -71,7 +71,5 @@ $(function(){
 		$('.bgColorShadow').show()
 		$('.activity-reservation').animate({"right":"0px"},400).show();
 	})
-	$('.Wdate').on('click',function(){
-		WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})
-	})
+
 });

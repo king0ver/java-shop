@@ -1,243 +1,31 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <meta name="baidu-site-verification" content="" />
-    <title></title>
-    <meta content="走秀网" name="keywords">
-    <meta content="" name="description">
-    <script type="text/javascript" src="../js/jquery.min.js" ></script>
-    <script type="text/javascript" src="./js/swiper.min.js" ></script>
-    <link rel="stylesheet" href="./css/base.css" />
+    <meta charset="UTF-8">
+    <#assign headerTag = newTag("headerTag") />
+    <#assign header = headerTag() />
+    <#if title??>
+        <title>${title}-${header.title}</title>
+        <#else/>
+        <title>${header.title}</title>
+    </#if>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/swiper.min.css" />
+    <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/base.css" />
+    <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/index.css" />
+    <script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/jquery/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="css/swiper.min.css" />
+    <script type="text/javascript" src="${ctx}${themes_path}/nanshan/js/swiper.min.js" ></script>
+
+
+    <script>
+        var ctx="${ctx}";
+    </script>
 </head>
-<style>
-    .wrap{
-        padding-top: 0;
-    }
-    .wrap .header .l-navFF {
-        display: -webkit-box;
-        display: -moz-box;
-        display: box;
-        padding: 10px 0 9px;
-        width: 100%;
-        height: 26px;
-        line-height: 26px;
-        max-width: 750px;
-    }
-    .wrap .header{
-        border: none;
-        color: #fff;
-    }
-    .tabBar{
-        width: 100%;
-        max-width: 1200px;
-        height: 50px;
-        background: #fff;
-        border: 1px solid #F2F2F2;
-        position: fixed;
-        bottom: 0;
-    }
-    .tabBar ul{
-        width: 100%;
-        display: -webkit-box;
-        display: -moz-box;
-        display: box;
-    }
-    .tabBar ul li{
-        text-align: center;
-        -webkit-box-flex: 1;
-        -moz-box-flex: 1;
-        box-flex: 1;
-        line-height: 50px;
-    }
-    .tabBar ul li:nth-child(1){
-        background: url(css/img/tabBar2.png) center 5px no-repeat;
-        background-size:25px 25px ;
-    }
-    .tabBar ul li:nth-child(2){
-        background: url(css/img/tabBar1.png) center 5px no-repeat;
-        background-size:25px 25px ;
-    }
-    .tabBar ul li:nth-child(3){
-        background: url(css/img/tabBar3.png) center 5px no-repeat;
-        background-size:25px 25px ;
-    }
-    .tabBar ul li span{
-        display: inline-block;
-        margin-top: 15px;
-    }
-    .header section:nth-child(2) {
-
-        color: #fff;
-    }
-    .wrap .header .iconsFF{
-        display: inline-block;
-        width: 12px;
-        height: 21px;
-        background: url(css/img/leftFFF.png) top left no-repeat;
-        background-size: 12px 21px;
-    }
-    .titlebg img{
-        width: 100%;
-        height: auto;
-    }
-    .content ul li{
-        margin-top: 20px;
-        width: 18%;
-        padding:0 3.5%;
-        float: left;
-    }
-    .content ul li span img{
-        width: 100%;
-        height: auto;
-    }
-    .content ul li span{
-        display: block;
-    }
-    .content ul li span:nth-child(2){
-        height: 30px;
-        line-height: 30px;
-        font-size: 13px;
-        text-align: center;
-
-    }
-    .txtAd{
-        height: 1.867rem;
-        line-height: 1.867rem;
-        margin: 0 0.222rem 0 0;
-        font-size: 0.578rem;
-        border-bottom: 1px solid;
-        border-bottom-color: rgba(216,216,216,0.5);
-        overflow: hidden;
-    }
-    .sec {
-        width: 1rem;
-        height: 1rem;
-        float: left;
-        margin: 0 10px 0 10%;
-    }
-    .sec img {
-        width: 100%;
-        margin: 0;
-    }
-    #scroll_text {
-        height: 100%;
-        overflow: hidden;
-        color: #666666;
-        letter-spacing: 0.01px;
-    }
-    #scroll_text ul li {
-        overflow: hidden;
-        position: relative;
-        height: 1.867rem;
-    }
-    .index-nav-Five{
-        width: 90%;
-        padding: 15px 5%;
-        height: 50px;
-        display: -webkit-box;
-        display: box;
-        display: -moz-box;
-        background: #FFFFFF;
-        border-bottom: 2px solid #f2f2f2;
-    }
-    .index-nav-Five .navList {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -o-box-sizing: border-box;
-        -webkit-box-flex: 1;
-        -moz-box-flex: 1;
-        box-flex: 1;
-        text-align: center;
-        line-height: 90px;
-        font-size: 13px;
-    }
-    .index-nav-Five .navList:nth-child(1) {
-        background: url(css/img/sy3.png) center top no-repeat;
-        background-size: 30px 30px;
-    }
-    .index-nav-Five .navList:nth-child(2) {
-        background: url(css/img/sy4.png) center top no-repeat;
-        background-size: 30px 30px;
-    }
-    .index-nav-Five .navList:nth-child(3) {
-        background: url(css/img/sy1.png) center top no-repeat;
-        background-size: 30px 30px;
-    }
-    .index-nav-Five .navList:nth-child(4) {
-        background: url(css/img/sy2.png) center top no-repeat;
-        background-size: 30px 30px;
-    }
-    .index-nav-Five .navList:nth-child(5) {
-        background: url(css/img/sy5.png) center top no-repeat;
-        background-size: 30px 30px;
-    }
-    .index-title {
-        background: url(css/img/titlrBg.png) 10px center no-repeat;
-        background-size: 17px 20px;
-        padding: 10px 4% 10px 40px;
-        font-size: 18px;
-        border-bottom: 1px solid #f2f2f2;
-    }
-    .index-content{
-        padding: 10px 5% 50px 5%;
-    }
-    .index-content .index-list1 p {
-        margin-bottom: 15px;
-        color: #333;
-    }
-    .index-content .index-list1 p img{
-        width: 32%;
-        height: auto;
-        float: left;
-        margin-right: 2%;
-    }
-    .index-content .index-list1 p img:nth-child(3){
-        margin-right: 0;
-    }
-    .index-content .index-list2 ul li{
-        padding: 15px 0;
-        border-bottom: 1px solid #f2f2f2;
-    }
-    .index-content .index-list2 ul li .index-txt{
-        float: left;
-        width: 55%;
-    }
-    .index-content .index-list2 ul li .index-txt p{
-
-        height: 40px;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        line-height: 20px;
-        overflow: hidden;
-    }
-    .index-content .index-list2 ul li .index-txt span{
-        font-size: 12px;
-        border: 1px solid #dcdcdc;
-        padding: 1px 2px;
-        border-radius: 5px;
-        color: #dcdcdc;
-        display: inline-block;
-        margin-top: 20px;
-    }
-    .index-content .index-list2 ul li .index-img{
-        width: 40%;
-        float: right;
-    }
-    .index-content .index-list2 ul li .index-img img{
-        width: 100%;
-        height: auto;
-    }
-</style>
-<body>
+<body id="top">
 <div class="wrap">
     <!--<header class="header">
         <div class="l-navFF">
@@ -249,13 +37,13 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="./css/img/titleBg.png" />
+                    <img src="${ctx}${themes_path}/nanshan/css/images/titleBg.png" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./css/img/titleBg.png" />
+                    <img src="${ctx}${themes_path}/nanshan/css/images/titleBg.png" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./css/img/titleBg.png" />
+                    <img src="${ctx}${themes_path}/nanshan/css/images/titleBg.png" />
                 </div>
             </div>
             <div class="swiper-pagination "></div>
@@ -275,7 +63,7 @@
     <div class="content">
         <div class="txtAd">
             <div class="sec">
-                <img src="css/img/laba.png">
+                <img src="${ctx}${themes_path}/nanshan/css/images/laba.png">
             </div>
             <div id="scroll_text">
                 说的就是大家圣诞节
@@ -304,9 +92,9 @@
         <div class="index-list1">
             <p>啥都好说肯定会盛开的花盛开的花盛开的哈萨克啥都好说肯定会盛开的花盛开的花盛开的哈萨克啥都好说肯定会盛开的花盛开的花盛开的哈萨克</p>
             <p class="clearfix">
-                <img src="css/img/activity1.jpg"/>
-                <img src="css/img/activity1.jpg"/>
-                <img src="css/img/activity1.jpg"/>
+                <img src="${ctx}${themes_path}/nanshan/css/images/activity1.jpg"/>
+                <img src="${ctx}${themes_path}/nanshan/css/images/activity1.jpg"/>
+                <img src="${ctx}${themes_path}/nanshan/css/images/activity1.jpg"/>
 
             </p>
         </div>

@@ -45,7 +45,7 @@ public class ActReserveServiceImpl implements IActReserveService  {
 
 
 	public NanShanActReserve queryReserveByMemberId(int memberId, int activityId){
-		String sql ="select a.id activityId, a.title activityName, t.is_del isDel, t.activity_time  activityTime from es_nanshan_article a ,es_nanshan_act_reserve t where a.id=t.activity_id and t.is_del = 1 and t.member_id= ? and t.activity_id = ? limit 1";
+		String sql ="select a.id activityId, a.title activityName, t.is_del isDel, t.activity_time  activityTime from es_nanshan_article a ,es_nanshan_act_reserve t where a.id=t.activity_id and t.is_del = 0 and t.member_id= ? and t.activity_id = ? limit 1";
 		return daoSupport.queryForObject(sql, NanShanActReserve.class, memberId, activityId);
 	}
 

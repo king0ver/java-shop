@@ -1,5 +1,5 @@
 $(function(){
-	var payNum=$('.chooseNum').eq(0).html();
+	var payNum=$('.chooseNum').attr("data-value");
 	var setPayAmount = function(payNum){
 		$("div.priceNum span").html(payNum + ".00元");
 	}

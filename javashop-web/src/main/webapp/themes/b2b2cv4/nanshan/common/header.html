@@ -38,6 +38,8 @@ var ctxPath = '${file_path}/';
 <link href="${ctx}/statics/images/favicon.ico" rel="shortcut icon">
 <link href="${file_path}/nanshan/css/common.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${file_path}/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="${ctx}/adminthemes/new/js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="${ctx}/adminthemes/new/js/jquery.loading.js"></script>
 <script type="text/javascript" src="${file_path}/nanshan/js/catNav.js"></script>
 
 	<style type="text/css">
@@ -92,7 +94,7 @@ var ctxPath = '${file_path}/';
 	<div class="navCss">
 		<div class="navWrap">
 			<div class="logo">
-				<img src="${file_path}/nanshan/css/images/logo6.jpg">
+				<a href="/"><img src="${file_path}/nanshan/css/images/logo6.jpg"></a>
 			</div>
 			<div class="fr">
 				<div class="navList">
@@ -107,7 +109,7 @@ var ctxPath = '${file_path}/';
 						<#if cat.leafs?? && cat.leafs?size gt 0>
 							<div class="itmeList">
 								<#list cat.leafs as leaf>
-									<div><a href="${leaf.pcUrl!''}">${leaf.name}</a></div>
+									<div><a href="${leaf.pcUrl!''}">${article.parentCat.name!''}</a></div>
 								</#list>
 							</div>
 						</#if>

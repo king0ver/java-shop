@@ -1,3 +1,5 @@
+<#assign memberIsLoginTag=newTag("memberLoginCheckTag")/>
+<#assign isLogin=memberIsLoginTag("'login_url':'/store/login.html'")/>
 <#assign articlePage = newTag("articleStaticPage") />
 <#assign article = articlePage('{"catId":58}') />
 <#include 'common/header.html'/>

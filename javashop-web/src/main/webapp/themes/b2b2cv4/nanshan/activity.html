@@ -4,9 +4,12 @@
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/plugins/layui/css/layui.css" />
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/library/jquery.min-2.1.4.js"></script>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/plugins/layui/layui.js "></script>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/js/global.js"></script>
 <script type="text/javascript" src="${file_path}/nanshan/js/appoint.js"></script>
-
-<#include 'common/thirdCat.html'/>
+    <#include 'common/thirdCat.html'/>
 
 <div class="section-content">
     <#include 'common/navigator.html'/>
@@ -60,7 +63,7 @@
             <ul class="form-list">
                 <li>
                     <label for="date">参加活动日期</label>
-                    <input name="yyEnd" type="text" class="Wdate" />
+                    <input name="yyEnd" type="text" class="Wdate" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" />
                     <input id="activityId" type="hidden" value="${article.item.id}" />
                 </li>
                 <div id="member">
