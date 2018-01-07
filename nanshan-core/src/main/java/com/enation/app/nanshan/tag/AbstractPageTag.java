@@ -34,6 +34,10 @@ public abstract class AbstractPageTag extends BaseFreeMarkerTag{
         if(cur.getParent() != null){
             result.put("siblings", cur.getParent().getLeafs());
             result.put("parentCat",cur.getParent());
+            if(cur.getParent().getParent() != null){
+            	result.put("grandCat", cur.getParent().getParent());
+            	result.put("uncleCats", cur.getParent().getParent().getLeafs());
+            }
         }
     }
 
