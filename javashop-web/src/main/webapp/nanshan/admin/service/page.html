@@ -27,12 +27,15 @@ form{margin-bottom:0px;}
 				</#list>
    			</select>
   		</div>
-  		
-  		 <div class="layui-input-inline" style="width:100px;">
-		       <a id="addCatbtn" class="layui-btn" >添加分类</a>
+  		  <div class="layui-input-inline" style="width:110px;">
+		       <a  title="cat_name" class="layui-btn" onclick="editCatPanel(${(data.cat_id)!'0'})" >编辑分类</a>
 		  </div>
+  		 <div class="layui-input-inline" style="width:110px;">
+		       <a  title="cat_name" class="layui-btn" onclick="addCatPanel(this)" >添加分类</a>
+		  </div>
+		   
 		   <div class="layui-input-inline"  style="width:100px;">
-		       <a id="delCatbtn" class="layui-btn layui-btn-danger" onclick="delCat()" >删除分类</a>
+		       <a id="delCatbtn"  class="layui-btn layui-btn-danger" onclick="delCat()" >删除分类</a>
 		  </div>
 	</div>
  	<div class="layui-form-item" style="width:400px;">
@@ -42,6 +45,7 @@ form{margin-bottom:0px;}
      		<input type="text" name="title" value="${data.title!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
    		</div>
 	</div>
+	
   	<div class="layui-form-item" style="width:400px;">
    		<label class="layui-form-label">设施地址：</label>
    		<div class="layui-input-inline">
@@ -101,46 +105,122 @@ form{margin-bottom:0px;}
  	 </div>
 </form>
 
-<div id="addCat" style="padding-top:30px;display:none">
+<form id="addCat" style="padding-top:30px;display:none">
     <div class="layui-form-item">
-		<label class="layui-form-label" style="padding:0px 0px 0px 20px;width:100px;">分类名称：</label>
+		<label class="layui-form-label" style="padding:0px 0px 0px 20px;width:100px;">PC分类名称：</label>
 		<div class="layui-input-inline">
-		 <input id="catName" type="text" name="catName" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		 <input type="hidden" name="cat_id" value="0" />
+		 <input id="catName" type="text" name="cat_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 		</div>
 	</div>
+	<div class="layui-form-item">
+		<label class="layui-form-label" style="padding:0px 0px 0px 20px;width:100px;">WAP分类名称：</label>
+		<div class="layui-input-inline">
+		 <input id="catName" type="text" name="wap_cat_name" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		</div>
+	</div>
+		<div class="layui-form-item" style="magin-top:10px">
+				<label class="layui-form-label" style="width:100px">分类PC图标：</label>
+				<input type="hidden" name="pc_icon"  />
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="test2" type="file">	
+				</div>
+				<div class="pcIcon" class="layui-inline"></div>
+		</div>
+			
+		<div class="layui-form-item" style="magin-top:10px">
+				<label class="layui-form-label" style="width:100px">分类WAP图标：</label>
+				<input type="hidden" name="wap_icon"  />
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="test2" type="file">	
+				</div>
+				<div class="wapIcon" class="layui-inline"></div>
+		</div>
 	<div class="layui-form-item" style="margin-top:20px;">
 		    <div class="layui-input-block">
 		      	<a class="layui-btn"  lay-filter="addCat" style="margin-left:50px" onclick="addCat()" >保存</a>
 		    </div>
 	 	 </div>
-	</div>
+	</form>
 <script>
 $(function(){
-	  $("#addCatbtn").click(function(){
-		   	 layer.open({
-		            title:"添加分类",//标题
-		            maxmin :true,//右上角可否放大缩小
-		            type:1,//弹框的类型
-		            shade: [0.3, '#000'],//黑色背景
-		            offset: '10px',//弹框位置
-		            shadeClose:false,//黑色背景是否可以点击关闭
-		            content:$("#addCat"),//内容的URL
-		            area:['400px','300px'],//弹框大小
-		            scrollbar: false//是否允许浏览器出现滚动条
-		        });
-	}); 
 
 })
+
+function editCatPanel(){
+	var id=$("#catId").val();
+	var text=$("#catId").find("option:selected").text();
+	if(id==""){
+		alert("请先选择分类");
+		return false;
+	}
+	$("input[name='cat_id']").val(id);
+    $.ajax({  
+        type: 'POST',  
+        url: '/core/admin/service/edit-cat.do?catId='+id,//发送请求  
+        dataType : "html",  
+        success: function(res) { 
+        	var res=$.parseJSON(res )
+            var cat_name=res.data.cat_name;
+        	var wap_cat_name=res.data.wap_cat_name;
+        	var pc_icon=res.data.pc_icon;
+        	var wap_icon=res.data.wap_icon;
+        	if(pc_icon!=""&&pc_icon!=null){
+        		var picIconHtml=getRouteImgUrl(pc_icon)
+        		 $(".pcIcon").html(picIconHtml);
+        		$("input[name='pc_icon']").val(pc_icon)
+        	}
+        	if(wap_icon!=""&&wap_icon!=null){
+        		var wapIconHtml=getRouteImgUrl(wap_icon)
+        		 $(".wapIcon").html(wapIconHtml);
+        		$("input[name='wap_icon']").val(wap_icon)
+        	}
+             $("input[name='cat_name']").val(cat_name)
+             $("input[name='wap_cat_name']").val(wap_cat_name)
+        	layer.open({
+                title:"编辑分类："+text,//标题
+                maxmin :true,//右上角可否放大缩小
+                type:1,//弹框的类型
+                shade: [0.3, '#000'],//黑色背景
+                offset: '10px',//弹框位置
+                shadeClose:false,//黑色背景是否可以点击关闭
+                content:$("#addCat"),//内容的URL
+                area:['600px','600px'],//弹框大小
+                scrollbar: false//是否允许浏览器出现滚动条
+            });
+         }  
+    });  
+}
+function addCatPanel(obj){
+	 $("#addCat").find("input[type='text']").val("")
+	 $("input[name='cat_id']").val(0);
+	 $(".pcIcon").html("")
+	  $(".wapIcon").html("")
+   	 layer.open({
+            title:"添加分类",//标题
+            maxmin :true,//右上角可否放大缩小
+            type:1,//弹框的类型
+            shade: [0.3, '#000'],//黑色背景
+            offset: '10px',//弹框位置
+            shadeClose:false,//黑色背景是否可以点击关闭
+            content:$("#addCat"),//内容的URL
+            area:['600px','600px'],//弹框大小
+            scrollbar: false//是否允许浏览器出现滚动条
+        });
+}
 function addCat(){
-	
 	var data=new Object();
-	data.parent_id=46;
-	data.cat_name=$("#catName").val();
+	var catVal=$("input[name='cat_name']").val();
+	if(catVal==""){
+		alert("分类不能为空")
+		$("input[name='cat_name']").focus();
+		return false;
+	}
 	var options = {
 			url : '/core/admin/service/add-cat.do',
 			type : "POST",
 			dataType : 'json',
-			data:data,
+			
 			success : function(result) {
 				if(result.result==1){
 				    $.Loading.success(result.message);
@@ -213,6 +293,14 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
     laydate = layui.laydate;	
+	
+	layui.upload({
+	    url: ctx+'/core/admin/nanshan/upload.do'
+	    ,method: 'POST'
+	    ,success: function(res,con){
+	    	 handleImg(res,con)
+	    }
+	});
 	
 	layui.upload({
 	    url: '/core/admin/nanshan/upload.do'
@@ -289,5 +377,30 @@ function delImg(){
 		});
 };
 
+function delIcon(obj){
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$(obj).parent().html("")
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+function getRouteImgUrl(src){
+	var html="<img src='"+src+"' width='130' height='130' style='margin-right:5px;margin-left:10px' />"+
+	"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delIcon(this);'><i class='layui-icon'>&#xe640;</i></a>";
+	return html
+}
+function handleImg(res,con){
+	var html=getRouteImgUrl(res.url);
+	$(con).parent().parent().parent().prev().val(res.url);
+	$(con).parent().parent().parent().next().html(html);
+}
 </script>
 <#include '/admin/footer.html' >

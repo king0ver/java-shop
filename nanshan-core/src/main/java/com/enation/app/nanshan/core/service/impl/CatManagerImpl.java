@@ -1,6 +1,8 @@
 package com.enation.app.nanshan.core.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,24 @@ public class CatManagerImpl implements ICatManager {
 		if(id>0){
 		daoSupport.execute("delete from es_nanshan_article_category where cat_id="+id);
 		}
+		
+	}
+
+	@Override
+	public ArticleCat queryCatById(int id) {
+		return daoSupport.queryForObject("select * from es_nanshan_article_category where cat_id=?", ArticleCat.class, id);
+	}
+
+	@Override
+	public void updateCat(ArticleCat articleCat) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		if(StringUtils.isNotBlank(articleCat.getCat_name())) map.put("cat_name", articleCat.getCat_name());
+		if(StringUtils.isNotBlank(articleCat.getWap_cat_name())) map.put("wap_cat_name", articleCat.getWap_cat_name());
+		if(StringUtils.isNotBlank(articleCat.getPc_icon())) map.put("pc_icon", articleCat.getPc_icon());
+		if(StringUtils.isNotBlank(articleCat.getWap_icon())) map.put("wap_icon", articleCat.getWap_icon());
+		daoSupport.update("es_nanshan_article_category", map, "cat_id="+articleCat.getCat_id());
+		
+		
 		
 	}
 
