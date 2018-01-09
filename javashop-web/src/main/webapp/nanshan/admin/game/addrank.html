@@ -9,21 +9,41 @@
 <div class="main" style="padding-top:20px">
     <!--表单区域  -->
 	<form id="addUriForm" class="layui-form layui-form-pane" action="" enctype="multipart/form-data">
-	   <div id="gameRank">
-	  		<div class="layui-form-item">
-	    		<label class="layui-form-label">游戏排行1：</label>
-	    		<div class="layui-input-inline">
-	      			<input type="text" name="rank1" id="uri" maxlength="100" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入游戏id">
-	    		</div>
-	    		<div class="layui-input-inline">
-		    	          <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>
-		    	</div> 
-	  		</div>
-  	   </div>
+	
+	<div style="width:850px">
+	     <div style="float:left;width:400px" >
+		     <div id="gameRank">
+		  		<div class="layui-form-item">
+		    		<label class="layui-form-label">游戏排行1：</label>
+		    		<div class="layui-input-inline">
+		      			<input type="text" name="rank" id="uri" maxlength="100" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入游戏id">
+		    		</div>
+			    	<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>
+			    	
+		  		</div>
+		  		
+	  	   </div>
+	  	   <div class="layui-form-item" style="margin-left:110px">
+		  		<a class="layui-btn" onclick="addPanel('gameRank');">增加游戏排行</a>			
+		   </div>
+         </div>
+	     <div  style="width:400px;float:right">
+	            <div id="gameHot">
+			  		<div class="layui-form-item">
+			    		<label class="layui-form-label">热门游戏1：</label>
+			    		<div class="layui-input-inline">
+			      			<input type="text" name="rank" id="uri" maxlength="100" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入游戏id">
+			    		</div>
+				    	<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>
+			  		</div>
+		  	   </div>
+		  	   <div class="layui-form-item" style="margin-left:110px">
+			  		<a class="layui-btn" onclick="addPanel('gameHot');">增加热门游戏</a>			
+			   </div>
+         </div>
+	</div>
+	   
   		
-  		<div class="layui-form-item" style="margin-left:110px">
-	  		<a class="layui-btn" onclick="addPanel();">增加记录</a>			
-	    </div>
   		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
   			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_uri">保存</a>
   		</div>
@@ -51,15 +71,13 @@ layui.use(['form', 'layedit', 'laydate'], function(){
     
 	form.on('submit(save_uri)', function(data){
 		 var content=getRankList()
-		
-		 content='{"articleIds":'+JSON.stringify(content)+'}'
+		 content=JSON.stringify(content);
 		 var cat_id='${catId}';
     	 var options = {
-   			url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}&id=${(vo.id)!'0'}",
+   		    url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}&id=${(vo.id)!'0'}",
    			type:"post",
    			dataType:"json",
    			data:{"content":content,"cat_id":${catId},"content_id":${(vo.content_id)!'0'}},
-   			
    			success:function(data){
    				if(data.result==1){	
    					$.Loading.success(data.message);
@@ -75,52 +93,89 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 });
 
 function getRankList(){
+	var obj=new Object();
+	var gameRankList=[];
+	var gameHot=[];
+	var ids=[];
+	$("#gameRank input[name='rank']").each(function(){
+		gameRankList.push($(this).val())
+		ids.push($(this).val())
+	})
 	var content=[];
-	$("input[name*='rank']").each(function(){
-		content.push($(this).val())
+	$("#gameHot input[name='rank']").each(function(){
+		gameHot.push($(this).val())
+		ids.push($(this).val())
 	   }
 	)
-	return content;
+	obj.articleIds=ids;
+	obj.gameRankIds=gameRankList;
+	obj.gameHotIds=gameHot
+	return obj
 }
 
 
-function  getMovieHtml(index,value){
+function  getMovieHtml(index,value,label){
+	var labelName='';
+	if(label=="gameRank") labelName="游戏排行";
+	if(label=="gameHot") labelName="热门游戏";
 	var html='<div class="layui-form-item">'+
-	'<label class="layui-form-label">游戏排行'+index+'：</label>'+
+	'<label class="layui-form-label">'+labelName+index+'：</label>'+
 	'<div class="layui-input-inline">'+
 			'<input type="text" name="rank" id="uri" maxlength="100" dataType="string" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入游戏id" value='+value+'>'+
 	'</div>'+
-	'<div class="layui-input-inline">'+
-	          '<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>'+
-	'</div>'+ 
+	
+	'<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delPanel(this);"><i class="layui-icon">&#xe640;</i></a>'+
+	
 	'</div>'
 	return html;
 }
-function addPanel(){
-	var index=$("#gameRank .layui-form-item").length+1;
-	var html=getMovieHtml(index,'');
-	$("#gameRank").append(html);
+function addPanel(id){
+	var index=$("#"+id+" .layui-form-item").length+1;
+	var html=getMovieHtml(index,'',id);
+	$("#"+id+"").append(html);
 	
 }
 
 function delPanel(obj){
-	$(obj).parent().parent().remove();
+	var label=$(obj).parent().parent().attr("id");
+	$(obj).parent().remove();
+	
+	var labelName='';
+	if(label=="gameRank") labelName="游戏排行";
+	if(label=="gameHot") labelName="热门游戏";
+	var index=1;
+	$("#"+label).find(".layui-form-label").each(function(){
+		$(this).html(labelName+index+"：");
+		index++;
+		
+	}) 
 }
 
 function initMovieRand(){
-	var desc='${(vo.content)!''}';
+	
+ 	var desc='${(vo.content)!''}'; 
 	if(desc!=""){
 		desc=JSON.parse(desc);
-		var articleIds=desc.articleIds;
+		var articleIds=desc.gameRankIds;
 		var html="";
 		if(articleIds!=undefined&&articleIds.length>0){
 			for(var i=0;i<articleIds.length;i++)
 			{
 				var index=i+1
-				html=html+getMovieHtml(index,articleIds[i])
+				html=html+getMovieHtml(index,articleIds[i],'gameRank')
 			}
 			$("#gameRank").html(html);
 		}
+		var gameHotIds=desc.gameHotIds;
+		if(gameHotIds!=undefined&&gameHotIds.length>0){
+			var gameHostHtml="";
+			for(var j=0;j<gameHotIds.length;j++){
+				var index=j+1
+				gameHostHtml=gameHostHtml+getMovieHtml(index,gameHotIds[j],'gameHot')
+			}
+			$("#gameHot").html(gameHostHtml);
+		}
+		
 	}
 	
 }
