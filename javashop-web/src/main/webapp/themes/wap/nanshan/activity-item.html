@@ -1,0 +1,68 @@
+<#if !article?exists>
+    <#assign articleListPageTag = newTag("articleListPageTag") />
+    <#assign article = articleListPageTag() />
+</#if>
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#if article.items?size gt 0>
+    <ul class="contentList bgColor">
+        <#list article.items as item>
+            <li  class="actList clearfix">
+                <div class="actListImg">
+                    <img src="${item.imgUrl!''}" />
+                </div>
+                <div class="actTxt">
+                    <div class="actTxtTi">${item.title}</div>
+                    <div class="zlTime">
+                        <span></span>
+                        <#if article.curCat.id == 38>
+                            <@dateformat time='${item.expiryDate}' pattern='yyyy-MM-dd HH24:mm'/>
+                        <#else>
+                            已结束
+                        </#if>
+                    </div>
+                    <div><span class="c1">活动人群：</span>${item.actname!''}</div>
+                    <div><span class="c1">活动费用：</span>${item.actcost!''}</div>
+                    <div><span class="c1">活动地点：</span>${item.actaddress!''}</div>
+                </div>
+            </li>
+            <li  class="actList clearfix">
+                <div class="actListImg">
+                    <img src="${item.imgUrl!''}" />
+                </div>
+                <div class="actTxt">
+                    <div class="actTxtTi">${item.title}</div>
+                    <div class="zlTime">
+                        <span></span>
+                        <#if article.curCat.id == 38>
+                            <@dateformat time='${item.expiryDate}' pattern='yyyy-MM-dd HH24:mm'/>
+                            <#else>
+                                已结束
+                        </#if>
+                    </div>
+                    <div><span class="c1">活动人群：</span>${item.actname!''}</div>
+                    <div><span class="c1">活动费用：</span>${item.actcost!''}</div>
+                    <div><span class="c1">活动地点：</span>${item.actaddress!''}</div>
+                </div>
+            </li>
+            <li  class="actList clearfix">
+                <div class="actListImg">
+                    <img src="${item.imgUrl!''}" />
+                </div>
+                <div class="actTxt">
+                    <div class="actTxtTi">${item.title}</div>
+                    <div class="zlTime">
+                        <span></span>
+                        <#if article.curCat.id == 38>
+                            <@dateformat time='${item.expiryDate}' pattern='yyyy-MM-dd HH24:mm'/>
+                            <#else>
+                                已结束
+                        </#if>
+                    </div>
+                    <div><span class="c1">活动人群：</span>${item.actname!''}</div>
+                    <div><span class="c1">活动费用：</span>${item.actcost!''}</div>
+                    <div><span class="c1">活动地点：</span>${item.actaddress!''}</div>
+                </div>
+            </li>
+        </#list>
+    </ul>
+</#if>

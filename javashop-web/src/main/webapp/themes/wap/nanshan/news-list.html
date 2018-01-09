@@ -1,5 +1,6 @@
 <#assign articleListPageTag = newTag("articleListPageTag") />
 <#assign article = articleListPageTag() />
+<#assign articleTitle = "${article.grandCat.name}" />
 <#include 'common/header.html'/>
 <div class="nav">
     <#if article.siblings?size gt 0>
