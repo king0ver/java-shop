@@ -102,10 +102,7 @@ public class ServiceController extends GridController{
 	
 	
 	/**
-	 * 修改
-	 * @param spec
-	 * @param specValName
-	 * @param spec
+	 * 添加分类
 	 * @return
 	 */
 	@ResponseBody
@@ -113,7 +110,12 @@ public class ServiceController extends GridController{
 	public JsonResult saveCat(ArticleCat articleCat,HttpServletRequest request){
 		try{
 			articleCat.setParent_id(46);
-			catManager.addCat(articleCat);
+			if(articleCat.getCat_id()<1){
+				catManager.addCat(articleCat);	
+			}
+			else{
+				catManager.updateCat(articleCat);
+			}
 			return JsonResultUtil.getSuccessJson("操作成功");
 		}catch(Exception e){
 			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
@@ -122,10 +124,6 @@ public class ServiceController extends GridController{
 	
 	
 	/**
-	 * 修改
-	 * @param spec
-	 * @param specValName
-	 * @param spec
 	 * @return
 	 */
 	@ResponseBody
@@ -134,6 +132,20 @@ public class ServiceController extends GridController{
 		try{
 			catManager.delCat(catId);
 			return JsonResultUtil.getSuccessJson("操作成功");
+		}catch(Exception e){
+			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
+		}		
+	}
+	
+	/**
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/edit-cat")
+	public JsonResult editCat(int catId,HttpServletRequest request){
+		try{
+			ArticleCat cat=catManager.queryCatById(catId);
+			return JsonResultUtil.getObjectJson(cat);
 		}catch(Exception e){
 			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
 		}		

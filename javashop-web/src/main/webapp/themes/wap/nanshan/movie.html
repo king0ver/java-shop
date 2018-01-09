@@ -1,0 +1,39 @@
+<#assign articlePageTag = newTag("articlePage") />
+<#assign article = articlePageTag() />
+<#assign articleTitle = article.grandCat.name/>
+<#include 'common/header.html'/>
+<header class="header">	
+	<div class="l-nav">
+		<section><em class="icons"></em><a href="javascript:pageBack();"></a></section>
+		<section id='h-title' style='padding-right:53px;'>影片详情</section>
+	</div>
+</header>
+<div class="movieDetail">
+  	<div class="movieDetailList1">
+  		<img class="movieImg" src="${article.item.imgUrl!''}"/>
+  		<div class="movieTxt">
+  			<span>${article.item.title}</span>
+  			<#if article.item.content?? >
+	  			<span>时长：${article.item.content.movieTimeLength}</span>
+	  			<span>放映地点：${article.item.content.movieAddr}</span>
+	  			<span>放映时间：${article.item.content.movieTime}</span>
+	  		</#if>
+  		</div>
+  	</div>
+</div>
+<div class="content">
+	<div class="content-title">影片介绍</div>
+	<p class="contentTxt">${article.item.content.movieIntroduce}</p>
+</div>
+<div class="titleContent">影片花絮</div>
+<div class="contentImgList">
+  	<ul class="clearfix">
+  		<#if article.item.content?? && article.item.content.filmTidbits?size gt 0 >
+           <#list article.item.content.filmTidbits as bit>
+  				<li>
+					<img src="${bit.content}" />
+				</li>
+			</#list>
+		</#if>
+  	</ul>
+  </div>

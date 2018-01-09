@@ -42,4 +42,21 @@ public interface ICatManager{
 	*/ 
 	public void delCat(int id);
 	
+	/** 
+	* @Description: 查询单个分类
+	* @author luyanfen  
+	* @date 2018年1月8日 下午2:43:01
+	*  
+	*/ 
+	public ArticleCat queryCatById(int id);
+	
+	
+	/** 
+	* @Description: 更改分类
+	* @author luyanfen  
+	* @date 2018年1月8日 下午2:47:31
+	*  
+	*/ 
+	public void updateCat(ArticleCat articleCat);
+	
 }

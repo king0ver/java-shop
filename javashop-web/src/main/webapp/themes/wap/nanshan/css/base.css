@@ -54,7 +54,7 @@ input:-webkit-autofill{background: none;}
 .header section:first-child a,#loginPanel  { position:absolute; top:-10px; left:0; display:inline-block; width:45px; height:45px;  }
 .header section:first-child a,#loginMy  { position:absolute; top:-10px; left:0; display:inline-block; width:45px; height:45px;  }
 .header section:last-child{ position:relative; padding:0 13px;  }
-.header section:nth-child(2){ text-align: center; -webkit-box-flex:1; -moz-box-flex:1; box-flex:1; font-size:16px; color:#464646; }
+.header section:nth-child(2){ text-align: center; -webkit-box-flex:1; -moz-box-flex:1; box-flex:1; font-size:16px; color:#464646; font-weight: bold;}
 #loginPanel { width:50px;}
 #loginMy { width:50px;}
 /*button*/

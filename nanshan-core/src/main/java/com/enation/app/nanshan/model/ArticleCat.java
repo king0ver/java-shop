@@ -22,6 +22,10 @@ public class ArticleCat implements Serializable {
 	private long parent_id;
 	private int is_del;
 	private String spec_id;
+	private String wap_cat_name;
+	private String pc_icon;
+	private String wap_icon;
+	
 	
 	
 
@@ -73,6 +77,26 @@ public class ArticleCat implements Serializable {
 	public void setSpec_id(String spec_id) {
 		this.spec_id = spec_id;
 	}
+	public String getWap_cat_name() {
+		return wap_cat_name;
+	}
+	public void setWap_cat_name(String wap_cat_name) {
+		this.wap_cat_name = wap_cat_name;
+	}
+	public String getPc_icon() {
+		return pc_icon;
+	}
+	public void setPc_icon(String pc_icon) {
+		this.pc_icon = pc_icon;
+	}
+	public String getWap_icon() {
+		return wap_icon;
+	}
+	public void setWap_icon(String wap_icon) {
+		this.wap_icon = wap_icon;
+	}
+	
+	
 	
 	
 	

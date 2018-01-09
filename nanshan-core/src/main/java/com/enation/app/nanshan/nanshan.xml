@@ -5,12 +5,14 @@
 		<table>nanshan_article_category</table>
 		<field><name>cat_id</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>cat_name</name><type>varchar</type><size>60</size><option>00</option></field>
-		<field><name>article_url</name><type>varchar</type><size>255</size><option>00</option></field>
 		<field><name>pc_url</name><type>varchar</type><size>255</size><option>00</option></field>
 		<field><name>wap_url</name><type>varchar</type><size>255</size><option>00</option></field>
         <field><name>spec_id</name><type>varchar</type><size>60</size><option>00</option></field>
 		<field><name>parent_id</name><type>int</type><size>10</size><option>00</option></field>
 		<field><name>is_del</name><type>int</type><size>1</size><option>00</option></field>
+		<field><name>wap_cat_name</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>wap_icon</name><type>varchar</type><size>255</size><option>00</option></field>
+		<field><name>pc_icon</name><type>varchar</type><size>255</size><option>00</option></field>
 	</action>
 
 	<action>
