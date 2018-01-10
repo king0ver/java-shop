@@ -1,0 +1,23 @@
+<#if !articlePage?exists>
+	<#assign articleListPageTag = newTag("articleListPageTag") />
+	<#assign articlePage = articleListPageTag('{"catId":14}') />
+</#if>
+<#if articlePage.items?size gt 0>
+<div class="content">
+	<ul class="contentList">
+		<#list articlePage.items as item>
+			<li class="zlList clearfix">
+				<div class="zlImg">
+					<img src="${item.imgUrl!''}" />
+				</div>
+				<div class="zlTxt">
+					<div class="actTxtTi">${item.title!''}</div>
+					<div class="zlTime"><span></span>山东黄金时间</div>
+					<div class="zlweizhi"><span></span>山东黄金时间</div>
+					<div class="zlListDetail">查看详情</div>
+				</div>
+			</li>
+		</#list>
+	</ul>
+ </div>
+</#if>

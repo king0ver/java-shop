@@ -1,0 +1,96 @@
+<#assign articleStaticPage = newTag("articleStaticPage") />
+<#assign article = articleStaticPage('{"catId":5}') />
+<#assign articleGuide = articleStaticPage('{"catId":45}') />
+<#assign articleFacilities = articleStaticPage('{"catId":46}') />
+<#assign articleTitle = article.curCat.name/>
+<#include 'common/header.html'/>
+<style>
+	.wrap{
+		padding-top: 0;
+	}
+	.wrap .header .l-navFF {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    padding: 10px 0 9px;
+    width: 100%;
+    height: 26px;
+    line-height: 26px;
+    max-width: 750px;
+}
+.wrap .header{
+	border: none;
+	color: #fff;
+}
+.header section:nth-child(2) {
+    color: #3e3d3d;
+}
+	.wrap .header .iconsFF{
+		display: inline-block;
+		width: 12px;
+    height: 21px;
+		background: url(css/img/leftFFF.png) top left no-repeat;
+		background-size: 12px 21px;
+	}
+	.titlebg img{
+		width: 100%;
+		height: auto;
+	}
+	.content ul li{
+		margin-top: 40px;
+		width: 18%;
+		padding:0 3.5%;
+		float: left;
+	}
+	.content ul li span img{
+		width: 100%;
+		height: auto;
+	}
+	.content ul li span{
+		display: block;	
+	}
+	.content ul li span:nth-child(2){
+		height: 30px;
+		line-height: 30px;
+		font-size: 13px;
+		text-align: center;
+		
+	}
+	
+</style>
+<div class="wrap">
+	<div class="content">
+		<ul class="clearfix">
+			<#if article.curCat.leafs?size gt 0>
+				<#list article.curCat.leafs as cat>
+					<li>
+						<span>
+							<img src="css/img/fw(1).png" />
+						</span>
+						<span>${cat.name}</span>
+					</li>
+				</#list>
+			</#if>
+			<#if articleFacilities.curCat.leafs?size gt 0>
+				<#list articleFacilities.curCat.leafs as cat>
+					<li>
+						<span>
+							<img src="css/img/fw(1).png" />
+						</span>
+						<span>${cat.name}</span>
+					</li>
+				</#list>
+			</#if>
+			<#if articleGuide.curCat.leafs?size gt 0>
+				<#list articleGuide.curCat.leafs as cat>
+					<li>
+						<span>
+							<img src="css/img/fw(1).png" />
+						</span>
+						<span>${cat.name}</span>
+					</li>
+				</#list>
+			</#if>
+		</ul>
+	</div>
+</div>

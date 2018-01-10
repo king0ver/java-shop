@@ -1,0 +1,124 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign articleTitle = article.curCat.name/>
+<#include 'common/header.html'/>
+<style>
+	.bgColor{
+		background: #fff;
+	}
+.rc-nav-Five{
+	    width: 90%;
+    padding: 15px 5%;
+    height: 50px;
+    display: -webkit-box;
+    display: box;
+    display: -moz-box;
+   border-top: 5px solid #f2f2f2;
+    background: #FFFFFF;
+    border-bottom: 5px solid #f2f2f2;
+}
+.rc-nav-Five .navList {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    text-align: center;
+    line-height: 90px;
+    font-size: 13px;
+}
+.lx-img{
+	width: 100%;
+}
+.lx-img img{
+	width: 100%;
+}
+.lx .lx-list1{
+	background: #f7f7f7;
+	padding: 15px 10px;
+}
+.lx .lx-list1 span:nth-child(1){
+	color: #fff;
+	display: inline-block;
+	width: 50px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	background: #0086ed;
+	border-radius: 30px;
+}
+.lx .lx-list1 span:nth-child(2){
+	float: right;
+	width: 20px;
+	height: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	background: url(css/img/yuyue_3.png) center center no-repeat;
+	background-size:20px 10px ;
+} 
+.lx .lx-list2{
+	margin-top: 10px;
+}
+.lx .lx-list2 .lx-img-list{
+	float: left;
+	width: 32%;
+	margin-right:2% ;
+}
+.lx .lx-list2 .lx-img-list:nth-child(3){
+	float: left;
+	width: 32%;
+	margin-right:0 ;
+}
+.lx .lx-list2 .lx-img-list img{
+	width: 100%;
+	height: auto;
+}
+.lx .lx-list2 .lx-img-list span{
+	display: block;
+	width: 100%;
+	line-height: 35px;
+	text-align: center;
+}
+</style>
+<div class="content">
+	<div class="lx-img">
+		<#if article.item??>
+			<img src="${article.item.imgUrl!''}">
+		</#if>
+	</div>
+	<ul class="lx">
+		<#if article.item??>
+			<#list article.item.content.content as content>
+				<li>
+					<div class="lx-list1">
+						<span>${content.index}</span>
+						<span></span>
+					</div>
+					<div class="lx-list2 clearfix">
+						<div class="lx-img-list">
+							 <#list content.imgs as img>
+								<img src="${img}">
+								<span>${content.name}</span>
+							 </#list>
+						</div>
+					</div>
+				</li>
+			</#list>
+		</#if>
+	</ul>
+	<div class="nav">
+		<#if article.siblings?size gt 0>
+			<#list article.siblings as cat>
+				<#if article.curCat.id == cat.id>
+					<div class="navList select">${cat.name}
+						<span></span>
+					</div>
+				<#else>
+					<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
+				</#if>
+			</#list>
+		</#if>
+	</div>
+</div>
