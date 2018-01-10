@@ -32,6 +32,8 @@
             </#if>
         </div>
     </div>
-    <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+	<div class="pageContainer">
+		<@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
+	</div> = '
 </div>
 <#include 'common/footer.html'/>
