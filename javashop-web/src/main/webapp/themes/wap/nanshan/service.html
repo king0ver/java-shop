@@ -63,32 +63,38 @@
 		<ul class="clearfix">
 			<#if article.curCat.leafs?size gt 0>
 				<#list article.curCat.leafs as cat>
-					<li>
-						<span>
-							<img src="css/img/fw(1).png" />
-						</span>
-						<span>${cat.name}</span>
-					</li>
+					<a href="${cat.wapUrl}">
+						<li>
+							<span>
+								<img src="${cat.wap_icon!''}" />
+							</span>
+							<span>${cat.name}</span>
+						</li>
+					</a>
 				</#list>
 			</#if>
 			<#if articleFacilities.curCat.leafs?size gt 0>
 				<#list articleFacilities.curCat.leafs as cat>
-					<li>
-						<span>
-							<img src="css/img/fw(1).png" />
-						</span>
-						<span>${cat.name}</span>
-					</li>
+					<a href="${cat.wapUrl}">
+						<li>
+							<span>
+								<img src="${cat.wap_icon!''}" />
+							</span>
+							<span>${cat.name}</span>
+						</li>
+					</a>
 				</#list>
 			</#if>
 			<#if articleGuide.curCat.leafs?size gt 0>
 				<#list articleGuide.curCat.leafs as cat>
-					<li>
-						<span>
-							<img src="css/img/fw(1).png" />
-						</span>
-						<span>${cat.name}</span>
-					</li>
+					<a href="${cat.wapUrl}">
+						<li>
+							<span>
+								<img src="${cat.wap_icon!''}" />
+							</span>
+							<span>${cat.name}</span>
+						</li>
+					</a>
 				</#list>
 			</#if>
 		</ul>

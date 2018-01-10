@@ -1,0 +1,18 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign articleTitle = article.curCat.name/>
+<#include 'common/header.html'/>
+<div class="content-title center">山东黄金时代环境盛开的花几十块</div>
+	<#if article.item.content?size gt 0 >
+         <#list article.item.content['content'] as content>
+             <#if content.type == 'text'>
+                 <p class="contentTxt">${content.content}</p>
+             </#if>
+             <#if content.type == 'img'>
+                 <p class="contentImg">
+                     <img src="${content.content}">
+                 </p>
+             </#if>
+         </#list>
+     </#if>
+</div>
