@@ -1,0 +1,46 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage('{"catId":11}') />
+<#assign bgColor = "true" />
+<#assign articleTitle = article.grandCat.name/>
+<#include 'common/header.html'/>
+<div class="nav-Tree">
+	<div class="Tree">
+		<#if article.uncleCats?size gt 0>
+			<#list article.uncleCats as cat>
+				<#if article.parentCat.id == cat.id>
+					<div class="navList selectBlue">${cat.name}</div>
+				<#else>
+					<div class="navList">${cat.name}</div>
+				</#if>
+			</#list>
+		</#if>
+	</div>
+</div>
+<div class="nav">
+	<#if article.siblings?size gt 0>
+		<#list article.siblings as cat>
+			<#if article.curCat.id == cat.id>
+				<div class="navList select">${cat.name}
+					<span></span>
+				</div>
+			<#else>
+				<div class="navList">${cat.name}</div>
+			</#if>
+		</#list>
+	</#if>
+</div>
+<div class="content">
+	<div class="content-title">${article.item.title!''}</div>
+	<#if article.item.content?size gt 0 >
+		<#list article.item.content['content'] as content>
+		    <#if content.type == 'text'>
+		        <p class="contentTxt">${content.content!''}</p>
+		    </#if>
+		    <#if content.type == 'img'>
+		        <p class="contentImg">
+					<img src="${content.content!''}" />
+				</p>
+		    </#if>
+		</#list>
+    </#if>
+</div>
