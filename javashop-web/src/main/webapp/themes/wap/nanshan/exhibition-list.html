@@ -1,5 +1,5 @@
 <#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag() />
+<#assign article = articleListPageTag('{"catId":16}') />
 <#assign bgColor = "true" />
 <#assign articleTitle = article.grandCat.name/>
 <#include 'common/header.html'/>

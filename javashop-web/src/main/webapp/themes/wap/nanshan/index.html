@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <#assign headerTag = newTag("headerTag") />
     <#assign header = headerTag() />
+    <#assign nCatTag = newTag("nCatTag") />
+	<#assign ncat = nCatTag() />
+    <#assign indexWapPageTag = newTag("indexWapPageTag") />
+	<#assign article = indexWapPageTag() />
     <#if title??>
         <title>${title}-${header.title}</title>
         <#else/>
@@ -17,114 +21,148 @@
     <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/base.css" />
     <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/index.css" />
     <script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/jquery/jquery.min.js"></script>
-
     <script type="text/javascript" src="${ctx}${themes_path}/nanshan/js/swiper.min.js" ></script>
-
-
     <script>
         var ctx="${ctx}";
     </script>
 </head>
 <body id="top">
 <div class="wrap">
-    <!--<header class="header">
-        <div class="l-navFF">
-            <section><em class="iconsFF"></em><a href="javascript:pageBack();"></a></section>
-            <section id='h-title' style='padding-right:53px;'>交通指南</section>
-        </div>
-    </header>-->
     <div class="titlebg">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="${ctx}${themes_path}/nanshan/css/images/titleBg.png" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="${ctx}${themes_path}/nanshan/css/images/titleBg.png" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="${ctx}${themes_path}/nanshan/css/images/titleBg.png" />
-                </div>
+                <#if article.item.content.imgs?size gt 0>
+	                <#list  article.item.content.imgs as img>
+	                    <div class="swiper-slide">
+	                        <a href="${img.pageUrl!''}"><img src="${img.imgUrl!''}"/></a>
+	                    </div>
+	                </#list>
+	            </#if>
             </div>
             <div class="swiper-pagination "></div>
         </div>
-
     </div>
     <script>
-
         var swiper = new Swiper('.swiper-container', {
             pagination: {
                 el: '.swiper-pagination',
                 dynamicBullets: true,
             },
         });
-
     </script>
     <div class="content">
         <div class="txtAd">
             <div class="sec">
                 <img src="${ctx}${themes_path}/nanshan/css/images/laba.png">
             </div>
-            <div id="scroll_text">
-                说的就是大家圣诞节
-            </div>
+            <div id="scroll_text">说的就是大家圣诞节</div>
         </div>
         <div class="index-nav-Five">
-            <div class="navList">
-                消防
-            </div>
-            <div class="navList">
-                消防
-            </div>
-            <div class="navList">
-                消防
-            </div>
-            <div class="navList">
-                消防
-            </div>
-            <div class="navList">
-                消防
-            </div>
+            <div class="navList">资讯</div>
+            <div class="navList"><a href="/nanshan/exhibition-list.html">展览</a></div>
+            <div class="navList"><a href="/nanshan/service.html">服务大厅</a></div>
+            <div class="navList">关于我们</div>
+            <div class="navList">签到</div>
         </div>
-        <div class="index-title">猪猪小熊</div>
+        <div class="index-title">最新资讯</div>
     </div>
     <div class="index-content">
-        <div class="index-list1">
-            <p>啥都好说肯定会盛开的花盛开的花盛开的哈萨克啥都好说肯定会盛开的花盛开的花盛开的哈萨克啥都好说肯定会盛开的花盛开的花盛开的哈萨克</p>
-            <p class="clearfix">
-                <img src="${ctx}${themes_path}/nanshan/css/images/activity1.jpg"/>
-                <img src="${ctx}${themes_path}/nanshan/css/images/activity1.jpg"/>
-                <img src="${ctx}${themes_path}/nanshan/css/images/activity1.jpg"/>
-
-            </p>
-        </div>
-        <div class="index-list2">
-            <ul>
-                <li class="clearfix">
-                    <div class="index-txt">
-                        <p>是的是的就是大家时间都是是的是的就是大家时间都是是的是的就是大家时间都是是的是的就是大家时间都是是的是的就是大家时间都是</p>
-                        <span>科技之光</span>
-                    </div>
-                    <div class="index-img">
-                        <img src="css/img/activity1.jpg">
-                    </div>
-                </li>
-                <li class="clearfix">
-                    <div class="index-txt">
-                        <p>是的是的就是大家时间都是是的是的就是大家时间都是是的是的就是大家时间都是是的是的就是大家时间都是是的是的就是大家时间都是</p>
-                        <span>科技之光</span>
-                    </div>
-                    <div class="index-img">
-                        <img src="css/img/activity1.jpg">
-                    </div>
-                </li>
+		<div class="index-list2">
+			<ul>
+                <#if article.tech??>
+                	<a href="/nanshan/news.html?id=${article.tech.id}" class="btn">
+						<li class="clearfix">
+		                    <div class="index-txt">
+		                        <p>${article.tech.title!''}</p>
+		                        <span>
+		                       		<#if ncat?size gt 0>
+										<#list ncat as cat >
+											<#if cat.leafs?? && cat.leafs?size gt 0>
+												<#list cat.leafs as leaf>
+													<#if leaf.leafs?? && leaf.leafs?size gt 0>
+														<#list leaf.leafs as leaf>
+															<#if leaf.id == article.tech.catId>
+																${leaf.name!''}
+															</#if>
+														</#list>
+													</#if>
+												</#list>
+											</#if>
+										</#list>
+									</#if>
+		                        </span>
+		                    </div>
+		                    <div class="index-img">
+		                        <img src="${article.tech.imgUrl!''}">
+		                    </div>
+		                </li>
+	                </a>
+				</#if>
+                <#if article.dynamic??>
+                	<a href="/nanshan/news.html?id=${article.dynamic.id}" class="btn">
+						<li class="clearfix">
+		                    <div class="index-txt">
+		                        <p>${article.dynamic.title!''}</p>
+		                        <span>
+		                       		<#if ncat?size gt 0>
+										<#list ncat as cat >
+											<#if cat.leafs?? && cat.leafs?size gt 0>
+												<#list cat.leafs as leaf>
+													<#if leaf.leafs?? && leaf.leafs?size gt 0>
+														<#list leaf.leafs as leaf>
+															<#if leaf.id == article.dynamic.catId>
+																${leaf.name!''}
+															</#if>
+														</#list>
+													</#if>
+												</#list>
+											</#if>
+										</#list>
+									</#if>
+		                        </span>
+		                    </div>
+		                    <div class="index-img">
+		                        <img src="${article.dynamic.imgUrl!''}">
+		                    </div>
+		                </li>
+		             </a>
+				</#if>
+				<#if article.media??>
+					<a href="/nanshan/news.html?id=${article.media.id}" class="btn">
+						<li class="clearfix">
+		                    <div class="index-txt">
+		                        <p>${article.media.title!''}</p>
+		                        <span>
+		                       		<#if ncat?size gt 0>
+										<#list ncat as cat >
+											<#if cat.leafs?? && cat.leafs?size gt 0>
+												<#list cat.leafs as leaf>
+													<#if leaf.leafs?? && leaf.leafs?size gt 0>
+														<#list leaf.leafs as leaf>
+															<#if leaf.id == article.media.catId>
+																${leaf.name!''}
+															</#if>
+														</#list>
+													</#if>
+												</#list>
+											</#if>
+										</#list>
+									</#if>
+		                        </span>
+		                    </div>
+		                    <div class="index-img">
+		                        <img src="${article.media.imgUrl!''}">
+		                    </div>
+		                </li>
+					</a>
+				</#if>
             </ul>
-        </div>
+		</div>
     </div>
     <div class="tabBar">
         <ul>
-            <li><span>我</span></li>
-            <li><span>我</span></li>
+            <li><span>发现</span></li>
+            <li><span>预约</span></li>
             <li><span>我</span></li>
         </ul>
     </div>
