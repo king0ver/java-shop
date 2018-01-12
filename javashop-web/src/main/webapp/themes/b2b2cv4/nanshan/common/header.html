@@ -109,7 +109,7 @@ var ctxPath = '${file_path}/';
 						<#if cat.leafs?? && cat.leafs?size gt 0>
 							<div class="itmeList">
 								<#list cat.leafs as leaf>
-									<div><a href="${leaf.pcUrl!''}">${article.parentCat.name!''}</a></div>
+									<div><a href="${leaf.pcUrl!''}">${leaf.name}</a></div>
 								</#list>
 							</div>
 						</#if>

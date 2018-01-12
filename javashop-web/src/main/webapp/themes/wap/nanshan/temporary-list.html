@@ -1,5 +1,6 @@
 <#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag('{"catId":16}') />
+<#assign article = articleListPageTag('{"catId":15}') />
+<#assign articlePage = articleListPageTag('{"catId":14}') />
 <#assign bgColor = "true" />
 <#assign articleTitle = article.grandCat.name/>
 <#include 'common/header.html'/>
@@ -16,17 +17,21 @@
 		</#if>
 	</div>
 </div>
-<div class="nav-Five">
-	<#if article.siblings?size gt 0>
-		<#list article.siblings as cat>
-			<#if article.curCat.id == cat.id>
-				<div class="navList selectBlue">${cat.name}</div>
-			<#else>
-				<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
+<div class="titleContentimages">展览回顾</div>
+<div class="imgSwiper">
+	<div class="swiper-container1">
+	    <div class="swiper-wrapper">
+	    	<#if article.items?size gt 0>
+	    		<#list article.items as item>
+					<div class="swiper-slide">
+		      			<img src="${item.imgUrl!''}">
+		      		</div>
+	      		</#list>
 			</#if>
-		</#list>
-	</#if>
+  	 	</div>
+	</div>
 </div>
-<#include 'exhibition-item.html'/>
+<div class="titleContentimages">正在热览</div>
+<#include 'temporary-item.html'/>
 </body>
 </html>

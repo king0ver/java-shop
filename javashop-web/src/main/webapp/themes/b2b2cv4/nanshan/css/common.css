@@ -345,12 +345,14 @@ body{
 	color: #333;
 }
 /*Footer - end*/
-
+.pageContainer{
+	text-align: center;
+}
 .page {
-	float: right;
 	height: 50px;
-	/*margin: 20px 10px 0px 0px;*/
-	/*display: inline;*/
+	margin: 0 auto;
+	display: inline-block;
+	text-align: center;
 }
 .page span {
 	background-color: #fafafa;

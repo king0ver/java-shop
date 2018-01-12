@@ -10,7 +10,7 @@
 				<#if article.parentCat.id == cat.id>
 					<div class="navList selectBlue">${cat.name}</div>
 				<#else>
-					<div class="navList">${cat.name}</div>
+					<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
 				</#if>
 			</#list>
 		</#if>
@@ -24,7 +24,7 @@
 					<span></span>
 				</div>
 			<#else>
-				<div class="navList">${cat.name}</div>
+				<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
 			</#if>
 		</#list>
 	</#if>

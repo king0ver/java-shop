@@ -2,8 +2,6 @@
 	<#assign articleListPageTag = newTag("articleListPageTag") />
 	<#assign article = articleListPageTag() />
 </#if>
-
-<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#if article.items?size gt 0>
 	<div class="content">
 		<#list article.items as item>

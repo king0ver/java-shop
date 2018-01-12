@@ -1,0 +1,16 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage('{"catId":80}') />
+<#assign articleTitle = article.curCat.name/>
+<#include 'common/header.html'/>
+<#if article.item.content.content?size gt 0>
+	<div class="content">
+		<ul class="zsList">
+			<#list article.item.content.content as item>
+				<li>
+					<img src="${item.imgUrl!''}" />
+				</li>
+			</#list>
+		</ul>
+	</div>
+</#if>
+	           		
