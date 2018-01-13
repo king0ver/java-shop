@@ -8,6 +8,8 @@
 	<#assign ncat = nCatTag() />
     <#assign indexWapPageTag = newTag("indexWapPageTag") />
 	<#assign article = indexWapPageTag() />
+	<#assign messageBgTag = newTag("messageBgTag") />
+	<#assign articleMessage = messageBgTag() />
     <#if title??>
         <title>${title}-${header.title}</title>
         <#else/>
@@ -21,7 +23,7 @@
     <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/base.css" />
     <link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/index.css" />
     <script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="${ctx}${themes_path}/nanshan/js/swiper.min.js" ></script>
+    <script type="text/javascript" src="${ctx}${themes_path}/js/swiper.min.js" ></script>
     <script>
         var ctx="${ctx}";
     </script>
@@ -43,19 +45,45 @@
         </div>
     </div>
     <script>
-        var swiper = new Swiper('.swiper-container', {
-            pagination: {
-                el: '.swiper-pagination',
-                dynamicBullets: true,
-            },
-        });
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination',
+          dynamicBullets: true,
+        },
+      });
+      function timer(opj) {
+  	$(opj).find('ul').animate({
+  		marginTop: "-30px"
+  	}, 500, function() {
+  		$(this).css({
+  			marginTop: "0"
+  		}).find("li:first").appendTo(this);
+  	})
+  }
+    $(function() {
+  	var num = $('#scroll_text').find('li').length;
+  	if(num > 1) {
+  		var time = setInterval('timer("#scroll_text")', 2500);
+  		
+  	}
+  });
     </script>
     <div class="content">
         <div class="txtAd">
             <div class="sec">
                 <img src="${ctx}${themes_path}/nanshan/css/images/laba.png">
             </div>
-            <div id="scroll_text">说的就是大家圣诞节</div>
+            <div id="scroll_text">
+				<ul>
+					<#if articleMessage.items?? && articleMessage.items?size gt 0>
+            			<#list articleMessage.items as item>
+            				<#if item_index lt 3>
+            					<li style="color:;">${item.msg_title!''}</li>
+            				</#if>
+            			</#list>
+            		</#if>
+				</ul>
+			</div>
         </div>
         <div class="index-nav-Five">
             <div class="navList">资讯</div>
@@ -74,23 +102,7 @@
 						<li class="clearfix">
 		                    <div class="index-txt">
 		                        <p>${article.tech.title!''}</p>
-		                        <span>
-		                       		<#if ncat?size gt 0>
-										<#list ncat as cat >
-											<#if cat.leafs?? && cat.leafs?size gt 0>
-												<#list cat.leafs as leaf>
-													<#if leaf.leafs?? && leaf.leafs?size gt 0>
-														<#list leaf.leafs as leaf>
-															<#if leaf.id == article.tech.catId>
-																${leaf.name!''}
-															</#if>
-														</#list>
-													</#if>
-												</#list>
-											</#if>
-										</#list>
-									</#if>
-		                        </span>
+		                        <span>科技之光</span>
 		                    </div>
 		                    <div class="index-img">
 		                        <img src="${article.tech.imgUrl!''}">
@@ -103,23 +115,7 @@
 						<li class="clearfix">
 		                    <div class="index-txt">
 		                        <p>${article.dynamic.title!''}</p>
-		                        <span>
-		                       		<#if ncat?size gt 0>
-										<#list ncat as cat >
-											<#if cat.leafs?? && cat.leafs?size gt 0>
-												<#list cat.leafs as leaf>
-													<#if leaf.leafs?? && leaf.leafs?size gt 0>
-														<#list leaf.leafs as leaf>
-															<#if leaf.id == article.dynamic.catId>
-																${leaf.name!''}
-															</#if>
-														</#list>
-													</#if>
-												</#list>
-											</#if>
-										</#list>
-									</#if>
-		                        </span>
+		                        <span>行业动态</span>
 		                    </div>
 		                    <div class="index-img">
 		                        <img src="${article.dynamic.imgUrl!''}">
@@ -132,23 +128,7 @@
 						<li class="clearfix">
 		                    <div class="index-txt">
 		                        <p>${article.media.title!''}</p>
-		                        <span>
-		                       		<#if ncat?size gt 0>
-										<#list ncat as cat >
-											<#if cat.leafs?? && cat.leafs?size gt 0>
-												<#list cat.leafs as leaf>
-													<#if leaf.leafs?? && leaf.leafs?size gt 0>
-														<#list leaf.leafs as leaf>
-															<#if leaf.id == article.media.catId>
-																${leaf.name!''}
-															</#if>
-														</#list>
-													</#if>
-												</#list>
-											</#if>
-										</#list>
-									</#if>
-		                        </span>
+		                        <span>媒体声音</span>
 		                    </div>
 		                    <div class="index-img">
 		                        <img src="${article.media.imgUrl!''}">
