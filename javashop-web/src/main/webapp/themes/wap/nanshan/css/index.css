@@ -107,16 +107,36 @@
     width: 100%;
     margin: 0;
 }
-#scroll_text {
+ #scroll_text ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 30px;
+    
+}
+ #scroll_text ul li {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    height: 30px;
+    margin-top: 0;
+    padding: 0;
+}
+.sec img {
+    width: 100%;
+    margin: 0;
+}
+ #scroll_text {
     height: 100%;
     overflow: hidden;
     color: #666666;
     letter-spacing: 0.01px;
 }
-#scroll_text ul li {
+
+ #scroll_text ul li {
     overflow: hidden;
     position: relative;
-    height: 1.867rem;
+   
 }
 .index-nav-Five{
     width: 90%;

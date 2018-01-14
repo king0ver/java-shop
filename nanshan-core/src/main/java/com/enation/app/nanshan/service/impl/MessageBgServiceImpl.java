@@ -17,7 +17,7 @@ public class MessageBgServiceImpl implements IMessageBgService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Page<MessageBgVo> queryMessageInfoByPage(int pageNo,int pageSize) {
-		String sql = "SELECT t.msg_id,t.msg_content,t.msg_title,t.member_ids,t.adminuser_id,t.send_time,t.send_type,t.adminuser_name FROM es_message_bg t ";
+		String sql = "SELECT t.msg_id,t.msg_content,t.msg_title,t.member_ids,t.adminuser_id,t.send_time,t.send_type,t.adminuser_name FROM es_message_bg t order by t.send_time desc";
 		Page<MessageBgVo> page=daoSupport.queryForPage(sql, pageNo,pageSize);
 		return page;
 	}

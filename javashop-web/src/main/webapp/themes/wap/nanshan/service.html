@@ -59,26 +59,30 @@
 		<ul class="clearfix">
 			<#if article.curCat.leafs?size gt 0>
 				<#list article.curCat.leafs as cat>
-					<a href="${cat.wapUrl}">
-						<li>
-							<span>
-								<img src="${cat.wap_icon!''}" />
-							</span>
-							<span>${cat.name}</span>
-						</li>
-					</a>
+					<#if cat.id != 46>
+						<a href="${cat.wapUrl}">
+							<li>
+								<span>
+									<img src="${cat.wap_icon!''}" />
+								</span>
+								<span>${cat.name}</span>
+							</li>
+						</a>
+					</#if>
 				</#list>
 			</#if>
 			<#if articleFacilities.curCat.leafs?size gt 0>
 				<#list articleFacilities.curCat.leafs as cat>
-					<a href="${cat.wapUrl}">
-						<li>
-							<span>
-								<img src="${cat.wap_icon!''}" />
-							</span>
-							<span>${cat.name}</span>
-						</li>
-					</a>
+					<#if cat.id != 67>
+						<a href="${cat.wapUrl}">
+							<li>
+								<span>
+									<img src="${cat.wap_icon!''}" />
+								</span>
+								<span>${cat.name}</span>
+							</li>
+						</a>
+					</#if>
 				</#list>
 			</#if>
 			<#if articleGuide.curCat.leafs?size gt 0>
