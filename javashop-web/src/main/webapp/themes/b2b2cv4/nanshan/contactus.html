@@ -2,9 +2,40 @@
 <#assign article = articlePage('{"catId":64}') />
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/lianxwom.css" rel="stylesheet" type="text/css">
-<#include 'common/thirdCat.html'/>
+<style>
+    .txt-content p{
+        text-align: center;
+    }
+    .myList{
+        width: 100%;
+    }
+    .myList li{
+        float: left;
+        width: 365px;
+        height: 220px;
+        border: 1px solid #f3f3f3;
+        box-shadow: #f3f3f3 3px -3px 20px;
+        color: #000;
+    }
+    .myList li div:nth-child(1){
+        font-size: 18px;
+        margin: 30px 0;
+        font-weight: bold;
+    }
+    .myList li div:nth-child(2),.myList li div:nth-child(3){
+        font-size: 15px;
+        margin: 15px 0;
+    }
+    .myList li:not(:last-child){
+        margin-right: 45px;
+    }
+    .myList li div{
+        text-align: center;
+    }
+</style>
+<#include 'common/navigator.html'/>
 <div class="section-content">
-    <#include 'common/navigator.html'/>
+
     <div class="txt-content">
         <div class="map">
             <img src="${file_path}/nanshan/css/images/lxBg.jpg">

@@ -149,6 +149,7 @@
  	padding: 0 4%;
  	height: 40px;
  	line-height: 40px;
+	border-bottom: 1px solid #eeeeee;
  }
   .navTime span{
   	    display: inline-block;
@@ -505,11 +506,12 @@ display:-webkit-box;
 	padding: 10px 0;
 	font-size: 18px;
 	color: #333;
+	line-height: 25px;
 }
 .content .content-title2,.content .content-title3,.content .content-title4{
 	font-size: 12px;
-	margin-bottom: 5px;
-	color: #333;
+	margin-bottom: 20px;
+	color: #a1a1a1;
 }
 
 .content .content-title3 span{
@@ -539,6 +541,9 @@ display:-webkit-box;
     line-height: 30px;
     font-size: 16px;
 	letter-spacing: 1px;
+}
+.content .contentImg{
+	padding: 20px 0;
 }
 .content .contentImg,.content .contentImg img{
 	width: 100%;
@@ -855,3 +860,8 @@ width: 90%;
 	background: #b9b9b9;
 	
 }
+#loading{
+	text-align: center;
+	padding: 20px 0;
+}
+

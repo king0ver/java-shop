@@ -22,19 +22,12 @@
 
         <div class="icon-content">
             <ul class="list">
-                <li><a href="/nanshan/facility.html?catId=67"><img src="${file_path}/nanshan/css/images/service-pic1.png"></a><div class="desc">服务中心</div></li>
-                <li><a href="/nanshan/facility.html?catId=68"><img src="${file_path}/nanshan/css/images/service-pic2.png"></a><div class="desc">休息区域</div></li>
-                <li><a href="/nanshan/facility.html?catId=69"><img src="${file_path}/nanshan/css/images/service-pic3.png"></a><div class="desc">饮水机</div></li>
-                <li><a href="/nanshan/facility.html?catId=70"><img src="${file_path}/nanshan/css/images/service-pic4.png"></a><div class="desc">洗手间</div></li>
-                <li><a href="/nanshan/facility.html?catId=71"><img src="${file_path}/nanshan/css/images/service-pic5.png"></a><div class="desc">科普商店</div></li>
-                <li><a href="/nanshan/facility.html?catId=72"><img src="${file_path}/nanshan/css/images/service-pic6.png"></a><div class="desc">导览手册</div></li>
-                <li><a href="/nanshan/facility.html?catId=73"><img src="${file_path}/nanshan/css/images/service-pic7.png"></a><div class="desc">讲解服务</div></li>
-                <li><a href="/nanshan/facility.html?catId=74"><img src="${file_path}/nanshan/css/images/service-pic8.png"></a><div class="desc">停车指南</div></li>
-                <li><a href="/nanshan/facility.html?catId=75"><img src="${file_path}/nanshan/css/images/service-pic9.png"></a><div class="desc">无障碍设施</div></li>
-                <li><a href="/nanshan/facility.html?catId=76"><img src="${file_path}/nanshan/css/images/service-pic10.png"></a><div class="desc">母婴室</div></li>
-                <li><a href="/nanshan/facility.html?catId=77"><img src="${file_path}/nanshan/css/images/service-pic11.png"></a><div class="desc">失物招领</div></li>
-                <li><a href="/nanshan/facility.html?catId=78"><img src="${file_path}/nanshan/css/images/service-pic12.png"></a><div class="desc">物品寄存</div></li>
-                <li><a href="/nanshan/facility.html?catId=79"><img src="${file_path}/nanshan/css/images/service-pic13.png"></a><div class="desc">医务室/AED</div></li>
+                <#list article.siblings as cat>
+                    <li>
+                        <a href="${cat.pcUrl}"><img src="${cat.pcIcon}"></a>
+                        <div class="desc">${cat.name}</div>
+                    </li>
+                </#list>
             </ul>
         </div>
 

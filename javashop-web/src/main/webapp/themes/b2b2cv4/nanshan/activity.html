@@ -9,10 +9,10 @@
 <script type="text/javascript" src="${ctx}/adminthemes/version3/plugins/layui/layui.js "></script>
 <script type="text/javascript" src="${ctx}/adminthemes/version3/js/global.js"></script>
 <script type="text/javascript" src="${file_path}/nanshan/js/appoint.js"></script>
-    <#include 'common/thirdCat.html'/>
+<#include 'common/navigator.html'/>
 
 <div class="section-content">
-    <#include 'common/navigator.html'/>
+
     <div><img src="${article.item.imgUrl!''}" style="width: 1200px;height: 400px;"></div>
     <!--
         作者：offline
@@ -43,13 +43,13 @@
                     <p class="text-indent" data-type="text">${content.content!''}</p>
                 </#if>
                 <#if content.type == 'img'>
-                    <#if content_index == 0 || article.item.content['content'][content_index-1].type=='img'>
-                        <div class="img" data-type="image" data-image="${content.content!''}">
+                    <#if content_index == 0 || article.item.content['content'][content_index-1].type!='img'>
+                        <div class="img">
                     </#if>
                     <img src="${content.content!''}" />
                     <#if !content_has_next || article.item.content['content'][content_index+1].type!='img'>
                         </div>
-                    </#if>
+                     </#if>
                 </#if>
             </#list>
         </#if>

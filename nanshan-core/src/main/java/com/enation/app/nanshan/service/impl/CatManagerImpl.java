@@ -71,6 +71,9 @@ public class CatManagerImpl implements ICatManager  {
         		nCatVo.setParentId(articleCat.getParent_id());
         		nCatVo.setPcUrl(articleCat.getPc_url());
         		nCatVo.setWapUrl(articleCat.getWap_url());
+				nCatVo.setWapName(articleCat.getWap_cat_name());
+				nCatVo.setWapIcon(articleCat.getWap_icon());
+				nCatVo.setPcIcon(articleCat.getPc_icon());
         		newCatlist.add(nCatVo);
 			}
         }

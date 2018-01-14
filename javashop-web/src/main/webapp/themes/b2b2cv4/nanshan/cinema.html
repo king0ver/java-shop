@@ -2,10 +2,10 @@
 <#assign articlePage = newTag("articlePage") />
 <#assign article = articlePage('{"catId":11}') />
 <#include 'common/header.html'/>
+<link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
 <link href="${file_path}/nanshan/css/cinema.css" rel="stylesheet" type="text/css">
-<#include 'common/thirdCat.html'/>
+<#include 'common/navigator.html'/>
 <div class="section-content">
-    <#include 'common/navigator.html'/>
     <ul class="item-content">
         <li class="txt">
             <div class="content-title">${article.item.title!''}</div>
@@ -27,11 +27,18 @@
 <div class="movie-box">
     <!-- 推荐电影 -->
     <div class="recommended-movie-box">
-        <div class="recommended-movie">推荐电影</div>
+        <div class="recommended-movie-bg"><span>推荐电影</span><span></span></div>
         <ul class="movie-img-list">
             <#if article.item.articleList?size gt 0>
                 <#list article.item.articleList as article>
-                    <li><a href="/nanshan/movie.html?id=${article.id}"><img src="${article.imgUrl!''}"></a></li>
+                    <li>
+
+                            <div class="imgScal">
+                                <a href="/nanshan/movie.html?id=${article.id}"> <img src="${article.imgUrl!''}">
+                                <em></em></a>
+                            </div>
+
+                    </li>
                 </#list>
             </#if>
         </ul>

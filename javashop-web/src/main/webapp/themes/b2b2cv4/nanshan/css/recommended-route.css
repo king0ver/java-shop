@@ -1,9 +1,9 @@
 @import "common.css";
 /* 推荐路线 */
 
-.crumbs, .banner{
+.banner{
     width: 1200px;
-    margin: auto;
+    margin: 0px -200px;
 }
 .banner-box{
     width: 100%;

@@ -21,6 +21,12 @@ public class NCatVo implements Serializable {
 
     private String wapUrl;
 
+    private String wapName;
+
+    private String pcIcon;
+
+    private String wapIcon;
+
     private List<NCatVo> leafs;
 
     private NCatVo parent;
@@ -82,5 +88,29 @@ public class NCatVo implements Serializable {
 
     public void setParent(NCatVo parent) {
         this.parent = parent;
+    }
+
+    public String getWapName() {
+        return wapName;
+    }
+
+    public void setWapName(String wapName) {
+        this.wapName = wapName;
+    }
+
+    public String getPcIcon() {
+        return pcIcon;
+    }
+
+    public void setPcIcon(String pcIcon) {
+        this.pcIcon = pcIcon;
+    }
+
+    public String getWapIcon() {
+        return wapIcon;
+    }
+
+    public void setWapIcon(String wapIcon) {
+        this.wapIcon = wapIcon;
     }
 }

@@ -1,24 +1,25 @@
 @import "common.css";
 
+/*科学影城时间表*/
 .title-bg{
-    width: 674px;
-    height: 133px;
-    line-height: 144px;
-    background: url('img/row-table-title.png') no-repeat;
+    width: 700px;
+    height: 86px;
+    line-height: 85px;
+    margin-top: 20px;
+    background: url(images/row-table-title1.png) no-repeat;
     text-align: center;
     font-size: 32px;
-    color: #3C97EE;
-    margin: auto;
+    color: #fff;
 }
 .table{
     overflow: hidden;
-    width: 800px;
+    width: 1135px;
     margin: auto;
 }
 .table .header{
-    width: 800px;
+    width: 1135px;
     height: 70px;
-    background: #f7f7f7;
+    background: #e7e7e7;
     line-height: 70px;
     color: #333;
     font-size: 24px;
@@ -28,22 +29,26 @@
     float: left;
     width: 25%;
     text-align: center;
+
 }
 .table .row {
     overflow: hidden;
-    padding: 46px 0 40px 0;
+    height: 85px;
+    line-height: 85px;
     font-size: 19px;
-    border-bottom: 1px solid #ccc;
 }
 /*.table .row li:not(:eq(2)){
     line-height: 124px;
 }*/
 .table .row i{
     font-size: 22px;
-    font-style:italic;
+
 }
 .mark-red{
     color: red;
+}
+.table-bg{
+    background: #e3edf4;
 }
 
 /* 加载中 */

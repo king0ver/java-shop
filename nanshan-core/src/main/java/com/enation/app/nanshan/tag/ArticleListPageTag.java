@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,7 +40,7 @@ public class ArticleListPageTag extends AbstractPageTag{
         int pageNo = getPage();
 
         Page<ArticleVo> webPage =articleService.querySpecInfoByCatId(Integer.parseInt(catId),
-                specs, pageNo, getPageSize());
+                specs, 1, getPageSize());
 
         webPage.setCurrentPageNo(pageNo);
 

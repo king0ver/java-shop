@@ -58,7 +58,7 @@
             <div id="scroll_text">说的就是大家圣诞节</div>
         </div>
         <div class="index-nav-Five">
-            <div class="navList">资讯</div>
+            <div class="navList"><a href="/nanshan/news-list.html?catId=40">资讯</a></div>
             <div class="navList"><a href="/nanshan/exhibition-list.html">展览</a></div>
             <div class="navList"><a href="/nanshan/service.html">服务大厅</a></div>
             <div class="navList">关于我们</div>
@@ -159,13 +159,8 @@
             </ul>
 		</div>
     </div>
-    <div class="tabBar">
-        <ul>
-            <li><span>发现</span></li>
-            <li><span>预约</span></li>
-            <li><span>我</span></li>
-        </ul>
-    </div>
+	<#assign tabFlag = "index"/>
+	<#include 'common/tab.html'/>
 </div>
 </body>
 </html>

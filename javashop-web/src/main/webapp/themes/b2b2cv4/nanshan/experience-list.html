@@ -3,17 +3,20 @@
 <#assign article = articleListPageTag() />
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
-<#include 'common/thirdCat.html'/>
+<#include 'common/navigator.html'/>
 <div class="section-content clearfix">
-    <#include 'common/navigator.html'/>
+
     <#if article.items?? && article.items?size gt 0>
         <ul class="tiyan-img-list">
             <#list article.items as item>
                 <li>
-                    <a href="/nanshan/developing.html?id=${item.id}">
-                        <img src="${item.imgUrl!''}">
-                        <div class="title">${item.title!''}</div>
-                    </a>
+                    <div class="imgScal">
+                        <a href="/nanshan/developing.html?id=${item.id}" >
+                            <img src="${item.imgUrl!''}">
+                            <em></em>
+                        </a>
+                    </div>
+                    <div class="title">${item.title!''}</div>
                 </li>
             </#list>
         </ul>

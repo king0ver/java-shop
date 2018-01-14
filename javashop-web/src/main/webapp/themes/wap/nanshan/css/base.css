@@ -43,7 +43,7 @@ input:-webkit-autofill{background: none;}
 .icons { display:inline-block; background:url('./images/icons.png') no-repeat; background-size: 200px; }
 /*contianer*/
 .innerContent { padding: 15px 0 0; background-color:#fff;}
-.header { position: fixed; top: 0; height: 45px; width:100%; max-width: 750px;border-bottom:1px solid #ababab; z-index: 99;}
+.header { position: fixed; top: 0; height: 45px; width:100%; max-width: 750px;border-bottom:1px solid #eeeeee; z-index: 99;}
 .notfixed-wrap { padding-top:0; }
 .notfixed-wrap .header{ position:static; }
 .header .l-nav{ display:-webkit-box; display:-moz-box; display:box;  background-color:#fff; padding:10px 0 9px; width:100%; height:26px; line-height:26px; max-width: 750px;}
@@ -54,7 +54,7 @@ input:-webkit-autofill{background: none;}
 .header section:first-child a,#loginPanel  { position:absolute; top:-10px; left:0; display:inline-block; width:45px; height:45px;  }
 .header section:first-child a,#loginMy  { position:absolute; top:-10px; left:0; display:inline-block; width:45px; height:45px;  }
 .header section:last-child{ position:relative; padding:0 13px;  }
-.header section:nth-child(2){ text-align: center; -webkit-box-flex:1; -moz-box-flex:1; box-flex:1; font-size:16px; color:#464646; font-weight: bold;}
+.header section:nth-child(2){ text-align: center; -webkit-box-flex:1; -moz-box-flex:1; box-flex:1; font-size:18px; color:#464646; font-weight: bold;}
 #loginPanel { width:50px;}
 #loginMy { width:50px;}
 /*button*/

@@ -9,14 +9,98 @@
     display: inline-block;
     width: 370px;
     height: 456px;
-       border: 1px solid #f3f3f3;
+    border: 1px solid #f3f3f3;
     box-shadow: 0px 0px 10px 2px #f3f3f3;
     text-align: center;
 }
+
 .xfdetail-lists li img{
-	width: 370px;
-	height: 265px;
+    width: 370px;
+    height: 265px;
 }
+
+.xfdetail-lists li .imgScal{
+    width: 370px;
+    height: 265px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+.xfdetail-lists li .imgScal img{
+    width: 370px;
+    height: 265px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all 0.5s;
+
+}
+.xfdetail-lists li .imgScal em{
+    display: inline-block;
+    width: 370px;
+    height: 265px;
+    background: rgba(0,0,0,0);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.xfdetail-lists li .imgScal:hover em{
+    display: inline-block;
+    width: 370px;
+    height: 265px;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.xfdetail-lists li .imgScal:hover img{
+    transform: scale(1.2);
+    transition: all 0.5s;
+}
+
+/***/
+
+li .imgScal{
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+li .imgScal img{
+
+    cursor: pointer;
+    transform: scale(1);
+    transition: all 0.5s;
+
+}
+li .imgScal em{
+    display: inline-block;
+    background: rgba(0,0,0,0);
+    transition: all 0.5s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+li .imgScal:hover em{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+li .imgScal:hover img{
+    transform: scale(1.2);
+    transition: all 0.5s;
+}
+
+
+
+
 .xfdetail-lists li:not(:last-child){
     margin-right: 20px;
     margin-bottom: 32px;
@@ -26,10 +110,10 @@
 }
 .xfdetail-lists .txt{
     padding: 0 30px;
-        padding: 0 30px;
+    padding: 0 30px;
     width: 310px;
     height: 50px;
-     display: -webkit-box;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
@@ -40,10 +124,15 @@
     height: 46px;
     text-align: center;
     line-height: 46px;
-    background: #ddd;
+    background: #059bfb;
     color: #fff;
     font-size: 16px;
     margin:10px auto 22px;
+    transition: all 0.5s;
+}
+.xfdetail-lists .btn:hover{
+    background: #27abff;
+    transition: all 0.5s;
 }
 
 /*人才招聘*/
@@ -51,7 +140,7 @@
     width: 674px;
     height: 133px;
     line-height: 144px;
-    background: url('img/row-table-title.png') no-repeat;
+    background: url('images/row-table-title.png') no-repeat;
     text-align: center;
     font-size: 32px;
     color: #3C97EE;
@@ -70,20 +159,24 @@
     font-size: 14px;
     margin: auto;
 }
+
+
+
 .row-table-title .rencaitable li{
     float: left;
     width: 23%;
     padding-left: 2%;
 }
 .zpdetail{
-	padding-left: 2%;
-	padding-bottom: 30px;
-	color: #b299a5;
+    padding-left: 2%;
+    padding-bottom: 30px;
+    color: #b299a5;
 }
 .row-table-title .rencaitable .row {
     overflow: hidden;
     padding: 30px 0 10px 0;
     font-size: 14px;
+    width: 1200px;
 }
 .yuyue-table-title .rencaitable .row {
     overflow: hidden;
@@ -92,22 +185,22 @@
 }
 
 .row-table-title .tableList{
-	border-bottom:1px dashed #f1f1f1;
+    border-bottom:1px dashed #f1f1f1;
 }
 .yuyue-table-title .tableList{
-	border-bottom:1px solid #dcdcdc;
+    border-bottom:1px solid #dcdcdc;
 }
 
 .yuyue-table-title .rencaitable li{
-	text-align: center;
+    text-align: center;
 }
 .yuyue-table-title .rencaitable .row li{
-	height: 50px;
-	line-height: 50px;
+    height: 50px;
+    line-height: 50px;
 }
- .yuyue-table-title .rencaitable .row li:nth-child(1){
-   
-    	line-height: 25px;
+.yuyue-table-title .rencaitable .row li:nth-child(1){
+
+    line-height: 25px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -115,35 +208,35 @@
 }
 .yuyue-table-title .rencaitable li:nth-child(1){
     float: left;
-   width: 18%;
-  
+    width: 18%;
+
 }
 .yuyue-table-title .rencaitable li:nth-child(2){
     float: left;
-     width: 18%;
-   
+    width: 18%;
+
 }
 .yuyue-table-title .rencaitable li:nth-child(3){
     float: left;
     width: 18%;
-    
+
 }
- 
- .yuyue-table-title .rencaitable .row li:nth-child(4){
-   
-    	line-height: 25px;
-   
+
+.yuyue-table-title .rencaitable .row li:nth-child(4){
+
+    line-height: 25px;
+
 }
 .yuyue-table-title .rencaitable li:nth-child(4){
     float: left;
-     width: 18%;
-    
-   
+    width: 18%;
+
+
 }
 .yuyue-table-title .rencaitable li:nth-child(5){
     float: left;
-     width: 18%;
-  
+    width: 18%;
+
 }
 /*消防图片平铺影片预告*/
 .recommended-movie{
@@ -161,7 +254,30 @@
     margin-right: 55px;
 }
 .movie-img-list .title{
-    margin: 14px 0 28px;
+    padding: 14px 0;
+}
+.movie-img-list li{
+    padding: 2px 0;
+    height: 521px;
+    width: 340px;
+    position: relative;
+
+}
+.movie-img-list li .divHover{
+    position: absolute;
+    top:14px;
+    left: 0;
+    transition: all 0.5s;
+}
+.movie-img-list li .divHover:hover{
+    position: absolute;
+    top:0;
+    left: 0;
+    transition: all 0.5s;
+}
+.movie-img-list li .divHover:hover .title{
+    box-shadow: 0px 0px 20px 1px #d1d1d1;
+    transition: all 0.5s;
 }
 /*体验图片平铺影片预告*/
 .tiyan-img-list{
@@ -172,9 +288,49 @@
     text-align: center;
 }
 .tiyan-img-list li img{
-	width: 375px;
-	height: 265px;
+    width: 375px;
+    height: 265px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all 0.5s;
+    cursor: pointer;
 }
+.tiyan-img-list li .imgScal:hover img{
+
+    transform: scale(1.2);
+    transition: all 0.5s;
+    cursor: pointer;
+
+}
+.tiyan-img-list li .imgScal{
+    width: 375px;
+    height: 265px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.tiyan-img-list li .imgScal em{
+    display: inline-block;
+    width: 375px;
+    height: 265px;
+    background: rgba(0,0,0,0);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.tiyan-img-list li .imgScal:hover em{
+    display: inline-block;
+    width: 375px;
+    height: 265px;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .tiyan-img-list li:not(:last-child){
     margin-right: 20px;
 }
@@ -190,39 +346,89 @@
     text-align: center;
 }
 .youxi-img-list li img{
-	width: 340px;
-	height: 515px;
+    width: 340px;
+    height: 515px;
 }
 
 .youxi-img-list li:not(:last-child){
     margin-right: 20px;
 }
 .youxi-img-list .title{
-    margin: 14px 0 28px;
+    margin: 0px 0 28px;
+}
+.youxi-img-list .title{
+    padding: 14px 0;
+}
+.youxi-img-list li{
+    padding: 2px 0;
+    height: 600px;
+    width: 340px;
+    position: relative;
+
+}
+.youxi-img-list li .divHover{
+    position: absolute;
+    top:14px;
+    left: 0;
+    transition: all 0.5s;
+}
+.youxi-img-list li .divHover:hover{
+    position: absolute;
+    top:0;
+    left: 0;
+    transition: all 0.5s;
+}
+.youxi-img-list li .divHover:hover .title{
+    box-shadow: 0px 0px 20px 1px #d1d1d1;
+    transition: all 0.5s;
 }
 /*游戏列表左右平铺*/
 /* 游戏列表 */
 
 .game-lists{
-	width: 840px;
+    width: 840px;
 }
 .game-lists li{
     display: inline-block;
     text-align: center;
 }
 .game-lists li img{
-	width: 195px;
-	height: 250px;
+    width: 195px;
+    height: 250px;
 }
 
 .game-lists li:not(:last-child){
     margin-right: 10px;
 }
 .game-lists .txt{
-    margin: 15px auto 27px;
+    margin: 0 auto;
+    padding: 15px 0 27px 0;
 }
 .game-item-lt{
     float: left;
+}
+.game-item-lt li{
+    padding: 2px 0;
+    width: 195px;
+    height: 250px;
+    position: relative;
+
+}
+.game-item-lt li .divHover{
+    position: absolute;
+    top:14px;
+    left: 0;
+    transition: all 0.5s;
+}
+.game-item-lt li .divHover:hover{
+    position: absolute;
+    top:0;
+    left: 0;
+    transition: all 0.5s;
+}
+.game-item-lt li .divHover:hover .title{
+    box-shadow: 0px 0px 20px 1px #d1d1d1;
+    transition: all 0.5s;
 }
 .game-item-rt{
     float: right;
@@ -233,7 +439,7 @@
 .game-item-rt .hot-game-title{
     font-size: 20px;
     margin: 14px 0;
-    
+
 }
 .game-item-rt li{
     margin: 10px 2px
@@ -248,14 +454,14 @@
     font-size: 16px;
 }
 .game-item-rt ul li img{
-	width: 90px;
-	height: 90px;
+    width: 90px;
+    height: 90px;
 }
 .game-item-rt .game-detail{
-     color: #7d7d7d;
- 	width: 168px;
+    color: #7d7d7d;
+    width: 168px;
     height: 50px;
-     display: -webkit-box;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
@@ -270,6 +476,9 @@
 .sectionBG .content{
     width: 1200px;
     margin: auto;
+}
+.content-bg{
+    background: #f8f8f8;
 }
 .game-title{
     display: inline-block;
@@ -313,7 +522,7 @@
 }
 .activity-lists .content-list ,
 .activity-lists p{
-    padding: 6px 0;
+    padding-top: 6px;
     font-size: 17px;
 }
 
@@ -323,8 +532,8 @@
     background: #fff;
 }
 .activity-img-list li img{
-	width: 375px;
-	height: 260px;
+    width: 375px;
+    height: 260px;
 }
 
 .activity-img-list li:not(:last-child){
@@ -349,7 +558,6 @@
     border-top: 10px solid transparent;
     -moz-border-top-colors: #f1f1f1 #f0f0f0 #efefef #eee #ececec #eaeaea #e9e9e9 #e3e3e3;
     border-top-colors: #f1f1f1 #f0f0f0 #efefef #eee #ececec #eaeaea #e9e9e9 #e3e3e3;
-    height: 638px;
     width: 100%;
     background: #fff;
 }
@@ -361,6 +569,27 @@
     margin: 49px 0 37px;
     font-size: 32px;
 }
+.recommended-movie-bg{
+    margin: 49px 0 37px;
+    font-size: 32px;
+
+}
+.recommended-movie-bg span:first-child{
+    display: inline-block;
+    background: url(images/moveBg.png) center center no-repeat;
+    background-size: 200px 45px;
+    width: 200px;
+    height: 45px;
+    text-indent: 60px;
+    line-height: 45px;
+    font-weight: bold;
+}
+.recommended-movie-bg span:last-child{
+    display: inline-block;
+    width: 1000px;
+    vertical-align: bottom;
+    border-bottom: 2px solid #eee;
+}
 .movie-img-list{
     overflow: hidden;
 }
@@ -368,14 +597,15 @@
     float: left
 }
 .movie-img-list li img{
-	width: 340px;
-	height: 450px;
+    width: 340px;
+    height: 450px;
 }
 .movie-img-list li:not(:last-child){
-    margin-right: 60px;
+    margin-right: 25px;
+    margin-left: 25px;
 }
 .highlights-box {
-	margin: 0 auto;
+    margin: 0 auto;
 }
 .highlights-box ul{
     overflow: hidden;
@@ -398,9 +628,9 @@
 
 /*背景颜色*/
 .content-bg{
-	    width: 100%;
+    width: 100%;
     height: 100%;
-    background: #f8f8f8;
+    /*  background: #fff;*/
 }
 
 .type-box{
@@ -410,24 +640,24 @@
 }
 /*科学影城时间表*/
 .title-bg{
-    width: 674px;
-    height: 133px;
-    line-height: 144px;
-    background: url('css/img/row-table-title.png') no-repeat;
+    width: 700px;
+    height: 86px;
+    line-height: 85px;
+    margin-top: 20px;
+    background: url(images/row-table-title1.png) no-repeat;
     text-align: center;
     font-size: 32px;
-    color: #3C97EE;
-    margin: auto;
+    color: #fff;
 }
 .table{
     overflow: hidden;
-    width: 800px;
+    width: 1135px;
     margin: auto;
 }
 .table .header{
-    width: 800px;
+    width: 1135px;
     height: 70px;
-    background: #f7f7f7;
+    background: #e7e7e7;
     line-height: 70px;
     color: #333;
     font-size: 24px;
@@ -437,25 +667,27 @@
     float: left;
     width: 25%;
     text-align: center;
-    
+
 }
 .table .row {
     overflow: hidden;
-    padding: 46px 0 40px 0;
+    height: 85px;
+    line-height: 85px;
     font-size: 19px;
-    border-bottom: 1px solid #ccc;
 }
 /*.table .row li:not(:eq(2)){
     line-height: 124px;
 }*/
 .table .row i{
     font-size: 22px;
-    font-style:italic;
+
 }
 .mark-red{
     color: red;
 }
-
+.table-bg{
+    background: #e3edf4;
+}
 /*游戏排行榜*/
 .title-bgGame{
     width: 674px;
@@ -482,14 +714,14 @@
 }
 .tableGame li:nth-child(1){
     float: left;
-     width: 140px;
+    width: 140px;
     height: 160px;
     line-height: 160px;
     text-align: center;
 }
 .tableGame li img{
-	width: 160px;
-	height: 160px;
+    width: 160px;
+    height: 160px;
 }
 
 .tableGame li:nth-child(2){
@@ -501,8 +733,8 @@
 .tableGame li:nth-child(3){
     float: left;
     width: 620px;
-    height: 160px; 
-    margin-left: 25px;     
+    height: 160px;
+    margin-left: 25px;
 }
 .tableGame .row {
     overflow: hidden;
@@ -516,15 +748,15 @@
     font-style:italic;
 }
 .rowTitle{
-	font-size: 24px;
+    font-size: 24px;
 }
 .rowTxt{
-	margin-top: 30px;
-	color: #7d7d7d;
-	font-size: 16px;
-	width: 620px;
-	height: 100px;
-	 display: -webkit-box;
+    margin-top: 30px;
+    color: #7d7d7d;
+    font-size: 16px;
+    width: 620px;
+    height: 100px;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
@@ -537,7 +769,7 @@
     width: 1200px;
     background: #fff;
     overflow: hidden;
-    padding: 17px 12px 17px 73px;
+    padding: 17px 12px 0px 73px;
 }
 .item-content .detail-lists li:not(:last-child){
     margin-bottom: 20px;
@@ -549,7 +781,8 @@
     line-height: 71px;
     text-align: center;
     font-size: 36px;
-    background: #dcdcdc;
+    background: #1bb6dd;
+    color: #fff;
 }
 .item-content .lt-num{
     padding: 30px 73px 14px 73px;
@@ -564,19 +797,27 @@
 }
 .detail-lists .rt-txt p{
     width: 730px;
-    height: 128px;
+    height: 100px;
     margin-top: 15px;
-     display: -webkit-box;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 3;
     overflow: hidden;
+    border-bottom: 1px solid #eee;
 }
 .item-content .rt-txt{
     padding: 7px 8px 7px 42px;
+
 }
 .item-content .rt-title{
     font-size: 20px;
     padding: 7px 0;
+    font-weight: bold;
+    color: #2e3752;
+}
+
+div.img{
+    text-align: center;
 }
 
 /* 媒体声音 */
@@ -585,7 +826,7 @@
     color: #1173d1;
     border-bottom: 1px solid #1173d1;
     line-height: 16px;
-        margin-top: 20px;
+    margin-top: 20px;
 }
 .detail-lists .article-source .a_txt{
     color: #333;
@@ -608,11 +849,11 @@
     vertical-align: bottom;
     float: left;
 }
-
 .g-type .type-content{
-    width: 1000px;
     float: left;
+    width: 1000px;
 }
+
 
 /* 游戏列表 */
 .change-game-box{
@@ -698,21 +939,21 @@
 }
 .activity-lists .content-list ,
 .activity-lists p{
-   
+
     font-size: 17px;
-     display: -webkit-box;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
 .activity-lists .actDetil span{
-	font-size: 17px;
-	float: left;
+    font-size: 17px;
+    float: left;
 }
 .activity-lists .actDetil span:nth-child(2){
-	font-size: 17px;
-	width: 640px;
-	    display: -webkit-box;
+    font-size: 17px;
+    width: 640px;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
@@ -747,15 +988,66 @@
     font-size: 16px;
     text-align: center;
 }
+.activity-img-list li .imgScal{
+    width: 375px;
+    height: 260px;
+    overflow: hidden;
+}
+.activity-img-list li img{
+    width: 375px;
+    height: 260px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.activity-img-list li .imgScal:hover img{
+
+    transform: scale(1.2);
+    transition: all 0.5s;
+    cursor: pointer;
+
+}
+.activity-img-list li .imgScal{
+    width: 375px;
+    height: 260px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.activity-img-list li .imgScal em{
+    display: inline-block;
+    width: 375px;
+    height: 265px;
+    background: rgba(0,0,0,0);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.activity-img-list li .imgScal:hover em{
+    display: inline-block;
+    width: 375px;
+    height: 265px;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
 /* 最新活动-灾情报警详情 */
 .activity-detail h3{
     font-size: 24px;
     margin: 40px 0 23px;
+    font-weight: bold;
 }
 
 .activity-detail .content-list span{
-    color: #7d7d7d
+    color: #7d7d7d;
+    height: 24px;
+    line-height: 24px;
 }
 
 .activity-detail .precautions{
@@ -769,32 +1061,92 @@
 
 }
 .detailInfo .content-list{
-	width: 999px;
-	float: left;
+    width: 950px;
+    float: left;
 }
 .detailInfo .yuyue{
-	width: 200px;
-	height: 150px;
-	border-left: 1px solid #c7c7c7;
-	float: right;
-	
+    width: 210px;
+    height: 150px;
+    border-left: 1px solid #c7c7c7;
+    float: right;
+
 }
 .detailInfo .yuyue img{
-	width: 110px;
-	margin: 20px 40px;
+    width: 90px;
+    margin: 30px 40px;
+}
+.movie-img-list-1{
+    overflow: hidden;
+}
+.movie-img-list-1 li{
+    float: left;
+    text-align: center;
+}
+.movie-img-list-1 li:not(:last-child){
+    margin-right: 55px;
 }
 
+.movie-img-list-1 li{
+    padding: 2px 0;
+    height: 521px;
+    width: 340px;
+    position: relative;
+
+}
+.movie-img-list-1 li img{
+    height: 521px;
+    width: 340px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.movie-img-list-1 li .imgScal:hover img{
+
+    transform: scale(1.2);
+    transition: all 0.5s;
+    cursor: pointer;
+
+}
+.movie-img-list-1 li .imgScal{
+    height: 521px;
+    width: 340px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.movie-img-list-1 li .imgScal em{
+    display: inline-block;
+    height: 521px;
+    width: 340px;
+    background: rgba(0,0,0,0);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.movie-img-list-1 li .imgScal:hover em{
+    display: inline-block;
+    height: 521px;
+    width: 340px;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.5s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 /*侧边栏预约*/
 .bgColorShadow{
-	width: 100%;
-	height: 100%;
-	background: #000;
-	opacity: 0.4;
-	 position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.4;
+    position: fixed;
     right: 0;
     top: 0;
     z-index: 998;
- }
+}
 .activity-reservation{
     position: fixed;
     right: -549px;
@@ -888,35 +1240,33 @@
 }
 /*招贤纳士*/
 .content-title1{
-		     padding: 25px 0 5px 34px;
-   			 font-size: 18px;
-   			 color: #333;
-   			 font-weight:bold;
-	}
-	.content-txtList{
-		   padding: 0px 0 5px 34px;
-   			 font-size: 12px;
-	}
-	.lxBtn{
-		width: 100px;
-		height: 30px;
-		text-align: center;
-		line-height: 30px;
-	
-		background: #0186ed;
-		margin-left: 34px;
-		font-size:12px ;
-		margin-top: 20px;
-	}
-	.lxBtn a{
-			color: #fff;
-	}
-	.xx-content .detail-lists li{
-		background: #fff;
-		padding: 15px 0;
-		margin-bottom: 10px;
-		border: 1px solid #ececec;
-	}
+    padding: 25px 0 5px 34px;
+    font-size: 18px;
+    color: #333;
+}
+.content-txtList{
+    padding: 0px 0 5px 34px;
+    font-size: 12px;
+}
+.lxBtn{
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+
+    background: #0186ed;
+    margin-left: 34px;
+    font-size:12px ;
+    margin-top: 20px;
+}
+.lxBtn a{
+    color: #fff;
+}
+.xx-content .detail-lists li{
+    background: #fff;
+    padding: 15px 0;
+    margin-bottom: 20px;
+}
 
 .xx-content  .lt-num, .xx-content  .rt-txt {
     float: left;
@@ -924,10 +1274,10 @@
 .xx-content .lt-num {
     padding: 20px 73px 14px 73px;
     border-right: 1px solid #ececec;
-  color: #dbdbdb;
+    color: #dbdbdb;
 }
 .xx-content  .rt-title {
-   font-weight: bold;
+    font-weight: bold;
     padding: 7px 0;
 }
 .xx-content .rt-txt {
@@ -937,20 +1287,19 @@
 .xx-content .rt-txt p {
     width: 730px;
     margin-top: 0px;
-    height: 40px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
     font-size: 12px;
     color: #929292;
-        line-height: 18px;
+    line-height: 18px;
 }
 .xx-content .txtColor{
-	color: #dd0302;
+    color: #dd0302;
 }
 
 .js{
-	text-align: center;
-	padding: 100px 0;
+    text-align: center;
+padding: 100px 0;
 }
