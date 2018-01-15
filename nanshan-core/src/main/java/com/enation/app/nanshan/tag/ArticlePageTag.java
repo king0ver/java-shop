@@ -33,23 +33,21 @@ public class ArticlePageTag extends AbstractPageTag {
         Map<String, Object> map = new HashMap<>();
 
         ArticleVo articleVo = null;
-
+        String catId = null;
         String articleId = ThreadContextHolder.getHttpRequest().getParameter("id");
         if(StringUtils.isNotBlank(articleId)){
             articleVo = articleService.queryArticleInfoById(Integer.parseInt(articleId));
+            catId = String.valueOf(articleVo.getCatId());
         }else if(params.containsKey("catId")){
             articleVo = articleService.queryArticleInfoByCatId(Integer.parseInt(params.get("catId").toString()));
+            catId = params.get("catId").toString();
         }else if(StringUtils.isNotBlank(ThreadContextHolder.getHttpRequest().getParameter("catId"))){
             articleVo = articleService.queryArticleInfoByCatId(Integer.parseInt(
                     ThreadContextHolder.getHttpRequest().getParameter("catId")));
+            catId = ThreadContextHolder.getHttpRequest().getParameter("catId");
         }
-
-
-        handlePageCat(map, String.valueOf(articleVo.getCatId()));
-
+        handlePageCat(map, catId);
         map.put("item", articleVo);
-
-
         return map;
     }
 
