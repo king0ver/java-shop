@@ -26,6 +26,10 @@ public class NCatVo implements Serializable {
     private NCatVo parent;
     
     private long parentId;
+    
+    private String pc_icon;
+    
+	private String wap_icon;
 
 
     public long getParentId() {
@@ -83,4 +87,21 @@ public class NCatVo implements Serializable {
     public void setParent(NCatVo parent) {
         this.parent = parent;
     }
+
+	public String getPc_icon() {
+		return pc_icon;
+	}
+
+	public void setPc_icon(String pc_icon) {
+		this.pc_icon = pc_icon;
+	}
+
+	public String getWap_icon() {
+		return wap_icon;
+	}
+
+	public void setWap_icon(String wap_icon) {
+		this.wap_icon = wap_icon;
+	}
+    
 }
