@@ -7,15 +7,15 @@
 	<div class="content-title">${article.item.title!''}</div>
 	<div class="content-title2">发布时间 :<@dateformat time='${article.item.createTime}' pattern='yyyy-MM-dd'/></div>
 	<#if article.item.content?size gt 0 >
-           <#list article.item.content['content'] as content>
-               <#if content.type == 'text'>
-                   <p class="contentTxt" style="line-height: 20px">${content.content!''}</p>
-               </#if>
-               <#if content.type == 'img'>
-                   <div class="contentImg">
-                       <img src="${content.content!''}">
-                   </div>
-               </#if>
-           </#list>
-       </#if>
+       <#list article.item.content['content'] as content>
+           <#if content.type == 'text'>
+               <p class="contentTxt" style="line-height: 20px">${content.content!''}</p>
+           </#if>
+           <#if content.type == 'img'>
+               <div class="contentImg">
+                   <img src="${content.content!''}">
+               </div>
+           </#if>
+       </#list>
+   </#if>
 </div>

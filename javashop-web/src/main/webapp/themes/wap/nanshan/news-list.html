@@ -14,8 +14,11 @@
     </#if>
 </div>
 <div class="navTime">
-    2017年12月
-    <span></span>
+    <div class="timeBtn">
+        <span></span>
+    </div>
+    <ul class="navTimeList">
+    </ul>
 </div>
 <div class="content">
     <#include 'news-item.html'/>
@@ -24,6 +27,41 @@
 <div id="loading"></div>
 <script>
     $("div.content").page({"url": "/nanshan/news-item.html" , "total" : '${article.webPage.totalCount}'});
+
+    $(function(){
+
+        var last_year_month = function() {
+            var d = new Date();
+            var result = [];
+            for(var i = 0; i < 12; i++) {
+                var m = d.getMonth() + 1;
+                m = m < 10 ? "0" + m : m;
+                //在这里可以自定义输出的日期格式  
+//                  result.push(d.getFullYear() + "-" + m);  
+                result.push(d.getFullYear() + "年" + m + '月');
+                d.setMonth(d.getMonth() - 1);
+            }
+            return result;
+        };
+
+        var d = last_year_month();
+
+        $(".timeBtn").prepend(d[0]);
+
+        for(var i in d){
+            $("ul.navTimeList").append("<li>").append(d[i]).append("</li>");;
+        }
+
+
+        $(".timeBtn").click(function(){
+            var $ul = $("ul.navTimeList");
+            if($ul.css("display")=='none'){
+                $ul.slideDown();
+            }else{
+                $ul.slideUp();
+            }
+        });
+    });
 </script>
 </body>
 </html>

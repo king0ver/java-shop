@@ -14,7 +14,7 @@ a { text-decoration: none;}
 input,select,textarea {  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  -webkit-appearance: none;  border: 0;  border-radius: 0; -webkit-border-radius: 0;-moz-border-radius: 0;}
 textarea:focus {  outline: 0;}
 *:focus {outline: none;} 
-body {color: #333;   font-size: 14px; background: #fff; -webkit-text-size-adjust: none;height: 100%;}
+body {color: #333;   font-size: 14px; background: #fff; -webkit-text-size-adjust: none;}
 a { color: #464646;}
 input:-webkit-autofill{background: none;}
 .wrap { padding-top:46px; margin: 0 auto;  position: relative; font-family:'微软雅黑', Arial, Helvetica, sans-serif;min-width:300px;}

@@ -1,0 +1,84 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign articleTitle = article.curCat.wapName />
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#include 'common/header.html'/>
+
+<div class="actTitle">
+    ${article.item.title}
+    <span>活动品牌</span>
+</div>
+<div class="actComent">
+    <div  class="actComentList clearfix">
+        <div class="actComentListL">集合地点：</div>
+        <div class="actComentListR">
+
+            <p>${article.item.actAddress}</p>
+        </div>
+    </div>
+    <div  class="actComentList clearfix">
+        <div class="actComentListL">活动地点：</div>
+        <div class="actComentListR">
+
+            <p>${article.item.actName}</p>
+        </div>
+    </div>
+    <div  class="actComentList clearfix">
+        <div class="actComentListL">人数规模：</div>
+        <div class="actComentListR">
+
+            <p>1~${article.item.reserveNum}人</p>
+        </div>
+    </div>
+</div>
+<div class="actImg">
+    <img src="${article.item.imgUrl}"/>
+</div>
+<div class="actTitle">
+    活动介紹
+</div>
+<div class="actContent">
+    <#if article.item.content?size gt 0 >
+        <#list article.item.content['content'] as content>
+            <#if content.type == 'text'>
+                <p class="contentTxt" style="line-height: 20px">${content.content!''}</p>
+            </#if>
+            <#if content.type == 'img'>
+                <div class="contentImg">
+                    <img src="${content.content!''}">
+                </div>
+            </#if>
+        </#list>
+    </#if>
+</div>
+<#if article.curCat.id = 39>
+    <div class="actNum">
+<#else>
+    <div class="actNum" style="color: #0086ed;">
+</#if>
+    <div class="actNum1">
+        <#if article.curCat.id = 39>
+            <span></span>已满${article.item.reservedNum}人
+        <#else>
+            <span></span>预约人数已达${article.item.reservedNum}人
+        </#if>
+
+    </div>
+
+    <div class="actNum2">
+        <span></span>预约开始时间: <@dateformat time='${article.item.expiryDate}' pattern='yyyy-MM-dd HH:mm'/>
+    </div>
+</div>
+
+<#if article.curCat.id = 39>
+    <div class="actBottom">
+        活 动 已 结 束
+    </div>
+<#else>
+    <div class="actBottom" style="background-color: #0086ed;color: #fff">
+        立即预约
+    </div>
+</#if>
+
+    </div>
+</bod>

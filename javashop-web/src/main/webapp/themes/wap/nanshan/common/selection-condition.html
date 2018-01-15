@@ -1,5 +1,112 @@
 <#assign selectionConditionTag = newTag("selectionConditionTag") />
 <#assign selection = selectionConditionTag() />
-<div class="navList selectBlue">面向人群<span></span></div>
-<div class="navList">活动品牌<span></span></div>
-<div class="navList">活动类型<span></span></div>
+<#list selection.specVos as specVo>
+    <div class="navList">
+        <div class="navListSelect">${specVo.name}<span></span></div>
+        <div class="fourList" >
+            <ul class="navListItem clearfix">
+                <#list specVo.specValVos as specVal>
+                    <#if specVal.id != 0 && specVal.selected>
+                        <li class="select" data-id="${specVal.id}">${specVal.name}</li>
+                    <#elseif specVal.id != 0>
+                        <li data-id="${specVal.id}">${specVal.name}</li>
+                    </#if>
+                </#list>
+            </ul>
+            <div class="navBtn clearfix">
+                <span class="reset">重置</span>
+                <span class="confirm">确定</span>
+            </div>
+        </div>
+    </div>
+</#list>
+<script>
+    $(function(){
+        $("span.reset").click(function(){
+
+            var url = location.href;
+            var prams = url.substring(url.indexOf("?")+1).split("&");
+
+            var specs;
+            for(var n in prams){
+                var tmp = prams[n].split("=")[0];
+                if(tmp == "specs"){
+                    specs = prams[n].split("=")[1].split(",");
+                    break;
+                }
+            }
+
+            $("li[data-id]").each(function(){
+
+                if(!!specs && specs.length > 0){
+
+                    var  flag = false;
+                    for(var i in specs){
+                        if($(this).attr("data-id") == specs[i]){
+                            flag = true;
+                        }
+                    }
+
+                    if(flag){
+                        $(this).addClass("select");
+                    }else{
+                        $(this).removeClass("select");
+                    }
+                }
+            });
+
+        });
+
+        $('.navListSelect').click(function(){
+            var $this=$(this)
+            if($this.parent().hasClass('select')){
+                $this.parent().removeClass('select');
+                $('.fourList').hide();
+
+                $('.navBg').hide()
+            }else{
+                $this.parent().addClass('select')
+                $this.parent().siblings().removeClass('select');
+                $('.fourList').hide();
+                $('.navBg').show()
+                $this.siblings().show()
+            }
+        })
+        $('.wrap').on('click','.navListItem li',function(){
+            $(this).toggleClass("select");
+        })
+        $(".navBg").click(function(){
+            $('.fourList').hide();
+            $('.navList').removeClass('select');
+            $('.navBg').hide();
+        });
+
+
+        $("span.confirm").click(function(){
+            var url = location.href;
+            var prams = url.substring(url.indexOf("?")+1).split("&");
+            url = url.substr(0,url.indexOf("?")) + "?a=1";
+
+            for(var n in prams){
+                var tmp = prams[n].split("=")[0];
+
+                if(tmp != "page" && tmp != "specs" && tmp!="a"){
+                    url += "&" + prams[n];
+                }
+            }
+
+            var specs = "";
+            $("li[data-id].select").each(function(){
+                var tmp = $(this).attr("data-id");
+
+                if(tmp != "0"){
+                    specs += $(this).attr("data-id") + ",";
+                }
+            });
+            url += (url.indexOf("?")==-1 ? "?" : "&") + "specs="+specs.substr(0, specs.length -1);
+
+            location.href = url;
+        });
+
+    });
+</script>

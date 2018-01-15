@@ -21,6 +21,21 @@
 
     <script>
         var ctx="${ctx}";
+        var pageBack = function(){
+            var a = window.location.href;
+            if (window.history.length > 2) {
+                if (/#top/.test(a)) {//返回顶部按钮
+                    window.history.go(-2);
+                    window.location.load(window.location.href);
+                } else {
+                    window.history.back();
+                    window.location.load(window.location.href);
+                }
+            } else {
+
+            }
+
+        }
     </script>
 </head>
 <body>

@@ -1,38 +1,14 @@
 <#assign articleListPageTag = newTag("articleListPageTag") />
 <#assign article = articleListPageTag() />
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <#assign headerTag = newTag("headerTag") />
-    <#assign file_path = ctx + themes_path />
-    <#assign header = headerTag() />
-    <#if title??>
-        <title>${title}-${header.title}</title>
-        <#else/>
-        <title>${header.title}</title>
-    </#if>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no" />
-    <link rel="stylesheet" href="${file_path}/nanshan/css/base.css" />
-    <link rel="stylesheet" href="${file_path}/nanshan/css/actAsk.css" />
-    <script type="text/javascript" src="${ctx}/statics/e_tools/mobile/library/jquery/jquery.min.js"></script>
-
-
-    <script>
-        var ctx="${ctx}";
-    </script>
-</head>
-<body>
+<#assign articleTitle = article.curCat.wapName />
+<#include 'common/header.html'/>
 <div class="nav-Tree">
     <div class="Tree">
         <#if article.curCat.id == 38>
             <div class="navList selectBlue">最新活动</div>
-            <div class="navList">活动回顾</div>
+            <div class="navList"><a href="/nanshan/activity-list.html?catId=39">活动回顾</a></div>
         <#else>
-            <div class="navList">最新活动</div>
+            <div class="navList"><a href="/nanshan/activity-list.html?catId=38">最新活动</a></div>
             <div class="navList selectBlue">活动回顾</div>
         </#if>
 
@@ -40,13 +16,13 @@
 </div>
 <div class="nav-Four">
     <div class="Four">
-        <div class="navList selectBlue">只看免费</div>
+        <div class="navList selectBlue"><a><i></i>只看免费</a></div>
         <#include 'common/selection-condition.html'/>
     </div>
-
 </div>
 <div class="content bgColor" style="padding : 0px;width: 100%;">
     <hr style="border: none; border-top: 0px #F2F2F2 solid"/>
     <#include 'activity-item.html'/>
 </div>
+<div class="navBg"></div>
 </body>
