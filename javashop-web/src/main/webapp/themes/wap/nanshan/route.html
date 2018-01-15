@@ -35,6 +35,7 @@
 .lx-img img{
 	width: 100%;
 }
+
 .lx .lx-list1{
 	background: #f7f7f7;
 	padding: 15px 10px;
@@ -55,7 +56,7 @@
 	height: 10px;
 	margin-top: 10px;
 	margin-right: 10px;
-	background: url(css/img/yuyue_3.png) center center no-repeat;
+	background: url(/themes/wap/nanshan/css/images/yuyue_3.png) center center no-repeat;
 	background-size:20px 10px ;
 } 
 .lx .lx-list2{
@@ -97,12 +98,12 @@
 						<span></span>
 					</div>
 					<div class="lx-list2 clearfix">
-						<div class="lx-img-list">
-							 <#list content.imgs as img>
+						<#list content.imgs as img>
+							<div class="lx-img-list">
 								<img src="${img}">
 								<span>${content.name}</span>
-							 </#list>
-						</div>
+							</div>
+						</#list>
 					</div>
 				</li>
 			</#list>
