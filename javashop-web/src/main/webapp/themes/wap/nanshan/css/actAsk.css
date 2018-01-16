@@ -843,7 +843,7 @@
 	display: none;
 }
 .navTime .navTimeList li{
-	line-height: 25px;
+	line-height: 30px;
 }
 
 .nowTime .nowTimeList {
@@ -1138,6 +1138,7 @@
 	width: 22%;
 	float: left;
 	color: #a1a1a1;
+	line-height: 23px;
 }
 
 .actComent .actComentList .actComentListR {

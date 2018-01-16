@@ -1,27 +1,34 @@
-
 <#assign articleListPageTag = newTag("articleListPageTag") />
 <#assign article = articleListPageTag() />
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
 <#include 'common/navigator.html'/>
 <div class="section-content clearfix">
-    <#include 'common/selection-condition.html'/>
-    <#if article.items?? && article.items?size gt 0>
-        <ul class="game-lists">
-            <#list article.items as item>
-                <li>
-                    <div class="imgScal">
-                        <a href="/nanshan/developing.html?id=${item.id}">
-                            <img src="${item.imgUrl!''}">
-                            <em></em>
-                        </a>
-                    </div>
-                    <div class="txt">${item.title}</div>
-                </li>
-            </#list>
-        </ul>
+    <#if article.curCat.id == 26>
+        <#include 'common/selection-condition.html'/>
+    <#else>
+        <#assign gameRecommend = "game-recommend" />
     </#if>
-
+    <div class="clearfix">
+        <#if article.items?? && article.items?size gt 0>
+            <ul class="game-lists ${gameRecommend!''}">
+                <#list article.items as item>
+                    <li>
+                        <div class="imgScal">
+                            <a href="/nanshan/developing.html?id=${item.id}">
+                                <img src="${item.imgUrl!''}">
+                                <em></em>
+                            </a>
+                        </div>
+                        <div class="txt">${item.title}</div>
+                    </li>
+                </#list>
+            </ul>
+        </#if>
+        <#if article.curCat.id == 26>
+            <#include 'game-hot.html'/>
+        </#if>
+    </div>
     <div class="pageContainer">
         <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
     </div>

@@ -17,7 +17,7 @@
         </div>
     </div>
     <div  class="actComentList clearfix">
-        <div class="actComentListL">活动地点：</div>
+        <div class="actComentListL">活动对象：</div>
         <div class="actComentListR">
 
             <p>${article.item.actName}</p>
@@ -72,13 +72,48 @@
 
 <#if article.curCat.id = 39>
     <div class="actBottom">
-        活 动 已 结 束
+        活动已结束
     </div>
-<#else>
-    <div class="actBottom" style="background-color: #0086ed;color: #fff">
+<#elseif !member??>
+    <div class="actBottom" data-id="0" style="background-color: #0086ed;color: #fff">
         立即预约
     </div>
+<#else>
+    <div class="actBottom" data-id="0" style="background-color: #0086ed;color: #fff">
+    </div>
 </#if>
+
+<script>
+<#if member?? && article.curCat.id != 39>
+
+    $.post("/activity-operation/isAppoint.do",{activity_id:'${article.item.id}'},function(data){
+
+        if(data.result != 1){
+            //已预约
+            $("div.actBottom").html("取消预约");
+            $("div.actBottom").attr("data-id",1);
+        }else{
+            $("div.actBottom").html("立即预约");
+            $("div.actBottom").attr("data-id",0);
+        }
+    },"json");
+</#if>
+
+    $(function(){
+
+        $("div.actBottom[data-id]").click(function(){
+
+            var $this = $(this);
+
+            if($this.attr("data-id") == "0"){
+                location.href = "/nanshan/appoint.html?id=${article.item.id}";
+            }else{
+
+            }
+        });
+    })
+</script>
+
 
     </div>
 </bod>

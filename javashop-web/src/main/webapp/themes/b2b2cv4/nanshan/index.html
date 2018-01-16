@@ -391,7 +391,35 @@
 
     });
 
+    $.get("/nanshan-index/index.do",{},function(data){
 
+        console.log(data);
+
+        if(data.result == 1){
+            $('.bgColorShadow').show();
+            $('.activity-reservation').animate({"right":"0px"},400).show()
+        }else if(data.result == 0 && data.message == "not login") {
+            alert("您还未登录系统!");
+            location.href ="/store/login.html";
+        }else{
+            alert(data.message);
+        }
+    },"json");
+
+    $.get("/nanshan-index/nav.do",{},function(data){
+
+        console.log(data);
+
+        if(data.result == 1){
+            $('.bgColorShadow').show();
+            $('.activity-reservation').animate({"right":"0px"},400).show()
+        }else if(data.result == 0 && data.message == "not login") {
+            alert("您还未登录系统!");
+            location.href ="/store/login.html";
+        }else{
+            alert(data.message);
+        }
+    },"json");
 </script>
 
 </body>

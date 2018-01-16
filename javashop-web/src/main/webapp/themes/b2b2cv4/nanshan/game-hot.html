@@ -1,0 +1,24 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign hotGame = articlePage('{"catId":25}') />
+<div class="game-item-rt">
+    <ul>
+        <div class="hot-game-title">热门游戏</div>
+        <#if hotGame.item.articleList?size gt 0 && hotGame.item.content.gameHotIds?size gt 0>
+            <#list hotGame.item.content.gameHotIds as rank>
+                <#list hotGame.item.articleList as game>
+                    <#if rank == game.id?string>
+                        <a href="/nanshan/developing.html?id=${game.id}">
+                            <li>
+                                <img src="${game.imgUrl}"/>
+                                <div class="txt-con">
+                                    <p class="game-name">${game.title}</p>
+                                    <p class="game-detail">${game.summary}</p>
+                                </div>
+                            </li>
+                        </a>
+                    </#if>
+                </#list>
+            </#list>
+        </#if>
+    </ul>
+</div>

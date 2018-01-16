@@ -10,16 +10,22 @@
         游戏排行榜
     </div>
     <div class="tableGame">
-        <#if article.item.articleList?size gt 0>
-            <#list article.item.articleList as game>
-                <ul class="row">
-                    <li><i>NO.${game_index + 1}</i></li>
-                    <li><img src="${game.imgUrl}"/></li>
-                    <li>
-                        <div class="rowTitle">${game.title}</div>
-                        <div class="rowTxt">${game.summary}</div>
-                    </li>
-                </ul>
+        <#if article.item.articleList?size gt 0 && article.item.content.gameRankIds?size gt 0>
+            <#list article.item.content.gameRankIds as rank>
+                <#list article.item.articleList as game>
+                    <#if rank == game.id?string>
+                        <a href="/nanshan/developing.html?id=${game.id}">
+                            <ul class="row">
+                                <li><i>NO.${game_index + 1}</i></li>
+                                <li><img src="${game.imgUrl}"/></li>
+                                <li>
+                                    <div class="rowTitle">${game.title}</div>
+                                    <div class="rowTxt">${game.summary}</div>
+                                </li>
+                            </ul>
+                        </a>
+                    </#if>
+                </#list>
             </#list>
         </#if>
     </div>

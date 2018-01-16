@@ -387,6 +387,10 @@ li .imgScal:hover img{
 
 .game-lists{
     width: 840px;
+    float: left;
+}
+.game-recommend{
+    width: 100%;
 }
 .game-lists li{
     display: inline-block;

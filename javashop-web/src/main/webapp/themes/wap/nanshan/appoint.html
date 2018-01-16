@@ -1,0 +1,138 @@
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<#include 'common/header.html'/>
+<style>
+    .innerContent .L-wrap {
+        padding: 0 30px;
+    }
+    .yuyue .f-field {
+        margin-top: 10px;
+    }
+    .yuyue .f-field .f-ipt-area{
+
+
+        border: none;
+    }
+    .yuyue .f-field .f-ipt-area span{
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        width: 15%;
+        font-size: 14px;
+        font-weight: bold;
+        float: left;
+        color: #333333;
+    }
+    .yuyue .f-field .f-ipt-area input{
+        float: right;
+        border: 1px solid #dcdcdc;
+        margin: 0;
+        width: 85%;
+        height: 50px;
+        text-indent: 15px;
+        color: #818181;
+        background: #efefef;
+    }
+    #J-submit{
+        margin-top: 50px;
+    }
+    .tishi{
+        margin-top: 10px;
+        color: #c2c2c2;
+        text-align: center;
+        font-size: 12px;
+    }
+</style>
+
+    <div class="innerContent">
+
+        <div class="L-wrap">
+            <div class="form-area yuyue">
+                <div class="f-field f-field-name flipInX">
+                    <div class="f-ipt-area clearfix">
+                        <span>姓名</span>
+                        <input type="text" class="f-ipt" id="name" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                    </div>
+                </div>
+                <div class="f-field f-field-name flipInX">
+                    <div class="f-ipt-area clearfix">
+                        <span>年龄</span>
+                        <input type="text" class="f-ipt" id="age" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                    </div>
+                </div>
+                <div class="f-field f-field-name flipInX">
+                    <div class="f-ipt-area clearfix">
+                        <span>人数</span>
+                        <input type="text" class="f-ipt" id="num" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                    </div>
+                </div>
+                <div class="f-field f-field-name flipInX">
+                    <div class="f-ipt-area clearfix">
+                        <span>电话</span>
+                        <input type="text" class="f-ipt" id="tel" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                    </div>
+                </div>
+                <div class="f-field f-field-name flipInX">
+                    <div class="f-ipt-area clearfix">
+                        <span>邮箱</span>
+                        <input type="text" class="f-ipt" id="email" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                    </div>
+                </div>
+            </div>
+            <div class="f-field f-btn-area flipInX">
+                <input type="button" id="J-submit" class="f-orange-btn btn-login" value="提交">
+            </div>
+
+            <div class="tishi">
+                提示:活动开始前可进入"个人中心-我的预约"取消预约
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            var activityId = $("#activityId").val();
+            var endTime = $("#reservation input[name='yyEnd']").val();
+            var uname = $("#uname").val();
+            var age = $("#age").val();
+            var phone = $("#phone").val();
+            var email = $("#email").val();
+
+            if(endTime.length == 0){
+                alert("请填写参加活动日期!");
+                return false;
+            }
+            if(uname.length == 0){
+                alert("请填写参加成员!");
+                return false;
+            }
+            if(age.length == 0){
+                alert("请填写年龄!");
+                return false;
+            }
+            if(phone.length == 0){
+                alert("请填写联系电话!");
+                return false;
+            }
+            if(email.length == 0){
+                alert("请填写电子邮件!");
+                return false;
+            }
+
+            $.post("/activity-operation/appoint.do",{activity_id:activityId,activity_time:endTime,member_name: uname,
+                member_age:age, phone_number:phone, email: email},function(data){
+
+                if(data.result == 1){
+                    alert("预约成功!");
+                }else if(data.result == 0 && data.message == "not login") {
+                    alert("您还未登录系统!");
+                    location.href ="login.html?forward=/nanshan/appoint.html?id=52";
+                }else{
+                    alert(data.message);
+                }
+            },"json")
+
+
+        });
+    </script>
+</div>
+</bod>

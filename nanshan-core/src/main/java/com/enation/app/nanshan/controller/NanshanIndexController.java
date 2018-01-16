@@ -13,10 +13,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +23,7 @@ import java.util.Map;
 /**
  * Created by yulong on 18/1/15.
  */
-@Api(description="预约活动")
+@Api(description="首页")
 @RestController
 @RequestMapping("/nanshan-index")
 @Validated
@@ -38,13 +35,33 @@ public class NanshanIndexController {
     private IArticleService articleService;
 
 
-    @ApiOperation(value="首页数据", notes="首页数据")
+    @ApiOperation(value="导航数据", notes="导航数据")
     @ResponseBody
-    @PostMapping(value="/index")
-    public JsonResult index(){
+    @GetMapping(value="/nav")
+    public JsonResult nav(){
 
         try {
             NCatVo nCatVo = catManager.getCatTree();
+
+            Map<String, Object> result = new HashMap<>();
+
+            result.put("cats", handleCatVo(nCatVo));
+
+            return JsonResultUtil.getObjectJson(result);
+        } catch (Exception e) {
+            if (!StringUtil.isEmpty(e.getMessage())) {
+                return JsonResultUtil.getErrorJson(e.getMessage());
+            }
+            return JsonResultUtil.getErrorJson("接口异常!");
+        }
+    }
+
+    @ApiOperation(value="首页数据", notes="首页数据")
+    @ResponseBody
+    @GetMapping(value="/index")
+    public JsonResult index(){
+
+        try {
 
             ArticleVo articleVo = articleService.queryArticleInfoByCatId(0);
 
@@ -58,10 +75,8 @@ public class NanshanIndexController {
 
             result.put("item", articleVo);
             result.put("news", news);
-            result.put("activeNew", news);
-            result.put("activeBack", news);
-            result.put("cats", handleCatVo(nCatVo));
-
+            result.put("activeNew", activeNew);
+            result.put("activeBack", activeBack);
 
             return JsonResultUtil.getObjectJson(result);
         } catch (Exception e) {
@@ -70,7 +85,6 @@ public class NanshanIndexController {
             }
             return JsonResultUtil.getErrorJson("接口异常!");
         }
-
     }
 
     /**

@@ -16,7 +16,12 @@
 </div>
 <div class="nav-Four">
     <div class="Four">
-        <div class="navList selectBlue"><a><i></i>只看免费</a></div>
+        <#if article.freeFlag??>
+            <div id="freeFlag" class="navList selectBlue"><a>
+        <#else>
+            <div id="freeFlag" class="navList"><a>
+        </#if>
+            <i></i>只看免费</a></div>
         <#include 'common/selection-condition.html'/>
     </div>
 </div>
@@ -25,4 +30,25 @@
     <#include 'activity-item.html'/>
 </div>
 <div class="navBg"></div>
+
+<script>
+    $("#freeFlag").click(function(){
+        var url = location.href;
+        var prams = url.substring(url.indexOf("?")+1).split("&");
+        url = url.substr(0,url.indexOf("?")) + "?a=1";
+
+        for(var n in prams){
+            var tmp = prams[n].split("=")[0];
+
+            if(tmp != "page" && tmp != "free" && tmp!="a"){
+                url += "&" + prams[n];
+            }
+        }
+        if(!$(this).hasClass("selectBlue")){
+            url += "&free=1";
+        }
+
+        location.href = url;
+    });
+</script>
 </body>

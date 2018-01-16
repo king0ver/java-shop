@@ -15,6 +15,7 @@
 </div>
 <div class="navTime">
     <div class="timeBtn">
+        ${article.month}
         <span></span>
     </div>
     <ul class="navTimeList">
@@ -46,12 +47,30 @@
 
         var d = last_year_month();
 
-        $(".timeBtn").prepend(d[0]);
-
         for(var i in d){
-            $("ul.navTimeList").append("<li>").append(d[i]).append("</li>");;
+            $("ul.navTimeList").append("<li>" + d[i] + "</li>");
         }
 
+        $("ul.navTimeList li").click(function(){
+
+            var url = location.href;
+            var prams = url.substring(url.indexOf("?")+1).split("&");
+            url = url.substr(0,url.indexOf("?")) + "?a=1";
+
+            for(var n in prams){
+                var tmp = prams[n].split("=")[0];
+
+                if(tmp != "page" && tmp != "month" && tmp!="a"){
+                    url += "&" + prams[n];
+                }
+            }
+
+            var month = $(this).html();
+
+            url += (url.indexOf("?")==-1 ? "?" : "&") + "month="+ month;
+
+            location.href = url;
+        });
 
         $(".timeBtn").click(function(){
             var $ul = $("ul.navTimeList");

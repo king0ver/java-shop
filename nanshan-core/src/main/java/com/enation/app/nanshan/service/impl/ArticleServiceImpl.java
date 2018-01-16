@@ -27,7 +27,8 @@ public class ArticleServiceImpl implements IArticleService {
 	private IDaoSupport daoSupport;
 	
 	@Override
-	public Page<ArticleVo> querySpecInfoByCatId(Integer catId, String specValIds, int pageNo, int pageSize) {
+	public Page<ArticleVo> querySpecInfoByCatId(Integer catId, String specValIds,
+			boolean isFree, long startTime, long endTime ,int pageNo, int pageSize) {
 		if(catId == null){
 			return null;
 		}
@@ -37,6 +38,15 @@ public class ArticleServiceImpl implements IArticleService {
 				+ "t.act_name actName,t.act_cost actCost,t.act_address actAddress,"
 				+ "esns.work_place workPlace,esns.job_cat jobCat,esns.dept_name deptName "
 				+ "from es_nanshan_article esns left join es_nanshan_article_ext t on esns.id=t.article_id  where 1=1  ";
+		if(isFree){
+			sql += " and t.act_cost = '免费'";
+		}
+		if(startTime != 0l){
+			sql += " and esns.create_time >=" + startTime;
+		}
+		if(endTime != 0){
+			sql += " and esns.create_time <=" + endTime;
+		}
 		if(StringUtils.isNotBlank(specValIds)){
 			String[] specValIdList=specValIds.trim().split(",");
 			for(int i=0;i<specValIdList.length;i++){
