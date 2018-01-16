@@ -35,6 +35,18 @@
 	      			<input type="text" name="title" id="uri" value="${data.title!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 	    		</div>
 			</div>
+			  		<div class="layui-form-item">
+    		<label class="layui-form-label">文章摘要：</label>
+    		<div class="layui-input-block">
+    		    <textarea name="summary" id="summary" style="height:100px" placeholder="请输入内容" class="layui-textarea">${data.summary!''}</textarea>
+    		</div>
+  		</div>
+				<div class="layui-form-item">
+    		<label class="layui-form-label">注意事项：</label>
+    		<div class="layui-input-block">
+    		    <textarea name="notice" id="notice" style="height:100px" placeholder="请输入内容" class="layui-textarea"></textarea>
+    		</div>
+  		</div>
 
 			<div class="layui-form-item">
 	    		<label class="layui-form-label">创建时间:</label>
@@ -43,7 +55,7 @@
 	    		</div>
   		    </div>
 			<div class="layui-form-item">
-	    		<label class="layui-form-label">文章大图：</label>
+	    		<label class="layui-form-label">列表图片：</label>
 	    		<input type="hidden" name="pic_url" id="picUrl">
 				<div class="layui-input-inline" style="width:120px;">
 					<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
@@ -55,6 +67,15 @@
 					</#if>
 				</div>
 	  		</div>
+	  		
+	  		 <div class="layui-form-item">
+	    		<label class="layui-form-label">文章大图：</label>
+	    		<input type="hidden" name="big_pic_url" id="big_pic_url">
+				<div class="layui-input-inline" style="width:120px;">
+					<input name="file" class="layui-upload-file" id="bigImgUploadBtn" type="file">	
+				</div>
+				<div id="bigImg" class="layui-inline"></div>
+  		    </div>
   		   	<div id="act">
   		   
 		  		<div class="layui-form-item">
@@ -125,10 +146,20 @@ var table;
 var desc='${(data.content)!''}';
 var specIds='${data.specValIds!''}'
 if(desc!=''&&desc.match("^\{(.+:.+,*){1,}\}$")){
-	var context=$.parseJSON(desc).content;
+	var obj=eval('(' + desc + ')');
+	
+	var context=obj.content;
+	var bigImg=obj.big_pic_url;
+	var notice=obj.notice;
+	notice=notice.replace("<br/>",'\n'); 
+	$("#notice").html(notice)
+	if(bigImg!=""){
+	$("#big_pic_url").val(bigImg);
+	$("#bigImg").html(getPicHtml(bigImg));
+	}
 	initContextHtml(context);	
 }
-initSpecId(specIds);
+initSpecId(specIds); 
 var index = parent.layer.getFrameIndex(window.name);
 layui.use(['form', 'layedit', 'laydate','upload'], function(){
     var form = layui.form()
@@ -140,11 +171,20 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	    ,elem: '#exhImgUploadBtn' 
 	    ,method: 'POST'
 	    ,success: function(res){
-	    	$("#exhImg").html("<img src='"+res.url+"' width='130' height='130' />"+
-	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#exhImg").html(getPicHtml(res.url));
 	    	$("#picUrl").val(res.url);
 	    }
 	});
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#bigImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#bigImg").html(getPicHtml(res.url));
+	    	$("#big_pic_url").val(res.url);
+	    }
+	});
+	
 	
 	layui.upload({
 	    url: '/core/admin/nanshan/upload.do'
@@ -164,10 +204,19 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     
 
 form.on('submit(editModel)', function(data){
-	var content=JSON.stringify(getContext());
-	var actExt=JSON.stringify(getActExt());
+	var actExt=getActExt();
 	var specValue=getSpecValId();
-	var content='{"content":'+content+',"actExt":'+actExt+'}';
+	var content=getContext();
+	var con=new Object();
+	    con.content=content;
+	    con.big_pic_url=$("#big_pic_url").val();
+	    var notice=$("#notice").val();
+	    if(notice!=""){
+	    	notice=notice.replace(/\n|\r\n/g,"<br/>");
+	    	con.notice=notice;
+	    }
+	    con.actExt=actExt
+	var content=JSON.stringify(con);
 	var options = {
 		url : ctx+"/admin/article/save-edit.do",
 		type : "POST",
@@ -209,7 +258,11 @@ form.on('submit(editModel)', function(data){
 	        });
 	 }
 	 
-	 
+	 function getPicHtml(url){
+		 var html="<img src='"+url+"' width='130' height='130' />"+
+			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>"
+			return html;
+	 }
 	
 
 

@@ -41,12 +41,27 @@
     		</div>
   		</div>
   		<div class="layui-form-item">
-    		<label class="layui-form-label">文章大图：</label>
+    		<label class="layui-form-label">注意事项：</label>
+    		<div class="layui-input-block">
+    		    <textarea name="notice" id="notice" style="height:100px" placeholder="请输入内容" class="layui-textarea"></textarea>
+    		</div>
+  		</div>
+  		
+  		 <div class="layui-form-item">
+    		<label class="layui-form-label">列表图片：</label>
     		<input type="hidden" name="pic_url" id="picUrl">
 			<div class="layui-input-inline" style="width:120px;">
 				<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
 			</div>
 			<div id="exhImg" class="layui-inline"></div>
+  		</div>
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">文章大图：</label>
+    		<input type="hidden" name="big_pic_url" id="big_pic_url">
+			<div class="layui-input-inline" style="width:120px;">
+				<input name="file" class="layui-upload-file" id="bigImgUploadBtn" type="file">	
+			</div>
+			<div id="bigImg" class="layui-inline"></div>
   		</div>
   		<div id="act">
   		   
@@ -125,6 +140,21 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	
 	layui.upload({
 	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#bigImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#bigImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#big_pic_url").val(res.url);
+	    }
+	});
+	
+	
+	
+	
+	
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
 		    ,elem: '#exhInfoImgUploadBtn' 
 		    ,method: 'POST'
 		    ,success: function(res){
@@ -140,8 +170,18 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 		});
     
 	form.on('submit(save_uri)', function(data){
-		var content=JSON.stringify(getContext());
-		var content='{"content":'+content+'}';
+		var content=getContext();
+		var con=new Object();
+		    con.content=content;
+		    con.big_pic_url=$("#big_pic_url").val();
+		    var notice=$("#notice").val();
+		    if(notice!=""){
+		    	notice=notice.replace(/\n|\r\n/g,"<br/>");
+		    	con.notice=notice;
+		    }
+		    
+		    
+		var content=JSON.stringify(con);
 		var specValue=getSpecValId();
     	var options = {
    			url:ctx+"/admin/article/add_save.do?catId=${catId}",
