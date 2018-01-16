@@ -1,0 +1,37 @@
+<#assign articlePageTag = newTag("articlePage") />
+<#assign article = articlePageTag() />
+<#assign articleTitle = article.grandCat.name/>
+<#include 'common/header.html'/>
+<header class="header">	
+	<div class="l-nav">
+		<section><em class="icons"></em><a href="javascript:pageBack();"></a></section>			
+		<section id='h-title' style='padding-right:53px;'>人才招聘</section>	
+	</div>		
+</header>
+<div class="rc-xq-title">
+	<div class="rc-title">${article.item.title!''}</div>
+			<div class="rc-img">
+				<div class="rc-lx"><span></span>${article.item.jobCat!''}</div>
+				<div class="rc-bm"><span></span>${article.item.deptName!''}</div>
+				<div class="rc-dd"><span></span>${article.item.workPlace!''}</div>	
+			</div>
+	</div>
+</div>
+<div class="content">
+<div class="titleTxt">岗位职责</div>
+	<#if article.item.content?size gt 0 >
+        <#list article.item.content['jobRes'] as jobRes>
+            <p class="xq-txt">${jobRes.content}</p>
+        </#list>
+    </#if>
+    <div class="titleTxt">岗位要求</div>
+    <#if article.item.content?size gt 0 >
+        <#list article.item.content['jobReq'] as jobReq>
+	<p class="xq-txt">${jobReq.content}</p>
+       </#list>
+    </#if>
+</div>
+<div class="actBottom">
+	联系我们<span>(222222)</span>
+</div>
+	
