@@ -151,7 +151,8 @@ if(desc!=''&&desc.match("^\{(.+:.+,*){1,}\}$")){
 	var context=obj.content;
 	var bigImg=obj.big_pic_url;
 	var notice=obj.notice;
-	notice=notice.replace("<br/>",'\n'); 
+	var reg = new RegExp("<br/>","g");//g,表示全部替换。
+	notice=notice.replace(reg,'\n'); 
 	$("#notice").html(notice)
 	if(bigImg!=""){
 	$("#big_pic_url").val(bigImg);
@@ -212,7 +213,8 @@ form.on('submit(editModel)', function(data){
 	    con.big_pic_url=$("#big_pic_url").val();
 	    var notice=$("#notice").val();
 	    if(notice!=""){
-	    	notice=notice.replace(/\n|\r\n/g,"<br/>");
+	    	var reg = new RegExp(/\n|\r\n/g,"g");//g,表示全部替换。
+	    	notice=notice.replace(reg,"<br/>");
 	    	con.notice=notice;
 	    }
 	    con.actExt=actExt

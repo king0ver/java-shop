@@ -176,7 +176,8 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 		    con.big_pic_url=$("#big_pic_url").val();
 		    var notice=$("#notice").val();
 		    if(notice!=""){
-		    	notice=notice.replace(/\n|\r\n/g,"<br/>");
+		    	var reg = new RegExp(/\n|\r\n/g,"g");//g,表示全部替换。
+		    	notice=notice.replace(reg,"<br/>");
 		    	con.notice=notice;
 		    }
 		    
