@@ -1,30 +1,43 @@
 <#assign articleListPageTag = newTag("articleListPageTag") />
-<#assign article = articleListPageTag() />
+<#assign article = articleListPageTag('{"catId":62}') />
 <#assign articleTitle = "${article.grandCat.name}" />
 <#include 'common/header.html'/>
-<div class="bgColor">
-    <div class="section-content">
-        <ul class="item-detail">
-
-            <li  style="width: 650px;float: right;">
-                <p style="margin-top: 80px;">以科学传播为宗旨,以科普展示为载体,围绕“自然、人和技”的大
-                    主题,有生物万象、地壳探秘、设计师摇篮、智慧之光、地球家园、信
-                    息时代、机器人世界、探索之光、人与健康、宇肮天地、彩虹丿儿童乐园
-                    等11个常设展厅;蜘蛛和动物世界2个特别展览;中国古代科技和中外科
-                    学探索者2个浮雕长廊;中国科学院和中国工程院院士信息墙,加上由巨
-                    了_堕
-                    幕、球幕、四维、太空四大特种影院组成的科学影城,引发观众探索
-                    自然与科技奥秘
-                    器人世界、探索之光、人与健康、宇航天地、彩虹丿儿童乐园等11个常
-                    设展厅;蜘蛛和动物世界2个特别展览;中国古代科技和中外科学探索者
-                    2个浮雕长廊;中匡科学院和中国工程院院土信息墙,加上白巨幕、球幕
-                    四维、太空四大特种影院组成的科学影城,引发观众探索自然与
-                    科技奥秘</p>
-            </li>
-            <li class="img" style="width: 500px;height: 450px;">
-                <img src="${file_path}/nanshan/css/images/cg2.jpg" style="width: 100%;height: 100%;">
-            </li>
-        </ul>
-    </div>
+<header class="header">	
+	<div class="l-nav">
+		<section><em class="icons"></em><a href="javascript:pageBack();"></a></section>			
+		<section id='h-title' style='padding-right:53px;'>场馆介绍</section>	
+	</div>		
+</header>
+<div class="rc-nav-Five">
+	<div class="navList select">
+		<a href="/nanshan/venue-intro.html">场馆介绍</a>
+	</div>
+	<div class="navList">
+		<a href="/nanshan/recruit-list.html">人才招聘</a>
+	</div>
+	<div class="navList">
+		<a href="/nanshan/volunteer.html">志愿者招募</a>
+	</div>
+	<div class="navList">
+		<a href="/nanshan/contactus.html">联系我们</a>
+	</div>
 </div>
-<#include 'common/footer.html'/>
+<div class="content">
+	<div class="imgCs">
+		<img src="${file_path}/nanshan/css/images/cg1.jpg"/>
+	</div>
+	<div style="font-weight: bold;text-align: center;margin: 15px 0;font-size: 18px;">南山安全教育体验馆</div>
+	<p class="contentTxt">以科学传播为宗旨,以科普展示为载体,围绕“自然、人和技”的大
+                   主题,有生物万象、地壳探秘、设计师摇篮、智慧之光、地球家园、信
+                   息时代、机器人世界、探索之光、人与健康、宇肮天地、彩虹丿儿童乐园
+                   等11个常设展厅;蜘蛛和动物世界2个特别展览;中国古代科技和中外科
+                   学探索者2个浮雕长廊;中国科学院和中国工程院院士信息墙,加上由巨
+                   了_堕
+                   幕、球幕、四维、太空四大特种影院组成的科学影城,引发观众探索
+                   自然与科技奥秘
+                   器人世界、探索之光、人与健康、宇航天地、彩虹丿儿童乐园等11个常
+                   设展厅;蜘蛛和动物世界2个特别展览;中国古代科技和中外科学探索者
+                   2个浮雕长廊;中匡科学院和中国工程院院土信息墙,加上白巨幕、球幕
+                   四维、太空四大特种影院组成的科学影城,引发观众探索自然与
+                   科技奥秘</p>
+</div>

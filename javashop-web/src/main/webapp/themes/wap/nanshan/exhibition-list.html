@@ -17,15 +17,41 @@
 	</div>
 </div>
 <div class="nav-Five">
-	<#if article.siblings?size gt 0>
-		<#list article.siblings as cat>
-			<#if article.curCat.id == cat.id>
-				<div class="navList selectBlue">${cat.name}</div>
-			<#else>
-				<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
-			</#if>
-		</#list>
+	<div class="navList
+	<#if article.curCat.id == 16>
+		select
 	</#if>
+	">
+		<a href="/nanshan/exhibition-list.html?catId=16">消防</a>
+	</div>
+	<div class="navList
+	<#if article.curCat.id == 17>
+		select
+	</#if>
+	">
+		<a href="/nanshan/exhibition-list.html?catId=17">交通</a>
+	</div>
+	<div class="navList
+	<#if article.curCat.id == 18>
+		select
+	</#if>
+	">
+		<a href="/nanshan/exhibition-list.html?catId=18">家居</a>
+	</div>
+	<div class="navList
+	<#if article.curCat.id == 19>
+		select
+	</#if>
+	">
+		<a href="/nanshan/exhibition-list.html?catId=19">施工</a>
+	</div>
+	<div class="navList
+	<#if article.curCat.id == 20>
+		select
+	</#if>
+	">
+		<a href="/nanshan/exhibition-list.html?catId=20">工业</a>
+	</div>
 </div>
 <#include 'exhibition-item.html'/>
 </body>

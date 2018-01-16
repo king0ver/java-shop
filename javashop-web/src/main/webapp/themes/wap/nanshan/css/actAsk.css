@@ -300,9 +300,52 @@
 	font-size: 13px;
 }
 
-.nav-Five .navList {
-	background: url(images/xf-1.png) center top no-repeat;
-	background-size: 20px 20px;
+.nav-Five .navList:nth-child(1){
+ 	background: url(images/xf-1.png) center top no-repeat;
+    background-size: 20px 20px;
+ }
+ .nav-Five .navList:nth-child(1).select{
+ 	background: url(images/xf-2.png) center top no-repeat;
+    background-size: 20px 20px;
+   
+ }
+ .nav-Five .navList:nth-child(2){
+ 	background: url(images/zs-1.png) center top no-repeat;
+    background-size: 20px 20px;
+ }
+ .nav-Five .navList:nth-child(2).select{
+ 	background: url(images/zs-2.png) center top no-repeat;
+    background-size: 20px 20px;
+   
+ }
+ .nav-Five .navList:nth-child(3){
+ 	background: url(images/fz-1.png) center top no-repeat;
+    background-size: 20px 20px;
+ }
+ .nav-Five .navList:nth-child(3).select{
+ 	background: url(images/fz-2.png) center top no-repeat;
+    background-size: 20px 20px;
+   
+ }
+ .nav-Five .navList:nth-child(4){
+ 	background: url(images/gz-1.png) center top no-repeat;
+    background-size: 20px 20px;
+ }
+ .nav-Five .navList:nth-child(4).select{
+ 	 background: url(images/gz-2.png) center top no-repeat;
+    background-size: 20px 20px;
+   
+ }
+ .nav-Five .navList:nth-child(5){
+ 	 background: url(images/ls-1.png) center top no-repeat;
+    background-size: 20px 20px;
+ }
+ .nav-Five .navList:nth-child(5).select{
+ 	 background: url(images/ls-2.png) center top no-repeat;
+    background-size: 20px 20px;
+ }
+ .nav-Five .select a{
+	 color: #0086ed;
 }
 
 .nav-Four {
@@ -785,7 +828,7 @@
 
 .content .contentTxt {
 	text-indent: 20px;
-	line-height: 30px;
+	line-height: 25px;
 	font-size: 16px;
 	letter-spacing: 1px;
 }
@@ -1225,4 +1268,194 @@
 .nav-Four .fourList .navListItem li.select {
 	background: #0086ed;
 	color: #fff;
+}
+.bgColor{
+	background: #fff;
+}
+
+.rc-nav-Five{
+	    width: 90%;
+    padding: 15px 5%;
+    height: 50px;
+    display: -webkit-box;
+    display: box;
+    display: -moz-box;
+   border-top: 5px solid #f2f2f2;
+    background: #FFFFFF;
+    border-bottom: 5px solid #f2f2f2;
+}
+.rc-nav-Five .navList {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    text-align: center;
+    line-height: 90px;
+    font-size: 13px;
+}
+.rc-nav-Five .navList:nth-child(1) {
+    background: url(images/gywm1.png) center top no-repeat;
+    background-size: 30px 30px;
+    color:#000000;
+}
+.rc-nav-Five .navList:nth-child(1).select{
+    background: url(images/gywm1-1.png) center top no-repeat;
+    background-size: 30px 30px;
+    color: #0186ed;
+}
+.rc-nav-Five .navList:nth-child(2) {
+    background: url(images/gywm2.png) center top no-repeat;
+    background-size: 30px 30px;
+    color:#000000;
+}
+.rc-nav-Five .navList:nth-child(2).select {
+    background: url(images/gywm2-1.png) center top no-repeat;
+    background-size: 30px 30px;
+    color: #0186ed;
+}
+.rc-nav-Five .navList:nth-child(3) {
+    background: url(images/gywm3.png) center top no-repeat;
+    background-size: 30px 30px;
+    color:#000000;
+}
+.rc-nav-Five .navList:nth-child(3).select {
+    background: url(images/gywm3-1.png) center top no-repeat;
+    background-size: 30px 30px;
+    color: #0186ed;
+}
+.rc-nav-Five .navList:nth-child(4) {
+    background: url(images/gywm4-1.png) center top no-repeat;
+    background-size: 30px 30px;
+    color:#000000;
+}
+.rc-nav-Five .navList:nth-child(4).select {
+    background: url(images/gywm4.png) center top no-repeat;
+    background-size: 30px 30px;
+    color: #0186ed;
+}
+
+.rc-title{
+	font-size: 15px;
+	font-weight: bold;
+}
+.content .rc-List .rc-img{
+	margin-top: 10px;
+}
+.content .rc-List .rc-img div{
+	display: inline-block;
+	margin-right: 20px;
+}
+.content .rc-List .rc-img .rc-lx span{
+	display: inline-block;
+	width: 10px;
+	height: 16px;
+	background: url(images/gy_1.png) center center no-repeat;
+	background-size:10px 16px ;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.content .rc-List .rc-img .rc-bm span{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(images/gy_2.png) center center no-repeat;
+	background-size:16px 16px ;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.content .rc-List .rc-img .rc-dd span{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(images/gy_3.png) center center no-repeat;
+	background-size:13px 16px ;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.content .rc-List li{
+	padding: 20px 0;
+	border-bottom: 1px solid #e6e6e6;
+}
+.content .rc-List .rc-txt{
+	height: 20px;
+	font-size: 15px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    margin-top: 15px;
+}
+.bor{
+	width: 60%;height: 50px;background: #f1f1f1;margin-left: 20%;border:1px solid #d3d3d3;border-radius:3px;line-height: 5px;text-align: center;
+	    line-height: 50px;font-weight:bold;
+	    margin-bottom: 15px;
+}
+
+
+.rc-xq-title .rc-img{
+	margin-top: 10px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.rc-xq-title{
+	padding: 20px 5%;
+}
+.rc-xq-title .rc-img div{
+	display: inline-block;
+	margin-right: 20px;
+	color: #878787;
+}
+.rc-xq-title .rc-img .rc-lx span{
+	display: inline-block;
+	width: 10px;
+	height: 16px;
+	background: url(images/gy_1.png) center center no-repeat;
+	background-size:10px 16px ;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.rc-xq-title .rc-img .rc-bm span{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(images/gy_2.png) center center no-repeat;
+	background-size:16px 16px ;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.rc-xq-title .rc-img .rc-dd span{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(images/gy_3.png) center center no-repeat;
+	background-size:13px 16px ;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.content{
+	padding: 0 5%;
+}
+.titleTxt{
+	font-weight: bold;
+	margin: 15px 0;
+}
+.xq-txt{
+	margin-top: 5px;
+	color: #878787;
+	line-height: 20px;
+}
+.actBottom {
+	margin-top: 20px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    text-align: center;
+    background: #0186ed;
+    color: #fff;
+}
+.actBottom span{
+	   font-size: 12px;
 }

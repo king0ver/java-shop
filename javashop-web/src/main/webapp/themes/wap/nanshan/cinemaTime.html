@@ -29,7 +29,7 @@
 		</#list>
 	</#if>
 </div>
-<div class="title-bg">
+<div style="font-weight: bold;text-align: center;margin: 15px 0;font-size: 18px;">
 	${article.item.title!''}
 </div>
 <div class="nowTime">
@@ -45,13 +45,15 @@
               <#list article.item.content.content as content>
                   <a href="/nanshan/movie.html?id=${content.articleId}">
 					 	<li>
-					 		<#if article.item.articleList?size gt 0>
+					 		<#if article.item.articleList??>
+						 		<#if article.item.articleList?size gt 0>
 		                              <#list article.item.articleList as tmp>
 		                                  <#if content.articleId = tmp.id?string>
-		                                      <span> ${tmp.title}</span>
+		                                      <span>${tmp.title}</span>
 		                                  </#if>
 		                              </#list>
-		                          </#if>
+		                        </#if>
+		                    </#if>
 					 		<span>${content.cinameTime?substring(11,16)}</span>
 					 		<span>${content.cinamePrice}元</span>/张</span>
 					 	</li>
