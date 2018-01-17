@@ -73,7 +73,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 	form.on('submit(save_uri)', function(data){
 		 var content=getRankList()
 		 content=JSON.stringify(content);
-		 alert(content)
 		 var cat_id='${catId}';
     	 var options = {
    		    url:ctx+"/admin/article/add_edit_rank.do?catId=${catId}&id=${(vo.id)!'0'}",
