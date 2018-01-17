@@ -68,8 +68,7 @@ function checkLength(){
 layui.use(['form', 'layedit', 'laydate'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
-    laydate = layui.laydate;
-    
+    laydate = layui.laydate;    
 	form.on('submit(save_uri)', function(data){
 		 var content=getRankList()
 		 content=JSON.stringify(content);
@@ -100,11 +99,13 @@ function getRankList(){
 	var ids=[];
 	$("#gameRank input[name='rank']").each(function(){
 		gameRankList.push($(this).val())
+		if($.inArray($(this).val(), ids)==-1)
 		ids.push($(this).val())
 	})
 	var content=[];
 	$("#gameHot input[name='rank']").each(function(){
 		gameHot.push($(this).val())
+		if($.inArray($(this).val(), ids)==-1)
 		ids.push($(this).val())
 	   }
 	)

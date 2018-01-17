@@ -1,0 +1,54 @@
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<#assign articleTitle = "预约成功" />
+<#include 'common/header.html'/>
+<style>
+    .innerContent .L-wrap {
+        margin-top: 20%;
+        text-align: center;
+    }
+    .innerContent .L-wrap img{
+        width: 50%;
+    }
+    .btn{
+        text-align: center;
+    }
+    .btn div{
+        display: inline-block;
+        margin-top: 30px;
+    }
+    .btn .btn1{
+        width: 30%;
+        height: 50px;
+        line-height: 50px;
+        margin-right: 10px;
+        border-radius: 5px;
+        color: #0186ed;
+        border: 1px solid #0186ed;
+        font-size: 16px;
+    }
+    .btn .btn2{
+        width: 55%;
+        height: 50px;
+        background: #0186ed;
+        line-height: 50px;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 16px;
+    }
+</style>
+
+<div class="innerContent">
+
+    <div class="L-wrap">
+        <img src="${file_path}/nanshan/css/images/sucess.png">
+    </div>
+    <p style="text-align: center;font-size: 18px;margin-top: 10px;">预约成功</p>
+    <p style="text-align: center;font-size: 12px;margin-top: 5px;color: color:#818181;">提示</p>
+    <p style="text-align: center;font-size: 12px;color: color:#818181;">活动开始前可进入“跟人中心-我的预约”取消预约</p>
+    <div class="btn">
+        <div class="btn2">我的预约</div>
+    </div>
+</div>
+</div>
+</bod>

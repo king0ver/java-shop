@@ -37,6 +37,7 @@ public class MyAppointListPageTag extends AbstractPageTag{
         if(StringUtils.isBlank(catId) && params.containsKey("catId")){
             catId = params.get("catId").toString();
         }
+        String isDel = params.get("isDel") == null ? null : params.get("isDel").toString();
 
         handlePageCat(map, catId);
 
@@ -48,7 +49,8 @@ public class MyAppointListPageTag extends AbstractPageTag{
             return map;
         }
 
-        Page<ActReserveVo> webPage =  reserveService.queryReserveListById(member.getMember_id(),pageNo, 10);
+        Page<ActReserveVo> webPage =  reserveService.queryReserveListById(member.getMember_id(),
+                isDel,pageNo, 10);
 
         webPage.setCurrentPageNo(pageNo);
 

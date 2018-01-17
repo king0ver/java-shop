@@ -54,49 +54,50 @@
 	}
 	
 </style>
-<div class="wrap">
-	<div class="content">
-		<ul class="clearfix">
-			<#if article.curCat.leafs?size gt 0>
-				<#list article.curCat.leafs as cat>
-					<#if cat.id != 46>
-						<a href="${cat.wapUrl}">
-							<li>
-								<span>
-									<img src="${cat.wap_icon!''}" />
-								</span>
-								<span>${cat.name}</span>
-							</li>
-						</a>
-					</#if>
-				</#list>
-			</#if>
-			<#if articleFacilities.curCat.leafs?size gt 0>
-				<#list articleFacilities.curCat.leafs as cat>
-					<#if cat.id != 67>
-						<a href="${cat.wapUrl}">
-							<li>
-								<span>
-									<img src="${cat.wap_icon!''}" />
-								</span>
-								<span>${cat.name}</span>
-							</li>
-						</a>
-					</#if>
-				</#list>
-			</#if>
-			<#if articleGuide.curCat.leafs?size gt 0>
-				<#list articleGuide.curCat.leafs as cat>
+<div class="content" style="margin-top: 40px">
+	<ul class="clearfix">
+		<#if article.curCat.leafs?size gt 0>
+			<#list article.curCat.leafs as cat>
+				<#if cat.id != 46>
 					<a href="${cat.wapUrl}">
 						<li>
 							<span>
-								<img src="${cat.wap_icon!''}" />
+								<img src="${cat.wapIcon!''}" />
 							</span>
 							<span>${cat.name}</span>
 						</li>
 					</a>
-				</#list>
-			</#if>
-		</ul>
-	</div>
+				</#if>
+			</#list>
+		</#if>
+		<#if articleFacilities.curCat.leafs?size gt 0>
+			<#list articleFacilities.curCat.leafs as cat>
+				<#if cat.id != 67>
+					<a href="${cat.wapUrl}">
+						<li>
+							<span>
+								<img src="${cat.wapIcon!''}" />
+							</span>
+							<span>${cat.name}</span>
+						</li>
+					</a>
+				</#if>
+			</#list>
+		</#if>
+		<#if articleGuide.curCat.leafs?size gt 0>
+			<#list articleGuide.curCat.leafs as cat>
+				<a href="${cat.wapUrl}">
+					<li>
+						<span>
+							<img src="${cat.wapIcon!''}" />
+						</span>
+						<span>${cat.name}</span>
+					</li>
+				</a>
+			</#list>
+		</#if>
+	</ul>
 </div>
+</div>
+</body>
+</html>

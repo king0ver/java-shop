@@ -24,7 +24,7 @@
                     <#list article.items as item>
                         <ul class="row">
 
-                            <li>${item.activityname}</li>
+                            <li>${item.title}</li>
                             <li>1</li>
                             <li><@dateformat time='${item.activitytime}' pattern='yyyy-MM-dd'/></li>
                             <li>
@@ -33,11 +33,11 @@
                                     <#else>
                                         <p>已取消</p>
                                 </#if>
-                                <p style="color: #67b0fd;"><a href="/nanshan/activity.html?id=${item.activityid}">查看活动详情</a></p>
+                                <p style="color: #67b0fd;"><a href="/nanshan/activity.html?id=${item.id}">查看活动详情</a></p>
                             </li>
                             <li>
                                 <#if item.isdel == 0>
-                                    <a href="javascript:void(0)" class="cancel" data-value="${item.activityid}">取消预约</a>
+                                    <a href="javascript:void(0)" class="cancel" data-value="${item.id}">取消预约</a>
                                     <#else>
                                         无
                                 </#if>

@@ -51,31 +51,31 @@
                 <div class="f-field f-field-name flipInX">
                     <div class="f-ipt-area clearfix">
                         <span>姓名</span>
-                        <input type="text" class="f-ipt" id="name" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                        <input type="text" class="f-ipt" id="name" name="memberVo.logonName" placeholder="发起人姓名,与身份证一致">
                     </div>
                 </div>
                 <div class="f-field f-field-name flipInX">
                     <div class="f-ipt-area clearfix">
                         <span>年龄</span>
-                        <input type="text" class="f-ipt" id="age" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                        <input type="text" class="f-ipt" id="age" name="memberVo.logonName" placeholder="年龄与身份证一致">
                     </div>
                 </div>
                 <div class="f-field f-field-name flipInX">
                     <div class="f-ipt-area clearfix">
                         <span>人数</span>
-                        <input type="text" class="f-ipt" id="num" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                        <input type="text" class="f-ipt" id="num" name="memberVo.logonName" placeholder="参加人数,包含发起人">
                     </div>
                 </div>
                 <div class="f-field f-field-name flipInX">
                     <div class="f-ipt-area clearfix">
                         <span>电话</span>
-                        <input type="text" class="f-ipt" id="tel" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                        <input type="text" class="f-ipt" id="phone" name="memberVo.logonName" placeholder="手机/座机">
                     </div>
                 </div>
                 <div class="f-field f-field-name flipInX">
                     <div class="f-ipt-area clearfix">
                         <span>邮箱</span>
-                        <input type="text" class="f-ipt" id="email" name="memberVo.logonName" placeholder="手机号/邮箱/用户名">
+                        <input type="text" class="f-ipt" id="email" name="memberVo.logonName" placeholder="填写正常格式@**.">
                     </div>
                 </div>
             </div>
@@ -90,48 +90,56 @@
     </div>
     <script>
         $(function(){
-            var activityId = $("#activityId").val();
-            var endTime = $("#reservation input[name='yyEnd']").val();
-            var uname = $("#uname").val();
-            var age = $("#age").val();
-            var phone = $("#phone").val();
-            var email = $("#email").val();
 
-            if(endTime.length == 0){
-                alert("请填写参加活动日期!");
-                return false;
-            }
-            if(uname.length == 0){
-                alert("请填写参加成员!");
-                return false;
-            }
-            if(age.length == 0){
-                alert("请填写年龄!");
-                return false;
-            }
-            if(phone.length == 0){
-                alert("请填写联系电话!");
-                return false;
-            }
-            if(email.length == 0){
-                alert("请填写电子邮件!");
-                return false;
-            }
+            $("#J-submit").click(function(){
 
-            $.post("/activity-operation/appoint.do",{activity_id:activityId,activity_time:endTime,member_name: uname,
-                member_age:age, phone_number:phone, email: email},function(data){
+                var activityId = getUrlParam("id");
+                var uname = $("#name").val();
+                var age = $("#age").val();
+                var num = $("#num").val();
+                var phone = $("#phone").val();
+                var email = $("#email").val();
 
-                if(data.result == 1){
-                    alert("预约成功!");
-                }else if(data.result == 0 && data.message == "not login") {
-                    alert("您还未登录系统!");
-                    location.href ="login.html?forward=/nanshan/appoint.html?id=52";
-                }else{
-                    alert(data.message);
+                if(uname.length == 0){
+                    alert("请填写参加成员!");
+                    return false;
                 }
-            },"json")
+                if(age.length == 0){
+                    alert("请填写年龄!");
+                    return false;
+                }
+                if(phone.length == 0){
+                    alert("请填写联系电话!");
+                    return false;
+                }
+                if(email.length == 0){
+                    alert("请填写电子邮件!");
+                    return false;
+                }
+                if(num.length == 0){
+                    alert("请填写参加人数!");
+                    return false;
+                }
+                if(!$.isNumeric(num)){
+                    alert("参加人数必须为数字!");
+                    return false;
+                }
 
+                $.post("/activity-operation/appoint.do",{activity_id:activityId,num:num,member_name: uname,
+                    member_age:age, phone_number:phone, email: email},function(data){
 
+                    if(data.result == 1){
+                        alert("预约成功!");
+                        location.href = "/nanshan/appoint-success.html";
+                    }else if(data.result == 0 && data.message == "not login") {
+                        alert("您还未登录系统!");
+                        location.href ="login.html?forward=/nanshan/appoint.html?id=52";
+                    }else{
+                        alert(data.message);
+                    }
+                },"json")
+
+            });
         });
     </script>
 </div>

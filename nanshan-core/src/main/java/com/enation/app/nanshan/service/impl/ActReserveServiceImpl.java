@@ -17,9 +17,10 @@ public class ActReserveServiceImpl implements IActReserveService  {
 	private IDaoSupport daoSupport;
 
 	@Override
-	public void reserve(NanShanActReserve NanShanActReserve) {
-		this.daoSupport.insert("es_nanshan_act_reserve", NanShanActReserve);
-		this.daoSupport.execute(" update es_nanshan_article_ext t set t.reserved_num=t.reserved_num+1 where t.article_id="+NanShanActReserve.getActivity_id());
+	public void reserve(NanShanActReserve reserve) {
+		this.daoSupport.insert("es_nanshan_act_reserve", reserve);
+		this.daoSupport.execute(" update es_nanshan_article_ext t set t.reserved_num=t.reserved_num + "+
+				reserve.getNum() + " where t.article_id="+ reserve.getActivity_id());
 	}
 
 	@Override
@@ -36,10 +37,21 @@ public class ActReserveServiceImpl implements IActReserveService  {
 	}
 
 	@Override
-	public Page<ActReserveVo> queryReserveListById(Integer userId, int pageNo,
+	public Page<ActReserveVo> queryReserveListById(Integer userId, String isDel, int pageNo,
 			int pageSize) {
-		String sql ="select a.id activityId, a.title activityName, t.is_del isDel, t.activity_time  activityTime from es_nanshan_article a ,es_nanshan_act_reserve t where a.id=t.activity_id and t.member_id="+userId+" order by t.activity_time desc";
-		Page<ActReserveVo> page=daoSupport.queryForPage(sql, pageNo,pageSize);
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("select a.id, a.title, t.is_del isDel, t.activity_time  activityTime, a.pic_url imgUrl")
+			  .append(",b.expiry_date expiryDate, b.act_name actName, b.act_cost actCost, b.act_address actAddress")
+			  .append(" from es_nanshan_article a ,es_nanshan_act_reserve t, es_nanshan_article_ext b")
+			  .append(" where a.id=t.activity_id and a.id = b.article_id and ")
+			  .append(" t.member_id = ")
+			  .append(userId);
+		if(isDel != null){
+			buffer.append(" and t.is_del = 0");
+		}
+		buffer.append(" order by t.activity_time desc");
+
+		Page<ActReserveVo> page=daoSupport.queryForPage(buffer.toString(), pageNo,pageSize);
 		return page;
 	}
 

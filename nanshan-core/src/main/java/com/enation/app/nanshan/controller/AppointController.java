@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +42,7 @@ public class AppointController {
     })
     @ResponseBody
     @PostMapping(value="/appoint")
-    public JsonResult create(int activity_id, String activity_time, String member_name,
+    public JsonResult create(int activity_id, String activity_time, String member_name,int num,
                              String member_age, String phone_number, String email){
 
         try {
@@ -58,6 +59,10 @@ public class AppointController {
             if(ext.getReserved_num()>=ext.getReserve_num()){
             	 return JsonResultUtil.getErrorJson("预约人数已满");
             }
+            if((ext.getReserved_num() + num) >= ext.getReserve_num()){
+                return JsonResultUtil.getErrorJson("只剩余" + (ext.getReserve_num() - ext.getReserved_num()) + "个席位!");
+            }
+
 
             NanShanActReserve tmp = actReserveService.queryReserveByMemberId(member.getMember_id(), activity_id);
             if(tmp != null){
@@ -67,12 +72,15 @@ public class AppointController {
 
             NanShanActReserve reserve = new NanShanActReserve();
             reserve.setActivity_id(activity_id);
-            reserve.setActivity_time(DateUtil.getDateline(activity_time));
+            if(StringUtils.isNotBlank(activity_time)){
+                reserve.setActivity_time(DateUtil.getDateline(activity_time));
+            }
             reserve.setAttend_name(member_name);
             reserve.setAge(member_age);
             reserve.setPhone_number(phone_number);
             reserve.setEmail(email);
             reserve.setMember_id(member.getMember_id());
+            reserve.setNum(num);
 
             actReserveService.reserve(reserve);
 

@@ -46,6 +46,7 @@ public class ArticlePageTag extends AbstractPageTag {
                     ThreadContextHolder.getHttpRequest().getParameter("catId")));
             catId = ThreadContextHolder.getHttpRequest().getParameter("catId");
         }
+
         handlePageCat(map, catId);
         map.put("item", articleVo);
         return map;

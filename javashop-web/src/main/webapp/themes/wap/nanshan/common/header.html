@@ -36,6 +36,22 @@
             }
 
         }
+
+        var getUrlParam = function(name){
+            var url = location.href;
+            var prams = url.substring(url.indexOf("?")+1).split("&");
+
+            for(var n in prams){
+                var tmp = prams[n];
+
+                if(tmp.length > 0){
+                    tmp = tmp.split("=");
+                    if(tmp[0] == name){
+                        return tmp[1];
+                    }
+                }
+            }
+        }
     </script>
 </head>
 <body>

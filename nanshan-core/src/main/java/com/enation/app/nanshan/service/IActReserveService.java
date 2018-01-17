@@ -40,7 +40,7 @@ public interface IActReserveService {
 	 * @param userId
 	 * @return
 	 */
-	public Page<ActReserveVo> queryReserveListById(Integer userId,int pageNo, int pageSize);
+	public Page<ActReserveVo> queryReserveListById(Integer userId, String isDel, int pageNo, int pageSize);
 
 	/**
 	 * 查用户预约活动记录

@@ -8,6 +8,7 @@ public class NanShanActReserve {
 	private String age;
 	private String phone_number;
 	private String email;
+	private int num;
 	private int member_id;
 	private int is_del;
 
@@ -69,7 +70,12 @@ public class NanShanActReserve {
 	public void setIs_del(int is_del) {
 		this.is_del = is_del;
 	}
-	
-	
 
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
 }

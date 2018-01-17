@@ -1,0 +1,16 @@
+<#assign memberLoginCheckTag = newTag("memberLoginCheckTag") />
+<#assign memberInfo = memberLoginCheckTag()!'' />
+<#assign myAppointListPageTag = newTag("myAppointListPageTag") />
+<#assign article = myAppointListPageTag('{"catId":57,"isDel":"0"}') />
+<#assign articleTitle = "我的预约" />
+<#include 'common/header.html'/>
+
+<div class="content bgColor" style="padding : 0px;width: 100%;">
+    <#include 'activity-item.html'/>
+</div>
+
+
+
+</div>
+</body>
+</html>

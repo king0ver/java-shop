@@ -3,7 +3,7 @@
     <#assign article = articleListPageTag() />
 </#if>
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
-<#if article.items?size gt 0>
+<#if article.items?? && article.items?size gt 0>
     <ul class="contentList bgColor">
         <#list article.items as item>
             <li  class="actList clearfix">
@@ -15,10 +15,11 @@
                         <div class="actTxtTi">${item.title}</div>
                         <div class="zlTime">
                             <span></span>
-                            <#if article.curCat.id == 38>
-                                <@dateformat time='${item.expiryDate}' pattern='yyyy-MM-dd HH24:mm'/>
-                            <#else>
+                            <#if article.curCat.id == 39>
                                 已结束
+                            <#else>
+                                <@dateformat time='${item.expiryDate}' pattern='yyyy-MM-dd HH24:mm'/>
+
                             </#if>
                         </div>
                         <div><span class="c1">活动人群：</span>${item.actname!''}</div>

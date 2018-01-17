@@ -13,7 +13,7 @@
 
 <div class="section-content">
 
-    <div><img src="${article.item.imgUrl!''}" style="width: 1200px;height: 400px;"></div>
+    <div><img src="${article.item.content.big_pic_url!''}" style="width: 1200px;height: 400px;"></div>
     <!--
         作者：offline
         时间：2017-12-23
@@ -26,6 +26,8 @@
                 <li><span>活动对象</span>：${article.item.actName}</li>
                 <li><span>活动时间</span>：<@dateformat time='${article.item.expiryDate}' pattern='yyyy-MM-dd'/></li>
                 <li><span>活动地址</span>：${article.item.actAddress}</li>
+                <li class="clearfix"><span style="display: block;float: left">注意事项：</span>
+                    <span style="display: inline-block;color: #000;">${article.item.content.notice!''}</span></li>
             </ul>
             <#if article.item.catId = 38>
                 <div class="yuyue" >
