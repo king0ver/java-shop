@@ -147,14 +147,15 @@ var desc='${(data.content)!''}';
 var specIds='${data.specValIds!''}'
 if(desc!=''&&desc.match("^\{(.+:.+,*){1,}\}$")){
 	var obj=eval('(' + desc + ')');
-	
 	var context=obj.content;
 	var bigImg=obj.big_pic_url;
 	var notice=obj.notice;
-	var reg = new RegExp("<br/>","g");//g,表示全部替换。
-	notice=notice.replace(reg,'\n'); 
-	$("#notice").html(notice)
-	if(bigImg!=""){
+	if(notice!=""&&notice!=undefined){
+		var reg = new RegExp("<br/>","g");//g,表示全部替换。
+		notice=notice.replace(reg,'\n'); 
+		$("#notice").html(notice)
+	}
+	if(bigImg!=""&&bigImg!=undefined){
 	$("#big_pic_url").val(bigImg);
 	$("#bigImg").html(getPicHtml(bigImg));
 	}
