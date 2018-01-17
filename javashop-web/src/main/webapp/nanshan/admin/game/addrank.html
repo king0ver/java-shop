@@ -68,8 +68,7 @@ function checkLength(){
 layui.use(['form', 'layedit', 'laydate'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
-    laydate = layui.laydate;
-    
+    laydate = layui.laydate;    
 	form.on('submit(save_uri)', function(data){
 		 var content=getRankList()
 		 content=JSON.stringify(content);
