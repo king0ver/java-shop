@@ -8,9 +8,9 @@
 		<#if article.uncleCats?size gt 0>
 			<#list article.uncleCats as cat>
 				<#if article.parentCat.id == cat.id>
-					<div class="navList selectBlue">${cat.name}</div>
+					<div class="navList selectBlue">${cat.name!''}</div>
 				<#else>
-					<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
+					<div class="navList"><a href="${cat.wapUrl!''}">${cat.name!''}</a></div>
 				</#if>
 			</#list>
 		</#if>

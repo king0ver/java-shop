@@ -59,7 +59,7 @@
 		<ul class="clearfix">
 			<#if article.curCat.leafs?size gt 0>
 				<#list article.curCat.leafs as cat>
-					<#if cat.id != 46>
+					<#if cat.id != 46 && cat.id != 45>
 						<a href="${cat.wapUrl}">
 							<li>
 								<span>
