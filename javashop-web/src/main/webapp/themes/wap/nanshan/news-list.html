@@ -6,7 +6,7 @@
     <#if article.siblings?size gt 0>
         <#list article.siblings as cat>
             <#if cat.id?? && cat.id == article.curCat.id>
-                <div class="navList select">${cat.name}<span></span></div>
+                <div class="navList select"><span>${cat.name}</span><span></span></div>
             <#else>
                 <div class="navList"> <span><a href="${cat.wapUrl}">${cat.name}</a></span></div>
             </#if>

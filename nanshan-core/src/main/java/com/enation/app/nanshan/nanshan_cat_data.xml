@@ -196,14 +196,14 @@
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
-		<fields>cat_id,cat_name,wap_cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>38,'最新活动','最新活动',4,0,'/nanshan/activity-list.html?catId=38','/nanshan/activity-list.html?catId=38'</values>
+		<fields>cat_id,cat_name,wap_cat_name,parent_id,is_del,pc_url,wap_url,spec_id</fields>
+		<values>38,'最新活动','最新活动',4,0,'/nanshan/activity-list.html?catId=38','/nanshan/activity-list.html?catId=38','4;5;6'</values>
 	</action>
 	<action>
 		<command>insert</command>
 		<table>es_nanshan_article_category</table>
-		<fields>cat_id,cat_name,wap_cat_name,parent_id,is_del,pc_url,wap_url</fields>
-		<values>39,'活动回顾','活动回顾',4,0,'/nanshan/activity-list.html?catId=39','/nanshan/activity-list.html?catId=39'</values>
+		<fields>cat_id,cat_name,wap_cat_name,parent_id,is_del,pc_url,wap_url,spec_id</fields>
+		<values>39,'活动回顾','活动回顾',4,0,'/nanshan/activity-list.html?catId=39','/nanshan/activity-list.html?catId=39','4;5;6'</values>
 	</action>
 	<action>
 		<command>insert</command>

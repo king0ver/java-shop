@@ -114,11 +114,11 @@
 		<#if article.siblings?size gt 0>
 			<#list article.siblings as cat>
 				<#if article.curCat.id == cat.id>
-					<div class="navList select">${cat.name}
+					<div class="navList select"><span>${cat.name}</span>
 						<span></span>
 					</div>
 				<#else>
-					<div class="navList"><a href="${cat.wapUrl}">${cat.name}</a></div>
+					<div class="navList"><span><a href="${cat.wapUrl}">${cat.name}</a></span></div>
 				</#if>
 			</#list>
 		</#if>

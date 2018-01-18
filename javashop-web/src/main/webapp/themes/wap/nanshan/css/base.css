@@ -269,4 +269,54 @@ input:-webkit-autofill{background: none;}
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis; }
+.tabBar{
+  width: 100%;
+  max-width: 1200px;
+  height: 50px;
+  background: #fff;
+  border: 1px solid #F2F2F2;
+  position: fixed;
+  bottom: 0;
+}
+.tabBar ul{
+  width: 100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+}
+.tabBar ul li{
+  text-align: center;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  line-height: 50px;
+}
+.tabBar ul li:nth-child(1){
+  background: url(./images/tabBar2.png) center 5px no-repeat;
+  background-size:25px 25px ;
+}
+.tabBar ul li:nth-child(1).select{
+  background: url(./images/tabBar2-1.png) center 5px no-repeat;
+  background-size:25px 25px ;
+}
+.tabBar ul li:nth-child(2){
+  background: url(./images/tabBar1.png) center 5px no-repeat;
+  background-size:25px 25px ;
+}
+.tabBar ul li:nth-child(2).select{
+  background: url(./images/tabBar1.png) center 5px no-repeat;
+  background-size:25px 25px ;
+}
+.tabBar ul li:nth-child(3){
+  background: url(./images/tabBar3.png) center 5px no-repeat;
+  background-size:25px 25px ;
+}
+.tabBar ul li:nth-child(3).select{
+  background: url(./images/tabBar3.png) center 5px no-repeat;
+  background-size:25px 25px ;
+}
+.tabBar ul li span{
+  display: inline-block;
+  margin-top: 15px;
+}
 
