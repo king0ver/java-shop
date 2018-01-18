@@ -211,6 +211,7 @@
 	display: -moz-box;
 }
 
+
 .nav .navList{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -354,8 +355,11 @@
  	 background: url(images/ls-2.png) center top no-repeat;
     background-size: 20px 20px;
  }
- .nav-Five .select a{
+ .nav-Five .navList.select a{
 	 color: #0086ed;
+}
+.nav-Five .navList  a{
+	color: #808080;
 }
 
 .nav-Four {
@@ -500,6 +504,7 @@
 	display: -webkit-box;
 	display: box;
 	display: -moz-box;
+	background-color: #fff;
 }
 
 .nav-Tree .Tree .navList {
@@ -530,7 +535,7 @@
 
 .contentImgList {
 	width: 98%;
-	padding: 0 1%;
+	padding: 15px 1%;
 }
 
 .contentImgList ul li {
@@ -649,7 +654,6 @@
 
 .content ul .zlList {
 	padding: 10px 0;
-	height: 110px;
 }
 
 .content ul .zlList .zlImg {
@@ -1285,6 +1289,9 @@
 	background: #fff;
 }
 
+.bgGray{
+	background: #f2f2f2;
+}
 .rc-nav-Five{
 	    width: 90%;
     padding: 15px 5%;

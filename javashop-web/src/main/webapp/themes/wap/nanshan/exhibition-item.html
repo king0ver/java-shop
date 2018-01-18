@@ -3,16 +3,14 @@
 	<#assign article = articleListPageTag() />
 </#if>
 <#if article.items?size gt 0>
-	<div class="content">
-		<#list article.items as item>
-			<a href="/nanshan/exhibition.html?id=${item.id}" class="btn">
-				<ul class="zsList">
-					<li>
-						<img src="${item.imgUrl!''}" />
-						<div>${item.title!''}</div>
-					</li>
-				</ul>
-			</a>
-		</#list>
-	</div>
+	<#list article.items as item>
+		<a href="/nanshan/exhibition.html?id=${item.id}" class="btn">
+			<ul class="zsList">
+				<li>
+					<img src="${item.imgUrl!''}" />
+					<div>${item.title!''}</div>
+				</li>
+			</ul>
+		</a>
+	</#list>
 </#if>

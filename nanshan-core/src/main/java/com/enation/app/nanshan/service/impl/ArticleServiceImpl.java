@@ -54,7 +54,7 @@ public class ArticleServiceImpl implements IArticleService {
 						"esns.id = esnsar.article_id and esnsar.specval_id = "+specValIdList[i]+") ";
 			}
 		}
-		sql += " and esns.is_del = 0 and esns.cat_id = "+ catId;
+		sql += " and esns.is_del = 0 and esns.cat_id = "+ catId + " order by esns.create_time desc";
 		Page<ArticleVo> page=daoSupport.queryForPage(sql, pageNo,pageSize);
 		return page;
 	}

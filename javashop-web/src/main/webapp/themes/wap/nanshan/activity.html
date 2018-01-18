@@ -106,9 +106,29 @@
             var $this = $(this);
 
             if($this.attr("data-id") == "0"){
-                location.href = "/nanshan/appoint.html?id=${article.item.id}";
+                <#if member??>
+                    location.href = "/nanshan/appoint.html?id=${article.item.id}";
+                <#else>
+                    location.href = "/login.html?forward="+location.href;
+                </#if>
+
             }else{
 
+                if(confirm("确认要取消预约吗?")){
+                    $.post("/activity-operation/cancel.do",{activity_id:'${article.item.id}'},function(data){
+
+                        if(data.result == 1){
+                            alert("取消成功!");
+                            location.reload();
+                        }else if(data.result == 0 && data.message == "not login") {
+                            alert("您还未登录系统!");
+                            location.href ="/store/login.html";
+                        }else{
+                            alert("预约异常!");
+                        }
+
+                    },"json");
+                }
             }
         });
     })

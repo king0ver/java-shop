@@ -59,7 +59,7 @@ public class AppointController {
             if(ext.getReserved_num()>=ext.getReserve_num()){
             	 return JsonResultUtil.getErrorJson("预约人数已满");
             }
-            if((ext.getReserved_num() + num) >= ext.getReserve_num()){
+            if((ext.getReserved_num() + num) > ext.getReserve_num()){
                 return JsonResultUtil.getErrorJson("只剩余" + (ext.getReserve_num() - ext.getReserved_num()) + "个席位!");
             }
 

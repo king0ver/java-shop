@@ -8,9 +8,9 @@
 <div class="content bgColor" style="padding : 0px;width: 100%;">
     <#include 'activity-item.html'/>
 </div>
-
-
-
+<script>
+    $("div.content").page({"url": "/nanshan/activity-item.html" , "total" : '${article.webPage.totalCount}'});
+</script>
 </div>
 </body>
 </html>

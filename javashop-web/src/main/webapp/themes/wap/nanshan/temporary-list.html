@@ -4,7 +4,22 @@
 <#assign bgColor = "true" />
 <#assign articleTitle = article.grandCat.name/>
 <#include 'common/header.html'/>
-<div class="nav-Tree">
+<link rel="stylesheet" href="${ctx}${themes_path}/nanshan/css/swiper.min.css" />
+<style>
+	.navList a{
+		color: #0086ed;
+	}
+	.content ul.contentList li{
+		border-bottom: 6px solid #f2f2f2;
+		padding: 10px 5%;
+	}
+	.content{
+		padding: 0px;
+		width: 100%;
+	}
+</style>
+<script type="text/javascript" src="${ctx}${themes_path}/nanshan/js/swiper.min.js" ></script>
+<div class="nav-Tree" style="background-color: #f2f2f2">
 	<div class="Tree">
 		<#if article.uncleCats?size gt 0>
 			<#list article.uncleCats as cat>
@@ -18,20 +33,36 @@
 	</div>
 </div>
 <div class="titleContentimages">展览回顾</div>
-<div class="imgSwiper">
+<div class="imgSwiper" style="padding: 8px 0px;border-top: 1px solid #f2f2f2;border-bottom: 6px solid #f2f2f2">
 	<div class="swiper-container1">
 	    <div class="swiper-wrapper">
 	    	<#if article.items?size gt 0>
 	    		<#list article.items as item>
 					<div class="swiper-slide">
-		      			<a href="/nanshan/exhibition.html?id=${item.id}" class="btn"><img src="${item.imgUrl!''}"></a>
+		      			<a href="/nanshan/exhibition.html?id=${item.id}" class="btn"><img src="${item.imgUrl!''}" style="height: 100px"></a>
 		      		</div>
 	      		</#list>
 			</#if>
   	 	</div>
 	</div>
 </div>
-<div class="titleContentimages">正在热览</div>
-<#include 'temporary-item.html'/>
+<div class="titleContentimages" style="border-bottom: 1px solid #f2f2f2">正在热览</div>
+<div class="content">
+	<#include 'temporary-item.html'/>
+</div>
+
+
+<script>
+	var swiper = new Swiper('.swiper-container1', {
+		slidesPerView: 3,
+		spaceBetween: 10,
+		freeMode: true,
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+		},
+	});
+	$("div.content").page({"url": "/nanshan/temporary-item.html" , "total" : '${article.webPage.totalCount}'});
+</script>
 </body>
 </html>

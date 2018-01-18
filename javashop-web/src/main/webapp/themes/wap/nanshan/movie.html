@@ -8,7 +8,7 @@
 		<section id='h-title' style='padding-right:53px;'>影片详情</section>
 	</div>
 </header>
-<div class="movieDetail">
+<div class="movieDetail" style="padding-bottom: 15px;border-bottom: 1px solid #f2f2f2;">
   	<div class="movieDetailList1">
   		<img class="movieImg" src="${article.item.imgUrl!''}"/>
   		<div class="movieTxt">
@@ -21,12 +21,12 @@
   		</div>
   	</div>
 </div>
-<div class="content">
+<div class="content" style="padding: 5px 5% 25px;">
 	<div class="content-title">影片介绍</div>
 	<p class="contentTxt">${article.item.content.movieIntroduce!''}</p>
 </div>
-<div class="titleContent">影片花絮</div>
-<div class="contentImgList">
+<div class="titleContent" style="border-top: 5px solid #f2f2f2">电影花絮</div>
+<div class="contentImgList" style="padding: 0">
   	<ul class="clearfix">
   		<#if article.item.content?? && article.item.content.filmTidbits?size gt 0 >
            <#list article.item.content.filmTidbits as bit>
@@ -37,3 +37,6 @@
 		</#if>
   	</ul>
   </div>
+</div>
+</body>
+</html>

@@ -4,6 +4,10 @@
 <#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#include 'common/header.html'/>
 <link href="${file_path}/nanshan/css/list1.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${ctx}/adminthemes/version3/plugins/layui/css/layui.css" />
+<script type="text/javascript" src="${ctx}/statics/e_tools/js/library/jquery.min-2.1.4.js"></script>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/plugins/layui/layui.js "></script>
+<script type="text/javascript" src="${ctx}/adminthemes/version3/js/global.js"></script>
 <script type="text/javascript" src="${file_path}/nanshan/js/appoint.js"></script>
 <#include 'common/navigator.html'/>
 <div class="content-bg">
@@ -39,7 +43,7 @@
                     <ul class="activity-lists">
                         <#list article.items as item>
                             <li class="row">
-                                <a href="/nanshan/activity.html?id=${item.id}">
+                                <a data-url="/nanshan/activity.html?id=${item.id}" href="javascript:void(0)">
                                     <div class="lt-img">
                                         <img src="${item.imgUrl!''}">
                                     </div>
@@ -70,6 +74,53 @@
     <div class="pageContainer">
         <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
     </div>
+</div>
+    <!-- 活动预约 -->
+<div class="bgColorShadow" style="display: none;"></div>
+<div class="activity-reservation" style="display: none;">
+    <div class="item-title">
+        <img src="${file_path}/nanshan/css/images/gt.png">&nbsp;活动预约</div>
+    <form id="reservation">
+        <ul class="form-list">
+            <li>
+                <label for="date">参加活动日期</label>
+                <input name="yyEnd" type="text" class="Wdate" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" />
+                <input id="activityId" type="hidden" value="" />
+            </li>
+            <div id="member">
+                <div class="row">
+                    <label for="uname"><span class="error">※</span>参加成员</label>
+                    <input id="uname" type="text" placeholder="姓名">
+                </div>
+                <div class="row">
+                    <label for="age"><span class="error">※</span>年龄</label>
+                    <input id="age" type="text" placeholder="年龄">
+                </div>
+            </div>
+            <li>
+                <label for="num"><span class="error">※</span>参加人数</label>
+                <input id="num" type="text" placeholder="包含发起人">
+            </li>
+            <li>
+                <label for="phone"><span class="error">※</span>联系电话</label>
+                <input id="phone" type="text" placeholder="手机号码">
+            </li>
+            <li>
+                <label for="email"><span class="error">※</span>电子邮件</label>
+                <input id="email" type="text" placeholder="电子邮件">
+            </li>
+        </ul>
+
+
+        <div class="btn-box">
+            <input type="button" id="submit-btn" value="提交">
+        </div>
+        <p class="tip-txt">
+            提示:活动开始前可进入"个人中心-我的预约"取消预约
+        </p>
+    </form>
+
+</div>
     <script type="text/javascript">
         $("img[dis-type]").click(function(){
             var $this = $(this);
@@ -98,9 +149,10 @@
             location.href = url;
         });
 
+        $("a[data-url]").click(function(){
+            location.href = $(this).attr("data-url");
+        });
 
     </script>
-</div>
-
 </div>
 <#include 'common/footer.html'/>

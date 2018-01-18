@@ -3,7 +3,7 @@
 <#assign bgColor = "true" />
 <#assign articleTitle = article.grandCat.name/>
 <#include 'common/header.html'/>
-<div class="nav-Tree">
+<div class="nav-Tree bgGray">
 	<div class="Tree">
 		<#if article.uncleCats?size gt 0>
 			<#list article.uncleCats as cat>
@@ -16,7 +16,7 @@
 		</#if>
 	</div>
 </div>
-<div class="nav">
+<div class="nav" style="border-bottom: 1px solid #f2f2f2">
 	<#if article.siblings?size gt 0>
 		<#list article.siblings as cat>
 			<#if article.curCat.id == cat.id>

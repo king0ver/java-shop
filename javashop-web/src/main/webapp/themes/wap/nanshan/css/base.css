@@ -304,7 +304,7 @@ input:-webkit-autofill{background: none;}
   background-size:25px 25px ;
 }
 .tabBar ul li:nth-child(2).select{
-  background: url(./images/tabBar1.png) center 5px no-repeat;
+  background: url(./images/tabBar1-1.png) center 5px no-repeat;
   background-size:25px 25px ;
 }
 .tabBar ul li:nth-child(3){
@@ -312,7 +312,7 @@ input:-webkit-autofill{background: none;}
   background-size:25px 25px ;
 }
 .tabBar ul li:nth-child(3).select{
-  background: url(./images/tabBar3.png) center 5px no-repeat;
+  background: url(./images/tabBar3-1.png) center 5px no-repeat;
   background-size:25px 25px ;
 }
 .tabBar ul li span{

@@ -3,7 +3,6 @@
 	<#assign articlePage = articleListPageTag('{"catId":14}') />
 </#if>
 <#if articlePage.items?size gt 0>
-<div class="content">
 	<ul class="contentList">
 		<#list articlePage.items as item>
 			<li class="zlList clearfix">
@@ -17,5 +16,4 @@
 			</li>
 		</#list>
 	</ul>
- </div>
 </#if>
