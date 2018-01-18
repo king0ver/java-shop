@@ -128,14 +128,19 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 		    ,elem: '#filmImgUploadBtn' 
 		    ,method: 'POST'
 		    ,success: function(res){
-		    	$("#film").append("<div id='filmImg' class='layui-inline'>"+
-		    			"<div class='layui-inline'>"+
-		    				"<img name='img' src='"+res.url+"'  width='112' height='112' />"+
-		    	    	"</div>"+
-		    	    	"<div class='layui-inline'>"+
-		    	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
-		    	    	"</div>"+
-		      		"</div>");
+		    	if($("#film").children().length<3){
+		    		$("#film").append("<div id='filmImg' class='layui-inline'>"+
+			    			"<div class='layui-inline'>"+
+			    				"<img name='img' src='"+res.url+"'  width='112' height='112' />"+
+			    	    	"</div>"+
+			    	    	"<div class='layui-inline'>"+
+			    	      		"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delButton(this);'><i class='layui-icon'>&#xe640;</i></a>"+
+			    	    	"</div>"+
+			      		"</div>");
+		    	}else{
+		    		$.Loading.error("电影详情图不能超过三张");
+		    	}
+		    	
 		    }
 	});
 	
