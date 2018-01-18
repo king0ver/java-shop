@@ -24,7 +24,7 @@
 	    	<#if article.items?size gt 0>
 	    		<#list article.items as item>
 					<div class="swiper-slide">
-		      			<img src="${item.imgUrl!''}">
+		      			<a href="/nanshan/exhibition.html?id=${item.id}" class="btn"><img src="${item.imgUrl!''}"></a>
 		      		</div>
 	      		</#list>
 			</#if>

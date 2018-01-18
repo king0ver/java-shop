@@ -211,7 +211,7 @@
 	display: -moz-box;
 }
 
-.nav .navList {
+.nav .navList{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -219,21 +219,31 @@
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
 	box-flex: 1;
-	text-align: center;
-	line-height: 50px;
-	color: #717171;
+	padding-top: 12.5px;
+	
 }
-
-.nav .navList.select {
+.nav .navList>span:nth-child(1){
+	display: block;
+	text-align: center;
+	width: 100%;
+	line-height: 25px;
+	color: #717171;
+	border-right: 1px solid #f1f1f1;
+}
+.nav .navList:nth-child(3)>span:nth-child(1){
+	border: none;
+}
+.nav .navList.select span {
 	color: #0086ed;
 }
 
-.nav .navList.select>span {
+.nav .navList.select>span:nth-child(2) {
 	display: block;
 	width: 30%;
-	border: 1px solid #0086ed;
-	margin: 0 auto;
+	border-top: 2px solid #0086ed;
+	margin: 5px auto;
 }
+
 
 .navImg {
 	width: 100%;
@@ -662,7 +672,7 @@
 .content .zlTxt div:nth-child(2),
 .content .zlTxt div:nth-child(3) {
 	font-size: 10px;
-	color: #8a8a8a;
+	/* color: #8a8a8a; */
 }
 
 .content .zlTxt .zlTime {
@@ -969,6 +979,7 @@
 
 .imgSwiper .swiper-slide {
 	width: 25%;
+	float: left;
 }
 
 .imgSwiper .swiper-slide img {
@@ -1284,6 +1295,12 @@
     background: #FFFFFF;
     border-bottom: 5px solid #f2f2f2;
 }
+.rc-nav-Five a{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+
 .rc-nav-Five .navList {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
