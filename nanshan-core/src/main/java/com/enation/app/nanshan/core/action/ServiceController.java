@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.enation.app.nanshan.constant.NanShanCommonConstant;
 import com.enation.app.nanshan.core.service.IArticleManager;
 import com.enation.app.nanshan.core.service.ICatManager;
 import com.enation.app.nanshan.model.ArticleCat;
 import com.enation.app.nanshan.model.NanShanArticleVo;
 import com.enation.framework.action.GridController;
 import com.enation.framework.action.JsonResult;
+import com.enation.framework.cache.ICache;
 import com.enation.framework.util.DateUtil;
 import com.enation.framework.util.JsonResultUtil;
 
@@ -38,6 +40,11 @@ public class ServiceController extends GridController{
 
 	@Autowired
 	private ICatManager catManager;
+	
+	@Autowired
+	private ICache cache; 
+
+	
 	
 	/**
 	 * 跳转到修改页面
@@ -116,6 +123,7 @@ public class ServiceController extends GridController{
 			else{
 				catManager.updateCat(articleCat);
 			}
+			this.cache.remove(NanShanCommonConstant.NANSHANCATCACHENAME);
 			return JsonResultUtil.getSuccessJson("操作成功");
 		}catch(Exception e){
 			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());
@@ -131,6 +139,7 @@ public class ServiceController extends GridController{
 	public JsonResult saveCat(int catId,HttpServletRequest request){
 		try{
 			catManager.delCat(catId);
+			this.cache.remove(NanShanCommonConstant.NANSHANCATCACHENAME);
 			return JsonResultUtil.getSuccessJson("操作成功");
 		}catch(Exception e){
 			return JsonResultUtil.getErrorJson("操作失败:"+e.getMessage());

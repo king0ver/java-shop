@@ -105,13 +105,13 @@
 		  		<div class="layui-form-item">
 		    		<label class="layui-form-label" style="width:120px">可预约人数：</label>
 		    		<div class="layui-input-inline">
-		    		   <input type="text" name="reserve_num" value="${(data.reserve_num)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    		   <input type="text" name="reserve_num" lay-verify="number" value="${(data.reserve_num)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 		    		</div>
 		  		</div>
 		  		<div class="layui-form-item">
-		    		<label class="layui-form-label" style="width:120px">已预约人数：</label>
+		    		<label class="layui-form-label"  style="width:120px">已预约人数：</label>
 		    		<div class="layui-input-inline">
-		    		   <input type="text" name="reserve_num" value="${(data.reserved_num)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
+		    		   <input type="text" name="reserve_num" readOnly="true" value="${(data.reserved_num)!''}" maxlength="60" dataType="string" lay-verify="required" autocomplete="off" class="layui-input">
 		    		</div>
 		  		</div>
 	  		</div>

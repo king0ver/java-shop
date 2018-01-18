@@ -182,7 +182,12 @@ function  getMovieHtml(value){
 }
 function addPanel(){
 	var html=getMovieHtml("");
-	$("#recmovie").append(html);
+	if($("#recmovie").children().length<3){
+		$("#recmovie").append(html);
+	}else{
+		$.Loading.error("推荐电影不能超过三部");
+	}
+	
 	
 }
 
