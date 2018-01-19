@@ -47,7 +47,7 @@ form{margin-bottom:0px;}
 					<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
 				</div>
 				<div id="exhImg" class="layui-inline">
-					<#if data.pic_url??>
+					<#if data.pic_url??&&data.pic_url!="">
 						<img src="${data.pic_url}" width='130' height='130' />
 						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="return delImg();"><i class='layui-icon'>&#xe640;</i></a>
 					</#if>

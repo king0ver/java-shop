@@ -25,7 +25,7 @@
 				<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
 			</div>
 			<div id="exhImg" class="layui-inline">
-			   <#if (vo.pic_url)??>
+			   <#if (vo.pic_url)??&&vo.pic_url!="">
 						<img src="${(vo.pic_url)!''}" width='130' height='130' />
 						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="return delImg();"><i class='layui-icon'>&#xe640;</i></a>
 					</#if>

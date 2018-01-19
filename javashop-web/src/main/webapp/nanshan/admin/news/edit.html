@@ -59,6 +59,7 @@
 	  			</div>
 				
 			</fieldset>
+			<input type="hidden" name="content_id" value="${data.content_id}">
 			
   		</div>
 			<div class="layui-form-item">
@@ -127,7 +128,6 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
     });
 form.on('submit(editModel)', function(data){
 	var content=JSON.stringify(getContext());
-	
 	var content='{"content":'+content+'}';
 	var options = {
 		url : ctx+"/admin/article/save-edit.do",
