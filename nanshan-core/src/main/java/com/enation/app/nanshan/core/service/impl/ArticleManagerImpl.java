@@ -219,7 +219,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		ext.setReserve_num(vo.getReserve_num());
 		ext.setAct_cost(vo.getAct_cost());
 		if(!StringUtil.isEmpty(vo.getExpiryDate())){
-			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd");
+			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd hh:mm:ss");
 			ext.setExpiry_date(create_time);
 		}
 		return ext;
