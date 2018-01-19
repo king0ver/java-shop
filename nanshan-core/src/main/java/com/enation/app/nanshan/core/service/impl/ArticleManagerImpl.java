@@ -95,6 +95,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtil.isEmpty(param.getEndDate())){
 			sql.append(" and a.create_time<="+DateUtil.getDateline(param.getEndDate(), "yyyy-MM-dd hh:mm:ss"));
 		};
+		sql.append("  order by a.create_time desc");
 		Page webpage = this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 		return webpage;
 	}
@@ -187,6 +188,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 				sql.append(" and a.create_time <=").append(DateUtil.getDateline(String.valueOf(params.get("endDate")), "yyyy-MM-dd hh:mm:ss"));
 			}
 		}
+		sql.append(" order by a.create_time desc");
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
 
