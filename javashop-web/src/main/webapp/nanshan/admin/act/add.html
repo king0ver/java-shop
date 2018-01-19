@@ -121,6 +121,24 @@ function checkLength(){
 		$("#rolememo").val($("#rolememo").val().substring(0,100));
 	}
 }
+function delImgPanel(obj){
+	
+	 layer.confirm('确认要删除吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			 $(obj).parent().parent().children("input[type='hidden']").val("")
+			 $(obj).prev().remove();
+			 $(obj).remove();
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
 layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	var form = layui.form(),
     layedit = layui.layedit,
@@ -132,7 +150,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	    ,method: 'POST'
 	    ,success: function(res){
 	    	$("#exhImg").html("<img src='"+res.url+"' width='130' height='130' />"+
-	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>");
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImgPanel(this);' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>");
 	    	$("#picUrl").val(res.url);
 	    }
 	});
@@ -143,7 +161,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	    ,method: 'POST'
 	    ,success: function(res){
 	    	$("#bigImg").html("<img src='"+res.url+"' width='130' height='130' />"+
-	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>");
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImgPanel(this);' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>");
 	    	$("#big_pic_url").val(res.url);
 	    }
 	});

@@ -60,9 +60,11 @@
 					<input name="file" class="layui-upload-file" id="exhImgUploadBtn" type="file">	
 				</div>
 				<div id="exhImg" class="layui-inline">
-				<#if data.pic_url??>
+				<#if (data.pic_url)??>
+				   <#if (data.pic_url)!="">
 						<img src="${data.pic_url}" width='130' height='130' />
-						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="return delImg();"><i class='layui-icon'>&#xe640;</i></a>
+						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="return delImgPanel(this);"><i class='layui-icon'>&#xe640;</i></a>
+						</#if>
 					</#if>
 				</div>
 	  		</div>
@@ -262,10 +264,28 @@ form.on('submit(editModel)', function(data){
 	 
 	 function getPicHtml(url){
 		 var html="<img src='"+url+"' width='130' height='130' />"+
-			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg();' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>"
+			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImgPanel(this);' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>"
 			return html;
 	 }
-	
+	 
+	 function delImgPanel(obj){
+			
+		 layer.confirm('确认要删除吗？', {
+			  btn: ['删除','取消'] //按钮
+			  ,area:['80px','150px']
+			}, function(){
+				 $(obj).parent().parent().children("input[type='hidden']").val("")
+				 $(obj).prev().remove();
+				 $(obj).remove();
+			  	 layer.msg({
+				    time: 20000
+				 }); 
+			}, function(){
+			    layer.msg({
+				    time: 20000
+				}); 
+			});
+	};
 
 
   

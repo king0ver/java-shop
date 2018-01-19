@@ -115,11 +115,12 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtils.isEmpty(nanShanArticleVo.getSummary())) articleFields.put("summary", nanShanArticleVo.getSummary());
 		if(nanShanArticleVo.getCreate_time()>0) articleFields.put("create_time", nanShanArticleVo.getCreate_time());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getContent())) clobFields.put("content", nanShanArticleVo.getContent());
-		if(!StringUtils.isEmpty(nanShanArticleVo.getPic_url())) articleFields.put("pic_url", nanShanArticleVo.getPic_url());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getJob_cat())) articleFields.put("job_cat", nanShanArticleVo.getJob_cat());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getDept_name())) articleFields.put("dept_name", nanShanArticleVo.getDept_name());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getWork_place())) articleFields.put("work_place", nanShanArticleVo.getWork_place());
+		articleFields.put("pic_url", nanShanArticleVo.getPic_url());
 		this.delArtSpeRel(nanShanArticleVo.getId());
+		
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
 		if(articleFields.size()>0){
 			this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());

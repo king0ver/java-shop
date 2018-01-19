@@ -34,8 +34,10 @@
 			</div>
 			<div  class="layui-inline">
 			   <#if (vo.pic_url)??>
+			    <#if (vo.pic_url)!="">
 						<img src="${(vo.pic_url)!''}" width='130' height='130' />
 						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delImg(this);"><i class='layui-icon'>&#xe640;</i></a>
+				</#if>
 				</#if>
 			</div>
   	</div>
@@ -214,11 +216,6 @@ function delPanel(obj){
 	
 }
 
-function getRouteImgUrl(src){
-	var html="<img src='"+src+"' width='130' height='130' style='margin-right:5px;margin-left:10px' />"+
-	"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg(this);'><i class='layui-icon'>&#xe640;</i></a>";
-	return html
-}
 function handleImg(res,con){
 	var html=getRouteImgUrl(res.url);
 	if($(con).attr("id")=="picUrl"){
@@ -230,6 +227,13 @@ function handleImg(res,con){
 	}
    
 }
+
+function getRouteImgUrl(src){
+	var html="<img src='"+src+"' width='130' height='130' style='margin-right:5px;margin-left:10px' />"+
+	"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg(this);'><i class='layui-icon'>&#xe640;</i></a>";
+	return html
+}
+
 function initMovieContext(){
 	  var desc='${(vo.content)!''}';
 	 var html="";
