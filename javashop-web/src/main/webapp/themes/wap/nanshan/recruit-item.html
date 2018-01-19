@@ -3,23 +3,21 @@
 	<#assign article = articleListPageTag('{"catId":65}') />
 </#if>
 <#if article.items??>
-	<div class="content">
-		<ul class="rc-List">
-			<#if article.items?? && article.items?size gt 0>
-				<#list article.items as item>
-					<a href="/nanshan/recruit.html?id=${item.id}">
-						<li>
-							<div class="rc-title">${item.title!''}</div>
-							<div class="rc-img">
-								<div class="rc-lx"><span></span>${item.jobCat!''}</div>
-								<div class="rc-bm"><span></span>${item.deptName!''}</div>
-								<div class="rc-dd"><span></span>${item.workPlace!''}</div>	
-							</div>
-							<div class="rc-txt">${item.summary!''}</div>
-						</li>
-					</a>
-				</#list>
-			</#if>
-		</ul>
-	</div>
+	<ul class="rc-List">
+		<#if article.items?? && article.items?size gt 0>
+			<#list article.items as item>
+				<a href="/nanshan/recruit.html?id=${item.id}">
+					<li>
+						<div class="rc-title">${item.title!''}</div>
+						<div class="rc-img">
+							<div class="rc-lx"><span></span>${item.jobCat!''}</div>
+							<div class="rc-bm"><span></span>${item.deptName!''}</div>
+							<div class="rc-dd"><span></span>${item.workPlace!''}</div>
+						</div>
+						<div class="rc-txt">${item.summary!''}</div>
+					</li>
+				</a>
+			</#list>
+		</#if>
+	</ul>
 </#if>

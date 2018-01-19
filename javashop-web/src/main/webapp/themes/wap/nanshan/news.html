@@ -1,7 +1,7 @@
 <#assign articlePageTag = newTag("articlePage") />
 <#assign article = articlePageTag() />
 <#assign articleTitle = article.grandCat.name/>
-<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()/>
 <#include 'common/header.html'/>
 <div class="content">
 	<div class="content-title">${article.item.title!''}</div>
@@ -19,3 +19,6 @@
        </#list>
    </#if>
 </div>
+</div>
+</body>
+</html>

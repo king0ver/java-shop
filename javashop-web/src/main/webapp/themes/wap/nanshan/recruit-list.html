@@ -17,4 +17,12 @@
 		<a href="/nanshan/contactus.html">联系我们</a>
 	</div>
 </div>
-<#include 'recruit-item.html'/>
+<div class="content">
+	<#include 'recruit-item.html'/>
+</div>
+<script>
+	$("div.content").page({"url": "/nanshan/recruit-item.html" , "total" : '${article.webPage.totalCount}'});
+</script>
+</div>
+</body>
+</html>

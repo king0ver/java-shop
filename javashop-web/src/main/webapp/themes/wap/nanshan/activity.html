@@ -5,7 +5,7 @@
 <#include 'common/header.html'/>
 
 <div class="actTitle">
-    ${article.item.title}
+    <div style="float: left; height: 40px;overflow: auto;text-overflow: ellipsis;width: 75%;display: block;"> ${article.item.title}</div>
     <span>活动品牌</span>
 </div>
 <div class="actComent">
@@ -28,6 +28,13 @@
         <div class="actComentListR">
 
             <p>1~${article.item.reserveNum}人</p>
+        </div>
+    </div>
+    <div  class="actComentList clearfix">
+        <div class="actComentListL">注意事项：</div>
+        <div class="actComentListR">
+
+            <p>${article.item.content.notice!''}</p>
         </div>
     </div>
 </div>

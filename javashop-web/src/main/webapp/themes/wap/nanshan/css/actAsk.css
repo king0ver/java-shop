@@ -815,6 +815,10 @@
 	color: #a1a1a1;
 }
 
+.content .content-title2{
+	margin-bottom: 0;
+}
+
 .content .content-title3 span {
 	display: inline-block;
 	width: 12px;
