@@ -82,7 +82,7 @@ form{margin-bottom:0px;}
 					<input name="file" class="layui-upload-file" id="gameImgUploadBtn" type="file">	
 				</div>
 				<div id="gameImg" class="layui-inline">
-					<#if data.pic_url??>
+					<#if data.pic_url?? && data.pic_url!="" >
 						<img src="${data.pic_url}" width='130' height='130' />
 						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delImg();"><i class='layui-icon'>&#xe640;</i></a>
 					</#if>
@@ -131,7 +131,7 @@ form{margin-bottom:0px;}
   			</div>
   			
 			<div class="layui-layer-btn layui-layer-btn" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
-  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="save_info">保存</a>
+  			<a style="margin: 0px" class="layui-layer-btn0" type="submit" lay-submit="" lay-filter="editModel">保存</a>
   			<button class="layui-btn layui-btn-primary layui-btn-small" type="reset">还原</button>
   		</div>
 		</form>
@@ -200,6 +200,9 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	   					parent.layer.close(index); //再执行关闭        
 	   					parent.table.ajax.url(ctx+"/core/admin/game/list-json.do").load();
 	   				}
+	   			},
+	   			error : function(e) {
+	   				$.Loading.error("出现错误 ，请重试");
 	   			}
 	   		};
 	   	$("#updateModelForm").ajaxSubmit(options);

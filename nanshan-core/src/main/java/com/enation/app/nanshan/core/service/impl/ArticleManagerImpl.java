@@ -95,6 +95,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtil.isEmpty(param.getEndDate())){
 			sql.append(" and a.create_time<="+DateUtil.getDateline(param.getEndDate(), "yyyy-MM-dd hh:mm:ss"));
 		};
+		sql.append("  order by a.create_time desc");
 		Page webpage = this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 		return webpage;
 	}
@@ -114,11 +115,12 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(!StringUtils.isEmpty(nanShanArticleVo.getSummary())) articleFields.put("summary", nanShanArticleVo.getSummary());
 		if(nanShanArticleVo.getCreate_time()>0) articleFields.put("create_time", nanShanArticleVo.getCreate_time());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getContent())) clobFields.put("content", nanShanArticleVo.getContent());
-		if(!StringUtils.isEmpty(nanShanArticleVo.getPic_url())) articleFields.put("pic_url", nanShanArticleVo.getPic_url());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getJob_cat())) articleFields.put("job_cat", nanShanArticleVo.getJob_cat());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getDept_name())) articleFields.put("dept_name", nanShanArticleVo.getDept_name());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getWork_place())) articleFields.put("work_place", nanShanArticleVo.getWork_place());
+		articleFields.put("pic_url", nanShanArticleVo.getPic_url());
 		this.delArtSpeRel(nanShanArticleVo.getId());
+		
 		this.addArtSpecRel(nanShanArticleVo.getSpecValIds(), nanShanArticleVo.getId());
 		if(articleFields.size()>0){
 			this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
@@ -187,6 +189,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 				sql.append(" and a.create_time <=").append(DateUtil.getDateline(String.valueOf(params.get("endDate")), "yyyy-MM-dd hh:mm:ss"));
 			}
 		}
+		sql.append(" order by a.create_time desc");
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
 	}
 
@@ -219,7 +222,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		ext.setReserve_num(vo.getReserve_num());
 		ext.setAct_cost(vo.getAct_cost());
 		if(!StringUtil.isEmpty(vo.getExpiryDate())){
-			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd");
+			long create_time = DateUtil.getDateline(vo.getExpiryDate(), "yyyy-MM-dd hh:mm:ss");
 			ext.setExpiry_date(create_time);
 		}
 		return ext;
