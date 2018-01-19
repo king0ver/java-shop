@@ -2,6 +2,41 @@
 <#assign article = articlePage('{"catId":80}') />
 <#assign articleTitle = article.curCat.name/>
 <#include 'common/header.html'/>
+<style>
+.timeColor{
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	margin-top: 30px;
+}
+.timeColor .timeColotList{
+	display: inline-block;
+	margin: 0 10px;
+}
+.timeColor .timeColotList span:nth-child(1){
+	display: inline-block;
+	width: 30px;
+	height: 15px;
+}
+.timeColor .timeColotList:nth-child(1) span:nth-child(1){
+	background:#92d051;
+}
+
+.timeColor .timeColotList:nth-child(2) span:nth-child(1){
+	background:#ffff01;
+}
+
+.timeColor .timeColotList:nth-child(3) span:nth-child(1){
+	background:#fe0000;
+}
+
+.timeColor .timeColotList span:nth-child(2){
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 3px;
+	vertical-align: top;
+}
+</style>
 <#if article.item??>
 	<#if article.item.content.content?size gt 0>
 		<div class="content">
@@ -10,6 +45,20 @@
 					<li>
 						<img src="${item.imgUrl!''}" />
 					</li>
+					<div class="timeColor">
+						<div class="timeColotList">
+							<span></span>
+							<span>观众最少</span>
+						</div>
+						<div class="timeColotList">
+							<span></span>
+							<span>观众量较多</span>
+						</div>
+						<div class="timeColotList">
+							<span></span>
+							<span>观众最多</span>
+						</div>
+					</div>
 				</#list>
 			</ul>
 		</div>

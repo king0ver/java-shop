@@ -2,6 +2,7 @@
 	<#assign articleListPageTag = newTag("articleListPageTag") />
 	<#assign articlePage = articleListPageTag('{"catId":14}') />
 </#if>
+<#assign dateformat= "com.enation.framework.directive.DateformateDirective"?new()>
 <#if articlePage.items?size gt 0>
 	<ul class="contentList">
 		<#list articlePage.items as item>
@@ -11,6 +12,7 @@
 				</div>
 				<div class="zlTxt">
 					<div class="actTxtTi">${item.title!''}</div>
+					<div class="zlTime"><span></span><@dateformat time='${item.createTime}' pattern='yyyy-MM-dd'/></div>
 					<a href="/nanshan/exhibition.html?id=${item.id}" class="btn"><div class="zlListDetail">查看详情</div></a>
 				</div>
 			</li>

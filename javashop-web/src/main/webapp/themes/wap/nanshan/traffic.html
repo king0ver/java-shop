@@ -1,7 +1,12 @@
 <#assign articleTitle = '交通指南'/>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CKqEGUgToAjwgGaF7go5D0y15Ic2ksnu"></script>
 <#include 'common/header.html'/>
 <div class="content">
-	<p class="contentTxt">中国科技馆新馆位于北京市朝阳区北辰东路5号，奥林匹克公园中心区东北部，鸟巢正北1公里。</p>
+	<p class="contentTxt" style="padding-top: 20px;"></p>
+	<div class="map">
+  			<div style="width:100%;height:200px;border:#ccc solid 1px;" id="allmap"></div>
+	</div>
+	<p class="contentTxt" style="padding-top: 20px;">中国科技馆新馆位于北京市朝阳区北辰东路5号，奥林匹克公园中心区东北部，鸟巢正北1公里。</p>
 	<p class="contentTxt">1．公交线路：</p>
 	<p class="contentTxt" style="margin-left: 15px;">（1）乘坐328、379、419、484、617、628、751、913路、运通110路到“洼里南口”站，向北步行约6分钟到达中国科学技术馆西门（最近）；</p>
 	<p class="contentTxt" style="margin-left: 15px;">（2）乘坐328、379、419、425、484、518、628、630、695、751、617、913、949、运通110路到“豹房”站，向西再向北步行，约10分钟到达中国科学技术馆东门 （稍近）；</p>
@@ -13,3 +18,13 @@
 	<p class="contentTxt" style="margin-left: 15px;">（3）乘坐地铁5号线到“大屯路东”站出A1口，换乘538路到“北辰东路”站，向北直行约12分钟到达中国科学技术馆东门。</p>
 	<p class="contentTxt">温馨提示：因公交线路存在不定期更改的因素，建议您在出行前再核实一下乘车路线。</p>
 </div>
+<script type="text/javascript">
+	//百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(113.992988,22.536554);
+	map.centerAndZoom(point, 15);
+	var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	map.enableScrollWheelZoom(true);
+</script>
