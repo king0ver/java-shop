@@ -33,11 +33,9 @@
 				<input name="file" class="layui-upload-file" id="picUrl" type="file">	
 			</div>
 			<div  class="layui-inline">
-			   <#if (vo.pic_url)??>
-			    <#if (vo.pic_url)!="">
+			   <#if (vo.pic_url)??&&(vo.pic_url)!="">
 						<img src="${(vo.pic_url)!''}" width='130' height='130' />
-						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delImg(this);"><i class='layui-icon'>&#xe640;</i></a>
-				</#if>
+						<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delBigImg(this);"><i class='layui-icon'>&#xe640;</i></a>
 				</#if>
 			</div>
   	</div>
@@ -58,15 +56,19 @@
 			<div class="layui-form-item" style="magin-top:10px">
 				<label class="layui-form-label">图片：</label>
 				<div class="layui-input-inline" style="width:120px;">
-					<input name="file" class="layui-upload-file" id="test2" type="file">	
+					<input name="file" class="layui-upload-file" id="test2" type="file">
 				</div>
-				<div class="routeImg" class="layui-inline"></div>
+				<div class="layui-form-item"  >
+					
+				</div>
+				
 			</div>
 		  <div class="layui-form-item" style="margin-left:110px">
 	  		  <a class="layui-btn" onclick="addPanel();">增加记录</a>	
 	  		  <a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delPanel(this);'>删除记录</a>
 	     </div>
 	     </fieldset>
+	    
       </fieldset>
       </div>
   		<div class="layui-layer-btn layui-layer-btn-" style="padding:8px 12px;z-index:1000;position: fixed;left: 1px;width: 97%;height: 40px; background:rgba(230,230,230,0.8)"> 
@@ -111,6 +113,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 			return false
 		}
 		var content=JSON.stringify(getRouteContext());
+		
     	var options = {
    			url:ctx+"/admin/article/cinema-edit.do?id=${(vo.id)!'0'}&content_id=${(vo.content_id)!'0'}",
    			type:"post",
@@ -138,8 +141,11 @@ function getRouteContext(){
 		var floor=$(this).find("input[name='floor']").val();
 		var name=$(this).find("input[name='name']").val();
 		var imgs=[];
-		$(this).find(".routeImg").children("img").each(function(){
-			imgs.push($(this).attr("src"))
+		$(this).find("img").each(function(){
+			var imgobj=new Object()
+			imgobj.imgSrc=$(this).attr("src");
+			imgobj.imgDesc=$(this).parent().next().find("input").val();
+			imgs.push(imgobj)
 		})
 		obj.index=floor;
 		obj.name=name;
@@ -153,7 +159,7 @@ function  getRouteHtml(index,name,imgs){
 	var imgHtml="";
 	if(imgs!=''&&imgs.length>0){
 		for(var i=0;i<imgs.length;i++){
-			imgHtml=imgHtml+getRouteImgUrl(imgs[i])
+			imgHtml=imgHtml+getRouteImgUrl(imgs[i].imgSrc,imgs[i].imgDesc)
 		}
 	}
 	var html='<fieldset class="layui-elem-field site-demo-button" style="margin-top: 10px;padding-left:20px;padding-top:10px">'+
@@ -172,7 +178,7 @@ function  getRouteHtml(index,name,imgs){
 		'<div class="layui-input-inline" style="width:120px;">'+
 			'<input name="file" class="layui-upload-file" id="test2" type="file">'+	
 		'</div>'+
-		'<div class="routeImg" class="layui-inline">'+imgHtml+'</div>'+
+		'<div class="layui-form-item">'+imgHtml+'</div>'+
 	'</div>'+
 	'<div class="layui-form-item" style="margin-left:110px">'+
 	  '<a class="layui-btn" onclick="addPanel();">增加记录</a>	'+
@@ -217,20 +223,37 @@ function delPanel(obj){
 }
 
 function handleImg(res,con){
-	var html=getRouteImgUrl(res.url);
 	if($(con).attr("id")=="picUrl"){
 		 $("input[name='pic_url']").val(res.url);
+		 var html=getBigImg(res.url);
 		 $(con).parent().parent().parent().next().html(html);
 	}
 	else{
+		var html=getRouteImgUrl(res.url,'');
 		$(con).parent().parent().parent().next().append(html);
 	}
    
 }
 
-function getRouteImgUrl(src){
-	var html="<img src='"+src+"' width='130' height='130' style='margin-right:5px;margin-left:10px' />"+
-	"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delImg(this);'><i class='layui-icon'>&#xe640;</i></a>";
+function getRouteImgUrl(src,imgDesc){
+	var html='<div class="layui-input-inline" style="margin-top:10px;width:250px">'+
+				'<div class="layui-input-inline" style="padding-left:70px">'+
+				   '<img src='+src+' style="margin-right:5px;margin-left:10px" width="130" height="130">'+
+				'</div>'+
+			   '<div class="layui-input-inline" style="width:220px;margin-top:10px">'+
+				   '<label >图片描述：</label>'+
+					'<input type="text"  class="layui-input" style="float:right;width:150px" value='+imgDesc+'>'+	
+			   '</div>'+	
+			    '<div class="layui-input-inline">'+
+			       '<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delImg(this);" style="margin-top:10px;margin-left:120px"><i class="layui-icon">&#xe640;</i></a>'+
+			    '</div>'+
+			 '</div>';
+	return html
+}
+
+function getBigImg(url){
+	var html="<img src='"+url+"' width='130' height='130' />"+
+	"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delBigImg(this);' style='margin-left:10px'><i class='layui-icon'>&#xe640;</i></a>";
 	return html
 }
 
@@ -256,8 +279,7 @@ function delImg(obj){
 		  btn: ['删除','取消'] //按钮
 		  ,area:['80px','150px']
 		}, function(){
-			 $(obj).prev().remove();
-			 $(obj).remove();
+			 $(obj).parent().parent().remove();
 		  	 layer.msg({
 			    time: 20000
 			 }); 
@@ -267,6 +289,26 @@ function delImg(obj){
 			}); 
 		});
 };
+
+function delBigImg(obj){
+	
+	 layer.confirm('确认要删除推荐路线图吗？', {
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			 $("input[name='pic_url']").val("");
+			 $(obj).parent().html("")
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+
+
 
 function upload(obj){
 	 var pic = $("#imgUploadBtn")[0];
