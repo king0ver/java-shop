@@ -94,6 +94,57 @@ form{margin-bottom:0px;}
 			</#if>
 		</div>
   	</div>
+  	<div class="layui-form-item">
+   		<label class="layui-form-label">新闻中心：</label>
+		<div class="layui-input-inline" style="width:120px;">
+			<input name="file" class="layui-upload-file" id="newsImgUploadBtn" type="file">
+			<input id="newsImgUrl" name="newsImgUrl" value="<#if dataInfo.newsImgUrl??> ${dataInfo.newsImgUrl} </#if>" type="hidden">
+		</div>
+		<div id="newsImg" class="layui-inline">
+			<#if data.content??>
+				<#if dataInfo.newsImgUrl??>
+					<#if dataInfo.newsImgUrl != "">
+						<img src="${dataInfo.newsImgUrl}" width="130" height="130" />
+		    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delNewsImg();"><i class="layui-icon">&#xe640;</i></a>
+					</#if>
+				</#if>
+			</#if>
+		</div>
+  	</div>
+  	<div class="layui-form-item">
+   		<label class="layui-form-label">活动回顾：</label>
+		<div class="layui-input-inline" style="width:120px;">
+			<input name="file" class="layui-upload-file" id="activityReviewImgUploadBtn" type="file">
+			<input id="activityReviewImgUrl" name="activityReviewImgUrl" value="<#if dataInfo.activityReviewImgUrl??> ${dataInfo.activityReviewImgUrl} </#if>" type="hidden">
+		</div>
+		<div id="activityReviewImg" class="layui-inline">
+			<#if data.content??>
+				<#if dataInfo.activityReviewImgUrl??>
+					<#if dataInfo.activityReviewImgUrl != "">
+						<img src="${dataInfo.activityReviewImgUrl}" width="130" height="130" />
+		    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delActivityReviewImg();"><i class="layui-icon">&#xe640;</i></a>
+					</#if>
+				</#if>
+			</#if>
+		</div>
+  	</div>
+  	<div class="layui-form-item">
+   		<label class="layui-form-label">最新活动：</label>
+		<div class="layui-input-inline" style="width:120px;">
+			<input name="file" class="layui-upload-file" id="latestActivityImgUploadBtn" type="file">
+			<input id="latestActivityImgUrl" name="latestActivityImgUrl" value="<#if dataInfo.latestActivityImgUrl??> ${dataInfo.latestActivityImgUrl} </#if>" type="hidden">
+		</div>
+		<div id="latestActivityImg" class="layui-inline">
+			<#if data.content??>
+				<#if dataInfo.latestActivityImgUrl??>
+					<#if dataInfo.latestActivityImgUrl != "">
+						<img src="${dataInfo.latestActivityImgUrl}" width="130" height="130" />
+		    			<a class="layui-btn layui-btn-sm layui-btn-danger" onclick="delLatestActivityImg();"><i class="layui-icon">&#xe640;</i></a>
+					</#if>
+				</#if>
+			</#if>
+		</div>
+  	</div>
 	<div class="layui-form-item" >
 	    <div class="layui-inline">
 			<a class="layui-btn" type="submit" lay-submit="" lay-filter="save_info">保存提交</a>	
@@ -139,6 +190,36 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 	});
 	layui.upload({
 	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#newsImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#newsImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delNewsImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#newsImgUrl").val(res.url);
+	    }
+	});
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#activityReviewImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#activityReviewImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delActivityReviewImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#activityReviewImgUrl").val(res.url);
+	    }
+	});
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
+	    ,elem: '#latestActivityImgUploadBtn' 
+	    ,method: 'POST'
+	    ,success: function(res){
+	    	$("#latestActivityImg").html("<img src='"+res.url+"' width='130' height='130' />"+
+	    			"<a class='layui-btn layui-btn-sm layui-btn-danger' onclick='delLatestActivityImg();'><i class='layui-icon'>&#xe640;</i></a>");
+	    	$("#latestActivityImgUrl").val(res.url);
+	    }
+	});
+	layui.upload({
+	    url: '/core/admin/nanshan/upload.do'
 		    ,elem: '#serviceInfoImgUploadBtn' 
 		    ,method: 'POST'
 		    ,success: function(res){
@@ -180,6 +261,7 @@ layui.use(['form', 'layedit', 'laydate','upload'], function(){
 
 function delRoutineImg(){
 	 layer.confirm('确认要删除吗？', {
+		 offset:['300px','400px'],
 		  btn: ['删除','取消'] //按钮
 		  ,area:['80px','150px']
 		}, function(){
@@ -196,6 +278,7 @@ function delRoutineImg(){
 };
 function delTemporaryImg(){
 	 layer.confirm('确认要删除吗？', {
+		  offset:['300px','400px'],
 		  btn: ['删除','取消'] //按钮
 		  ,area:['80px','150px']
 		}, function(){
@@ -212,11 +295,63 @@ function delTemporaryImg(){
 };
 function delScienceImg(){
 	 layer.confirm('确认要删除吗？', {
+		 offset:['300px','400px'],
 		  btn: ['删除','取消'] //按钮
 		  ,area:['80px','150px']
 		}, function(){
 			$("#scienceImg").html("");
 			$("#scienceImgUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+function delNewsImg(){
+	 layer.confirm('确认要删除吗？', {
+		 offset:['300px','400px'],
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#newsImg").html("");
+			$("#newsImgUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+function delActivityReviewImg(){
+	 layer.confirm('确认要删除吗？', {
+		 offset:['300px','400px'],
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#activityReviewImg").html("");
+			$("#activityReviewImgUrl").val("");
+		  	 layer.msg({
+			    time: 20000
+			 }); 
+		}, function(){
+		    layer.msg({
+			    time: 20000
+			}); 
+		});
+};
+function delLatestActivityImg(){
+	 layer.confirm('确认要删除吗？', {
+		 offset:['300px','400px'],
+		  btn: ['删除','取消'] //按钮
+		  ,area:['80px','150px']
+		}, function(){
+			$("#latestActivityImg").html("");
+			$("#latestActivityImgUrl").val("");
 		  	 layer.msg({
 			    time: 20000
 			 }); 

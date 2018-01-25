@@ -75,6 +75,8 @@
         <@pager pageno="${article.webPage.currentPageNo!'1'}" pagesize="${article.webPage.pageSize}" totalcount="${article.webPage.totalCount}" />
     </div>
 </div>
+
+<#if member??>
     <!-- 活动预约 -->
 <div class="bgColorShadow" style="display: none;"></div>
 <div class="activity-reservation" style="display: none;">
@@ -87,27 +89,22 @@
                 <input name="yyEnd" type="text" class="Wdate" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" />
                 <input id="activityId" type="hidden" value="" />
             </li>
-            <div id="member">
-                <div class="row">
-                    <label for="uname"><span class="error">※</span>参加成员</label>
-                    <input id="uname" type="text" placeholder="姓名">
-                </div>
-                <div class="row">
-                    <label for="age"><span class="error">※</span>年龄</label>
-                    <input id="age" type="text" placeholder="年龄">
-                </div>
-            </div>
+            <li>
+                <label for="uname"><span class="error">※</span>发起人</label>
+                <input id="uname" type="text" placeholder="姓名" value="${member.name!''}">
+            </li>
+
             <li>
                 <label for="num"><span class="error">※</span>参加人数</label>
                 <input id="num" type="text" placeholder="包含发起人">
             </li>
             <li>
                 <label for="phone"><span class="error">※</span>联系电话</label>
-                <input id="phone" type="text" placeholder="手机号码">
+                <input id="phone" type="text" placeholder="手机号码" value="${member.mobile!''}">
             </li>
             <li>
                 <label for="email"><span class="error">※</span>电子邮件</label>
-                <input id="email" type="text" placeholder="电子邮件">
+                <input id="email" type="text" placeholder="电子邮件" value="${member.email!''}">
             </li>
         </ul>
 
@@ -119,8 +116,8 @@
             提示:活动开始前可进入"个人中心-我的预约"取消预约
         </p>
     </form>
-
 </div>
+</#if>
     <script type="text/javascript">
         $("img[dis-type]").click(function(){
             var $this = $(this);

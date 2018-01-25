@@ -41,4 +41,6 @@ public interface IArticleManager {
 
 	public Page queryReserveList(ReserveQueryParam param, int page, int pageSize);
 
+	public void updateActivityExpire();
+
 }

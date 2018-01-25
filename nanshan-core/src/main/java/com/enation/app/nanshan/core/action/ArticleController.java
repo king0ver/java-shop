@@ -141,6 +141,7 @@ public class ArticleController extends GridController {
             this.articleManager.updateArticle(nanShanArticleVo);
 		    return JsonResultUtil.getSuccessJson("修改成功");
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			return JsonResultUtil.getErrorJson("修改失败");
 		}
 	}

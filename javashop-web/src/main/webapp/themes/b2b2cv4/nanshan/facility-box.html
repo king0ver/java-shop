@@ -1,0 +1,30 @@
+<#assign articlePage = newTag("articlePage") />
+<#assign article = articlePage() />
+<#assign file_path = ctx + themes_path />
+<div class="alert-equipment">
+    <div class="alert-box">
+        <div class="alert-title">
+            <div class="alert-close"><img src="${file_path}/nanshan/css/images/close.jpg" /> </div>
+            <div class="alert-equipment-name">${article.item.title}</div>
+            <#if article.item.content.address??>
+                <div class="alert-position-desc"><img src="${file_path}/nanshan/css/images/position.png">&nbsp;${article.item.content.address}</div>
+            </#if>
+        </div>
+        <div class="alert-content">
+            <div class="alert-content-title">服务设施简介</div>
+
+            <#if article.item.content?size gt 0 >
+                <#list article.item.content['content'] as content>
+                    <#if content.type == 'text'>
+                        <p class="alert-txt">${content.content}</p>
+                    </#if>
+                    <#if content.type == 'img'>
+                        <div class="alert-img">
+                            <img src="${content.content}">
+                        </div>
+                    </#if>
+                </#list>
+            </#if>
+        </div>
+    </div>
+</div>

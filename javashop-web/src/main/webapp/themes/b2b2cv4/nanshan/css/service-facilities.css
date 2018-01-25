@@ -1,10 +1,16 @@
 @import "common.css";
+
 /* 服务设施 */
+
+div.main{
+    background-color: #f2f2f2;
+}
 
 .icon-content{
     width: 1200px;
     height: 542px;
     background: #fff;
+    margin-top: 20px;
 }
 .icon-content .list{
     overflow: hidden;
@@ -57,6 +63,76 @@
 }
 .equipment-introduction .img{
     margin: 30px auto 37px;
+}
+
+.alert-equipment{
+    width: 940px;
+    height: 840px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.25);
+    margin: auto;
+    position: absolute;
+    left: 0; right: 0; top: 250px; bottom: 0;
+    z-index: 999;
+}
+.alert-box{
+    background-color: #fff;
+    height: 100%;
+}
+.alert-box .alert-title{
+    text-align: center;
+    position: relative;
+}
+.alert-box .alert-close{
+    font-size: 54px;
+    color: #7d7d7d;
+    position: absolute;
+    right: 30px;
+    top: 0;
+    cursor: pointer;
+}
+.alert-box .alert-title .alert-equipment-name{
+    font-size: 36px;
+    font-weight: bold;
+    padding: 20px 0 18px;
+}
+.alert-box .alert-title .alert-position-desc{
+    font-size: 20px;
+    margin-left: 11px;
+    color: #1173d1;
+}
+.alert-box .alert-content{
+    margin: auto 37px 30px;
+}
+.alert-box .alert-content-title {
+    margin: 27px 0 20px;
+    font-size: 30px;
+}
+.alert-box .alert-txt{
+    height: 64px;
+    font-size: 16px;
+    color: #7d7d7d;
+    text-indent: 2em;
+}
+.alert-box .alert-img{
+    text-align: center;
+}
+.alert-box .alert-img img{
+    width: 825px;
+    height: 450px;
+    margin: 29px auto 29px;
+}
+#mask{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: #000;
+    opacity: 0.3;
+    margin: 0;
+    position: absolute;
+    left: 0;  top: 0;
+    z-index: 998;
+    display: none;
 }
 
 

@@ -32,8 +32,9 @@ function convertImg(dateInfo){
 
 function delButton(k){
 	 layer.confirm('确认要删除吗？', {
-		  btn: ['删除','取消'] //按钮
-		  ,area:['80px','150px']
+		  btn: ['删除','取消'], //按钮
+		  offset:['300px','400px'],
+		  area:['80px','150px']
 		}, function(){
 			$(k).parent().parent().remove();
 		  	 layer.msg({

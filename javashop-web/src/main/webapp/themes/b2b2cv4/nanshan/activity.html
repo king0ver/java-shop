@@ -26,7 +26,7 @@
                 <li><span>活动对象</span>：${article.item.actName}</li>
                 <li><span>活动时间</span>：<@dateformat time='${article.item.expiryDate}' pattern='yyyy-MM-dd'/></li>
                 <li><span>活动地址</span>：${article.item.actAddress}</li>
-                <li class="clearfix"><span style="display: block;float: left">注意事项：</span>
+                <li class="clearfix"><span style="display: block;float: left;height: auto">注意事项：</span>
                     <span style="display: inline-block;color: #000;">${article.item.content.notice!''}</span></li>
             </ul>
             <#if article.item.catId = 38>
@@ -56,51 +56,46 @@
             </#list>
         </#if>
     </div>
-    <!-- 活动预约 -->
-    <div class="bgColorShadow" style="display: none;"></div>
-    <div class="activity-reservation" style="display: none;">
-        <div class="item-title">
-            <img src="${file_path}/nanshan/css/images/gt.png">&nbsp;活动预约</div>
-        <form id="reservation">
-            <ul class="form-list">
-                <li>
-                    <label for="date">参加活动日期</label>
-                    <input name="yyEnd" type="text" class="Wdate" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" />
-                    <input id="activityId" type="hidden" value="${article.item.id}" />
-                </li>
-                <div id="member">
-                    <div class="row">
-                        <label for="uname"><span class="error">※</span>参加成员</label>
-                        <input id="uname" type="text" placeholder="姓名">
-                    </div>
-                    <div class="row">
-                        <label for="age"><span class="error">※</span>年龄</label>
-                        <input id="age" type="text" placeholder="年龄">
-                    </div>
+    <#if member??>
+        <!-- 活动预约 -->
+        <div class="bgColorShadow" style="display: none;"></div>
+        <div class="activity-reservation" style="display: none;">
+            <div class="item-title">
+                <img src="${file_path}/nanshan/css/images/gt.png">&nbsp;活动预约</div>
+            <form id="reservation">
+                <ul class="form-list">
+                    <li>
+                        <label for="date">参加活动日期</label>
+                        <input name="yyEnd" type="text" class="Wdate" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD'})" />
+                        <input id="activityId" type="hidden" value="${article.item.id}" />
+                    </li>
+                    <li>
+                        <label for="uname"><span class="error">※</span>发起人</label>
+                        <input id="uname" type="text" placeholder="姓名" value="${member.name!''}">
+                    </li>
+                    <li>
+                        <label for="num"><span class="error">※</span>参加人数</label>
+                        <input id="num" type="text" placeholder="包含发起人">
+                    </li>
+                    <li>
+                        <label for="phone"><span class="error">※</span>联系电话</label>
+                        <input id="phone" type="text" placeholder="手机号码" value="${member.mobile!''}">
+                    </li>
+                    <li>
+                        <label for="email"><span class="error">※</span>电子邮件</label>
+                        <input id="email" type="text" placeholder="电子邮件" value="${member.email!''}">
+                    </li>
+                </ul>
+
+
+                <div class="btn-box">
+                    <input type="button" id="submit-btn" value="提交">
                 </div>
-                <li>
-                    <label for="num"><span class="error">※</span>参加人数</label>
-                    <input id="num" type="text" placeholder="包含发起人">
-                </li>
-                <li>
-                    <label for="phone"><span class="error">※</span>联系电话</label>
-                    <input id="phone" type="text" placeholder="手机号码">
-                </li>
-                <li>
-                    <label for="email"><span class="error">※</span>电子邮件</label>
-                    <input id="email" type="text" placeholder="电子邮件">
-                </li>
-            </ul>
-
-
-            <div class="btn-box">
-                <input type="button" id="submit-btn" value="提交">
-            </div>
-            <p class="tip-txt">
-                提示:活动开始前可进入"个人中心-我的预约"取消预约
-            </p>
-        </form>
-
-    </div>
+                <p class="tip-txt">
+                    提示:活动开始前可进入"个人中心-我的预约"取消预约
+                </p>
+            </form>
+        </div>
+    </#if>
 </div>
 <#include 'common/footer.html'/>

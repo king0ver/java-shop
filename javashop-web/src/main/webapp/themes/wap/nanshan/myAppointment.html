@@ -9,7 +9,9 @@
     <#include 'activity-item.html'/>
 </div>
 <script>
-    $("div.content").page({"url": "/nanshan/activity-item.html" , "total" : '${article.webPage.totalCount}'});
+    <#if article.webPage??>
+        $("div.content").page({"url": "/nanshan/activity-item.html" , "total" : '${article.webPage.totalCount}'});
+    </#if>
 </script>
 </div>
 </body>

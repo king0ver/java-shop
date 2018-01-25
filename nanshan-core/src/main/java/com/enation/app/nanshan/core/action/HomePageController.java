@@ -85,9 +85,15 @@ public class HomePageController extends GridController{
 			String routineImgUrl = request.getParameter("routineImgUrl");
 			String temporaryImgUrl = request.getParameter("temporaryImgUrl");
 			String scienceImgUrl = request.getParameter("scienceImgUrl");
+			String newsImgUrl = request.getParameter("newsImgUrl");
+			String activityReviewImgUrl = request.getParameter("activityReviewImgUrl");
+			String latestActivityImgUrl = request.getParameter("latestActivityImgUrl");
 			json.put("routineImgUrl", routineImgUrl);
 			json.put("temporaryImgUrl", temporaryImgUrl);
 			json.put("scienceImgUrl", scienceImgUrl);
+			json.put("newsImgUrl", newsImgUrl.trim());
+			json.put("activityReviewImgUrl", activityReviewImgUrl.trim());
+			json.put("latestActivityImgUrl", latestActivityImgUrl.trim());
 			json.put("imgs", jsonArray);
 			articleVo.setContent(json.toString());
 			if(articleVo.getId()>0){

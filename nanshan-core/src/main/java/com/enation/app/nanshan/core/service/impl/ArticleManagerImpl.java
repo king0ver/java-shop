@@ -52,7 +52,9 @@ public class ArticleManagerImpl implements IArticleManager  {
 		nanShanArticle.setJob_cat(nanShanArticleVo.getJob_cat());
 		nanShanArticle.setDept_name(nanShanArticleVo.getDept_name());
 		NanShanClob nanShanClob=new NanShanClob();
-		nanShanClob.setContent(nanShanArticleVo.getContent());
+		if(StringUtils.isNotEmpty(nanShanArticleVo.getContent())){
+			nanShanClob.setContent(nanShanArticleVo.getContent().replaceAll("\\\\n",""));
+		}
 		nanShanClob.setCategory(nanShanArticleVo.getCat_id());
 		this.daoSupport.insert("es_nanshan_clob", nanShanClob);
 		int clobId=this.daoSupport.getLastId("es_nanshan_clob");
@@ -114,7 +116,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(nanShanArticleVo.getCat_id()>0) articleFields.put("cat_id", nanShanArticleVo.getCat_id());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getSummary())) articleFields.put("summary", nanShanArticleVo.getSummary());
 		if(nanShanArticleVo.getCreate_time()>0) articleFields.put("create_time", nanShanArticleVo.getCreate_time());
-		if(!StringUtils.isEmpty(nanShanArticleVo.getContent())) clobFields.put("content", nanShanArticleVo.getContent());
+		if(!StringUtils.isEmpty(nanShanArticleVo.getContent())) clobFields.put("content", nanShanArticleVo.getContent().replaceAll("\\\\n",""));
 		if(!StringUtils.isEmpty(nanShanArticleVo.getJob_cat())) articleFields.put("job_cat", nanShanArticleVo.getJob_cat());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getDept_name())) articleFields.put("dept_name", nanShanArticleVo.getDept_name());
 		if(!StringUtils.isEmpty(nanShanArticleVo.getWork_place())) articleFields.put("work_place", nanShanArticleVo.getWork_place());
@@ -126,6 +128,7 @@ public class ArticleManagerImpl implements IArticleManager  {
 			this.daoSupport.update("es_nanshan_article", articleFields, "id="+nanShanArticleVo.getId());
 		}
 		if(nanShanArticleVo.getContent_id()>0){
+
 			this.daoSupport.update("es_nanshan_clob", clobFields, "id="+nanShanArticleVo.getContent_id());
 		}
 		if(!StringUtil.isEmpty(nanShanArticleVo.getAct_name())){
@@ -310,7 +313,19 @@ public class ArticleManagerImpl implements IArticleManager  {
 		if(StringUtils.isNotBlank(param.getIsDel())){
 			sql.append(" and t.is_del="+param.getIsDel());
 	    }
+		sql.append(" order by t.activity_time desc");
 		return this.daoSupport.queryForPage(sql.toString(), page, pageSize);
+	}
+
+	@Override
+	public void updateActivityExpire() {
+
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("update es_nanshan_article t set t.cat_id = 39 where t.cat_id = 38")
+			  .append(" and t.id in ( select b.article_id from b2b2c.es_nanshan_article_ext b")
+			  .append(" where  b.expiry_date < now())");
+
+		daoSupport.execute(buffer.toString());
 	}
 
 	/*
@@ -325,5 +340,13 @@ public class ArticleManagerImpl implements IArticleManager  {
 		sql.append("from es_nanshan_article a,es_nanshan_clob c,es_nanshan_article_category t ");
 		sql.append(" where a.cat_id=t.cat_id and a.content=c.id and t.cat_id = ?");
 		return daoSupport.queryForList(sql.toString(),NanShanArticleVo.class,catId);
+	}
+
+
+
+	public static void main(String[] args){
+
+		System.out.println("{\"content\":[{\"index\":0,\"type\":\"text\",\"content\":\"“志合者，不以山海为远”，为积极落实国家提出的“一带一路”倡议，实现沿线国家科普场馆互通互联、繁荣发展，11月27 -28日，由中国自然科学博物馆协会主办、中国科学技术馆和上海科技馆联合承办的首届“一带一路”科普场馆发展国际研讨会在北京隆重召开。来自“一带一路”沿线22个国家24个科普场馆和机构的44位馆长或负责人，以及中国国内包括自然历史博物馆、科学技术馆、天文馆、国土资\\n\\n\\n\\n源博物馆等在内的8大类74家科普场馆和机构、15家科普企业的130余位馆长或负责人齐聚中国科学技术馆，围绕“协同共享、场馆互惠、共建科学传播丝绸之路”大会主题，共话沿线国家科普场馆间长远合作愿景。11月29-30日，与会外方代表赴上海科技馆、上海自然博物馆（上海科技馆分馆）进行专业参观。\"}]}".replaceAll("\\\\n",""));
+
 	}
 }

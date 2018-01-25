@@ -24,37 +24,34 @@
             <ul class="list">
                 <#list article.siblings as cat>
                     <li>
-                        <a href="${cat.pcUrl}"><img src="${cat.pcIcon}"></a>
+                        <a href="javascript:void(0)" data-id="${cat.id}"><img src="${cat.pcIcon}"></a>
                         <div class="desc">${cat.name}</div>
                     </li>
                 </#list>
             </ul>
         </div>
-
-        <!-- 设备简介 -->
-        <div class="equipment-introduction">
-            <div class="title">
-                <div class="equipment-name">${article.item.title}</div>
-                <#if article.item.content.address??>
-                    <div class="position-desc"><img src="${file_path}/nanshan/css/images/position.png">${article.item.content.address}</div>
-                </#if>
-            </div>
-            <div class="content-title">设施简介</div>
-            <#if article.item.content?size gt 0 >
-                <#list article.item.content['content'] as content>
-                    <#if content.type == 'text'>
-                        <p class="text-indent txt">${content.content}</p>
-                    </#if>
-                    <#if content.type == 'img'>
-                        <div class="img">
-                            <img src="${content.content}">
-                        </div>
-                    </#if>
-                </#list>
-            </#if>
-        </div>
-
     </div>
 
 </div>
+<div id="mask">
+
+</div>
+<script>
+    $(function(){
+        $("a[data-id]").click(function(){
+
+
+            $.get("/nanshan/facility-box.html?catId=" + $(this).attr("data-id"),function(data){
+
+                $("#mask").height($(document).height());
+                $("#mask").show();
+
+
+                $("body").append(data);
+
+
+            });
+        }) ;
+    });
+</script>
 <#include 'common/footer.html'/>

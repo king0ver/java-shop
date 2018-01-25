@@ -21,6 +21,7 @@ public class ActReserveVo implements Serializable {
 	private String  actName;//  活动名称
 	private String actCost;//活动费用
 	private String actAddress;//活动地址
+	private int num;//次数
 
 
 
@@ -91,5 +92,13 @@ public class ActReserveVo implements Serializable {
 
 	public void setActAddress(String actAddress) {
 		this.actAddress = actAddress;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
 	}
 }

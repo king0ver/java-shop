@@ -3,6 +3,8 @@ package com.enation.app.nanshan.tag;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.enation.app.base.core.model.Member;
+import com.enation.eop.sdk.context.UserConext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +28,22 @@ public class MessageBgTag extends AbstractPageTag{
 
     @Override
     protected Object exec(Map params) throws TemplateModelException {
+
+
         Map<String, Object> map = new HashMap<>();
-        int pageNo = getPage();
-        Page<MessageBgVo> webPage =messageBgService.queryMessageInfoByPage(pageNo, getPageSize());
-        webPage.setCurrentPageNo(pageNo);
+
         handlePageCat(map, "56");
+
+        Member member  = UserConext.getCurrentMember();
+
+        if(member == null){
+            return map;
+        }
+
+        int pageNo = getPage();
+        Page<MessageBgVo> webPage =messageBgService.queryMessageInfoByPage(member.getMember_id(),pageNo, getPageSize());
+        webPage.setCurrentPageNo(pageNo);
+
         map.put("webPage", webPage);
         map.put("items", webPage.getResult());
         map.put("blockview", ThreadContextHolder.getHttpRequest().getParameter("blockview"));

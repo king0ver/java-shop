@@ -231,7 +231,7 @@
 	color: #717171;
 	border-right: 1px solid #f1f1f1;
 }
-.nav .navList:nth-child(3)>span:nth-child(1){
+.nav .navList:last-child(3)>span:nth-child(1){
 	border: none;
 }
 .nav .navList.select span {
@@ -1465,7 +1465,7 @@
 	margin-right: 5px;
 }
 .content{
-	padding: 0 5%;
+	padding: 0 4%;
 }
 .titleTxt{
 	font-weight: bold;

@@ -16,6 +16,6 @@ public interface IMessageBgService {
 	 * @param pageSize
 	 * @return
 	 */
-	public Page<MessageBgVo> queryMessageInfoByPage(int pageNo, int pageSize);
+	public Page<MessageBgVo> queryMessageInfoByPage(Integer member_id,int pageNo, int pageSize);
 	
 }

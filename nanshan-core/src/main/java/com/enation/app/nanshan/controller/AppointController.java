@@ -43,7 +43,7 @@ public class AppointController {
     @ResponseBody
     @PostMapping(value="/appoint")
     public JsonResult create(int activity_id, String activity_time, String member_name,int num,
-                             String member_age, String phone_number, String email){
+                              String phone_number, String email){
 
         try {
 
@@ -76,7 +76,6 @@ public class AppointController {
                 reserve.setActivity_time(DateUtil.getDateline(activity_time));
             }
             reserve.setAttend_name(member_name);
-            reserve.setAge(member_age);
             reserve.setPhone_number(phone_number);
             reserve.setEmail(email);
             reserve.setMember_id(member.getMember_id());

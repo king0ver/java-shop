@@ -22,7 +22,7 @@
                     <li><b>${content.index}</b><span>${content.name}</span></li>
                     <ul class="img-row">
                         <#list content.imgs as img>
-                            <li><img src="${img}"></li>
+                            <li><img src="${img.imgSrc!''}"><span>${img.imgDesc}</span></li>
                         </#list>
                     </ul>
                 </#list>
